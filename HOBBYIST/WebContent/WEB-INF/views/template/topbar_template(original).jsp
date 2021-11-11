@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/menubar.css">
+<script src="js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 	 
