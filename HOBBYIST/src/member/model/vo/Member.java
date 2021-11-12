@@ -3,114 +3,102 @@ package member.model.vo;
 import java.sql.Date;
 
 public class Member {
-	
-	private String userEmail;
-	private String userName;
-	private String nickName;
-	private String phone;
-	private String pwd;
-	private Date enrollDate;
-	private int status;
-	private String grade;
+	private String memberEmail;
+	private String memberName;
+	private String memberNickName;
+	private String memberPhone;
+	private String memberPwd;
+	private int kakaoNo;
+	private String memberEnrollType;
+	private Date memberEnrollDate;
+	private int memberStatus;
+	private String memberGrade;
 	
 	public Member() {}
-
 	
-	
-	public Member(String userEmail, String userName, String nickName, String phone) {
+	public Member(String memberEmail, String memberName, String memberNickName, String memberPhone, String memberPwd,
+			int kakaoNo, String memberEnrollType, Date memberEnrollDate, int memberStatus, String memberGrade) {
 		super();
-		this.userEmail = userEmail;
-		this.userName = userName;
-		this.nickName = nickName;
-		this.phone = phone;
+		this.memberEmail = memberEmail;
+		this.memberName = memberName;
+		this.memberNickName = memberNickName;
+		this.memberPhone = memberPhone;
+		this.memberPwd = memberPwd;
+		this.kakaoNo = kakaoNo;
+		this.memberEnrollType = memberEnrollType;
+		this.memberEnrollDate = memberEnrollDate;
+		this.memberStatus = memberStatus;
+		this.memberGrade = memberGrade;
 	}
-
-
-
-	public Member(String userEmail, String userName, String nickName, String phone, String pwd, Date enrollDate,
-			int status, String grade) {
-		super();
-		this.userEmail = userEmail;
-		this.userName = userName;
-		this.nickName = nickName;
-		this.phone = phone;
-		this.pwd = pwd;
-		this.enrollDate = enrollDate;
-		this.status = status;
-		this.grade = grade;
+	public String getMemberEmail() {
+		return memberEmail;
 	}
-
-	public String getUserEmail() {
-		return userEmail;
+	public void setMemberEmail(String memberEmail) {
+		this.memberEmail = memberEmail;
 	}
-
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
+	public String getMemberName() {
+		return memberName;
 	}
-
-	public String getUserName() {
-		return userName;
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
 	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public String getMemberNickName() {
+		return memberNickName;
 	}
-
-	public String getNickName() {
-		return nickName;
+	public void setMemberNickName(String memberNickName) {
+		this.memberNickName = memberNickName;
 	}
-
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public String getMemberPhone() {
+		return memberPhone;
 	}
-
-	public String getPhone() {
-		return phone;
+	public void setMemberPhone(String memberPhone) {
+		this.memberPhone = memberPhone;
 	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public String getMemberPwd() {
+		return memberPwd;
 	}
-
-	public String getPwd() {
-		return pwd;
+	public void setMemberPwd(String memberPwd) {
+		this.memberPwd = memberPwd;
 	}
-
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
+	public int getKakaoNo() {
+		return kakaoNo;
 	}
-
-	public Date getEnrollDate() {
-		return enrollDate;
+	public void setKakaoNo(int kakaoNo) {
+		this.kakaoNo = kakaoNo;
 	}
-
-	public void setEnrollDate(Date enrollDate) {
-		this.enrollDate = enrollDate;
+	public String getMemberEnrollType() {
+		return memberEnrollType;
 	}
-
-	public String getGrade() {
-		return grade;
+	public void setMemberEnrollType(String memberEnrollType) {
+		this.memberEnrollType = memberEnrollType;
 	}
-
-	public void setGrade(String grade) {
-		this.grade = grade;
+	public Date getMemberEnrollDate() {
+		return memberEnrollDate;
 	}
-
-	public int getStatus() {
-		return status;
+	public void setMemberEnrollDate(Date memberEnrollDate) {
+		this.memberEnrollDate = memberEnrollDate;
 	}
-
-	public void setStatus(int status) {
-		this.status = status;
+	public int getMemberStatus() {
+		return memberStatus;
 	}
-
+	public void setMemberStatus(int memberStatus) {
+		this.memberStatus = memberStatus;
+	}
+	public String getMemberGrade() {
+		return memberGrade;
+	}
+	public void setMemberGrade(String memberGrade) {
+		this.memberGrade = memberGrade;
+	}
 
 	@Override
 	public String toString() {
-		return "Member [userEmail=" + userEmail + ", userName=" + userName + ", nickName=" + nickName + ", phone="
-				+ phone + ", pwd=" + pwd + ", enrollDate=" + enrollDate + ", status=" + status + ", grade=" + grade
-				+ "]";
+		return "Member [memberEmail=" + memberEmail + ", memberName=" + memberName + ", memberNickName="
+				+ memberNickName + ", memberPhone=" + memberPhone + ", memberPwd=" + memberPwd + ", kakaoNo=" + kakaoNo
+				+ ", memberEnrollType=" + memberEnrollType + ", memberEnrollDate=" + memberEnrollDate
+				+ ", memberStatus=" + memberStatus + ", memberGrade=" + memberGrade + "]";
 	}
-
 	
+	
+
 }

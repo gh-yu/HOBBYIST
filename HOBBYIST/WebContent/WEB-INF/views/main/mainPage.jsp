@@ -201,7 +201,7 @@
 												<span>Like</span>
 											</button>											
 											<% } else {  %>
-											<button class="button-like" disabled onclick="alert('로그인을 먼저 해주세요')"> 
+											<button class="button-like" disabled onclick="alert('을 먼저 해주세요')"> 
 												<!-- i : 아이콘 태그 -->
 												<i class="fa fa-heart">
 													<svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
@@ -255,7 +255,7 @@
 												<span>Like</span>
 											</button>											
 											<% } else {  %>
-											<button class="button-like" disabled onclick="alert('로그인을 먼저 해주세요')"> 
+											<button class="button-like" disabled onclick="alert('을 먼저 해주세요')"> 
 												<!-- i : 아이콘 태그 -->
 												<i class="fa fa-heart">
 													<svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
