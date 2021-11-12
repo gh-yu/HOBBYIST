@@ -16,6 +16,16 @@ public class MemberService{
 
 	MemberDAO mDAO = new MemberDAO();
 	
+	public int login(String userEmail, String userPwd) {
+		Connection conn = getConnection();
+		
+		int result = mDAO.login(conn, userEmail, userPwd);
+		
+		close(conn);
+		
+		return result;
+	}
+	
 	public Member loginMember(String userEmail, String userPwd) {
 		Connection conn = getConnection();
 		
@@ -24,6 +34,16 @@ public class MemberService{
 		close(conn);
 		
 		return m;
+	}
+	
+	public int join(Member member) {
+		Connection conn = getConnection();
+		
+		int result = mDAO.join(conn, member);
+		
+		close(conn);
+		
+		return result;
 	}
 
 	public int updateMember(Member newInfo) {
