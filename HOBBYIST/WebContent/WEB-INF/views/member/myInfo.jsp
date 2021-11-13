@@ -89,7 +89,7 @@
 						</a></li>
 						<br><br><br>
 						
-						<% if(loginUser != null && loginUser.getMemberGrade().equals("B")) { %>  
+						<% if(loginUser != null && loginUser.getGrade().equals("B")) { %>  
 						<li>
 							<span class="app-dashboard-sidebar-text"><h3>튜터</h3></span> 
 						</li>
@@ -124,20 +124,20 @@
 					<div class="image-upload info">					    
 						<br><br>
 						<b>이메일</b><br>
-						<%= loginUser.getMemberEmail() %>
-						<input type="hidden" id="email" name="email" value="<%= loginUser.getMemberEmail() %>"><br><br>
+						<%= loginUser.getUserEmail() %>
+						<input type="hidden" id="email" name="email" value="<%= loginUser.getUserEmail() %>"><br><br>
 						
 						<b>이름</b><br>
-						<%= loginUser.getMemberName() %>
-						<input type="hidden" id="name" name="name" value="<%= loginUser.getMemberName() %>"><br><br>
+						<%= loginUser.getUserName() %>
+						<input type="hidden" id="name" name="name" value="<%= loginUser.getUserName() %>"><br><br>
 					
 						<b>닉네임</b><br>
-						<%= loginUser.getMemberNickName() %>
-						<input type="hidden" id="nickName" name="nickName" value="<%= loginUser.getMemberNickName() %>"><br><br>
+						<%= loginUser.getNickName() %>
+						<input type="hidden" id="nickName" name="nickName" value="<%= loginUser.getNickName() %>"><br><br>
 						
 						<b>휴대폰 번호</b><br>
-						<%= loginUser.getMemberPhone() ==  null ? "-" : loginUser.getMemberPhone()  %>
-						<input type="hidden" id="phone" name="phone" value="<%= loginUser.getMemberPhone() %>"><br><br>
+						<%= loginUser.getPhone() ==  null ? "-" : loginUser.getPhone()  %>
+						<input type="hidden" id="phone" name="phone" value="<%= loginUser.getPhone() %>"><br><br>
 
 						<input type="submit" id="btnSub" value="수정하기"><br>
 						<input type="button" id="updatePwdBtn" value="비밀번호 변경하기" onclick="location.href='updatePwdForm.me'">

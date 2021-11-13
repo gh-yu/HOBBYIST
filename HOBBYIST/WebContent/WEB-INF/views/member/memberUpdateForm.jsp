@@ -3,6 +3,8 @@
 <%
 	// Member myInfo = (Member)request.getAttribute("myInfo"); 
 	// 내 정보 조회 페이지에서 가져온 정보 대신 세션 저장된 정보를 사용(어차피 로그인 상태이기 때문)
+	
+	String msg = (String)request.getAttribute("msg");
 %>
 <!DOCTYPE html>
 <html>
@@ -65,19 +67,19 @@
 				<!-- 사이드바 -->
 				<div class="app-dashboard-sidebar-inner">
 					<ul class="menu vertical">
-						<li><a href="<%= request.getContextPath() %>/myClass.te">
+						<li><a href="#">
 							<span class="app-dashboard-sidebar-text"><h3>나의 클래스룸</h3></span>
 						</a></li>
-						<li><a href=""> <%-- 나의 클래스룸 페이지에서는 각각 3개씩만 보여주고 더보기 클릭하면 조회 페이지 이동  --%>
+						<li><a href="#content1">
 							<span class="app-dashboard-sidebar-text">수강중인 클래스</span>
 						</a></li>
-						<li><a href=""> 
+						<li><a href="#content2"> 
 							<span class="app-dashboard-sidebar-text">수강완료 클래스</span>
 						</a></li>
-						<li><a href=""> 
+						<li><a href="#content3"> 
 							<span class="app-dashboard-sidebar-text">찜한 클래스</span>
 						</a></li>
-						<li><a href=""> 
+						<li><a href="#content4"> 
 							<span class="app-dashboard-sidebar-text">내가 쓴 후기</span>
 						</a></li>
 						<br>
@@ -95,7 +97,7 @@
 						</a></li>
 						<br><br><br>
 						
-						<% if(loginUser != null && loginUser.getMemberGrade().equals("B")) { %>  
+						<% if(loginUser != null && loginUser.getGrade().equals("B")) { %>  
 						<li>
 							<span class="app-dashboard-sidebar-text"><h3>튜터</h3></span> 
 						</li>
@@ -128,26 +130,26 @@
 						
 				<div class="modify-information">
 				
-				<form action="<%= request.getContextPath() %>/update.me" method="post" onsubmit="return updateValidate();"> <!-- 제출 전 검사 진행  -->
+				<form action="<%= request.getContextPath() %>/update.me" method="post">
 					<div class="info">
 					
 						<br><br>
 						<b>이메일</b><br>
-						<input type="text" id="emai" name="email" value="<%= loginUser.getMemberEmail() %>" style="background: lightgray" readonly><br>
+						<input type="text" id="emai" name="email" value="<%= loginUser.getUserEmail() %>" style="background: lightgray" readonly><br>
 						
 						<b>이름</b><br>
-						<input type="text" id="name" name="name" value="<%= loginUser.getMemberName() %>" style="background: lightgray" readonly><br>
+						<input type="text" id="name" name="name" value="<%= loginUser.getUserName() %>" style="background: lightgray" readonly><br>
 					
 						<b>닉네임</b><span style="color: red;">*</span><br>
-						<input type="text" id="nickName" name="nickName" value="<%= loginUser.getMemberNickName() %>" required> <span id="nickResult"></span> <br> 
-						<%-- <button type="button" id="checkBtn" value="중복확인">중복확인</button> --%>
+						<input type="text" id="nickName" name="nickName" value="<%= loginUser.getNickName() %>"> <button type="button" id="checkBtn" value="중복확인">중복확인</button> <br>
 
 						<b>휴대폰 번호</b><br>
-						<input type="text" id="phone" name="phone"  placeholder="(-없이)01012345678" value="<%= loginUser.getMemberPhone() ==  null ? "" : loginUser.getMemberPhone() %>"><br>
+						<input type="text" id="phone" name="phone"  placeholder="(-없이)01012345678" value="<%= loginUser.getPhone() ==  null ? "" : loginUser.getPhone() %>"><br>
 
 						<br>
 						<input type="submit" id="btnSub" value="수정하기"> <br>
-						<input type="button" id="cancelBtn" onclick="location.href='javascript:history.go(-1)'" value="취소하기">		
+						<!-- <input type="button" id="cancelBtn" onclick="location.href='javascript:history.go(-1)'" value="취소하기"> -->
+						<input type="button" id="cancelBtn" onclick="location.href='<%= request.getContextPath() %>/myInfo.me'" value="취소하기">			
 					</div>
 				</form>
 			</div>
@@ -168,70 +170,19 @@
 			</footer> 
 	</div>
 	<script>	
-		var isUsable = false;		// form제출 가능 여부
-		var isNickChecked = false;	// 닉네임 체크 여부
-		//var isPhoneChecked = false; // 폰 체크 여부
-		var nickName = document.getElementById('nickName');
-		var originNickName =  '<%= loginUser.getMemberNickName() %>';
-		
-		$('#nickName').on('change paste keyup blur', function(){ // 아이디 입력사항이 변경, 붙여넣기, 키업 이벤트가  발생했을 경우 
-			isNickChecked = false;	// idNickChecked = false로 초기화
-		});
-		
-		$('#nickName').change(function(){
-			//var nickName = $('#nickName');
+			// 닉네임 중복 확인 매시지 팝업창
+			document.getElementById('checkBtn').onclick = function(){
+				var nickName = document.getElementById('nickName').value;
 			
-			if (nickName.value.trim() == '' || nickName.value.length == 0) { // 닉네임 칸 빈 칸이면 제출 못하게(필수 입력사항)
-				alert('닉네임은 필수 입력사항입니다.');
-				nickName.focus();
-				$('#nickResult').html('');
-			} else if (nickName.value.trim() == originNickName.trim()) {
-				$('#nickResult').html(''); // 기존 닉네임이랑 같으면 닉네임 중복체크 칸 비움
-				isNickChecked = true;
-			} else {
-				$.ajax({ // 닉네임 중복여부 검사
-					url: 'checkNick.me', 
-					data: {inputNickName:nickName.value.trim()},
-					success: function(data){
-						console.log(data);
-						if (data.trim() == '0') { // int로 보냈지만 string으로 넘어옴, data == '0'했을때 잘 안 먹힘, trim()을 붙여주니 잘 먹힘 -> 어딘가에 띄어쓰기가 들어가있을 수도 있기 때문
-							$('#nickResult').text('사용 가능합니다.');
-							$('#nickResult').css('color', 'green');
-							isUsable = true;
-							isNickChecked = true;
-						} else {
-							$('#nickResult').text('사용 불가능합니다.');
-							$('#nickResult').css('color', 'red');
-							isUsable = false;
-							isNickChacked = false;
-							nickName.focus();
-						}
-					},
-					error: function(data){
-						console.log(data);
-					}
-				});			
+				window.open('checkNick.me?nickName=' + nickName, 'nickCheck', 'width=400, height=200');
 			}
-			
-		});
 				
-		// 닉네임 정규식 추가 --> 위의 조건문 else 위에 else if로 조건 추가
-		// if (!/^([a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{1,10}$/.test(사용자이름))  message: "닉네임은 한글, 영문, 숫자만 가능하며 2-10자리 가능. ", });
-		// 폰번호 정규식 체크할 것임	
-		// function isCelluar(asValue) { var regExp = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/; ); // 형식에 맞는 경우 true 리턴 }
-
-		
-		function updateValidate(){
-			if(isUsable && isNickChecked) {
-				return true;
-			} else if (nickName.value.trim() == originNickName.trim()) {
-				return true; // 기존 닉네임이랑 같을시 form 제출 가능
-			} else {
-				alert('닉네임 중복을 확인해주세요.');
-				return false;
+			// updateform 제출시 기존 닉네임과 변경하려고 하는 닉네임이 다르다면 서블릿에서 중복검사 진행 , 중복된 닉네임 있다면 request에 msg저장해서 이 페이지로 돌아옴
+			window.onload = function() { 
+				if ('<%= msg %>' != 'null') {
+					alert('<%= msg %>'); // alert메시지 출력 -> 사용 중인 닉네임
+				}
 			}
-			return true;
-		}
 				
 	</script>
 </body>
