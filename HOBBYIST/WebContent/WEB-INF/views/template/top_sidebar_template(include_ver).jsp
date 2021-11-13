@@ -76,7 +76,7 @@
 						</a></li>
 						<br><br><br>
 						
-						<% if(loginUser != null && loginUser.getGrade().equals("B")) { %> 
+						<% if(loginUser != null && loginUser.getMemberGrade().equals("B")) { %> 
 						<li>
 							<span class="app-dashboard-sidebar-text"><h3>튜터</h3></span> 
 						</li>
