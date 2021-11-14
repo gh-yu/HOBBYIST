@@ -2,7 +2,12 @@
     <wb-module deploy-name="HOBBYIST">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+<<<<<<< HEAD
         <property name="java-output-path" value="/HOBBYIST/build/classes"/>
         <property name="context-root" value="HOBBYIST"/>
+=======
+        <property name="context-root" value="HOBBYIST"/>
+	<property name="java-output-path" value="/HOBBYIST/WebContent/WEB-INF/classes"/>
+>>>>>>> 03f3f615ea60fe82ae57b6f39429c7b74501e5ff
     </wb-module>
 </project-modules>
