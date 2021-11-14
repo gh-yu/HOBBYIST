@@ -216,5 +216,32 @@ public class MemberDAO {
 		return m;
 	}
 
+	public int checkId(Connection conn, String inputId) {
+		PreparedStatement pstmt= null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = "SELECT COUNT(*) FROM MEMBER WHERE MEMBER_EMAIL = ?";
+		
+		try {
+			pstmt= conn.prepareStatement(query);
+			pstmt.setString(1, inputId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return result;
+	}
+
 
 }
