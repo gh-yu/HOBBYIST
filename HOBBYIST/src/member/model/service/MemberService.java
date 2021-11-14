@@ -41,6 +41,11 @@ public class MemberService{
 		
 		int result = mDAO.join(conn, member);
 		
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
 		close(conn);
 		
 		return result;

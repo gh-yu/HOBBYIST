@@ -204,7 +204,7 @@
 							$('#nickResult').text('사용 불가능합니다.');
 							$('#nickResult').css('color', 'red');
 							isUsable = false;
-							isNickChacked = false;
+							isNickChecked = false;
 							nickName.focus();
 						}
 					},

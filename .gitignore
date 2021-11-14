@@ -157,3 +157,4 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse,windows,macos,sass
 HOBBYIST/WebContent/WEB-INF/jspwork/
 Servers/
+HOBBYIST/.classpath.rej
