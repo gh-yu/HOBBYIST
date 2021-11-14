@@ -30,7 +30,7 @@ public class CheckNickServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String inputNickName = request.getParameter("nickName").trim();
-		String originNickName =((Member)request.getSession().getAttribute("loginUser")).getNickName().trim();
+		String originNickName =((Member)request.getSession().getAttribute("loginUser")).getMemberNickName().trim();
 	
 		int result = 0;
 		if (inputNickName.equals("")) {

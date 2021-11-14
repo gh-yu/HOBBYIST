@@ -97,7 +97,7 @@
 						</a></li>
 						<br><br><br>
 						
-						<% if(loginUser != null && loginUser.getGrade().equals("B")) { %>  
+						<% if(loginUser != null && loginUser.getMemberGrade().equals("B")) { %>  
 						<li>
 							<span class="app-dashboard-sidebar-text"><h3>튜터</h3></span> 
 						</li>
@@ -135,16 +135,16 @@
 					
 						<br><br>
 						<b>이메일</b><br>
-						<input type="text" id="emai" name="email" value="<%= loginUser.getUserEmail() %>" style="background: lightgray" readonly><br>
+						<input type="text" id="emai" name="email" value="<%= loginUser.getMemberEmail() %>" style="background: lightgray" readonly><br>
 						
 						<b>이름</b><br>
-						<input type="text" id="name" name="name" value="<%= loginUser.getUserName() %>" style="background: lightgray" readonly><br>
+						<input type="text" id="name" name="name" value="<%= loginUser.getMemberName() %>" style="background: lightgray" readonly><br>
 					
 						<b>닉네임</b><span style="color: red;">*</span><br>
-						<input type="text" id="nickName" name="nickName" value="<%= loginUser.getNickName() %>"> <button type="button" id="checkBtn" value="중복확인">중복확인</button> <br>
+						<input type="text" id="nickName" name="nickName" value="<%= loginUser.getMemberNickName() %>"> <button type="button" id="checkBtn" value="중복확인">중복확인</button> <br>
 
 						<b>휴대폰 번호</b><br>
-						<input type="text" id="phone" name="phone"  placeholder="(-없이)01012345678" value="<%= loginUser.getPhone() ==  null ? "" : loginUser.getPhone() %>"><br>
+						<input type="text" id="phone" name="phone"  placeholder="(-없이)01012345678" value="<%= loginUser.getMemberPhone() ==  null ? "" : loginUser.getMemberPhone() %>"><br>
 
 						<br>
 						<input type="submit" id="btnSub" value="수정하기"> <br>

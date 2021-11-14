@@ -108,7 +108,7 @@
 						<br><br><br>
 						
 						<%-- <% if(tutor == null) { %> 로그인할때 tutor정보도 세션에 저장하고 상단에서 객체 생성하기 --%>
-						<% if(loginUser != null && loginUser.getGrade().equals("B")) { %>  <%-- 로그인한 유저의 그레이드가 'B'즉 튜터가 아니면 튜터 신청 버튼 활성화 --%>
+						<% if(loginUser != null && loginUser.getMemberGrade().equals("B")) { %>  <%-- 로그인한 유저의 그레이드가 'B'즉 튜터가 아니면 튜터 신청 버튼 활성화 --%>
 						<li>
 							<span class="app-dashboard-sidebar-text"><h3>튜터</h3></span> 
 						</li>
