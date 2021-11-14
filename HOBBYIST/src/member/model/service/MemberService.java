@@ -14,7 +14,7 @@ import java.sql.Connection;
 
 public class MemberService{
 
-	MemberDAO mDAO = new MemberDAO();
+	private MemberDAO mDAO = new MemberDAO();
 	
 	public int login(String userEmail, String userPwd) {
 		Connection conn = getConnection();

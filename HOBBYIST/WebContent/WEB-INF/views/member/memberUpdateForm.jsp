@@ -139,6 +139,7 @@
 						<input type="text" id="name" name="name" value="<%= loginUser.getMemberName() %>" style="background: lightgray" readonly><br>
 					
 						<b>닉네임</b><span style="color: red;">*</span><br>
+
 						<input type="text" id="nickName" name="nickName" value="<%= loginUser.getMemberNickName() %>" required> <span id="nickResult"></span> <br> 
 						<%-- <button type="button" id="checkBtn" value="중복확인">중복확인</button> --%>
 

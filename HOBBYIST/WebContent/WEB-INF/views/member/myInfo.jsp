@@ -93,7 +93,7 @@
 						<li>
 							<span class="app-dashboard-sidebar-text"><h3>튜터</h3></span> 
 						</li>
-						<li ><a href=""> 
+						<li ><a href="<%= request.getContextPath() %>/tutorClass.me"> 
 							<span class="app-dashboard-sidebar-text">내 클래스</span>  <%-- 누르고 서블릿 이동하면 tutor정보도 세션에 저장하기? --%>
 						</a></li>
 						<li style="color: #9ED4C2"><a href=""> 
