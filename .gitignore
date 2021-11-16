@@ -160,3 +160,6 @@ Servers/
 HOBBYIST/.classpath.rej
 HOBBYIST/.classpath
 .settings/
+Servers/
+HOBBYIST/WebContent/WEB-INF/jspwork/
+HOBBYIST/.classpath.rej
