@@ -59,7 +59,7 @@
 	</div>
 	<script>
 		$('#listArea td').mouseenter(function(){
-			$(this).parent().css({'background':'darkgray', 'cursor':'pointer'});
+			$(this).parent().css({'background':'lightgray', 'cursor':'pointer'});
 		}).mouseout(function(){
 			$(this).parent().css({'background':'none'});
 		}).click(function(){

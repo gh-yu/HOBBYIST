@@ -39,9 +39,6 @@ public class ClassNoticeDAO {
 		ArrayList<ClassNotice> list = null;
 
 		String query = prop.getProperty("selectClassList");
-		System.out.println("query"+query);
-		System.out.println("list"+list);
-		
 
 		try {
 			stmt = conn.createStatement();
@@ -52,20 +49,14 @@ public class ClassNoticeDAO {
 				list.add(new ClassNotice(rset.getInt("CLASS_BOARD_NO"), rset.getString("CLASS_BOARD_NAME"),
 										rset.getString("CLASS_BOARD_CONTENT"), rset.getInt("CLASS_BOARD_VIEWS"),
 										rset.getDate("CLASS_BOARD_DATE"), rset.getInt("CLASS_BOARD_STATUS"), rset.getInt("CLASS_NO"),
-										rset.getString("CLASS_BOARD_WRITER")));
-				
-				System.out.println("query"+query);
-				System.out.println("list"+list);
+										rset.getString("CLASS_BOARD_WRITER")));			
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(rset);
 			close(stmt);
 		}
-		System.out.println("query"+query);
-		System.out.println("list"+list);
 		return list;
 	}
 
@@ -74,8 +65,6 @@ public class ClassNoticeDAO {
 		int result = 0;
 
 		String query = prop.getProperty("insertClassNotice");
-		// insertNotice=INSERT INTO NOTICE VALUES(SEQ_NNO.NEXTVAL, ?, ?, ?, DEFAULT, ?,
-		// DEFAULT)
 
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -152,8 +141,7 @@ public class ClassNoticeDAO {
 		int result = 0;
 
 		String query = prop.getProperty("updateClassNotice");
-		// updateNotice=UPDATE NOTICE SET NOTICE_TITLE = ?, NOTICE_CONTENT = ?,
-		// NOTICE_DATE = ? WHERE NOTICE_NO = ?
+
 
 		try {
 			pstmt = conn.prepareStatement(query);

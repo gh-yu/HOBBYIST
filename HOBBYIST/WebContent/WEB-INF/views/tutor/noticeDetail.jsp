@@ -40,8 +40,8 @@
 					<tr>
 						<th>작성자</th>
 						<td>
-							<%= classnotice.getClassBoardWriter() %>
-							<input type="hidden" name="writer" value="<%= classnotice.getClassBoardWriter() %>"> 
+							<%= member.getMemberNickName() %>
+							<input type="hidden" name="nickname" value="<%= member.getMemberNickName() %>"> 
 						</td>
 						<th>작성일</th>
 						<td>

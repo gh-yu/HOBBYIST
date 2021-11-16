@@ -53,7 +53,7 @@ public class ClassNoticeUpdateServlet extends HttpServlet {
 			noticeDate = new Date(new GregorianCalendar(year, month, day).getTimeInMillis());
 		}
 		
-		ClassNotice notice = new ClassNotice(classBoardNo, classBoardName, classBoardContent, 0, noticeDate, 1, 0, null);
+		ClassNotice notice = new ClassNotice(classBoardNo, classBoardName, classBoardContent, 0, noticeDate, 1, 1, null);
 		
 		int result = new ClassNoticeService().updateClassNotice(notice);
 		
