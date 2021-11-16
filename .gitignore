@@ -158,3 +158,5 @@ $RECYCLE.BIN/
 HOBBYIST/WebContent/WEB-INF/jspwork/
 Servers/
 HOBBYIST/.classpath.rej
+HOBBYIST/.classpath
+.settings/
