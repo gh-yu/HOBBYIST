@@ -43,10 +43,8 @@ public class CSBoardDetailServlet extends HttpServlet {
 			
 		String loginUserEmail = ((Member)request.getSession().getAttribute("loginUser")).getMemberEmail();
 		
-		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
 		String page = null;
-
-		
 		if(board != null) {
 			if (!(board.getReqWriter().equals(loginUserEmail) || loginUserEmail.equals("admin@hobbyist.com"))) { // 작성자와 관리자만 열람할 수 있게
 				PrintWriter script = response.getWriter();
@@ -62,17 +60,7 @@ public class CSBoardDetailServlet extends HttpServlet {
 			page = "WEB-INF/views/common/errorPage.jsp";
 			request.setAttribute("msg", "1:1문의글 조회 실패");
 		}
-		
 		request.getRequestDispatcher(page).forward(request, response);
-		
-		
-		// 게시판 비밀번호와 일치하지 않으면 알림창 띄우고, 뒤로가기 -> 리스트 조회 뷰에서 ajax로 해결
-//		response.setContentType("text/html; charset=UTF-8");
-//		PrintWriter out = response.getWriter();
-//		out.println("<script>");
-//		out.println("alert('비밀번호가 일치하지 않습니다');");
-//		out.println("history.back();");
-//		out.println("</script>");
 	}
 
 	/**

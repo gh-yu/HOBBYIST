@@ -47,7 +47,6 @@ public class CommonFilter implements Filter {
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
 		// TODO Auto-generated method stub
-		System.out.println("CommonFilter init()");
 	}
 
 }

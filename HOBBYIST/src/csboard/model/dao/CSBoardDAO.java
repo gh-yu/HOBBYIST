@@ -145,12 +145,18 @@ public class CSBoardDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, board.getReqCategory());
+			pstmt.setString(2, board.getReqTitle());
+			pstmt.setString(3, board.getReqContent());
+			pstmt.setString(4, board.getReqWriter());
 			
+			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(pstmt);
 		}
-		
 		
 		return result;
 	}

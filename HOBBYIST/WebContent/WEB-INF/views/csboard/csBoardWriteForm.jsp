@@ -121,7 +121,7 @@
 									</tr>
 									<tr>
 										<td colspan="6" style="min-height: 250px;">
-											<textarea cols="120" rows="15" style="resize:none;" required></textarea>
+											<textarea name="content" cols="120" rows="15" style="resize:none;" required></textarea>
 										</td>
 									</tr>
 								</tbody>

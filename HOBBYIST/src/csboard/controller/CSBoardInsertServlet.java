@@ -30,11 +30,12 @@ public class CSBoardInsertServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String title = request.getParameter("title");
-		String category = request.getParameter("category");
+		String category = request.getParameter("category").trim();
 		String nickName = request.getParameter("nickNmae");
 		String email = request.getParameter("email");
 		String content = request.getParameter("content");
 		
+		System.out.println(category);
 		RequestBoard board = new RequestBoard();
 		board.setReqTitle(title);
 		board.setReqCategory(category);
@@ -47,9 +48,9 @@ public class CSBoardInsertServlet extends HttpServlet {
 		if (result > 0) {
 			response.sendRedirect("list.cs");
 		} else {
+			request.setAttribute("msg", "게시글 작성 실패");
 			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
 		}
-		
 	}
 
 	/**

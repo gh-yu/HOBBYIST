@@ -64,7 +64,6 @@ public class CSBoardListServlet extends HttpServlet {
 		// int값 두 개를 나누면 소수점까지 안 나오기 때문에 double로 형 변환 필요 -> Math.ceil메소드로 올림처리 후 int로 형 변환
 		// 만약 0.9면 1로, 4.0이면 4로, 4.3이면 5라는 값이 maxPage에 저장될 것임
 		
-		
 		// startPage 계산식 -> 수열 개념 적용 필요
 		startPage = (currentPage - 1) / pageLimit * pageLimit + 1; 
 //		int n = (currentPage - 1) / pageLimit;
