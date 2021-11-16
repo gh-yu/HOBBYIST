@@ -22,10 +22,6 @@
 	box-shadow: 2px 2px 2px lightgray;
 	font-size: large;
 }
-#changePwd{
-	color: "#9ED4C2";
-	text-align : right;
-}
 
 #checkBtn{background: #9ED4C2; cursor: pointer; color: white; box-shadow: 1px 1px 2px lightgray; border: 1px solid lightgray; border-radius: 10px;}
 </style>

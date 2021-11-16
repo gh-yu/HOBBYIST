@@ -27,7 +27,7 @@
 					<div class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/myInfo.me"><img src="images/myPage.png"></a></div> <!-- 마이페이지아이콘 -->
 					<% }  %>
 					
-					<div class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/FAQ.bo"><img src="images/contact.png"></a></div> <!-- 콘택트아이콘 -->
+					<div class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/contact.co"><img src="images/contact.png"></a></div> <!-- 콘택트아이콘 -->
 							
 					<% if(loginUser == null) { %>
 						<div class="nav-item"><a class="nav-link"><img src="images/like.png" onclick="alert('로그인을 먼저 해주세요.');"></a></div>

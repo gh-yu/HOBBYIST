@@ -1,4 +1,4 @@
-package csboard.controller;
+package csBoard.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

@@ -30,11 +30,6 @@ public class MemberUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		String email = request.getParameter("email");
-		String name = request.getParameter("name");
-		String phone = request.getParameter("phone");
-		String profile = request.getParameter("profile"); // 출력해보면 파일명임
 		
 		request.setCharacterEncoding("UTF-8");
 		String email = request.getParameter("email");

@@ -1,4 +1,4 @@
-package csboard.controller;
+package csBoard.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import csboard.model.service.CSBoardService;
-import csboard.model.vo.Reply;
-import csboard.model.vo.RequestBoard;
+import csBoard.model.service.CSBoardService;
+import csBoard.model.vo.Reply;
+import csBoard.model.vo.RequestBoard;
 import member.model.vo.Member;
 
 /**

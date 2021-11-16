@@ -1,4 +1,4 @@
-package csboard.model.dao;
+package csBoard.model.dao;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.Properties;
 import static common.JDBCTemplate.close;
 
-import csboard.model.vo.PageInfo;
-import csboard.model.vo.RequestBoard;
+import csBoard.model.vo.PageInfo;
+import csBoard.model.vo.RequestBoard;
 import member.model.dao.MemberDAO;
 
 public class CSBoardDAO {

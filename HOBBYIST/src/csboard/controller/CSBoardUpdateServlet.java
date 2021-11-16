@@ -1,4 +1,4 @@
-package csboard.controller;
+package csBoard.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import csboard.model.service.CSBoardService;
-import csboard.model.vo.RequestBoard;
+import csBoard.model.service.CSBoardService;
+import csBoard.model.vo.RequestBoard;
 
 /**
  * Servlet implementation class CSBoardUpdateServlet

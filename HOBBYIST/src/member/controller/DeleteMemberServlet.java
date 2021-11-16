@@ -1,7 +1,6 @@
 package member.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import member.model.service.MemberService;
 import member.model.vo.Member;
-
 /**
  * Servlet implementation class DeleteMemberServlet
  */
@@ -31,10 +29,6 @@ public class DeleteMemberServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("WEB-INF/views/member/deleteMember.jsp").forward(request, response);
-		
-	
-	
 		HttpSession session = request.getSession(true); //로그인 된 상태에서 탈퇴하는 거니까 세션에서 정보 받아옴
         String memberEmail = ((Member)session.getAttribute("loginUser")).getMemberEmail();
 

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="csboard.model.vo.*, java.util.ArrayList" %>
+    pageEncoding="UTF-8" import="csBoard.model.vo.*, java.util.ArrayList" %>
 <%
 	ArrayList<RequestBoard> list = (ArrayList<RequestBoard>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
