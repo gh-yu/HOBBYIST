@@ -23,8 +23,6 @@
 					data-bs-slide-to="1" aria-label="Slide 2"></button>
 				<button type="button" data-bs-target="#myCarousel"
 					data-bs-slide-to="2" aria-label="Slide 3"></button>
-											<button type="button" data-bs-target="#myCarousel"
-												data-bs-slide-to="3" aria-label="Slide 4"></button>
 			</div>
 
 			<div class="carousel-inner">
@@ -98,31 +96,6 @@
 						</div>
 					</div>
 				</div>
-				
-				
-							<div class="carousel-item">
-			
-								<svg class="bd-placeholder-img" width="100%" height="100%"
-									xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-									preserveAspectRatio="xMidYMid slice" focusable="false">
-									<rect width="100%" height="100%" fill="#777" />
-									<img src="images/green.jpg"></svg>
-			
-			
-								<div class="container">
-									<div class="carousel-caption text-end">
-										<h1>One more for good measure.</h1>
-										<p>Some representative placeholder content for the third
-											slide of this carousel.</p>
-			
-										<form class="d-flex search-class">
-											<input class="search-class form-control me-2 search" type="search"
-												placeholder="어떤 클래스를 원하시나요?" aria-label="Search">
-											<button class="btn btn-outline-success" type="submit">Search</button>
-										</form>
-									</div>
-								</div>
-							</div>
 			</div>
 			<button class="carousel-control-prev" type="button"
 				data-bs-target="#myCarousel" data-bs-slide="prev">

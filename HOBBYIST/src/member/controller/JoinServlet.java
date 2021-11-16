@@ -9,11 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import member.model.dao.MemberDAO;
-import member.model.service.MemberService;
-import member.model.vo.Member;
-
-
 import member.model.service.MemberService;
 import member.model.vo.Member;
 
@@ -36,50 +31,7 @@ public class JoinServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("WEB-INF/views/member/joinAction.jsp").forward(request, response);
-
-//		 request.setCharacterEncoding("UTF-8");
-//	        
-//	        String memberEmail = request.getParameter("memberEmail");
-//	        String memberName = request.getParameter("memberName");
-//	        String memberNickName = request.getParameter("memberNickName");
-//	        String memberPhone = request.getParameter("memberPhone");
-//	        String memberPwd = request.getParameter("memberPwd");
-//	        
-//	        Member member = new Member();
-//	        member.setMemberEmail(memberEmail);
-//	        member.setMemberName(memberName);
-//	        member.setMemberNickName(memberNickName);
-//	        member.setMemberPhone(memberPhone);
-//	        member.setMemberPwd(memberPwd);
-//	        
-//	        if(memberEmail == null || memberName == null || memberNickName == null ||
-//	                memberPhone == null || memberPwd == null) {
-//	            PrintWriter script = response.getWriter();
-//	            script.println("<script>");
-//	            script.println("alert('입력되지 않은 사항이 있습니다.')");
-//	            script.println("history.back()");
-//	            script.println("</script>");
-//	        } else {
-//	            int result = new MemberService().join(member);
-//	        
-//	            if(result == -1) {
-//	                PrintWriter script = response.getWriter();
-//	                script.println("<script>");
-//	                script.println("alert('DB 오류.')");
-//	                script.println("history.back()");
-//	                script.println("</script>");
-//	            } else {
-//	                PrintWriter script = response.getWriter();
-//	                script.println("<script>");
-//	                script.println("location.href='index.jsp'");
-//	                script.println("</script>");
-//	                response.sendRedirect(request.getContextPath());
-//	                
-//	            }
-//	        }
-	        
-	    
+		
 		request.setCharacterEncoding("UTF-8");
 		
 		String memberEmail = request.getParameter("memberEmail");

@@ -163,10 +163,4 @@ HOBBYIST/.classpath
 Servers/
 HOBBYIST/WebContent/WEB-INF/jspwork/
 HOBBYIST/.classpath.rej
-3_JSPServlet/
-cos-05Nov2002/
-gson-2.8.5/
-javax.mail-1.6.2/
-json-simple-1.1.1/
-ojdbc8/
-TestPP/
+HOBBYIST/build/
