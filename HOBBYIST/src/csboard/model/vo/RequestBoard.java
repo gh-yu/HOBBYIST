@@ -12,11 +12,12 @@ public class RequestBoard {
 	private Date createDate;
 	private Date modifyDate;
 	private int status;
+	private String replyStatus;
 	
 	public RequestBoard() {}
 
 	public RequestBoard(int reqNo, String reqCategory, String reqTitle, String reqContent, String reqWriter,
-			String nickName, Date createDate, Date modifyDate, int status) {
+			String nickName, Date createDate, Date modifyDate, int status, String replyStatus) {
 		super();
 		this.reqNo = reqNo;
 		this.reqCategory = reqCategory;
@@ -27,6 +28,7 @@ public class RequestBoard {
 		this.createDate = createDate;
 		this.modifyDate = modifyDate;
 		this.status = status;
+		this.replyStatus = replyStatus;
 	}
 
 	public int getReqNo() {
@@ -101,11 +103,19 @@ public class RequestBoard {
 		this.status = status;
 	}
 
+	public String getReplyStatus() {
+		return replyStatus;
+	}
+
+	public void setReplyStatus(String replyStatus) {
+		this.replyStatus = replyStatus;
+	}
+
 	@Override
 	public String toString() {
 		return "RequestBoard [reqNo=" + reqNo + ", reqCategory=" + reqCategory + ", reqTitle=" + reqTitle
 				+ ", reqContent=" + reqContent + ", reqWriter=" + reqWriter + ", nickName=" + nickName + ", createDate="
-				+ createDate + ", modifyDate=" + modifyDate + ", status=" + status + "]";
+				+ createDate + ", modifyDate=" + modifyDate + ", status=" + status + ", replyStatus=" + replyStatus
+				+ "]";
 	}
-	
 }

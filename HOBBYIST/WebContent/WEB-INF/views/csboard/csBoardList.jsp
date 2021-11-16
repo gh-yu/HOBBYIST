@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="member.model.vo.Member" %>
+    pageEncoding="UTF-8" import="csboard.model.vo.*, java.util.ArrayList" %>
+<%
+	ArrayList<RequestBoard> list = (ArrayList<RequestBoard>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,17 +12,19 @@
 <script src="js/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/menubar.css">
 <script src="js/menubar.js"></script>
-<style>
-
-/* 	.outer{
-		width: 800px; height: 500px; background: rgba(255, 255, 255, 0.4); border: 5px solid white;
-		margin-left: auto; margin-right: auto; margin-top: 50px;
-	} */
+<style type="text/css">
 	#listArea{border-top: 2px solid gray; text-align: center; font-size: small; border-bottom: 1px solid lightgray;}
-	.tableArea{width:650px;	height:350px; margin-right: auto; margin-left: auto;}
+	.tableArea{width:1000px; height:270px; margin-right: auto; margin-left: auto;}
 	thead{}
 	tbody{}	
-	#writeBoard{background: #B0C4DE; font-weight: bold; color: white; border: none; cursor: pointer; margin-left: 67%; margin-bottom: 15px; width: 100px; height: 40px; box-shadow: 1px 1px 2px lightgray;}
+	#writeBtn{background: #B0C4DE; font-weight: bold; color: white; border: none; cursor: pointer; margin-left: 80%; margin-bottom: 15px; width: 100px; height: 40px; box-shadow: 1px 1px 2px lightgray;}
+	.pagingArea button{border-radius: 15px; /* background: #9ED4C2; */ background: none; border: 1px solid #9ed4c2;} /* #D5D5D5; */
+/* 	.buttonArea{margin-right: 50px; margin-bottom: 50px;}
+	.buttonArea button{background: #D1B2FF; border-radius: 5px; color: white; width: 80px; heigth: 25px; text-align: center;} */
+	button:hover{cursor: pointer;}
+	#numBtn{/* background: #9ED4C2; */ background: none; border: 1px solid #9ed4c2;} /* #B2CCFF */
+	#choosen{/* background: lightgray; */ background: none; border: 1px solid lightgray;}
+
 </style>
 </head>
 <body>
@@ -68,65 +74,116 @@
 						</a></li>
 						<br><br><br>
 					</ul>
-					
-					
 				</div>
 			</div>
 
 			<!-- 본문 영역 -->
 			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
 				
-				<div class="outer">
+				<div class="wrapList">
 					<br>
 					<h2 align="center">1:1문의</h2>
-					<button id="writeBoard" onclick="">문의하기</button>
+					<% if (loginUser != null) { %>
+					<button id="writeBtn" onclick="location.href='<%= request.getContextPath() %>/writeBoardForm.cs'">문의하기</button>
+					<% } %>
+					
 					<div class="tableArea">
 						<table id="listArea">
 							<thead>
 								<tr>	
-									<th width="100px">NO</th>
+									<th width="100px">NO.</th>
 									<th width="100px">분류</th>
-									<th width="500px">제목</th>
-									<th width="200px">답변상태</th>
-									<th width="100px">작성자</th>
+									<th width="350px">제목</th>
+									<th width="200px">작성자</th>
+									<th width="100px">답변상태</th>
 									<th width="150px">작성일</th>
 								</tr>
 							 </thead>
 							 <tbody>
-							 	<tr>
-							 		<td colspan="6">조회된 글이 없습니다.</td>
-							 	</tr>
-<%-- 							<% if (list.isEmpty()) { %>
+ 							<% if (list.isEmpty()) { %>
 							<tr>
-								<td colspan="6">조회된 리스트가 없습니다.</td>
+								<td colspan="6">조회된 글이 없습니다.</td>
 							</tr>
 							<% } else { %>
-							<% 		for(Board b : list) { %>
+							<% 		for(RequestBoard rb: list) { %>
 							<tr>	
-								<td><%= b.getBoardId() %></td>
-								<td><%= b.getCategory() %></td>
-								<td><%= b.getBoardTitle() %></td>
-								<td><%= b.getNickName() %></td>
-								<td><%= b.getBoardCount() %></td>
-								<td><%= b.getCreateDate() %></td>
+								<td><%= rb.getReqNo() %></td>
+								<td><%= rb.getReqCategory() %></td>
+								<td><%= rb.getReqTitle() %></td>
+								<td>
+								<% 
+										if(rb.getNickName().length() <= 2) {
+								%>		
+											<%= rb.getNickName().charAt(0) + "*" %>
+								<% 		} else { %>
+	 										<%= rb.getNickName().replace(rb.getNickName().substring(1, rb.getNickName().length()-1), "*")%>
+								<%		} %>
+								</td>
+								<td><%= rb.getReplyStatus() %></td>
+								<td><%= rb.getCreateDate() %></td>
+								<td hidden="hidden"><%= rb.getReqWriter() %></td>
 							</tr>	
 							<% 		} %>
-							<% } %> --%>							 
+							<% } %> 							 
 							 </tbody>
 
 						</table>
 					</div>
 					
 					<div class="pagingArea" align="center">
-					
-
+		
+						<!-- 맨 처음으로  -->
+						<button onclick="location.href='<%= request.getContextPath() %>/list.cs?currentPage=1'">&lt;&lt; 맨 처음</button>
+						
+						<!-- 이전 페이지로 -->
+						<button id="beforeBtn" onclick="location.href='<%= request.getContextPath() %>/list.cs?currentPage=<%= pi.getCurrentPage() - 1 %>'">&lt; 이전</button>
+						<script>
+							if(<%= pi.getCurrentPage() %> <= 1){
+								$('#beforeBtn').prop('disabled', true);
+							}
+						</script>
+						
+						<!-- 숫자 버튼 -->
+						<% for (int p = pi.getStartPage(); p <= pi.getEndPage(); p++) { %>
+						<% 		if(p == pi.getCurrentPage()) { %>
+						<button id="choosen" disabled><%= p %></button> <!-- 현재 페이지는 선택 못하게 -->
+						<%      } else { %>
+						<button id="numBtn" onclick="location.href='<%= request.getContextPath() %>/list.cs?currentPage=<%= p %>'"><%= p %></button>
+						<%		 } %>
+						<%	} %>
+						
+						<!-- 다음 페이지로 -->
+						<button id="afterBtn" onclick="location.href='<%= request.getContextPath() %>/list.cs?currentPage=<%= pi.getCurrentPage() + 1 %>'">다음 &gt;</button>
+						<script>
+							if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>){
+								$('#afterBtn').prop('disabled', true);
+							}
+						</script>
+						
+						<!-- 맨 끝으로 -->
+						<button onclick="location.href='<%= request.getContextPath() %>/list.cs?currentPage=<%= pi.getMaxPage() %>'">맨 끝 &gt;&gt;</button>
 					</div>
-				
 							
 				</div>	
 			</div>
-			
-			
+					<script>
+					
+						$('#listArea td').mouseenter(function(){
+							$(this).parent().css({'text-decoration':'underline', 'cursor':'pointer'})
+						}).mouseout(function(){
+							$(this).parent().css('text-decoration', 'none');
+						}).click(function(){
+							var rNo = $(this).parent().children().eq(0).text();
+							var userEmail = $(this).parent().children().eq(6).text();
+							
+							if ('<%= loginUser %>' == 'null') {
+								alert('작성자만 열람할 수 있습니다.');
+							} else {
+								location.href='<%= request.getContextPath() %>/detail.cs?rNo=' + rNo;
+							}
+						})
+						
+					</script>				
 		</div>
 		
 			<!-- FOOTER -->

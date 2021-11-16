@@ -80,14 +80,18 @@ public class CSBoardListServlet extends HttpServlet {
 		// 페이징 처리에 필요한 변수를 보관할 vo(클래스) 만들어 놓음 -> 여기서 객체 생성하여 필드에 저장
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, boardLimit, maxPage, startPage, endPage);		
 		
-		ArrayList<RequestBoard> list =  cService.selectList();
-		
-		
-		
-		
-		request.getRequestDispatcher("WEB-INF/views/csboard/csBoardList.jsp").forward(request, response);
-		
-		
+		ArrayList<RequestBoard> list =  cService.selectList(pi);
+	
+		String page = null;
+		if (list != null) {
+			page = "WEB-INF/views/csboard/csBoardList.jsp";
+			request.setAttribute("list", list);
+			request.setAttribute("pi", pi);
+		} else {
+			page = "WEB-INF/views/common/errorPage.jsp";
+			request.setAttribute("msg", "1:1문의 게시판 조회 실패");
+		}
+		request.getRequestDispatcher(page).forward(request, response);
 	}
 
 	/**

@@ -4,12 +4,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
+import static common.JDBCTemplate.close;
 
+import csboard.model.vo.PageInfo;
 import csboard.model.vo.RequestBoard;
 import member.model.dao.MemberDAO;
 
@@ -29,32 +32,128 @@ public class CSBoardDAO {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} 
 	}
 	
-	public ArrayList<RequestBoard> selectList(Connection conn) {
+	public int getListCount(Connection conn) {
 		Statement stmt = null;
 		ResultSet rset = null;
-		ArrayList<RequestBoard> list = null;
+		int listCount = 0;
 		
-		String query = prop.getProperty("selectList");
+		String query = prop.getProperty("getListCount");
+		
 		try {
 			stmt = conn.createStatement();
 			rset = stmt.executeQuery(query);
 			
-			while(rset.next()) {
-				
+			if (rset.next()) {
+				listCount = rset.getInt("COUNT(*)");
 			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return listCount;
+	}
+	
+	public ArrayList<RequestBoard> selectList(Connection conn, PageInfo pi) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<RequestBoard> list = null;
+		
+		String query = prop.getProperty("selectList");
+		
+		int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+		int endRow = startRow + pi.getBoardLimit() - 1;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<RequestBoard>();
+			while(rset.next()) {
+				RequestBoard rb = new RequestBoard(rset.getInt("REQ_NO"),
+												   rset.getString("REQ_CATEGORY"),
+												   rset.getString("REQ_TITLE"),
+												   rset.getString("REQ_CONTENT"),
+												   rset.getString("MEMBER_EMAIL"),
+												   rset.getString("MEMBER_NICKNAME"),
+												   rset.getDate("REQ_CREATE_DATE"),
+												   rset.getDate("REQ_MODIFY_DATE"),
+												   rset.getInt("REQ_STATUS"),
+												   rset.getString("REQ_REPLY_STATUS"));
+				list.add(rb);
+												   
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public RequestBoard selectBoard(Connection conn, int rNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		RequestBoard rb = null;
+		
+		String query = prop.getProperty("selectBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, rNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				rb = new RequestBoard(rset.getInt("REQ_NO"),
+									   rset.getString("REQ_CATEGORY"),
+									   rset.getString("REQ_TITLE"),
+									   rset.getString("REQ_CONTENT"),
+									   rset.getString("MEMBER_EMAIL"),
+									   rset.getString("MEMBER_NICKNAME"),
+									   rset.getDate("REQ_CREATE_DATE"),
+									   rset.getDate("REQ_MODIFY_DATE"),
+									   rset.getInt("REQ_STATUS"),
+									   rset.getString("REQ_REPLY_STATUS"));
+			}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return rb;
+	}
+
+	public int insertBoard(Connection conn, RequestBoard board) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return list;
+		
+		return result;
 	}
-	
-	
-
 	
 	// String query = "SELECT * FROM CS_REQ_BOARD JOIN FILES ON(BOARD_NO = REQ_NO) WHERE FILE_TABLE_NAME = 'CS_REQ_BOARD' AND STATUS = 1";
 	

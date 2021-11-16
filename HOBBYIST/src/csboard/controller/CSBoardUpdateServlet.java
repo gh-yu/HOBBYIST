@@ -1,4 +1,4 @@
-package classes.controller;
+package csboard.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,17 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import csboard.model.service.CSBoardService;
+import csboard.model.vo.RequestBoard;
+
 /**
- * Servlet implementation class ClassDetailServilet
+ * Servlet implementation class CSBoardUpdateServlet
  */
-@WebServlet("/classDetail.cl")
-public class ClassDetailServilet extends HttpServlet {
+@WebServlet("/update.cs")
+public class CSBoardUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ClassDetailServilet() {
+    public CSBoardUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,10 +29,22 @@ public class ClassDetailServilet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 파라미터(쿼리스트링)에 있는 정보 가져오기
-		// Service호출해서 정보 가져오기 클래스에 대한 정보
+		String title = request.getParameter("title");
+		String category = request.getParameter("category");
+		String nickName = request.getParameter("nickNmae");
+		String email = request.getParameter("email");
+		String content = request.getParameter("content");
 		
-		request.getRequestDispatcher("WEB-INF/views/classes/classDetail.jsp").forward(request, response);
+		RequestBoard board = new RequestBoard();
+		board.setReqTitle(title);
+		board.setReqCategory(category);
+		board.setNickName(nickName);
+		board.setReqWriter(email);
+		board.setReqContent(content);
+		
+		
+		
+		
 	}
 
 	/**

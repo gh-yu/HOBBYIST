@@ -11,7 +11,6 @@ import java.sql.Statement;
 import java.util.Properties;
 
 public class JDBCTemplate {
-	private static Connection conn = null;
 	
 	private JDBCTemplate() {} // 객체 생성하지 않기 위해 private
 

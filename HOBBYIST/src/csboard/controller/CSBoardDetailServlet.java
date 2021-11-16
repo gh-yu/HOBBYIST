@@ -2,12 +2,18 @@ package csboard.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import csboard.model.service.CSBoardService;
+import csboard.model.vo.Reply;
+import csboard.model.vo.RequestBoard;
+import member.model.vo.Member;
 
 /**
  * Servlet implementation class BoardDetailServlet
@@ -29,10 +35,35 @@ public class CSBoardDetailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		int rNo = Integer.parseInt(request.getParameter("rNo"));
 		
+		RequestBoard board = new CSBoardService().selectBoard(rNo);
 		
+		ArrayList<Reply> list = new CSBoardService().selectReplyList(rNo);
+			
+		String loginUserEmail = ((Member)request.getSession().getAttribute("loginUser")).getMemberEmail();
 		
+		response.setCharacterEncoding("UTF-8");
+		String page = null;
+
 		
+		if(board != null) {
+			if (!(board.getReqWriter().equals(loginUserEmail) || loginUserEmail.equals("admin@hobbyist.com"))) { // 작성자와 관리자만 열람할 수 있게
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('작성자만 열람할 수 있습니다.')");
+				script.println("history.back()");
+				script.println("</script>");
+			} else {
+				page = "WEB-INF/views/csboard/csBoardDetail.jsp";
+				request.setAttribute("board", board);
+			}
+		} else {
+			page = "WEB-INF/views/common/errorPage.jsp";
+			request.setAttribute("msg", "1:1문의글 조회 실패");
+		}
+		
+		request.getRequestDispatcher(page).forward(request, response);
 		
 		
 		// 게시판 비밀번호와 일치하지 않으면 알림창 띄우고, 뒤로가기 -> 리스트 조회 뷰에서 ajax로 해결
