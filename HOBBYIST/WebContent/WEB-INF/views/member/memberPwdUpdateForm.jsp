@@ -1,31 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="member.model.vo.Member" %>
+<%-- <%
+	// Member myInfo = (Member)request.getAttribute("myInfo"); 
+	// 내 정보 조회 페이지에서 가져온 정보 대신 세션 저장된 정보를 사용(어차피 로그인 상태이기 때문)
+	
+	String msg = (String)request.getAttribute("msg");
+%> --%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>내 정보 수정 - 비밀번호 변경</title>
 <script src="js/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/menubar.css">
 <link rel="stylesheet" type="text/css" href="css/myInfo.css">
 <script src="js/menubar.js"></script>
 <style>
-	#updatePwdBtn {
-		background: #778899;
-		font-weight: bold;
-		cursor: pointer;
-		color: white;
-		box-shadow: 2px 2px 2px lightgray;
-		font-size: large;
-	}
+#cancelBtn{
+	background: lightgray;
+	font-weight: bold;
+	cursor: pointer;
+	color: white;
+	box-shadow: 2px 2px 2px lightgray;
+	font-size: large;
+}
+
+#checkBtn{background: #9ED4C2; cursor: pointer; color: white; box-shadow: 1px 1px 2px lightgray; border: 1px solid lightgray; border-radius: 10px;}
 </style>
 </head>
 <body>
 	<div class="app-dashboard shrink-medium">
-		
+	
 		<!-- 상단바 -->
 		<%@ include file="../common/topbar.jsp" %>
-	
+		
 		<!-- 바디 영역(사이드바, 본문) -->
 		<div class="app-dashboard-body off-canvas-wrapper">
 		
@@ -59,19 +67,19 @@
 				<!-- 사이드바 -->
 				<div class="app-dashboard-sidebar-inner">
 					<ul class="menu vertical">
-						<li><a href="<%= request.getContextPath() %>/myClass.te">
+						<li><a href="#">
 							<span class="app-dashboard-sidebar-text"><h3>나의 클래스룸</h3></span>
 						</a></li>
-						<li><a href="#">
+						<li><a href="#content1">
 							<span class="app-dashboard-sidebar-text">수강중인 클래스</span>
 						</a></li>
-						<li><a href="#"> 
+						<li><a href="#content2"> 
 							<span class="app-dashboard-sidebar-text">수강완료 클래스</span>
 						</a></li>
-						<li><a href="#"> 
+						<li><a href="#content3"> 
 							<span class="app-dashboard-sidebar-text">찜한 클래스</span>
 						</a></li>
-						<li><a href="#"> 
+						<li><a href="#content4"> 
 							<span class="app-dashboard-sidebar-text">내가 쓴 후기</span>
 						</a></li>
 						<br>
@@ -84,7 +92,7 @@
 						<li><a href=""> 
 							<span class="app-dashboard-sidebar-text">결제정보</span>
 						</a></li>
-						<li><a href="<%= request.getContextPath() %>/delete.me"> 
+						<li><a href=""> 
 							<span class="app-dashboard-sidebar-text">튜티 탈퇴</span>
 						</a></li>
 						<br><br><br>
@@ -118,35 +126,37 @@
 
 			<!-- 본문 영역 -->
 			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
-			
-			<div class="modify-information">
-				<form action="<%= request.getContextPath() %>/updateForm.me" method="post">
-					<div class="image-upload info">					    
+				
+						
+				<div class="modify-information">
+				
+				<form action="<%= request.getContextPath() %>/pwdUpdate.me" method="post" id="updatePwdForm" name="updatePwdForm">
+					<div class="info">
+						
+						<h3>비밀번호 변경하기</h3>
 						<br><br>
-						<b>이메일</b><br>
-						<%= loginUser.getMemberEmail() %>
-						<input type="hidden" id="email" name="email" value="<%= loginUser.getMemberEmail() %>"><br><br>
-						
-						<b>이름</b><br>
-						<%= loginUser.getMemberName() %>
-						<input type="hidden" id="name" name="name" value="<%= loginUser.getMemberName() %>"><br><br>
+						<b>현재 비밀번호</b><br>
+						<input type="password" id="currPwd" name="memberPwd"><br>
+												
+						<b>변경할 비밀번호</b><span style="color: red;">*</span><br>
+						(8~12자로 영어와 숫자, !*$만 가능합니다.(영어로 시작))<br>
+						<input type="password" id="newPwd1" name="newPwd1">
+						<label id = "pwd1Result"></label> <br>
 					
-						<b>닉네임</b><br>
-						<%= loginUser.getMemberName() %>
-						<input type="hidden" id="nickName" name="nickName" value="<%= loginUser.getMemberName() %>"><br><br>
-						
-						<b>휴대폰 번호</b><br>
-						<%= loginUser.getMemberPhone() ==  null ? "-" : loginUser.getMemberPhone()  %>
-						<input type="hidden" id="phone" name="phone" value="<%= loginUser.getMemberPhone() %>"><br><br>
+						<b>변경할 비밀번호 확인</b><span style="color: red;">*</span><br>
+						(8~12자로 영어와 숫자, !*$만 가능합니다.(영어로 시작))<br>
+						<input type="password" id="newPwd2" name="newPwd2">
+						<label id = "pwd2Result"></label> <br>
 
-						<input type="submit" id="btnSub" value="수정하기"><br>
-						<input type="button" id="updatePwdBtn" value="비밀번호 변경하기" onclick="location.href='<%= request.getContextPath() %>/updatePwdForm.me'">
-						
+						<br>
+						<input type="submit" id="btnSub" value="변경하기"> <br>
+						<!-- <input type="button" id="cancelBtn" onclick="location.href='javascript:history.go(-1)'" value="취소하기"> -->
+						<input type="button" id="cancelBtn" onclick="location.href='<%= request.getContextPath() %>/myInfo.me'" value="취소하기">			
 					</div>
 				</form>
 			</div>
-		</div>	
-					
+		</div>
+			
 		</div>
 		
 			<!-- FOOTER -->
@@ -156,11 +166,44 @@
 					<a href="#">Back to top</a>
 				</p>
 				<p>
-					&copy; 2021 HOBBYIST, Inc. &middot; <a href="<%= request.getContextPath() %>/contact.co">Contact</a>
+					&copy; 2021 Company, Inc. &middot; <a href="#">Contact</a>
 					<!-- &middot; <a href="#">Terms</a> -->
 				</p>
 			</footer> 
 	</div>
+	<script> //비밀번호 체크
+	
+		var newPwd1 = $('#newPwd1');
+		var newPwd2 = $('#newPwd2');
+		var pwd1Result = $('#pwd1Result');
+		var pwd2Result = $('#pwd2Result');
+		var pwd1Val;
+		
+		$(newPwd1).keyup(function(e){
 
+			pwd1Val = $(this).val();
+			var newPwd1Reg = /^[a-zA-Z][a-zA-Z0-9!*$]{8,12}/gi;
+			if(newPwd1Reg.test(pwd1Val)===true){
+				if(pwd1Val.length < 8 || pwd1Val.length >12 || pwd1Val.length == '') {
+					pwd1Result.css('color', 'tomato').text('8~12자리까지 입력해주세요.')
+					check = false;
+				} else {
+					pwd1Result.css('color', 'green').text('사용할 수 있는 비밀번호 입니다')
+					check = true;
+				}
+			} else {
+				pwd1Result.css('color', 'tomato').text('형식에 맞지 않는 비밀번호 입니다.');
+					check = false;
+			}
+		})
+		// 비밀번호 확인
+		$(newPwd2).keyup(function(e){
+			var pwd2Val = $(this).val();
+			if(pwd2Val !== pwd1Val) {
+				pwd2Result.css('color', 'tomato').text('입력하신 비밀번호와 다릅니다.');
+			} else {
+				pwd2Result.css('color', 'green').text('입력하신 비밀번호와 일치합니다.')
+			}})
+		</script>
 </body>
 </html>

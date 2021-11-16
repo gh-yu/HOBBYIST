@@ -31,9 +31,9 @@ public class MemberUpdateServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String email = request.getParameter("memberEmail");
-		String name = request.getParameter("memberName");
-		String phone = request.getParameter("memberPhone");
+		String email = request.getParameter("email");
+		String name = request.getParameter("name");
+		String phone = request.getParameter("phone");
 		String profile = request.getParameter("profile"); // 출력해보면 파일명임
 		
 		HttpSession session = request.getSession();

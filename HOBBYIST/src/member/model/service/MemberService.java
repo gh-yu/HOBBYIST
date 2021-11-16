@@ -9,6 +9,7 @@ import static common.JDBCTemplate.commit;
 import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.HashMap;
 
 
 
@@ -48,6 +49,7 @@ public class MemberService{
 
 	public int updateMember(Member newInfo) {
 		Connection conn = getConnection();
+		System.out.println(conn);
 		
 		int result = mDAO.updateMember(conn, newInfo);
 		
@@ -81,6 +83,35 @@ public class MemberService{
 		close(conn);
 		
 		return m;
+	}
+
+	public int deleteMember(String memberEmail) {
+		Connection conn = getConnection();
+		
+		int result = mDAO.deleteMember(conn, memberEmail);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
+
+	public int updatePwd(HashMap<String, String> map) {
+		Connection conn = getConnection();
+		
+		int result = mDAO.updatePwd(conn, map);
+		if(result > 0){
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return result;
 	}
 
 }
