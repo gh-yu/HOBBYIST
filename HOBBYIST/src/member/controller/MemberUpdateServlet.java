@@ -33,12 +33,6 @@ public class MemberUpdateServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String email = request.getParameter("email");
 		String name = request.getParameter("name");
-		String phone = request.getParameter("phone");
-		String profile = request.getParameter("profile"); // 출력해보면 파일명임
-		
-		request.setCharacterEncoding("UTF-8");
-		String email = request.getParameter("email");
-		String name = request.getParameter("name");
 		String phone = request.getParameter("phone").trim(); // 새로 입력 받는 값이기 때문에 trim()으로 공백 삭제
 		String nickName = request.getParameter("nickName").trim();
 		

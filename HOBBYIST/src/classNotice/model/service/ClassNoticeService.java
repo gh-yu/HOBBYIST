@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import classNotice.model.DAO.ClassNoticeDAO;
+import classNotice.model.dao.ClassNoticeDAO;
 import classNotice.model.vo.ClassNotice;
 
 import static common.JDBCTemplate.getConnection;

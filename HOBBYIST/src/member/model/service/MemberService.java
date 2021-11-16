@@ -91,22 +91,6 @@ public class MemberService{
 	}
 	
 	public int deleteMember(String memberEmail) {
-        Connection conn = getConnection();
-
-        int result = mDAO.deleteMember(conn, memberEmail);
-
-        if(result > 0) {
-            commit(conn);
-        } else {
-            rollback(conn);
-        }
-
-        close(conn);
-
-        return result;
-    }
-
-	public int deleteMember(String memberEmail) {
 		Connection conn = getConnection();
 		
 		int result = mDAO.deleteMember(conn, memberEmail);

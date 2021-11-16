@@ -1,4 +1,4 @@
-package faq.model.DAO;
+package faq.model.dao;
 
 import java.io.FileReader;
 import java.io.IOException;

@@ -79,9 +79,7 @@ public class JoinServlet extends HttpServlet {
 //	            }
 //	        }
 	        
-	    }
-
-		
+	    
 		request.setCharacterEncoding("UTF-8");
 		
 		String memberEmail = request.getParameter("memberEmail");

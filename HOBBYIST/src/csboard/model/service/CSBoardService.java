@@ -1,4 +1,4 @@
-package csboard.model.service;
+package csBoard.model.service;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -7,10 +7,10 @@ import static common.JDBCTemplate.close;
 import static common.JDBCTemplate.commit;
 import static common.JDBCTemplate.rollback;
 
-import csboard.model.dao.CSBoardDAO;
-import csboard.model.vo.PageInfo;
-import csboard.model.vo.Reply;
-import csboard.model.vo.RequestBoard;
+import csBoard.model.dao.CSBoardDAO;
+import csBoard.model.vo.PageInfo;
+import csBoard.model.vo.Reply;
+import csBoard.model.vo.RequestBoard;
 
 public class CSBoardService {
 

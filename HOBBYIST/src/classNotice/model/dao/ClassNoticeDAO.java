@@ -1,4 +1,4 @@
-package classNotice.model.DAO;
+package classNotice.model.dao;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

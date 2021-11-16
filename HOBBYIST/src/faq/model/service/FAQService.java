@@ -6,7 +6,7 @@ import static common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import faq.model.DAO.FAQDAO;
+import faq.model.dao.FAQDAO;
 import faq.model.vo.FAQ;
 
 public class FAQService {
