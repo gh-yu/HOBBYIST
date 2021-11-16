@@ -29,11 +29,13 @@ public class ClassNoticeDeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int no = Integer.parseInt(request.getParameter("classBoardNo"));
+		int no = Integer.parseInt(request.getParameter("no"));
 		
 		int result = new ClassNoticeService().deleteClassNotice(no);
 		
 		if(result > 0) {
 			response.sendRedirect("classNoticeInsert.no");
+			response.sendRedirect("classNoticeList.no");
 		} else {
 			request.setAttribute("msg", "공지사항 삭제 실패");
 			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
@@ -48,4 +50,5 @@ public class ClassNoticeDeleteServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
+}
 }

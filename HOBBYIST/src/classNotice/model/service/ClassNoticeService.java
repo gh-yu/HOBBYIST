@@ -17,8 +17,8 @@ public class ClassNoticeService {
 	
 	private ClassNoticeDAO nDAO = new ClassNoticeDAO();
 
-	public ArrayList<ClassNotice> selectList() {
-		Connection conn = getConnection();
+	public ArrayList<ClassNotice> selectClassList() {
+		Connection conn = getConnection();	
 		
 		ArrayList<ClassNotice> list = nDAO.selecClasstList(conn);
 		
@@ -27,30 +27,31 @@ public class ClassNoticeService {
 		return list;
 	}
 
-	public int insertNotice(ClassNotice n) {
+	public int insertClassNotice(ClassNotice n) {
 		Connection conn = getConnection();
 		
 		int result = nDAO.insertClassNotice(conn, n);
 		if (result > 0) {
+			System.out.println("result : "+result);
 			commit(conn);
 		} else {
 			rollback(conn);
 		}
 		
 		close(conn);
-		
+		System.out.println("result : "+result);
 		return result;
 	}
 
-	public ClassNotice selectClassNotice(int noticeNo) {
+	public ClassNotice selectClassNotice(int classBoardNo) {
 		Connection conn = getConnection();
 		
-		int result = nDAO.updateClassNoticeCount(conn, noticeNo); // 조회수 먼저 올려주기
+		int result = nDAO.updateClassNoticeCount(conn, classBoardNo); // 조회수 먼저 올려주기
 		
-		ClassNotice notice = null;
+		ClassNotice classBoard = null;
 		if (result > 0) {
-			notice = nDAO.selectClassNotice(conn, noticeNo);
-			if (notice != null) {
+			classBoard = nDAO.selectClassNotice(conn, classBoardNo);
+			if (classBoard != null) {
 				commit(conn);
 			} else {
 				rollback(conn);
@@ -60,13 +61,13 @@ public class ClassNoticeService {
 		
 		close(conn);
 		
-		return notice;
+		return classBoard;
 	}
 
-	public int updateClassNotice(ClassNotice notice) {
+	public int updateClassNotice(ClassNotice classBoard) {
 		Connection conn = getConnection();
 		
-		int result = nDAO.updateClassNotice(conn, notice);
+		int result = nDAO.updateClassNotice(conn, classBoard);
 		if (result > 0) {
 			commit(conn);
 		} else {

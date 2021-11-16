@@ -9,12 +9,13 @@ import static common.JDBCTemplate.commit;
 import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.HashMap;
 
 
 
 public class MemberService{
 
-	MemberDAO mDAO = new MemberDAO();
+	private MemberDAO mDAO = new MemberDAO();
 	
 	public int login(String userEmail, String userPwd) {
 		Connection conn = getConnection();
@@ -53,6 +54,7 @@ public class MemberService{
 
 	public int updateMember(Member newInfo) {
 		Connection conn = getConnection();
+		System.out.println(conn);
 		
 		int result = mDAO.updateMember(conn, newInfo);
 		
@@ -88,31 +90,33 @@ public class MemberService{
 		return m;
 	}
 	
-	public int checkId(String inputId) {
+	public int deleteMember(String memberEmail) {
 		Connection conn = getConnection();
-
-		int result = mDAO.checkId(conn, inputId);
-
+		
+		int result = mDAO.deleteMember(conn, memberEmail);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
 		close(conn);
+		
 		return result;
 	}
-	
-	
-	// 추가
-	public int deleteMember(String memberEmail) {
-        Connection conn = getConnection();
 
-        int result = mDAO.deleteMember(conn, memberEmail);
-
-        if(result > 0) {
-            commit(conn);
-        } else {
-            rollback(conn);
-        }
-
-        close(conn);
-
-        return result;
-    }
+	public int updatePwd(HashMap<String, String> map) {
+		Connection conn = getConnection();
+		
+		int result = mDAO.updatePwd(conn, map);
+		if(result > 0){
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return result;
+	}
 
 }

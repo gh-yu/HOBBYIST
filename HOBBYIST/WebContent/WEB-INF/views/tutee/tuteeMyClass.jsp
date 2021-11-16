@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="member.model.vo.Member"%>
 <%
-	Member loginUser = (Member)session.getAttribute("loginUser");
+	/* Member loginUser = (Member)session.getAttribute("loginUser"); */
 	/* Tutor tutor = (Tutor)session.getAttribute("tutor"); */
 %>
 <!DOCTYPE html>
@@ -24,31 +24,12 @@
 	<div class="app-dashboard shrink-medium">
 	
 		<!-- 상단바 -->
-		<div class="row expanded app-dashboard-top-nav-bar">
-			<div class="columns medium-2">
-				<a class="app-dashboard-logo" href="<%= request.getContextPath() %>"><img
-					src="images/logo.png" width="70px" height="55px"></a>
-			</div>
-			<div class="columns shrink app-dashboard-top-bar-actions">
-							<div class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/myInfo.me"><img src="images/myPage.png"></a></div> <!-- 마이페이지아이콘 -->
-							<div class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/contact.co"><img src="images/contact.png"></a></div> <!-- 콘택트아이콘 -->
-							<div class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/myClass.me"><img src="images/like.png"></a></div> <!-- 찜아이콘  -->
-							
-							<% if(loginUser == null) { %>
-								<div class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/loginForm.me"><button id="logBtn">Login</button></a></div> <!-- 로그인 -->
-							<% } else { %>
-								<div class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/logout.me"><button id="logBtn">LogOut</button></a></div> <!-- 로그아웃 -->
-							<% } %>
-			
-			
-			
-				<!-- <button href="#" class="button hollow">Logout</button> 로그아웃 버튼 -->
-				<!-- <a href="#" height="30" width="30" alt=""><i class="fa fa-info-circle"></i></a> -->
-			</div>
-		</div>
+		<%@ include file="../common/topbar.jsp" %>
 
-
+		<!-- 바디 영역(사이드바, 본문) -->
 		<div class="app-dashboard-body off-canvas-wrapper">
+		
+			<!-- 사이드바 영역 -->
 			<div id="app-dashboard-sidebar"
 				class="app-dashboard-sidebar position-left off-canvas off-canvas-absolute reveal-for-medium"
 				data-off-canvas>
@@ -58,9 +39,7 @@
 						<button id="close-sidebar" data-app-dashboard-toggle-shrink
 							class="app-dashboard-sidebar-close-button show-for-medium"
 							aria-label="Close menu" type="button">
-							<span aria-hidden="true"><a href="#"><i
-									class="large fa fa-angle-double-left"><img
-								src="images/three-dots-vertical.svg"></i></a></span> 
+							<span aria-hidden="true"><a href="#"><i class="large fa fa-angle-double-left"><img src="images/three-dots-vertical.svg"></i></a></span> 
 						</button>
 					</div>
 					<!-- open button -->
@@ -68,16 +47,15 @@
 						<button id="open-sidebar" data-app-dashboard-toggle-shrink
 							class="app-dashboard-open-sidebar-button show-for-medium"
 							aria-label="open menu" type="button">
-							<span aria-hidden="true"><a href="#"><i
-									class="large fa fa-angle-double-right"><img
-								src="images/three-dots-vertical.svg"></i></a></span> 
+							<span aria-hidden="true"><a href="#">
+							<i class="large fa fa-angle-double-right"><img src="images/three-dots-vertical.svg"></i></a></span> 
 						</button>
 					</div>
 				</div>
 				<!-- 사이드바 -->
 				<div class="app-dashboard-sidebar-inner">
 					<ul class="menu vertical">
-						<li><a href="#">
+						<li><a href="<%= request.getContextPath() %>/myClass.te">
 							<span class="app-dashboard-sidebar-text"><h3>나의 클래스룸</h3></span> <!-- 누르면 나의 클래스룸 -> 수강중/수강완료/찜한클래스/후기 전체 볼 수 있는 페이지 -->
 						</a></li>
 						<li><a href="#">

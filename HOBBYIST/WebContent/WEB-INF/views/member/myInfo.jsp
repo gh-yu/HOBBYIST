@@ -84,8 +84,8 @@
 						<li><a href=""> 
 							<span class="app-dashboard-sidebar-text">결제정보</span>
 						</a></li>
-						<li><a href=""> 
-							<span class="app-dashboard-sidebar-text" onclick="deleteMember()">튜티 탈퇴</span>
+						<li><a href="<%= request.getContextPath() %>/delete.me"> 
+							<span class="app-dashboard-sidebar-text">튜티 탈퇴</span>
 						</a></li>
 						<br><br><br>
 						
@@ -93,10 +93,10 @@
 						<li>
 							<span class="app-dashboard-sidebar-text"><h3>튜터</h3></span> 
 						</li>
-						<li ><a href="<%= request.getContextPath() %>/tutorClass.me"> 
+						<li ><a href=""> 
 							<span class="app-dashboard-sidebar-text">내 클래스</span>  <%-- 누르고 서블릿 이동하면 tutor정보도 세션에 저장하기? --%>
 						</a></li>
-						<li style="color: #9ED4C2"><a href="<%= request.getContextPath() %>/tutorInform.me"> 
+						<li style="color: #9ED4C2"><a href=""> 
 							<span class="app-dashboard-sidebar-text">튜터 정보</span>
 						</a></li>
 						<li style="color: #9ED4C2"><a href=""> 
@@ -111,6 +111,8 @@
 						<% }  %>
 						<br><br><br>
 					</ul>
+					
+					
 				</div>
 			</div>
 
@@ -130,21 +132,21 @@
 						<input type="hidden" id="name" name="name" value="<%= loginUser.getMemberName() %>"><br><br>
 					
 						<b>닉네임</b><br>
-						<%= loginUser.getMemberNickName() %>
-						<input type="hidden" id="nickName" name="nickName" value="<%= loginUser.getMemberNickName() %>"><br><br>
+						<%= loginUser.getMemberName() %>
+						<input type="hidden" id="nickName" name="nickName" value="<%= loginUser.getMemberName() %>"><br><br>
 						
 						<b>휴대폰 번호</b><br>
 						<%= loginUser.getMemberPhone() ==  null ? "-" : loginUser.getMemberPhone()  %>
 						<input type="hidden" id="phone" name="phone" value="<%= loginUser.getMemberPhone() %>"><br><br>
 
 						<input type="submit" id="btnSub" value="수정하기"><br>
-						<input type="button" id="updatePwdBtn" value="비밀번호 변경하기" onclick="location.href='updatePwdForm.me'">
+						<input type="button" id="updatePwdBtn" value="비밀번호 변경하기" onclick="location.href='<%= request.getContextPath() %>/updatePwdForm.me'">
 						
 					</div>
 				</form>
 			</div>
 		</div>	
-			
+					
 		</div>
 		
 			<!-- FOOTER -->
@@ -159,16 +161,6 @@
 				</p>
 			</footer> 
 	</div>
-
-	<!-- 탈퇴 알림창 -->
-	<script>
-            function deleteMember(){
-                var bool = confirm("정말 탈퇴하시겠습니까?");
-                if(bool){
-                    location.href= '<%= request.getContextPath() %>/delete.me';
-                }
-            }
-        </script>
 
 </body>
 </html>

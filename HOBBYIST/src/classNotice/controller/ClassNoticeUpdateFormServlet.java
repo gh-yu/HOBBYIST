@@ -36,6 +36,10 @@ public class ClassNoticeUpdateFormServlet extends HttpServlet {
 		String title = request.getParameter("classBoardName");
 		String nickName = request.getParameter("memberNickName");
 		String content = request.getParameter("classBoardContent");
+		int no = Integer.parseInt(request.getParameter("no"));
+		String title = request.getParameter("title");
+		String nickName = request.getParameter("nickName");
+		String content = request.getParameter("content");
 		String userEmail = ((Member)request.getSession().getAttribute("loginUser")).getMemberEmail();
 		
 		String date = request.getParameter("date");
@@ -53,6 +57,7 @@ public class ClassNoticeUpdateFormServlet extends HttpServlet {
 		
 		ClassNotice notice = new ClassNotice(no, title, content, 0, noticeDate, 0, 0);
 		
+		ClassNotice notice = new ClassNotice(no, title, content, 0, noticeDate, 1, 0, userEmail);
 		request.setAttribute("notice", notice);
 		request.getRequestDispatcher("WEB-INF/views/notice/noticeUpdateForm.jsp").forward(request, response);
 
@@ -66,4 +71,5 @@ public class ClassNoticeUpdateFormServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
+}
 }

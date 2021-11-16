@@ -33,9 +33,10 @@ public class ClassNoticeUpdateServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		int no = Integer.parseInt(request.getParameter("classBoardNo"));
-		String title = request.getParameter("classBoardName");
-		String content = request.getParameter("classBoardContent");
+		int classBoardNo = Integer.parseInt(request.getParameter("no"));
+		String classBoardName = request.getParameter("title");
+		String nickname = request.getParameter("nickname");
+		String classBoardContent = request.getParameter("content");
 		// String userId = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
 		
 		String date = request.getParameter("date");
@@ -52,7 +53,7 @@ public class ClassNoticeUpdateServlet extends HttpServlet {
 			noticeDate = new Date(new GregorianCalendar(year, month, day).getTimeInMillis());
 		}
 		
-		ClassNotice notice = new ClassNotice(no, title, content, 0, noticeDate, 0, 0);
+		ClassNotice notice = new ClassNotice(classBoardNo, classBoardName, classBoardContent, 0, noticeDate, 1, 1, null);
 		
 		int result = new ClassNoticeService().updateClassNotice(notice);
 		

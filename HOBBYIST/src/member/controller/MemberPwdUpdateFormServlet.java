@@ -1,4 +1,4 @@
-package classes.controller;
+package member.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,17 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import member.model.service.MemberService;
+import member.model.vo.Member;
+
 /**
- * Servlet implementation class ClassDetailServilet
+ * Servlet implementation class MemberUpdateFormServlet
  */
-@WebServlet("/classDetail.cl")
-public class ClassDetailServilet extends HttpServlet {
+@WebServlet("/updatePwdForm.me")
+public class MemberPwdUpdateFormServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ClassDetailServilet() {
+    public MemberPwdUpdateFormServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,10 +29,8 @@ public class ClassDetailServilet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 파라미터(쿼리스트링)에 있는 정보 가져오기
-		// Service호출해서 정보 가져오기 클래스에 대한 정보
+		request.getRequestDispatcher("WEB-INF/views/member/memberPwdUpdateForm.jsp").forward(request, response); //페이지 이동
 		
-		request.getRequestDispatcher("WEB-INF/views/classes/classDetail.jsp").forward(request, response);
 	}
 
 	/**

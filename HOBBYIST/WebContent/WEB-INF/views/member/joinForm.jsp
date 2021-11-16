@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <!-- 마이페이지 - 회원가입 -->
 
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -139,8 +139,7 @@
                 <div class="col-md-5 col-md-offset-1">
                     <form class="signup-form" action="<%=request.getContextPath() %>/join.me" method="post" id="joinForm" name="joinForm">
                     <div class="form-group">
-                        	<input type="text" id="joinEmail" class="form-control" placeholder="이메일을 입력하세요" name="memberEmail" required="required">
-                        	<label id="idResult"></label>
+                            <input type="text" class="form-control" placeholder="이메일을 입력하세요" name="memberEmail" required="required">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="이름을 입력하세요" name="memberName" required="required">
@@ -175,61 +174,6 @@
             </div>
         </div>
     </section>
-    
-      <!-- 이메일 중복 확인 -->
-    <script>
-//     	document.getElementById('idCheck').onclick = function(){
-//     		window.open('checkIdForm.me', 'idCheckForm', 'width=300, height=200');
-//     	}
-		var isUsable = false;
-     	var isIdChecked = false;
-		
-     	$('#joinEmail').on('change paste keyup', function(){
-     		isIdChecked = false;
-     	});
-     	
-     	$('#joinEmail').change(function(){
-     		var userEmail = $('#joinEmail');
-     		
-     	if(!userEmail || userEmail.val().length < 4){
-     		alert('이메일은 최소 4자리 이상이어야합니다');
-     		userEmail.focus();
-     	} else{
-     		$.ajax({
-     			url: 'checkId.me',
-     			data: {inputId:userEmail.val()},
-     			success: function(data){
-     				console.log(data);
-     				if(data.trim() == '0'){
-     					$('#idResult').text("사용 가능합니다.");
-     					$('#idResult').css({'color':'green', 'float':'left', 'display':'inline-block'});
-     					isUsable = true;
-     					isIdChecked = true;
-     				} else{
-     					$('#idResult').text("사용 불가능합니다.");
-     					$('#idResult').css({'color':'red', 'float':'left', 'display':'inline-block'});
-     					isUsable = false;
-     					isIdChecked = false;
-     				}
-     			},
-     			error: function(data){
-     				console.log(data);
-     			}
-     		});
-     	}
-     		
-     	});
-     	
-     	function insertValidate(){
-     		if(isUsable && isIdChecked){
-     			return true;
-     		} else {
-     			alert('중복 확인해주세요');
-     			return false;
-     		}
-     	}
-     
-    </script>
   
   
 
@@ -249,7 +193,7 @@
                 <div class="footer-caption">
                     <img src="./image/img/logo.png" class="img-responsive center-block" alt="logo">
                     <hr>
-                     <h5 class="pull-left">HOBBYIST, &copy;2021 All rights reserved</h5>
+                    <h5 class="pull-left">Vortex, &copy;2016 All rights reserved</h5>
                     <ul class="liste-unstyled pull-right">
                         <li><a href="#twitter"><i class="fa fa-twitter"></i></a></li>
                         <li><a href="#instagram"><i class="fa fa-instagram"></i></a></li>

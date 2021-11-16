@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Properties;
 import static common.JDBCTemplate.getConnection;
 import static common.JDBCTemplate.close;
@@ -100,7 +101,7 @@ public class MemberDAO {
 			PreparedStatement pstmt = null;
 			
 			int result = 0;
-			String query = "INSERT INTO MEMBER VALUES(?, ?, ?, ?, ?, 0, DEFAULT, SYSDATE, DEFAULT, DEFAULT)";
+			String query = "INSERT INTO MEMBER VALUES (?, ?, ?, ?, ?, 0, DEFAULT, SYSDATE, DEFAULT, DEFAULT)";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
@@ -216,53 +217,46 @@ public class MemberDAO {
 		return m;
 	}
 	
-	public int checkId(Connection conn, String inputId) {
-		PreparedStatement pstmt= null;
-		ResultSet rset = null;
+	public int deleteMember(Connection conn, String memberEmail) {
+		PreparedStatement pstmt = null;
 		int result = 0;
-
-		String query = "SELECT COUNT(*) FROM MEMBER WHERE MEMBER_EMAIL = ?";
-
+		
+		String query = prop.getProperty("deleteMember");
+		
 		try {
-			pstmt= conn.prepareStatement(query);
-			pstmt.setString(1, inputId);
-
-			rset = pstmt.executeQuery();
-
-			if(rset.next()) {
-				result = rset.getInt(1);
-			}
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberEmail);
+			
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(rset);
 			close(pstmt);
 		}
-
-
+		
 		return result;
 	}
-	
-	// 추가
-	public int deleteMember(Connection conn, String memberEmail) {
-        PreparedStatement pstmt = null;
-        int result = 0;
 
-        String query = "UPDATE MEMBER SET MEMBER_STATUS = 0 WHERE MEMBER_EMAIL = ?";
-
-        try {
-            pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, memberEmail);
-
-            result = pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            close(pstmt);
-        }
-
-        return result;
-    }
+	public int updatePwd(Connection conn, HashMap<String, String> map) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updatePwd");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, map.get("newPwd1"));
+			pstmt.setString(2, map.get("memberEmail"));
+			pstmt.setString(3, map.get("memberPwd"));
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
 
 }

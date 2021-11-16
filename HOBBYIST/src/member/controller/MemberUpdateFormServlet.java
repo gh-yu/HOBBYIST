@@ -47,7 +47,6 @@ public class MemberUpdateFormServlet extends HttpServlet {
 		// 내 정보 조회에 있던 member정보 가져오기, 위처럼 가져오지 않아도 session에 저장되어 있는 것을 활용해도 됨
 		
 		request.getRequestDispatcher("WEB-INF/views/member/memberUpdateForm.jsp").forward(request, response);
-		
 	}
 
 	/**

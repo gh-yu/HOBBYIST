@@ -6,17 +6,15 @@ public class ClassNotice {
 
 	private int classBoardNo;
 	private String classBoardName;
-	private String classBoardContent;
+	private String classBoardContent;		// join으로 담을것
 	private int classBoardViews;
 	private Date classBoardDate;
 	private int classBoardStatus;
 	private int classNo;
-
-	public ClassNotice() {
-	}
-
-	public ClassNotice(int classBoardNo, String classBoardName, String classBoardContent, int classBoardViews,
-			Date classBoardDate, int classBoardStatus, int classNo) {
+	private String classBoardWriter;	
+	
+	public ClassNotice(int classBoardNo, String classBoardName, String classBoardContent, int classBoardViews, Date classBoardDate, 
+			int classBoardStatus, int classNo, String classBoardWriter) {
 		super();
 		this.classBoardNo = classBoardNo;
 		this.classBoardName = classBoardName;
@@ -25,9 +23,8 @@ public class ClassNotice {
 		this.classBoardDate = classBoardDate;
 		this.classBoardStatus = classBoardStatus;
 		this.classNo = classNo;
+		this.classBoardWriter = classBoardWriter;
 	}
-	
-	
 
 	public int getClassBoardNo() {
 		return classBoardNo;
@@ -51,6 +48,14 @@ public class ClassNotice {
 
 	public void setClassBoardContent(String classBoardContent) {
 		this.classBoardContent = classBoardContent;
+	}
+
+	public String getClassBoardWriter() {
+		return classBoardWriter;
+	}
+
+	public void setClassBoardWriter(String classBoardWriter) {
+		this.classBoardWriter = classBoardWriter;
 	}
 
 	public int getClassBoardViews() {
@@ -77,13 +82,22 @@ public class ClassNotice {
 		this.classBoardStatus = classBoardStatus;
 	}
 
-	public int getclassNo() {
+	public int getClassNo() {
 		return classNo;
 	}
 
 	public void setClassNo(int classNo) {
 		this.classNo = classNo;
 	}
+	
 
+	@Override
+	public String toString() {
+		return "ClassNotice [classBoardNo=" + classBoardNo + ", classBoardName=" + classBoardName
+				+ ", classBoardContent=" + classBoardContent   + ", classBoardViews="
+				+ classBoardViews + ", classBoardDate=" + classBoardDate + ", classBoardStatus=" + classBoardStatus
+				+ ", classNo=" + classNo + ", classBoardWriter=" + classBoardWriter + "]";
+	}
+	
 
 }

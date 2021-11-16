@@ -1,10 +1,50 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="member.model.vo.Member" %>
+    pageEncoding="UTF-8" import="java.util.ArrayList, faq.model.vo.FAQ" %>
+<% 
+	ArrayList<FAQ> list = (ArrayList<FAQ>)request.getAttribute("list");
+
+//	if(list == null){
+//	    list = new ArrayList<FAQ>();
+// 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>자주 묻는 질문(FAQ)</title>
+<style>
+	#outer {
+		width: 1000px;
+		height : 400px;
+		margin-left: 10px;
+	}
+	.tableArea {
+		width: 900px;
+		height : 300px;
+		margin-left: 0;
+ 	}
+	#listArea {
+		text-align: center;
+	}
+	
+	#writeFaqBtn {
+		background: #9ED4C2;
+		border: 1px solid white;
+		width : 100px;
+		height : 35px;
+		font-weight: bold;
+		color : white;
+	}
+	
+	th {
+		border-bottom: 1px solid lightgrey;
+		height : 35px;
+	}
+	
+	td {
+		height : 25px;
+	}
+</style>
 <script src="js/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/menubar.css">
 <script src="js/menubar.js"></script>
@@ -48,10 +88,10 @@
 				<!-- 사이드바 -->
 				<div class="app-dashboard-sidebar-inner">
 					<ul class="menu vertical">
-						<li><a href="<%= request.getContextPath() %>/contact.co">
+						<li><a href="<%= request.getContextPath() %>/FAQ.bo">
 							<span class="app-dashboard-sidebar-text"><h3>FAQ</h3></span>
 						</a></li>
-						<li><a href="">
+						<li><a href="<%= request.getContextPath() %>/list.cs">
 							<span class="app-dashboard-sidebar-text"><h3>1:1문의</h3></span>
 						</a></li>
 						<br><br><br>
@@ -63,15 +103,49 @@
 
 			<!-- 본문 영역 -->
 			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
-				
-						faqlist
-						여기다 본문 내용 적기
-						adsfadsfasdf
-						<p>adsfadsf</p>
+				<div id="outer">
+					<h1> 자주 묻는 질문(FAQ) </h1>
+						<div class="tableArea">
+							<table id="listArea">
+								<tr>
+									<th width = 100px> No.</th>
+									<th width = 200px> 카테고리 </th>
+									<th width = 900px> 제목 </th>
+								</tr>
+		 						<% if(list.isEmpty()) { %>
+									<tr>
+										<td colspan = "3"> 조회된 리스트가 없습니다. </td>
+									</tr>
+								<% } else { %>
+									<%	for(int i = 0; i < list.size(); i++){ %>
+										<tr>
+											<td><%= list.get(i).getFaqNo() %></td>
+											<td><%= list.get(i).getFaqCategory() %></td>
+											<td><%= list.get(i).getFaqTitle() %></td>
+										</tr>
+									<%  } %>
+								<% } %>
+							</table>
+						</div>
+						<br>
+					<div align="right">
+						<% if (loginUser != null && loginUser.getMemberEmail().equals("admin@hobbyist.com")) { %> <%-- 로그인을 했으면서, admin인  경우--%>
+						<input type="button" id="writeFaqBtn" value="FAQ등록" onclick="location.href='FAQWriteForm.bo'" >
+						<% } %>
+					</div>
+				</div>
 			</div>
-			
-			
 		</div>
+		<script>
+			$('#listArea td').mouseenter(function(){
+				$(this).parent().css({'background':'#9ED4C2', 'cursor':'pointer'});
+			}).mouseout(function(){
+				$(this).parent().css({'background':'none'});
+			}).click(function(){
+				var num = $(this).parent().children().eq(0).text(); // 글번호 가져오기
+				location.href = '<%= request.getContextPath() %>/datail.no?no=' + num; 
+			});
+		</script>
 		
 			<!-- FOOTER -->
 			<footer class="container" style="text-align: center; background: #F5F5F5;">
@@ -80,7 +154,7 @@
 					<a href="#">Back to top</a>
 				</p>
 				<p>
-					&copy; 2021 HOBBYIST, Inc. &middot; <a href="<%= request.getContextPath() %>/contact.co">Contact</a>
+					&copy; 2021 HOBBYIST, Inc. &middot; <a href="<%= request.getContextPath() %>/faq.bo">Contact</a>
 					<!-- &middot; <a href="#">Terms</a> -->
 				</p>
 			</footer> 
