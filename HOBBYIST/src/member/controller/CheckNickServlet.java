@@ -1,6 +1,8 @@
 package member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,24 +31,34 @@ public class CheckNickServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String inputNickName = request.getParameter("nickName").trim();
-		String originNickName =((Member)request.getSession().getAttribute("loginUser")).getMemberNickName().trim();
 	
-		int result = 0;
-		if (inputNickName.equals("")) {
-			request.setAttribute("msg", "닉네임이 빈 칸입니다.");
-		} else if (originNickName.equals(inputNickName)) {
-			request.setAttribute("msg", "닉네임 변경 후 중복확인 버튼을 눌러주세요.");
-		} else {
-			result = new MemberService().checkNick(inputNickName);
-			if (result > 0) {
-				request.setAttribute("msg", "이미 사용 중인 닉네임입니다.");
-			} else {
-				request.setAttribute("msg", "사용 가능한 닉네임입니다.");
-			}
-		} 
-		request.getSession().setAttribute("nickCheckResult", result);
-		request.getRequestDispatcher("WEB-INF/views/member/checkNick.jsp").forward(request, response);
+		String inputNickName = request.getParameter("inputNickName").trim();
+		int result = new MemberService().checkNick(inputNickName); // 회원가입시 저장될 때도 trim() 처리 필요(아니면 공백 여부에 따라 중복여부 달라짐)
+		
+		// ajax방식
+		PrintWriter out = response.getWriter(); 
+		out.println(result);
+		out.flush();
+		out.close();
+		
+//		 --> ajax방식 쓰기 전 중복확인 체크시 새 창에서 msg출력하는 방식
+//		String inputNickName = request.getParameter("nickName").trim();
+//		String originNickName =((Member)request.getSession().getAttribute("loginUser")).getNickName().trim();		
+//		int result = 0;
+//		if (inputNickName.equals("")) {
+//			request.setAttribute("msg", "닉네임이 빈 칸입니다.");
+//		} else if (originNickName.equals(inputNickName)) {
+//			request.setAttribute("msg", "닉네임 변경 후 중복확인 버튼을 눌러주세요.");
+//		} else {
+//			result = new MemberService().checkNick(inputNickName);
+//			if (result > 0) {
+//				request.setAttribute("msg", "이미 사용 중인 닉네임입니다.");
+//			} else {
+//				request.setAttribute("msg", "사용 가능한 닉네임입니다.");
+//			}
+//		} 
+//		request.getSession().setAttribute("nickCheckResult", result);
+//		request.getRequestDispatcher("WEB-INF/views/member/checkNick.jsp").forward(request, response);
 	}
 
 	/**

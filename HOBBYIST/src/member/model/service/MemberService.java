@@ -14,7 +14,7 @@ import java.sql.Connection;
 
 public class MemberService{
 
-	MemberDAO mDAO = new MemberDAO();
+	private MemberDAO mDAO = new MemberDAO();
 	
 	public int login(String userEmail, String userPwd) {
 		Connection conn = getConnection();
@@ -41,6 +41,11 @@ public class MemberService{
 		
 		int result = mDAO.join(conn, member);
 		
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
 		close(conn);
 		
 		return result;
@@ -82,5 +87,21 @@ public class MemberService{
 		
 		return m;
 	}
+	
+	public int deleteMember(String memberEmail) {
+        Connection conn = getConnection();
+
+        int result = mDAO.deleteMember(conn, memberEmail);
+
+        if(result > 0) {
+            commit(conn);
+        } else {
+            rollback(conn);
+        }
+
+        close(conn);
+
+        return result;
+    }
 
 }
