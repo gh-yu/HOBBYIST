@@ -215,6 +215,54 @@ public class MemberDAO {
 		
 		return m;
 	}
+	
+	public int checkId(Connection conn, String inputId) {
+		PreparedStatement pstmt= null;
+		ResultSet rset = null;
+		int result = 0;
+
+		String query = "SELECT COUNT(*) FROM MEMBER WHERE MEMBER_EMAIL = ?";
+
+		try {
+			pstmt= conn.prepareStatement(query);
+			pstmt.setString(1, inputId);
+
+			rset = pstmt.executeQuery();
+
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
+
+		return result;
+	}
+	
+	// 추가
+	public int deleteMember(Connection conn, String memberEmail) {
+        PreparedStatement pstmt = null;
+        int result = 0;
+
+        String query = "UPDATE MEMBER SET MEMBER_STATUS = 0 WHERE MEMBER_EMAIL = ?";
+
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, memberEmail);
+
+            result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(pstmt);
+        }
+
+        return result;
+    }
 
 
 }

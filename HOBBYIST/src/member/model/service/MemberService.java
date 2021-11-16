@@ -41,6 +41,11 @@ public class MemberService{
 		
 		int result = mDAO.join(conn, member);
 		
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
 		close(conn);
 		
 		return result;
@@ -82,5 +87,32 @@ public class MemberService{
 		
 		return m;
 	}
+	
+	public int checkId(String inputId) {
+		Connection conn = getConnection();
+
+		int result = mDAO.checkId(conn, inputId);
+
+		close(conn);
+		return result;
+	}
+	
+	
+	// 추가
+	public int deleteMember(String memberEmail) {
+        Connection conn = getConnection();
+
+        int result = mDAO.deleteMember(conn, memberEmail);
+
+        if(result > 0) {
+            commit(conn);
+        } else {
+            rollback(conn);
+        }
+
+        close(conn);
+
+        return result;
+    }
 
 }

@@ -155,3 +155,18 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse,windows,macos,sass
+HOBBYIST/WebContent/WEB-INF/jspwork/
+Servers/
+HOBBYIST/.classpath.rej
+HOBBYIST/.classpath
+.settings/
+3_JSPServlet/
+cos-05Nov2002/.classpath
+cos-05Nov2002/.gitignore
+cos-05Nov2002/.project
+cos-05Nov2002/src/META-INF/MANIFEST.MF
+gson-2.8.5/
+javax.mail-1.6.2/
+ojdbc8/
+TestPP/
+json-simple-1.1.1/

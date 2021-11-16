@@ -24,7 +24,7 @@ public class JDBCTemplate {
 		// System.out.println(fileName);
 		// /D:/Kh_Courses/5_Servlet_workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/3_JSPServlet/WEB-INF/classes/sql/driver.properties
 		
-		if (conn == null) {
+		if (conn == null) {	
 			
 			try {
 				// 1. 바로 적어주는 방법

@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="member.model.vo.Member" %>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>튜터 정보 페이지</title>
 <script src="js/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/menubar.css">
 <link rel="stylesheet" type="text/css" href="css/myInfo.css">
@@ -18,10 +19,28 @@
 		box-shadow: 2px 2px 2px lightgray;
 		font-size: large;
 	}
+#classtitle{
+	text-align:center;
+	font-size:200%;
+	font-weight:bold;
+}
+
+.box{
+	text-align:center;
+	border:1px solid black;
+	width: 500px;
+	height: 800px;
+	float: left;
+	margin:0 auto;
+
+}
+
+
+
 </style>
 </head>
-<body>
-	<div class="app-dashboard shrink-medium">
+<body>	
+		<div class="app-dashboard shrink-medium">
 		
 		<!-- 상단바 -->
 		<%@ include file="../common/topbar.jsp" %>
@@ -93,7 +112,7 @@
 						<li>
 							<span class="app-dashboard-sidebar-text"><h3>튜터</h3></span> 
 						</li>
-						<li ><a href="<%= request.getContextPath() %>/tutorClass.me"> 
+						<li ><a href=""> 
 							<span class="app-dashboard-sidebar-text">내 클래스</span>  <%-- 누르고 서블릿 이동하면 tutor정보도 세션에 저장하기? --%>
 						</a></li>
 						<li style="color: #9ED4C2"><a href="<%= request.getContextPath() %>/tutorInform.me"> 
@@ -113,39 +132,28 @@
 					</ul>
 				</div>
 			</div>
+			
+
 
 			<!-- 본문 영역 -->
 			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
+			<p id="classtitle"> [오전] 아이패드 드로잉 (3개월 과정)</p>
 			
-			<div class="modify-information">
-				<form action="<%= request.getContextPath() %>/updateForm.me" method="post">
-					<div class="image-upload info">					    
-						<br><br>
-						<b>이메일</b><br>
-						<%= loginUser.getMemberEmail() %>
-						<input type="hidden" id="email" name="email" value="<%= loginUser.getMemberEmail() %>"><br><br>
-						
-						<b>이름</b><br>
-						<%= loginUser.getMemberName() %>
-						<input type="hidden" id="name" name="name" value="<%= loginUser.getMemberName() %>"><br><br>
-					
-						<b>닉네임</b><br>
-						<%= loginUser.getMemberNickName() %>
-						<input type="hidden" id="nickName" name="nickName" value="<%= loginUser.getMemberNickName() %>"><br><br>
-						
-						<b>휴대폰 번호</b><br>
-						<%= loginUser.getMemberPhone() ==  null ? "-" : loginUser.getMemberPhone()  %>
-						<input type="hidden" id="phone" name="phone" value="<%= loginUser.getMemberPhone() %>"><br><br>
-
-						<input type="submit" id="btnSub" value="수정하기"><br>
-						<input type="button" id="updatePwdBtn" value="비밀번호 변경하기" onclick="location.href='updatePwdForm.me'">
-						
-					</div>
-				</form>
+			<div class="testtest">
+			<div class="box">
+			ssssssss
 			</div>
-		</div>	
+			<div class="box">
+			dddddddd
+			</div>
+			</div>
 			
+		
+		</div>	
 		</div>
+		<!-- 사이드바, 본문 끝 -->
+		
+		
 		
 			<!-- FOOTER -->
 			<footer class="container" style="text-align: center; background: #F5F5F5;">
@@ -160,15 +168,8 @@
 			</footer> 
 	</div>
 
-	<!-- 탈퇴 알림창 -->
-	<script>
-            function deleteMember(){
-                var bool = confirm("정말 탈퇴하시겠습니까?");
-                if(bool){
-                    location.href= '<%= request.getContextPath() %>/delete.me';
-                }
-            }
-        </script>
+
+
 
 </body>
 </html>
