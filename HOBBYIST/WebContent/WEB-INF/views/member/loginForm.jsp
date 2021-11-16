@@ -40,62 +40,6 @@
 </style>
 <body>
 
-
-    <!--======================================== 
-
-           Preloader
-
-    ========================================-->
-
-<!--     <div class="page-preloader"> -->
-<!--         <div class="spinner"> -->
-<!--             <div class="rect1"></div> -->
-<!--             <div class="rect2"></div> -->
-<!--             <div class="rect3"></div> -->
-<!--             <div class="rect4"></div> -->
-<!--             <div class="rect5"></div> -->
-<!--         </div> -->
-<!--     </div> -->
-
-<!-- 상단바 -->
-
-<!--     <div class="row expanded app-dashboard-top-nav-bar"> -->
-<!--             <div class="columns medium-2"> -->
-<!--                 <a class="app-dashboard-logo" href=#><img src="./image/img/logo.png" -->
-<!--                     width="70px" height="55px"></a> -->
-<!--             </div> -->
-<!--             <div class="columns show-for-medium"> -->
-<!--                 <div class="app-dashboard-search-bar-container"> -->
-<!--                 </div> -->
-<!--             </div> -->
-<!--             <div class="columns shrink app-dashboard-top-bar-actions"> -->
-<%--             <!--     <button class="button hollow" onclick="locatoin.href='<%= request.getContextPath() %>/logout.me'">Logout</button> --> --%>
-<%--             	<input type="button" class="button hollow" value="Logout" onclick="locatoin.href='<%= request.getContextPath() %>/logout.me'"> --%>
-                
-<!--                 로그아웃 버튼 -->
-<!--                 <a href="#" height="30" width="30" alt=""><i -->
-<!--                     class="fa fa-info-circle"></i></a> -->
-<!--             </div> -->
-<!-- </div> -->
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-
-<!--             <div class="collapse navbar-collapse" id="navbar-menu"> -->
-<!--                 <ul class="nav navbar-nav navbar-right"> -->
-
-<!--                     <li class="button-holder"> -->
-<!--                         <button type="button" class="btn btn-blue navbar-btn" data-toggle="modal" data-target="#SignIn">회원가입하기</button> -->
-<!--                     </li> -->
-<!--                 </ul> -->
-<!--             </div> -->
-            <!-- /.navbar-collapse -->
-<!--         </div> -->
-<!--     </nav> -->
-
-
-
-    <!--//** Banner**//-->
-
     <section id="home">
         <div class="container">
             <div class="row">
@@ -149,11 +93,23 @@
 						<tr>
 						<td></td>
 						<td>
+						<div onclick="kakaoLogin();">
+						<a href="javascript:void(0)">
 						<img src="./image/img/kakaologin.png" style="height:50px">
+						</a>
+						</div>
 						</td>
 						<td></td>
 						</tr>
+						
 						</table>
+						<ul>
+	<li onclick="kakaoLogout();">
+      <a href="javascript:void(0)">
+          <span>카카오 로그아웃</span>
+      </a>
+	</li>
+</ul>
                         </div>
                     </form>
                 </div>
@@ -210,6 +166,78 @@
     <script src="./js/plugins/Magnific-Popup-master/Magnific-Popup-master/dist/jquery.magnific-popup.js"></script>
 
     <script src="./js/main.js"></script>
+
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script>
+
+var userAgent=navigator.userAgent.toLowerCase();
+
+var browser;
+
+if(userAgent.indexOf('edge')>-1){
+
+	browser='익스플로러 엣지';
+
+}else if(userAgent.indexOf('whale')>-1){
+
+	browser='네이버 웨일';
+
+}else if(userAgent.indexOf('chrome')>-1){
+
+	browser='크롬';
+
+}else if(userAgent.indexOf('firefox')>-1){
+
+	browser='파이어폭스';
+
+}else{
+
+	browser='익스플로러';
+
+}
+
+
+
+Kakao.init('85f715b51f5b518271c48383bcb54f97'); 
+console.log(Kakao.isInitialized());
+//카카오로그인
+function kakaoLogin() {
+	window.open(),
+    Kakao.Auth.login({
+      success: function (response) {
+        Kakao.API.request({
+          url: '/v2/user/me',
+          success: function (response) {
+        	  console.log(response)
+          },
+          fail: function (error) {
+            console.log(error)
+          },
+        })
+      },
+      fail: function (error) {
+        console.log(error)
+      },
+    })
+  }
+  
+function kakaoLogout() {
+    if (Kakao.Auth.getAccessToken()) {
+      Kakao.API.request({
+        url: '/v1/user/unlink',
+        success: function (response) {
+        	console.log(response)
+        },
+        fail: function (error) {
+          console.log(error)
+        },
+      })
+      Kakao.Auth.setAccessToken(undefined)
+    }
+  }  
+</script>
+  
+
 
 </body>
 </html>

@@ -3,16 +3,33 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+#slider1{background-image: url('./../../../images/bakery.png')};
+#slider2
+#slider3
+</style>
 <meta charset="UTF-8">
+
 <title>mainPage</title>
 <script src="js/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/mainPage.css">
+<!-- 추가한 css -->
+<style>
+.carousel-item{height: 700px;}
+/* .bd-placeholder-img{background-size:contain;} */
+ .imgsize{object-fit:contain; height:500px; overflow:hidden; }	/*이미지 가로세로 고정*/
+/*  .container{position:absolute; margin:200px; bottom:100px;} */
+/* .d-flex, .search-class{position:absolute; margin:200px; bottom:100px;} */
+</style>
 </head>
 <body>
 	<!-- 상단바 소스코드 include -->
 	<%@ include file="../common/mainPageTopbar.jsp" %> 
 	
-	<!-- 본문 -->
+	
+
+	
+ 	<!-- 본문 -->
 	<main>
 		<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
 			<div class="carousel-indicators">
@@ -23,48 +40,103 @@
 					data-bs-slide-to="1" aria-label="Slide 2"></button>
 				<button type="button" data-bs-target="#myCarousel"
 					data-bs-slide-to="2" aria-label="Slide 3"></button>
+				<button type="button" data-bs-target="#myCarousel"
+					data-bs-slide-to="3" aria-label="Slide 4"></button>
+				<button type="button" data-bs-target="#myCarousel"
+					data-bs-slide-to="4" aria-label="Slide 5"></button>
+				<button type="button" data-bs-target="#myCarousel"
+					data-bs-slide-to="5" aria-label="Slide 6"></button>
+				<button type="button" data-bs-target="#myCarousel"
+					data-bs-slide-to="6" aria-label="Slide 7"></button>
+				<button type="button" data-bs-target="#myCarousel"
+					data-bs-slide-to="7" aria-label="Slide 8"></button>
 			</div>
+			
+			<br>
+			
+                
+                
+                <a class="carousel-control-prev text-decoration-none" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+                    <i class='bx bx-chevron-left'></i>
+                    <span class="visually-hidden">Previous</span>
+                </a>
+                <a class="carousel-control-next text-decoration-none" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+                    <i class='bx bx-chevron-right'></i>
+                    <span class="visually-hidden">Next</span>
+                </a>
+            </div>
+            </div>
+			</div>
+			
+		
 
+		<!-- 슬라이드 이미지 -->
 			<div class="carousel-inner">
 				<div class="carousel-item active">
-					<!-- 배경화면 : svg태그 끝을 알리는 태그 옆에 img태그 삽입 -->
+				<!--	배경화면 : svg태그 끝을 알리는 태그 옆에 img태그 삽입 -->
 					<svg class="bd-placeholder-img" width="100%" height="100%"
 						xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
 						preserveAspectRatio="xMidYMid slice" focusable="false">
-						<rect width="100%" height="100%" fill="#777" />
-						<img src="images/pastel.png"></svg>
+  						<rect width="100%" height="100%" fill="white"> 
+						<img src="images/coding.png" class="imgsize" style="background-size: cover">
+						</rect></svg>
 
 					<div class="container">
 						<div class="carousel-caption text-end">
 
-							<h1>Example headline.</h1>
-							<p>Some representative placeholder content for the first
+<!-- 							<h1>Example headline.</h1> -->
+<!-- 							<p>Some representative placeholder content for the first -->
+<!-- 								slide of the carousel.</p> -->
+<!--							검색창-->
+<!-- 							<form class="d-flex search-class"> -->
+<!-- 								<input class="search-class form-control me-2" type="search" -->
+<!-- 									placeholder="어떤 클래스를 원하시나요?" aria-label="Search"> -->
+<!-- 								<button class="btn btn-outline-success" type="submit">Search</button> -->
+<!-- 							</form> -->
+						</div>
+					</div>
+				</div>
+
+				<div class="carousel-item" style="position:relative">
+					<svg class="bd-placeholder-img" width="100%" height="100%"
+						xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+						preserveAspectRatio="xMidYMid slice" focusable="false">
+						<rect width="100%" height="100%" fill="#777" /></svg>
+						<img src="images/art1.png" class="imgsize">
+						
+					<div class="container">
+						<div class="carousel-caption text-end">
+							<h1>Another example headline.</h1>
+							<p>Some representative placeholder content for the second
 								slide of the carousel.</p>
-							<!-- 검색창 -->
-							<form class="d-flex search-class">
-								<input class="search-class form-control me-2" type="search"
+							 <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+							검색창
+								<form class="d-flex search-class" style="position:absolute; margin-bottom:50%">
+								<input class="form-control me-2" type="search"
 									placeholder="어떤 클래스를 원하시나요?" aria-label="Search">
 								<button class="btn btn-outline-success" type="submit">Search</button>
 							</form>
 						</div>
 					</div>
 				</div>
-
+				
+				
+				
+				
 				<div class="carousel-item">
-
 					<svg class="bd-placeholder-img" width="100%" height="100%"
 						xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
 						preserveAspectRatio="xMidYMid slice" focusable="false">
 						<rect width="100%" height="100%" fill="#777" />
-						<img src="images/mint.jpg"></svg>
+						<img src="images/health.png" class="imgsize"></svg>
 
 					<div class="container">
 						<div class="carousel-caption text-end">
 							<h1>Another example headline.</h1>
 							<p>Some representative placeholder content for the second
 								slide of the carousel.</p>
-							<!--  <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p> -->
-							<!-- 검색창 -->
+							 <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+							검색창
 							<form class="d-flex search-class">
 								<input class="form-control me-2" type="search"
 									placeholder="어떤 클래스를 원하시나요?" aria-label="Search">
@@ -73,14 +145,108 @@
 						</div>
 					</div>
 				</div>
+				
+				<div class="carousel-item" >
+					<svg class="bd-placeholder-img" width="100%" height="100%"
+						xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+						preserveAspectRatio="xMidYMid slice" focusable="false">
+						<rect width="100%" height="100%" fill="#777" />
+						<img src="images/interior.png" class="imgsize"></svg>
+
+					<div class="container" style="display:inline-block">
+						<div class="carousel-caption text-end">
+							<h1>Another example headline.</h1>
+							<p>Some representative placeholder content for the second
+								slide of the carousel.</p>
+							 <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+							검색창
+							<form class="d-flex search-class">
+								<input class="form-control me-2" type="search"
+									placeholder="어떤 클래스를 원하시나요?" aria-label="Search">
+								<button class="btn btn-outline-success" type="submit">Search</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				
+				<div class="carousel-item">
+					<svg class="bd-placeholder-img" width="100%" height="100%"
+						xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+						preserveAspectRatio="xMidYMid slice" focusable="false">
+						<rect width="100%" height="100%" fill="#777" />
+						<img src="images/stock.png" class="imgsize"></svg>
+
+					<div class="container">
+						<div class="carousel-caption text-end">
+							<h1>Another example headline.</h1>
+							<p>Some representative placeholder content for the second
+								slide of the carousel.</p>
+							 <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+							검색창
+							<form class="d-flex search-class">
+								<input class="form-control me-2" type="search"
+									placeholder="어떤 클래스를 원하시나요?" aria-label="Search">
+								<button class="btn btn-outline-success" type="submit">Search</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				
+				<div class="carousel-item">
+					<svg class="bd-placeholder-img" width="100%" height="100%"
+						xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+						preserveAspectRatio="xMidYMid slice" focusable="false">
+						<rect width="100%" height="100%" fill="#777" />
+						<img src="images/movie.png" class="imgsize"></svg>
+
+					<div class="container">
+						<div class="carousel-caption text-end">
+							<h1>Another example headline.</h1>
+							<p>Some representative placeholder content for the second
+								slide of the carousel.</p>
+							 <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+							검색창
+							<form class="d-flex search-class">
+								<input class="form-control me-2" type="search"
+									placeholder="어떤 클래스를 원하시나요?" aria-label="Search">
+								<button class="btn btn-outline-success" type="submit">Search</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				
+				<div class="carousel-item">
+					<svg class="bd-placeholder-img" width="100%" height="100%"
+						xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+						preserveAspectRatio="xMidYMid slice" focusable="false">
+						<rect width="100%" height="100%" fill="#777" />
+						<img src="images/music.png" class="imgsize"></svg>
+
+					<div class="container">
+						<div class="carousel-caption text-end">
+							<h1>Another example headline.</h1>
+							<p>Some representative placeholder content for the second
+								slide of the carousel.</p>
+							 <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+							검색창
+							<form class="d-flex search-class">
+								<input class="form-control me-2" type="search"
+									placeholder="어떤 클래스를 원하시나요?" aria-label="Search">
+								<button class="btn btn-outline-success" type="submit">Search</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				
+				
 				<div class="carousel-item">
 
 					<svg class="bd-placeholder-img" width="100%" height="100%"
 						xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
 						preserveAspectRatio="xMidYMid slice" focusable="false">
 						<rect width="100%" height="100%" fill="#777" />
-						<img src="images/green.jpg"></svg>
-
+						<img src="images/bakery.png" class="imgsize"></svg>
+						
 
 					<div class="container">
 						<div class="carousel-caption text-end">
@@ -111,7 +277,7 @@
 
 
 		<!-- Marketing messaging and featurettes
-  ================================================== -->
+  ================================================== 
 		<!-- Wrap the rest of the page in another container to center all the content. -->
 
 		<div class="container marketing">
@@ -299,11 +465,15 @@
 				</p>
 			</footer>
 		</div>
-	</main>
+
 	
 	<!-- Bootstrap JS CDN --> <!-- JS CDN은 body 하단에  -->
  	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 		crossorigin="anonymous"></script>
+		
+
+	
+		
 </body>
 </html>

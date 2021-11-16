@@ -37,7 +37,7 @@ public class MemberUpdateServlet extends HttpServlet {
 		String profile = request.getParameter("profile"); // 출력해보면 파일명임
 		
 		HttpSession session = request.getSession();
-		String originNickName = ((Member)session.getAttribute("loginUser")).getNickName();
+		String originNickName = ((Member)session.getAttribute("loginUser")).getMemberNickName();
 		
 		String nickName = request.getParameter("nickName").trim().equals("") ? originNickName : request.getParameter("nickName").trim();
 		// 닉네임 입력칸을 다 비우고(다 지우고) form제출시 ""로 들어옴, 만약 ""로 들어온다면 원래 닉네임으로 변경  (닉네임은 null값 허용하지 않기 때문), equals 또는  == ""로 비교 (== ""로 해도 안에 내용이 없어서 비교 가능)  
