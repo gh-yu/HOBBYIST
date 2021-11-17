@@ -111,7 +111,8 @@ public class ClassNoticeDAO {
 		ClassNotice n = null;
 
 		String query = prop.getProperty("selectClasstNotice");
-
+		
+		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, classBoardNo);
@@ -132,7 +133,6 @@ public class ClassNoticeDAO {
 			close(rset);
 			close(pstmt);
 		}
-
 		return n;
 	}
 
@@ -180,5 +180,31 @@ public class ClassNoticeDAO {
 
 		return result;
 	}
+
+	public int getListCount(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int listCount = 0;
+
+		String query = prop.getProperty("getListCount");
+	
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+
+			if (rset.next()) {
+				listCount = rset.getInt("COUNT(*)");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+
+		return listCount;
+	}
+	
 
 }
