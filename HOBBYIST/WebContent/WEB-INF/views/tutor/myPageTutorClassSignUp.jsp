@@ -144,6 +144,7 @@ img.ui-datepicker-trigger {
 </style>
 </head>
 <body>
+
 	<div class="app-dashboard shrink-medium">
 
 		<!-- 상단바 -->

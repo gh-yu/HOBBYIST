@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="classNotice.model.vo.ClassNotice" %>
 <%
-	ClassNotice classnotice = (ClassNotice)request.getAttribute("ClassNotice");
+	ClassNotice classnotice = (ClassNotice)request.getAttribute("classnotice");
 	Member member = (Member)request.getAttribute("Member");
 %>
 <!DOCTYPE html>
@@ -19,6 +19,7 @@
 	#cancelBtn{background: #B2CCFF;}
 	#deleteNoBtn{background: #D5D5D5;}
 </style>
+<script src="js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <%-- 	<%@ include file="../common/menubar.jsp" %> --%>
@@ -28,20 +29,20 @@
 		<h2 align="center">공지사항</h2>
  		<div class="tableArea">
 			<form action="classNoticeUpdateForm.no" id="detailForm" name="detailForm" method="post">
+				<input type="hidden" name="no" value ="<%= classnotice.getClassBoardNo() %>">
 				<table>
 					<tr>
 						<th>제목</th>
 						<td colspan="3">
 							<%= classnotice.getClassBoardName() %> 
-							<input type="hidden" name="title" value="<%= classnotice.getClassBoardName() %>"> 
-							<!-- type="hidden"으로 value값 넣은 이유 => 정보 쿼리스트링으로 넘겨서 서블릿에서 getParameter로 가져오기 위함 -->
+							<input type="hidden" name="title" value="<%= classnotice.getClassBoardName() %>">		
 						</td>				
 					</tr>
 					<tr>
 						<th>작성자</th>
 						<td>
-							<%= member.getMemberNickName() %>
-							<input type="hidden" name="nickname" value="<%= member.getMemberNickName() %>"> 
+							<%= classnotice.getClassBoardWriter() %>
+							<input type="hidden" name="writer" value="<%= classnotice.getClassBoardWriter() %>"> 
 						</td>
 						<th>작성일</th>
 						<td>
@@ -69,17 +70,25 @@
 					<input type="submit" id="updateNoBtn" value="수정하기">
 					<input type="button" id="deleteNoBtn"onclick="deleteNotice();" value="삭제하기">
 				<% } %> <!-- 로그인하지 않았거나, 게시글 작성자와 로그인한 user의 아이디가 같지 않으면  위의 수정하기 버튼 안 보임-->
-					<input type="button" onclick="location.href='javascript:history.go(-1);'" id="cancelBtn" value="뒤로 가기">
+					<input type="button" onclick="location.href='<%= request.getContextPath() %>/classNoticeList.no'" id="cancelBtn" value="뒤로 가기">
 				</div>
 				</form>
 		</div>
 	</div>
 	<script>
+// 		function deleteNotice() {
+// 			if (confirm("삭제하시겠습니까?")) {
+<%-- 				location.href = '<%= request.getContextPath() %>/classNoticeDelete.no?no=' + "<%=classnotice.getClassBoardNo()%>"; --%>
+// 			}
+// 		}
+		
 		function deleteNotice() {
-			if (confirm("삭제하시겠습니까?")) {
-				location.href = '<%= request.getContextPath() %>/classNoticeDelete.no?no=' + "<%=classnotice.getClassBoardNo()%>";
-			}
-		}
+ 			if (confirm("정말로 삭제하시겠습니까?")) {
+ 				$('#detailForm').attr('action', 'classNoticeDelete.no'); /* form태그의 action 속성값을 바꿈 */
+				$('#detailForm').submit(); /* form에 대한 submit() -> 제출  */
+ 			}
+ 		}
+
 	</script>
 </body>
 </html>

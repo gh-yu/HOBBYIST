@@ -52,8 +52,8 @@ public class ClassNoticeUpdateFormServlet extends HttpServlet {
 		}
 		
 		ClassNotice notice = new ClassNotice(no, title, content, 0, noticeDate, 1, 0, userEmail);
-		request.setAttribute("notice", notice);
-		request.getRequestDispatcher("WEB-INF/views/notice/noticeUpdateForm.jsp").forward(request, response);
+		request.setAttribute("classNotice", notice);
+		request.getRequestDispatcher("WEB-INF/views/tutor/noticeUpdateForm.jsp").forward(request, response);
 
 	}
 

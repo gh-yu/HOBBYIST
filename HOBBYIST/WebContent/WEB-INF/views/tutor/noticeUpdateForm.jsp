@@ -2,7 +2,6 @@
     pageEncoding="UTF-8" import="classNotice.model.vo.ClassNotice , member.model.vo.Member" %>
 <%
 	ClassNotice notice = (ClassNotice)request.getAttribute("classNotice");
-	Member member = (Member)request.getAttribute("Member");
 %>
 <!DOCTYPE html>
 <html>
@@ -21,6 +20,8 @@
 </head>
 <body>
 <%-- 	<%@ include file="../common/menubar.jsp" %> --%>
+	<%@ include file="../common/topbar.jsp" %>
+
 	<div class="outer">
 		<br>
 		<h2 align="center">공지사항 수정</h2>
@@ -36,8 +37,8 @@
 					<tr>
 						<th>작성자</th>
 						<td>
-							<%= member.getMemberNickName() %>
-							<input type="hidden" name="nickName" value="<%= member.getMemberNickName() %>"> 
+							<%= notice.getClassBoardWriter() %>
+							<input type="hidden" name="nickName" value="<%= notice.getClassBoardWriter() %>"> 
 						</td>
 						<th>작성일</th>			
 						<td>
@@ -50,7 +51,7 @@
 					<tr>
 						<td colspan="4">
 						<textarea name="content" cols="60" rows="15" style="resize:none;"><%= notice.getClassBoardContent() %></textarea>
-						<input type="hidden" name="no" value="<%= notice.getClassBoardContent() %>"> <!-- 수정시 게시글번호 필요하기 때문에 hidden으로 form 정보 넘김 -->
+						<input type="hidden" name="no" value="<%= notice.getClassBoardNo() %>"> <!-- 수정시 게시글번호 필요하기 때문에 hidden으로 form 정보 넘김 -->
 						</td>
 					</tr>
 				</table>

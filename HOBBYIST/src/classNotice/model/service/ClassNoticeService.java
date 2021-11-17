@@ -32,7 +32,7 @@ public class ClassNoticeService {
 		
 		int result = nDAO.insertClassNotice(conn, n);
 		if (result > 0) {
-			System.out.println("result : "+result);
+			
 			commit(conn);
 		} else {
 			rollback(conn);
@@ -50,6 +50,7 @@ public class ClassNoticeService {
 		
 		ClassNotice classBoard = null;
 		if (result > 0) {
+			System.out.println("result :" +result);
 			classBoard = nDAO.selectClassNotice(conn, classBoardNo);
 			if (classBoard != null) {
 				commit(conn);
@@ -91,6 +92,15 @@ public class ClassNoticeService {
 		
 		close(conn);
 		return result;
+	}
+	public int getListCount() {
+		Connection conn = getConnection();
+		
+		int listCount = nDAO.getListCount(conn);
+		
+		close(conn);
+		
+		return listCount;
 	}
 
 }
