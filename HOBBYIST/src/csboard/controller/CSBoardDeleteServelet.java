@@ -8,19 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import csBoard.model.service.CSBoardService;
-import csBoard.model.vo.RequestBoard;
 
 /**
- * Servlet implementation class CSBoardInsertServlet
+ * Servlet implementation class CSBoardDeleteServelet
  */
-@WebServlet("/insert.cs")
-public class CSBoardInsertServlet extends HttpServlet {
+@WebServlet("/deleteBoard.cs")
+public class CSBoardDeleteServelet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CSBoardInsertServlet() {
+    public CSBoardDeleteServelet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,27 +28,17 @@ public class CSBoardInsertServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String title = request.getParameter("title");
-		String category = request.getParameter("category").trim();
-		String contactEmail = request.getParameter("contactEmail");
-		String content = request.getParameter("content");
-		String writer = request.getParameter("writer");
+		int rNo = Integer.parseInt(request.getParameter("rNo"));
 		
-		RequestBoard board = new RequestBoard();
-		board.setReqTitle(title);
-		board.setReqCategory(category);
-		board.setContactEmail(contactEmail);
-		board.setReqContent(content);
-		board.setReqWriter(writer);
-		
-		int result = new CSBoardService().insertBoard(board);
-		
+		int result = new CSBoardService().deleteBoard(rNo);
+
 		if (result > 0) {
 			response.sendRedirect("list.cs");
 		} else {
-			request.setAttribute("msg", "1:1문의글 작성 실패");
+			request.setAttribute("msg", "1:1문의글 삭제 실패");
 			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
 		}
+		
 	}
 
 	/**

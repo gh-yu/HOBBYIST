@@ -47,10 +47,13 @@ public class CSBoardService {
 	}
 
 	public ArrayList<Reply> selectReplyList(int rNo) {
+		Connection conn = getConnection();
 		
+		ArrayList<Reply> list = cDAO.selectReplyList(conn, rNo);
 		
+		close(conn);
 		
-		return null;
+		return list;
 	}
 
 	public int insertBoard(RequestBoard board) {
@@ -66,6 +69,36 @@ public class CSBoardService {
 		close(conn);
 		
 		return result;
+	}
+
+	public int updateBoard(RequestBoard board) {
+		Connection conn = getConnection();
+		
+		int result = cDAO.updateBoard(conn, board);
+
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+
+	public int deleteBoard(int rNo) {
+		Connection conn = getConnection();
+		
+		int result = cDAO.deleteBoard(conn, rNo);
+
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;	
 	}
 	
 

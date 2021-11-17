@@ -111,13 +111,22 @@
 								<td><%= rb.getReqCategory() %></td>
 								<td><%= rb.getReqTitle() %></td>
 								<td>
-								<% 
-										if(rb.getNickName().length() <= 2) {
-								%>		
-											<%= rb.getNickName().charAt(0) + "*" %>
-								<% 		} else { %>
-	 										<%= rb.getNickName().replace(rb.getNickName().substring(1, rb.getNickName().length()-1), "*")%>
-								<%		} %>
+								<%
+									String originNick = rb.getNickName();
+									String newNick = "";
+									if (originNick.length() <= 2) {
+										newNick = originNick.charAt(0) + "*";
+									} else { // 닉네임의 첫 글자와 마지막 글자를 제외하고 마스킹 처리
+										for (int i = 0; i < originNick.length(); i++) {
+											if (i == 0 || i == originNick.length() - 1) {
+												newNick += originNick.charAt(i);
+											} else {
+												newNick += "*";
+											}
+										}
+									}
+								%>
+ 								<%= newNick %>
 								</td>
 								<td><%= rb.getReplyStatus() %></td>
 								<td><%= rb.getCreateDate() %></td>
@@ -167,22 +176,22 @@
 				</div>	
 			</div>
 					<script>
-					
-						$('#listArea td').mouseenter(function(){
-							$(this).parent().css({'text-decoration':'underline', 'cursor':'pointer'})
-						}).mouseout(function(){
-							$(this).parent().css('text-decoration', 'none');
-						}).click(function(){
-							var rNo = $(this).parent().children().eq(0).text();
-							var userEmail = $(this).parent().children().eq(6).text();
-							
-							if ('<%= loginUser %>' == 'null') {
-								alert('작성자만 열람할 수 있습니다.');
-							} else {
-								location.href='<%= request.getContextPath() %>/detail.cs?rNo=' + rNo;
-							}
-						})
-						
+						if ('<%= list.isEmpty() %>' == 'false') {
+							$('#listArea td').mouseenter(function(){
+								$(this).parent().css({'text-decoration':'underline', 'cursor':'pointer'})
+							}).mouseout(function(){
+								$(this).parent().css('text-decoration', 'none');
+							}).click(function(){
+								var rNo = $(this).parent().children().eq(0).text();
+								var userEmail = $(this).parent().children().eq(6).text();
+								
+								if ('<%= loginUser %>' == 'null') {
+									alert('작성자만 열람할 수 있습니다.');
+								} else {
+									location.href='<%= request.getContextPath() %>/detail.cs?rNo=' + rNo;
+								}
+							})
+						}
 					</script>				
 		</div>
 		

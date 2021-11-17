@@ -13,7 +13,7 @@ import csBoard.model.vo.RequestBoard;
 /**
  * Servlet implementation class CSBoardUpdateServlet
  */
-@WebServlet("/update.cs")
+@WebServlet("/updateBoard.cs")
 public class CSBoardUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -31,20 +31,25 @@ public class CSBoardUpdateServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String title = request.getParameter("title");
 		String category = request.getParameter("category");
-		String nickName = request.getParameter("nickNmae");
-		String email = request.getParameter("email");
 		String content = request.getParameter("content");
+		String contactEmail = request.getParameter("contactEmail");
+		int rNo = Integer.parseInt(request.getParameter("rNo"));
 		
 		RequestBoard board = new RequestBoard();
 		board.setReqTitle(title);
 		board.setReqCategory(category);
-		board.setNickName(nickName);
-		board.setReqWriter(email);
 		board.setReqContent(content);
+		board.setContactEmail(contactEmail);
+		board.setReqNo(rNo);
 		
-		
-		
-		
+		int result = new CSBoardService().updateBoard(board);
+		System.out.println("controller" + result);
+		if (result > 0) {
+			response.sendRedirect("detail.cs?rNo=" + rNo);
+		} else {
+			request.setAttribute("msg", "1:1문의글 수정 실패");
+			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
+		}
 	}
 
 	/**
