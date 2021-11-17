@@ -32,7 +32,7 @@ public class CheckIdServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String inputId = request.getParameter("inputId");
 
-		int result = new MemberService().checkId(inputId);
+		int result = new MemberService().checkNick(inputId);
 
 //		request.setAttribute("result", result);
 //		request.setAttribute("checkedId", inputId);

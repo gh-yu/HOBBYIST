@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.ArrayList, faq.model.vo.FAQ" %>
 <% 
-	ArrayList<FAQ> list = (ArrayList<FAQ>)request.getAttribute("list");
+	FAQ faq= (FAQ)request.getAttribute("faq");
 
 //	if(list == null){
 //	    list = new ArrayList<FAQ>();
@@ -24,10 +24,11 @@
 		margin-left: 0;
  	}
 	#listArea {
-		text-align: center;
+/* 		text-align: center; */
+		border : 1px solid lightgray;
 	}
 	
-	#FAQWriteBtn {
+	#editFaqBtn {
 		background: #9ED4C2;
 		border: 1px solid white;
 		width : 100px;
@@ -43,18 +44,31 @@
 		border: 1px solid white;
 	}
 	
-	th {
-		border-bottom: 1px solid lightgrey;
+	#deleteBtn {
+		width : 100px;
 		height : 35px;
+		font-weight: bold;
+		border: 1px solid white;
 	}
 	
-	td {
-		height : 25px;
+	#td_head {
+		font-weight: bold;
+		width : 150px;
+		height: 33px;
+		border-bottom: 1px solid lightgrey;
+	}	
+	
+	#td_content {
+		width : 480px;
 		border-bottom: 1px solid lightgrey;
 	}
 	
-	#bottons {
-		margin-left: 457px;
+	#td_content_reply, #td_head_reply{
+		height : 150px;
+	}
+	
+	#btnArea {
+		margin-left: 355px;
 	}
 	
 	
@@ -116,59 +130,68 @@
 			</div>
 
 			<!-- 본문 영역 -->
-			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content> 				
-				<div class="sub08_title">
-					<div class="title"><h1>자주 묻는 질문(FAQ) 등록</h1></div>
-						</div>
-						<br>
-							<form id="tx_editor_form" name="tx_editor_form" action="<%= request.getContextPath() %>/FAQinsert.bo" method="post">
-								<table id="write_frm" cellpadding="0" cellspacing="0">
+			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
+				<form action="FAQUpdate.bo" id="detailForm" name="detailForm" method="post">
+					<div id="outer">
+						<h1> 자주 묻는 질문(FAQ) 수정</h1>
+							<div class="tableArea">
+								<table id="listArea">
 									<tr>
-										<th style="width: 150px; height: 50px">제목</th>
-										<td>
-											<input type="text" id="title" name="title" style="width: 500px; height: 25px;" value="">
+										<th id="td_head"> No.</th>
+										<td id="td_content" >  
+											  <%= faq.getFaqNo() %>
+ 											<input type="hidden" id="no" name="no" style="width: 500px; height: 25px;" value="<%= faq.getFaqNo() %>" readonly>
 										</td>
 									</tr>
-									<tr>
-										<th style="height: 50px;">카테고리</th>
-										<td>
-											<select id="category" name="category" style="width: 120px; height: 30px;">
-												<option value="계정">계정</option>
-												<option value="수강">수강</option>
-												<option value="서비스">서비스</option>
-												<option value="기타">기타</option>
+									<tr>	
+										<th id="td_head"> 카테고리 </th>
+										<td> 
+											<select id="category" name="category" style="width: 110px; height: 30px;">
+													<option value="계정">계정</option>
+													<option value="수강">수강</option>
+													<option value="서비스">서비스</option>
+													<option value="기타">기타</option>
 											</select>
 										</td>
 									</tr>
 									<tr>
-										<th>내용</th>
-										<td>
-											<div class="tx-source-deco">
-												<div id="tx_canvas_source_holder" class="tx-holder">
-													<textarea id="reply" name="reply" rows="20" cols="70" style= "resize: none"></textarea>
-												</div>
-											</div>
+										<th id="td_head"> 제목 </th>
+										<td id="td_content"> 
+											<input type="text" id="title" style="width:485px; height:25px;" name="title" value="<%= faq.getFaqTitle() %>">
 										</td>
 									</tr>
-<!-- 									<tr> -->
-<!-- 										<td colspan="2" class="ta last"> -->
-<!-- 											<div class="board_view_botton" style="width:auto;" align="right"> -->
-<!-- 												<input type="button" id="FAQcancel" value="취소"> -->
-<!-- 												<input type="button" id="FAQWriteBtn" value="등록"> -->
-<!-- 											</div> -->
-<!-- 											<br><br> -->
-<!-- 										</td> -->
-<!-- 									</tr> -->
+									<tr>
+										<th id="td_head_reply"> 답변 </th>
+										<td id="td_content_reply">
+											<textarea id="reply" name="reply" rows="13" cols="67" style= "resize: none"><%= faq.getFaqReply() %></textarea>
+											<input type="hidden" id="reply" name="reply"  height="200px" value="<%= faq.getFaqReply() %>">
+										</td>
+									</tr>
 								</table>
-								<br>
-									<div id="bottons" style="width:auto;">
-										<input type="button" id="FAQcancel" value="취소" onclick="location.href='javascript:history.go(-1);'">
-										<button type="submit" id="FAQWriteBtn">등록</button>
-									</div>
-								<br>
-							</form>
+							</div>
 						</div>
-					</div>
+						<div id="btnArea">
+							<input type="button" id="FAQcancel" value="목록" onclick="location.href='javascript:history.go(-1);'">
+							<% if (loginUser != null && loginUser.getMemberEmail().equals("admin@hobbyist.com")) { %> <%-- 로그인을 했으면서, admin인  경우--%>
+							<input type="button" id="deleteBtn" value="삭제" onclick="deleteFAQ();">
+							<input type="submit" id="editFaqBtn" value="수정">
+							<% } %>
+							
+						</div>
+					</form>
+				</div>
+			</div>
+		<br>
+		<br>
+		
+		<script>
+			function deleteFAQ(){
+				if(confirm("정말로 삭제하시겠습니까?")){
+					$('#detailForm').attr('action', 'FAQdelete.bo');
+					$('#detailForm').submit();
+					}
+				}		
+		</script>	
 
 			
 		<!-- FOOTER -->

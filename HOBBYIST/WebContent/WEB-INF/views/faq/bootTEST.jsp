@@ -12,19 +12,17 @@
 <head>
 <meta charset="UTF-8">
 <title>자주 묻는 질문(FAQ)</title>
+<script src="js/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/menubar.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="js/menubar.js"></script>
 <style>
 	#outer {
 		width: 1000px;
 		height : 400px;
 		margin-left: 10px;
-	}
-	.tableArea {
-		width: 900px;
-		height : 300px;
-		margin-left: 0;
- 	}
-	#listArea {
-		text-align: center;
+		margin-top: 20px;
 	}
 	
 	#writeFaqBtn {
@@ -35,19 +33,13 @@
 		font-weight: bold;
 		color : white;
 	}
-	
-	th {
-		border-bottom: 1px solid lightgrey;
-		height : 35px;
+
+	.FAQList{
+		margin-top: 50px;
 	}
 	
-	td {
-		height : 25px;
-	}
+			
 </style>
-<script src="js/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/menubar.css">
-<script src="js/menubar.js"></script>
 </head>
 <body>
 	<div class="app-dashboard shrink-medium">
@@ -105,28 +97,70 @@
 			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
 				<div id="outer">
 					<h1> 자주 묻는 질문(FAQ) </h1>
-						<div class="tableArea">
+<%-- 						<div class="tableArea">
 							<table id="listArea">
-								<tr>
-									<th width = 100px> No.</th>
-									<th width = 200px> 카테고리 </th>
-									<th width = 900px> 제목 </th>
-								</tr>
-		 						<% if(list.isEmpty()) { %>
+								<tbody>
 									<tr>
-										<td colspan = "3"> 조회된 리스트가 없습니다. </td>
+										<!-- <th width = 100px> No.</th> -->
+										<th width = 200px> 카테고리 </th>
+										<th width = 900px> 제목 </th>
 									</tr>
-								<% } else { %>
-									<%	for(int i = 0; i < list.size(); i++){ %>
+			 						<% if(list.isEmpty()) { %>
 										<tr>
-											<td><%= list.get(i).getFaqNo() %></td>
-											<td><%= list.get(i).getFaqCategory() %></td>
-											<td><%= list.get(i).getFaqTitle() %></td>
+											<td colspan = "3"> 조회된 리스트가 없습니다. </td>
 										</tr>
-									<%  } %>
-								<% } %>
+									<% } else { %>
+										<%	for(int i = 0; i < list.size(); i++){ %>
+											<tr onclick="<%= list.get(i).getFaqReply() %>" class="faqContent">
+												<td><%= list.get(i).getFaqCategory() %></td>
+												<td><%= list.get(i).getFaqTitle() %></td>
+											</tr>
+											<tr class="faqReply" style="display: table-row;">
+												<td><div class="div-sub">&nbsp;</div></td>
+												<td><div class="div-sub"><%= list.get(i).getFaqReply() %></div></td>
+											</tr>
+										<%  } %>
+									<% } %>
+								</tbody>
 							</table>
-						</div>
+						</div> --%>
+						
+	
+<div class="FAQListArea" id="FAQListArea">
+<% if(list.isEmpty()) { %>
+	조회된 리스트가 없습니다.
+<% } else { %>
+	  <div class="FAQList">
+	    <h2 class="FAQquestion1" id="question1">
+	      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+	        <b><%= list.get(0).getFaqCategory() %></b> &nbsp; &nbsp; &nbsp;  <%= list.get(0).getFaqTitle() %>
+     	 </button>
+   		 </h2>
+	    <div id="collapseOne" class="FAQAnswer" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+	      <div class="accordion-body">
+	       	<%= list.get(0).getFaqReply() %>
+	      </div>
+	    </div>
+  	</div>
+  	<%	for(int i = 1; i < list.size(); i++){ %>
+  		<div class="accordion-item">
+		    <h2 class="FAQquestion" id="question">
+		      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+		        <b><%= list.get(i).getFaqCategory() %></b> &nbsp; &nbsp; &nbsp;  <%= list.get(i).getFaqTitle() %>
+		      </button>
+		    </h2>
+		    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+		      <div class="accordion-body">
+		       	 <%= list.get(i).getFaqReply() %>
+		      </div>
+		    </div>
+		  </div>
+  	<%  } %>
+ <% } %>
+ 
+  
+  
+   
 						<br>
 					<div align="right">
 						<% if (loginUser != null && loginUser.getMemberEmail().equals("admin@hobbyist.com")) { %> <%-- 로그인을 했으면서, admin인  경우--%>
@@ -136,15 +170,23 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	
 		<script>
-			$('#listArea td').mouseenter(function(){
+/* 			$('#listArea td').mouseenter(function(){
 				$(this).parent().css({'background':'#9ED4C2', 'cursor':'pointer'});
 			}).mouseout(function(){
 				$(this).parent().css({'background':'none'});
-			}).click(function(){
+			}).click(function(e){
 				var num = $(this).parent().children().eq(0).text(); // 글번호 가져오기
-				location.href = '<%= request.getContextPath() %>/datail.no?no=' + num; 
+				$('#listArea').find('.div-sub').slideToggle();
 			});
+			
+			$(".faqContent").click(function(){
+				$('#listArea .faqReply').slideToggle();
+				$('#listArea tr[class=on]').attr("class", "off");
+			}); */
+			
 		</script>
 		
 			<!-- FOOTER -->
