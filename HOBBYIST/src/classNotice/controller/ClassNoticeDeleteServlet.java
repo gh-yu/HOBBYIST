@@ -28,7 +28,7 @@ public class ClassNoticeDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int no = Integer.parseInt(request.getParameter("classBoardNo"));
+//		int no = Integer.parseInt(request.getParameter("classBoardNo"));
 		int no = Integer.parseInt(request.getParameter("no"));
 		
 		int result = new ClassNoticeService().deleteClassNotice(no);
@@ -50,5 +50,4 @@ public class ClassNoticeDeleteServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
-}
 }

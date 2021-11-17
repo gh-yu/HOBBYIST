@@ -1,27 +1,42 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="member.model.vo.Member" %>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="js/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/menubar.css">
-<link rel="stylesheet" type="text/css" href="css/myInfo.css">
-<script src="js/menubar.js"></script>
+<title>튜티 마이페이지 - 튜터 신청</title>
+
+
 <style>
-	#updatePwdBtn {
-		background: #778899;
-		font-weight: bold;
-		cursor: pointer;
-		color: white;
-		box-shadow: 2px 2px 2px lightgray;
-		font-size: large;
+.off-canvas-content{
+	text-align:center;
+	border: 1px solid black;
+	
+}
+.box1{
+	border: 1px solid black;
+	width: 48%;
+	height: 700px;
+	float:left;
 	}
+.box2{
+	border: 1px solid black;
+	width: 48%;
+	height: 700px;
+	float:left;
+	overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	}
+.imgresponsive{
+	height:702px;
+}
 </style>
+
 </head>
 <body>
-	<div class="app-dashboard shrink-medium">
+<div class="app-dashboard shrink-medium">
 		
 		<!-- 상단바 -->
 		<%@ include file="../common/topbar.jsp" %>
@@ -119,34 +134,15 @@
 
 			<!-- 본문 영역 -->
 			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
+				<div class="box1">
+				</div>
+				<div class="box2">
+					<img src="./images/yellow.png" alt="" class="imgresponsive">
+				</div>
+				
+				
 			
-			<div class="modify-information">
-				<form action="<%= request.getContextPath() %>/updateForm.me" method="post">
-					<div class="image-upload info">					    
-						<br><br>
-						<b>이메일</b><br>
-						<%= loginUser.getMemberEmail() %>
-						<input type="hidden" id="email" name="email" value="<%= loginUser.getMemberEmail() %>"><br><br>
-						
-						<b>이름</b><br>
-						<%= loginUser.getMemberName() %>
-						<input type="hidden" id="name" name="name" value="<%= loginUser.getMemberName() %>"><br><br>
-					
-						<b>닉네임</b><br>
-						<%= loginUser.getMemberName() %>
-						<input type="hidden" id="nickName" name="nickName" value="<%= loginUser.getMemberName() %>"><br><br>
-						
-						<b>휴대폰 번호</b><br>
-						<%= loginUser.getMemberPhone() ==  null ? "-" : loginUser.getMemberPhone()  %>
-						<input type="hidden" id="phone" name="phone" value="<%= loginUser.getMemberPhone() %>"><br><br>
-
-						<input type="submit" id="btnSub" value="수정하기"><br>
-						<input type="button" id="updatePwdBtn" value="비밀번호 변경하기" onclick="location.href='<%= request.getContextPath() %>/updatePwdForm.me'">
-						
-					</div>
-				</form>
-			</div>
-		</div>	
+			</div>	
 					
 		</div>
 		
@@ -162,6 +158,8 @@
 				</p>
 			</footer> 
 	</div>
+	
+	
 
 </body>
 </html>
