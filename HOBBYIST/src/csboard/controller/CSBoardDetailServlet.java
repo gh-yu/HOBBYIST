@@ -39,7 +39,7 @@ public class CSBoardDetailServlet extends HttpServlet {
 		
 		RequestBoard board = new CSBoardService().selectBoard(rNo);
 		
-		ArrayList<Reply> list = new CSBoardService().selectReplyList(rNo);
+		ArrayList<Reply> list = new CSBoardService().selectReplyList(rNo); // 댓글(답변)
 			
 		String loginUserEmail = ((Member)request.getSession().getAttribute("loginUser")).getMemberEmail();
 		
@@ -55,6 +55,7 @@ public class CSBoardDetailServlet extends HttpServlet {
 			} else {
 				page = "WEB-INF/views/csboard/csBoardDetail.jsp";
 				request.setAttribute("board", board);
+				request.setAttribute("list", list);
 			}
 		} else {
 			page = "WEB-INF/views/common/errorPage.jsp";
