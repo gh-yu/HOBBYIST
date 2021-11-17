@@ -1,8 +1,6 @@
 package faq.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,19 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import faq.model.service.FAQService;
-import faq.model.vo.FAQ;
 
 /**
- * Servlet implementation class ContactServlet
+ * Servlet implementation class FAQDeleteServlet
  */
-@WebServlet("/FAQWriteForm.bo")
-public class FAQWriteFormServlet extends HttpServlet {
+@WebServlet("/FAQdelete.bo")
+public class FAQDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FAQWriteFormServlet() {
+    public FAQDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,8 +28,17 @@ public class FAQWriteFormServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("WEB-INF/views/faq/faqWriteForm.jsp").forward(request, response);
+		int no = Integer.parseInt(request.getParameter("no"));
 		
+		int result = new FAQService().deleteFAQ(no);
+		System.out.println(result);
+		
+		if(result > 0) {
+			response.sendRedirect("FAQ.bo");
+		} else {
+			request.setAttribute("msg", "FAQ 삭제 실패");
+			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
+		}
 	}
 
 	/**

@@ -3,22 +3,20 @@ package faq.model.vo;
 public class FAQ {
 	
 	private int faqNo;
-	private String faqCategory;
 	private String faqTitle;
-//	private String faqContent;
 	private String faqReply;
-	
+	private String faqCategory;
 	
 	public FAQ() {}
 
 
-	public FAQ(int faqNo, String faqCategory, String faqTitle, String faqReply) {
+	public FAQ(int faqNo, String faqTitle, String faqReply, String faqCategory) {
 		super();
 		this.faqNo = faqNo;
-		this.faqCategory = faqCategory;
 		this.faqTitle = faqTitle;
-//		this.faqContent = faqContent;
 		this.faqReply = faqReply;
+		this.faqCategory = faqCategory;
+		
 	}
 
 
@@ -30,18 +28,8 @@ public class FAQ {
 	public void setFaqNo(int faqNo) {
 		this.faqNo = faqNo;
 	}
-
-
-	public String getFaqCategory() {
-		return faqCategory;
-	}
-
-
-	public void setFaqCategory(String faqCategory) {
-		this.faqCategory = faqCategory;
-	}
-
-
+	
+	
 	public String getFaqTitle() {
 		return faqTitle;
 	}
@@ -51,15 +39,15 @@ public class FAQ {
 		this.faqTitle = faqTitle;
 	}
 
+	
+	public String getFaqCategory() {
+		return faqCategory;
+	}
 
-//	public String getFaqContent() {
-//		return faqContent;
-//	}
-//
-//
-//	public void setFaqContent(String faqContent) {
-//		this.faqContent = faqContent;
-//	}
+
+	public void setFaqCategory(String faqCategory) {
+		this.faqCategory = faqCategory;
+	}
 
 
 	public String getFaqReply() {
@@ -74,8 +62,9 @@ public class FAQ {
 
 	@Override
 	public String toString() {
-		return "FAQ [faqNo=" + faqNo + ", faqCategory=" + faqCategory + ", faqTitle=" + faqTitle + ", faqContent="
-				+ ", faqReply=" + faqReply + "]";
+		return "FAQ [faqNo=" + faqNo + ", faqTitle=" + faqTitle + ", faqReply=" + faqReply + ", faqCategory="
+				+ faqCategory + "]";
 	}
+	
 
 }

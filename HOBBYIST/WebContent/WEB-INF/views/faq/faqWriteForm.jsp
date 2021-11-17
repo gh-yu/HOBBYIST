@@ -53,7 +53,7 @@
 		border-bottom: 1px solid lightgrey;
 	}
 	
-	#bottons {
+	#btnArea {
 		margin-left: 457px;
 	}
 	
@@ -161,7 +161,7 @@
 <!-- 									</tr> -->
 								</table>
 								<br>
-									<div id="bottons" style="width:auto;">
+									<div id="btnArea" style="width:auto;">
 										<input type="button" id="FAQcancel" value="취소" onclick="location.href='javascript:history.go(-1);'">
 										<button type="submit" id="FAQWriteBtn">등록</button>
 									</div>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.ArrayList, faq.model.vo.FAQ" %>
 <% 
-	ArrayList<FAQ> list = (ArrayList<FAQ>)request.getAttribute("list");
+	FAQ faq= (FAQ)request.getAttribute("faq");
 
 //	if(list == null){
 //	    list = new ArrayList<FAQ>();
@@ -24,10 +24,11 @@
 		margin-left: 0;
  	}
 	#listArea {
-		text-align: center;
+/* 		text-align: center; */
+		border : 1px solid lightgray;
 	}
 	
-	#writeFaqBtn {
+	#editFaqBtn {
 		background: #9ED4C2;
 		border: 1px solid white;
 		width : 100px;
@@ -36,14 +37,41 @@
 		color : white;
 	}
 	
-	th {
-		border-bottom: 1px solid lightgrey;
+	#FAQcancel{
+		width : 100px;
 		height : 35px;
+		font-weight: bold;
+		border: 1px solid white;
 	}
 	
-	td {
-		height : 25px;
+	#deleteBtn {
+		width : 100px;
+		height : 35px;
+		font-weight: bold;
+		border: 1px solid white;
 	}
+	
+	#td_head {
+		font-weight: bold;
+		width : 150px;
+		height: 33px;
+		border-bottom: 1px solid lightgrey;
+	}	
+	
+	#td_content {
+		width : 480px;
+		border-bottom: 1px solid lightgrey;
+	}
+	
+	#td_content_reply, #td_head_reply{
+		height : 150px;
+	}
+	
+	#btnArea {
+		margin-left: 355px;
+	}
+	
+	
 </style>
 <script src="js/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/menubar.css">
@@ -91,7 +119,7 @@
 						<li><a href="<%= request.getContextPath() %>/FAQ.bo">
 							<span class="app-dashboard-sidebar-text"><h3>FAQ</h3></span>
 						</a></li>
-						<li><a href="<%= request.getContextPath() %>/list.cs">
+						<li><a href="">
 							<span class="app-dashboard-sidebar-text"><h3>1:1문의</h3></span>
 						</a></li>
 						<br><br><br>
@@ -103,51 +131,70 @@
 
 			<!-- 본문 영역 -->
 			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
-				<div id="outer">
-					<h1> 자주 묻는 질문(FAQ) </h1>
-						<div class="tableArea">
-							<table id="listArea">
-								<tr>
-									<th width = 100px> No.</th>
-									<th width = 200px> 카테고리 </th>
-									<th width = 900px> 제목 </th>
-								</tr>
-		 						<% if(list.isEmpty()) { %>
+				<form action="FAQUpdate.bo" id="detailForm" name="detailForm" method="post">
+					<div id="outer">
+						<h1> 자주 묻는 질문(FAQ) 수정</h1>
+							<div class="tableArea">
+								<table id="listArea">
 									<tr>
-										<td colspan = "3"> 조회된 리스트가 없습니다. </td>
+										<th id="td_head"> No.</th>
+										<td id="td_content" >  
+											  <%= faq.getFaqNo() %>
+ 											<input type="hidden" id="no" name="no" style="width: 500px; height: 25px;" value="<%= faq.getFaqNo() %>" readonly>
+										</td>
 									</tr>
-								<% } else { %>
-									<%	for(int i = 0; i < list.size(); i++){ %>
-										<tr>
-											<td><%= list.get(i).getFaqNo() %></td>
-											<td><%= list.get(i).getFaqCategory() %></td>
-											<td><%= list.get(i).getFaqTitle() %></td>
-										</tr>
-									<%  } %>
-								<% } %>
-							</table>
+									<tr>	
+										<th id="td_head"> 카테고리 </th>
+										<td> 
+											<select id="category" name="category" style="width: 110px; height: 30px;">
+													<option value="계정">계정</option>
+													<option value="수강">수강</option>
+													<option value="서비스">서비스</option>
+													<option value="기타">기타</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<th id="td_head"> 제목 </th>
+										<td id="td_content"> 
+											<input type="text" id="title" style="width:485px; height:25px;" name="title" value="<%= faq.getFaqTitle() %>">
+										</td>
+									</tr>
+									<tr>
+										<th id="td_head_reply"> 답변 </th>
+										<td id="td_content_reply">
+											<textarea id="reply" name="reply" rows="13" cols="67" style= "resize: none"><%= faq.getFaqReply() %></textarea>
+											<input type="hidden" id="reply" name="reply"  height="200px" value="<%= faq.getFaqReply() %>">
+										</td>
+									</tr>
+								</table>
+							</div>
 						</div>
-						<br>
-					<div align="right">
-						<% if (loginUser != null && loginUser.getMemberEmail().equals("admin@hobbyist.com")) { %> <%-- 로그인을 했으면서, admin인  경우--%>
-						<input type="button" id="writeFaqBtn" value="FAQ등록" onclick="location.href='FAQWriteForm.bo'" >
-						<% } %>
-					</div>
+						<div id="btnArea">
+							<input type="button" id="FAQcancel" value="목록" onclick="location.href='javascript:history.go(-1);'">
+							<% if (loginUser != null && loginUser.getMemberEmail().equals("admin@hobbyist.com")) { %> <%-- 로그인을 했으면서, admin인  경우--%>
+							<input type="button" id="deleteBtn" value="삭제" onclick="deleteFAQ();">
+							<input type="submit" id="editFaqBtn" value="수정">
+							<% } %>
+							
+						</div>
+					</form>
 				</div>
 			</div>
-		</div>
+		<br>
+		<br>
+		
 		<script>
-			$('#listArea td').mouseenter(function(){
-				$(this).parent().css({'background':'#9ED4C2', 'cursor':'pointer'});
-			}).mouseout(function(){
-				$(this).parent().css({'background':'none'});
-			}).click(function(){
-				var num = $(this).parent().children().eq(0).text(); // 글번호 가져오기
-				location.href = '<%= request.getContextPath() %>/datail.no?no=' + num; 
-			});
-		</script>
-				
-			<!-- FOOTER -->
+			function deleteFAQ(){
+				if(confirm("정말로 삭제하시겠습니까?")){
+					$('#detailForm').attr('action', 'FAQdelete.bo');
+					$('#detailForm').submit();
+					}
+				}		
+		</script>	
+
+			
+		<!-- FOOTER -->
 			<footer class="container" style="text-align: center; background: #F5F5F5;">
 			
 				<p class="float-end">

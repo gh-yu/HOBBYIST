@@ -15,14 +15,14 @@ import faq.model.vo.FAQ;
 /**
  * Servlet implementation class ContactServlet
  */
-@WebServlet("/FAQWriteForm.bo")
-public class FAQWriteFormServlet extends HttpServlet {
+@WebServlet("/FAQdatail.bo")
+public class FAQDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FAQWriteFormServlet() {
+    public FAQDetailServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,9 +31,22 @@ public class FAQWriteFormServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("WEB-INF/views/faq/faqWriteForm.jsp").forward(request, response);
+		request.setCharacterEncoding("UTF-8");
 		
-	}
+		int faqNo = Integer.parseInt(request.getParameter("no"));
+		FAQ faq = new FAQService().detailFAQ(faqNo);
+		
+		String page = null;
+		if(faq!= null) {
+			request.setAttribute("faq", faq);
+			page = "WEB-INF/views/faq/faqDetail.jsp";
+		} else {
+			request.setAttribute("msg", "FAQ 상세조회 실패");
+			page = "WEB-INF/views/common/errorPage.jsp";
+		}
+		request.getRequestDispatcher(page).forward(request, response);
+
+		}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
