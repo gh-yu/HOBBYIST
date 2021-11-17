@@ -30,6 +30,16 @@ public class Member {
 		this.memberStatus = memberStatus;
 		this.memberGrade = memberGrade;
 	}
+	
+	
+	public Member(String memberEmail, String memberName, String memberNickName, String memberPhone) {
+		super();
+		this.memberEmail = memberEmail;
+		this.memberName = memberName;
+		this.memberNickName = memberNickName;
+		this.memberPhone = memberPhone;
+	}
+
 	public String getMemberEmail() {
 		return memberEmail;
 	}

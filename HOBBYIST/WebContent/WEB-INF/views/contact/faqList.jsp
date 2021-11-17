@@ -146,7 +146,7 @@
 				location.href = '<%= request.getContextPath() %>/datail.no?no=' + num; 
 			});
 		</script>
-		
+				
 			<!-- FOOTER -->
 			<footer class="container" style="text-align: center; background: #F5F5F5;">
 			

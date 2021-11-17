@@ -85,7 +85,7 @@
 							<% } else { %>
 							<li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/myInfo.me"><img src="images/myPage.png"></a></li> <!-- 마이페이지 정보조회 아이콘 -->
 							<% }  %>
-							<li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/contact.co"><img src="images/contact.png"></a></li> <!-- 콘택트아이콘 -->
+							<li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/FAQ.bo"><img src="images/contact.png"></a></li> <!-- 콘택트아이콘 -->
 							
 							<% if(loginUser == null) { %>
 							<li class="nav-item"><a class="nav-link"><img src="images/like.png" onclick="alert('로그인을 먼저 해주세요.');"></a></li><!-- 내클래스(찜한클래스) 아이콘  -->	

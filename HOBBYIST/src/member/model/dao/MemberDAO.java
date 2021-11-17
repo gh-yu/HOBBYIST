@@ -101,7 +101,7 @@ public class MemberDAO {
 			PreparedStatement pstmt = null;
 			
 			int result = 0;
-			String query = "INSERT INTO MEMBER VALUES (?, ?, ?, ?, ?, 0, DEFAULT, SYSDATE, DEFAULT, DEFAULT)";
+			String query = "INSERT INTO MEMBER VALUES(?, ?, ?, ?, ?, 0, DEFAULT, SYSDATE, DEFAULT, DEFAULT)";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
@@ -236,7 +236,7 @@ public class MemberDAO {
 		
 		return result;
 	}
-
+	
 	public int updatePwd(Connection conn, HashMap<String, String> map) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -258,5 +258,5 @@ public class MemberDAO {
 		return result;
 	}
 
-
+	
 }

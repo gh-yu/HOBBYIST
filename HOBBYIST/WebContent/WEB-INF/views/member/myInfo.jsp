@@ -93,8 +93,8 @@
 						<li>
 							<span class="app-dashboard-sidebar-text"><h3>튜터</h3></span> 
 						</li>
-						<li ><a href=""> 
-							<span class="app-dashboard-sidebar-text">내 클래스</span>  <%-- 누르고 서블릿 이동하면 tutor정보도 세션에 저장하기? --%>
+						<li ><a href="<%= request.getContextPath() %>/classNoticeList.no"> 
+							<span class="app-dashboard-sidebar-text">내 클래스</span> 
 						</a></li>
 						<li style="color: #9ED4C2"><a href="<%= request.getContextPath() %>/tutorInform.me"> 
 							<span class="app-dashboard-sidebar-text">튜터 정보</span>
@@ -133,8 +133,8 @@
 						<input type="hidden" id="name" name="name" value="<%= loginUser.getMemberName() %>"><br><br>
 					
 						<b>닉네임</b><br>
-						<%= loginUser.getMemberName() %>
-						<input type="hidden" id="nickName" name="nickName" value="<%= loginUser.getMemberName() %>"><br><br>
+						<%= loginUser.getMemberNickName() %>
+						<input type="hidden" id="nickName" name="nickName" value="<%= loginUser.getMemberNickName() %>"><br><br>
 						
 						<b>휴대폰 번호</b><br>
 						<%= loginUser.getMemberPhone() ==  null ? "-" : loginUser.getMemberPhone()  %>

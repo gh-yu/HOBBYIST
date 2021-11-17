@@ -12,7 +12,6 @@ import java.sql.Connection;
 import java.util.HashMap;
 
 
-
 public class MemberService{
 
 	private MemberDAO mDAO = new MemberDAO();
@@ -54,7 +53,6 @@ public class MemberService{
 
 	public int updateMember(Member newInfo) {
 		Connection conn = getConnection();
-		System.out.println(conn);
 		
 		int result = mDAO.updateMember(conn, newInfo);
 		
@@ -89,7 +87,7 @@ public class MemberService{
 		
 		return m;
 	}
-	
+
 	public int deleteMember(String memberEmail) {
 		Connection conn = getConnection();
 		

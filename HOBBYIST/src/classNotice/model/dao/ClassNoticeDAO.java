@@ -120,10 +120,10 @@ public class ClassNoticeDAO {
 
 			if (rset.next()) {
 
-				n = new ClassNotice(rset.getInt("classBoardNo"), rset.getString("classBoardName"),
-						rset.getString("classBoardContent"), rset.getInt("classBoardViews"),
-						rset.getDate("classBoardDate"), rset.getInt("classBoardStatus"), rset.getInt("classNo"),
-						rset.getString("classBoardWriter"));
+				n = new ClassNotice(rset.getInt("CLASS_BOARD_NO"), rset.getString("CLASS_BOARD_NAME"),
+						rset.getString("CLASS_BOARD_CONTENT"), rset.getInt("CLASS_BOARD_VIEWS"),
+						rset.getDate("CLASS_BOARD_DATE"), rset.getInt("CLASS_BOARD_STATUS"), rset.getInt("CLASS_NO"),
+						rset.getString("CLASS_BOARD_WRITER"));
 			}
 
 		} catch (SQLException e) {
