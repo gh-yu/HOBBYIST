@@ -68,7 +68,7 @@
 						<li><a href="#">
 							<span class="app-dashboard-sidebar-text"><h3>FAQ</h3></span>
 						</a></li>
-						<li><a href="">
+						<li><a href="<%= request.getContextPath() %>/list.cs">
 							<span class="app-dashboard-sidebar-text"><h3>1:1문의</h3></span>
 						</a></li>
 						<br><br><br>
@@ -84,13 +84,13 @@
 					<h2 align="center">1:1문의</h2>
 					<h4 align="left">문의 내용</h4>
 					<div class="contentArea">
-						<form action="<%= request.getContextPath() %>/insert.cs" id="detailForm" method="post">
+						<form action="<%= request.getContextPath() %>/insert.cs" id="detailForm" method="post" onsubmit="return validate()">
 							<table id="boardArea">
 								<thead>
 									<tr>
 										<th height="20px">제목</th>
 										<td colspan="8" height="30px;">
-											<input type="text" name="title" required style="width: 98%;">
+											<input type="text" id="title" name="title" required style="width: 98%;">
 										</td>
 									</tr>
 									<tr>
@@ -122,7 +122,7 @@
 									</tr>
 									<tr>
 										<td colspan="9" style="min-height: 250px;">
-											<textarea name="content" cols="120" rows="15" style="resize:none;" required></textarea>
+											<textarea id="content" name="content" cols="120" rows="15" style="resize:none;" required></textarea>
 										</td>
 									</tr>
 								</tbody>
@@ -176,7 +176,19 @@
 				</div>	
 			</div>		
 		</div>
-		
+		<script>
+			function validate(){
+				if ($('#title').val().trim() == '') {
+					alert('제목을 입력해주세요.');
+					return false;
+				} else if ($('#content').val().trim() == '') {
+					alert('내용을 입력해주세요.');
+					return false;
+				} else {
+					return true;
+				}
+			}
+		</script>
 			<!-- FOOTER -->
 			<footer class="container" style="text-align: center; background: #F5F5F5;">
 			

@@ -69,7 +69,7 @@
 						<li><a href="#">
 							<span class="app-dashboard-sidebar-text"><h3>FAQ</h3></span>
 						</a></li>
-						<li><a href="">
+						<li><a href="<%= request.getContextPath() %>/list.cs">
 							<span class="app-dashboard-sidebar-text"><h3>1:1문의</h3></span>
 						</a></li>
 						<br><br><br>

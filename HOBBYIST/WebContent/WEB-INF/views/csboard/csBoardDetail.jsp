@@ -76,7 +76,7 @@
 						<li><a href="#">
 							<span class="app-dashboard-sidebar-text"><h3>FAQ</h3></span>
 						</a></li>
-						<li><a href="">
+						<li><a href="<%= request.getContextPath() %>/list.cs">
 							<span class="app-dashboard-sidebar-text"><h3>1:1문의</h3></span>
 						</a></li>
 						<br><br><br>
@@ -223,11 +223,13 @@
 				$content.attr("readonly", false); // 답변 수정 버튼 클릭시 readonly속성 해제
 				$(this).text('수정 완료'); // 버튼 text 답변 수정을 수정 완료로 바꾸기
 				
+				
 				$(this).click(function(){ // 내용 변경 후 수정 완료 버튼 누르면 update 실행
 					var rNo = '<%= rb.getReqNo() %>';
 					var modifyDate = $(this).parent().parent().children().eq(0).text();
 					var repNo =  $(this).parent().children().eq(2).val(); 
 					var content = $content.val();
+					if (content.trim() != '') {
 						$.ajax({
 							url: 'updateReply.cs',
 							data: {repNo:repNo, content:content, rNo:rNo},
@@ -255,6 +257,9 @@
 								console.log(data);
 							}
 						});
+					} else {
+						alert('내용을 입력하세요.');
+					}
 				});
 
 			});
@@ -266,34 +271,36 @@
 					var repNo =  $(this).parent().children().eq(2).val();
 					var rNo = '<%= rb.getReqNo() %>';
 					
- 					$.ajax({
-						url: 'deleteReply.cs',
-						data: {repNo:repNo, rNo:rNo},
-						success: function(data){
-							console.log(data);
-							
-							var replyList = document.getElementById('replyList');
-							replyList.innerHTML = ''; // 비워주고 시작
+					if(confirm("정말 삭제하시겠습니까?")){
+						$.ajax({
+							url: 'deleteReply.cs',
+							data: {repNo:repNo, rNo:rNo},
+							success: function(data){
+								console.log(data);
+								
+								var replyList = document.getElementById('replyList');
+								replyList.innerHTML = ''; // 비워주고 시작
 
-							var html = "";
-							for (var i in data) {
-							
-								html += "<tr><td  colspan='3'><textarea readonly>" + data[i].replyContent + "</textarea></td>" 
-										+ "<tr><td>" + data[i].modifyDate + "</td>"
-										+ "<td><button class='btn deleteReply'>답변 삭제</button>"
-										+ "<button class='btn modifyReply'>답변 수정</button>"
-										+ "<input type='hidden' name='repNo' value='" + data[i].replyNo + "'></td></tr>"
-										+ "<tr class='gap'></tr>"; 
-								replyList.innerHTML = html;
+								var html = "";
+								for (var i in data) {
+								
+									html += "<tr><td  colspan='3'><textarea readonly>" + data[i].replyContent + "</textarea></td>" 
+											+ "<tr><td>" + data[i].modifyDate + "</td>"
+											+ "<td><button class='btn deleteReply'>답변 삭제</button>"
+											+ "<button class='btn modifyReply'>답변 수정</button>"
+											+ "<input type='hidden' name='repNo' value='" + data[i].replyNo + "'></td></tr>"
+											+ "<tr class='gap'></tr>"; 
+									replyList.innerHTML = html;
+								}
+								
+								$('#replyContent').val('');
+							},
+							error: function(data){
+								console.log(data);
 							}
 							
-							$('#replyContent').val('');
-						},
-						error: function(data){
-							console.log(data);
-						}
-						
-					});
+						});
+					}
 				} else {
 					alert('수정만 가능합니다.'); // 답변이 1개 이하면 수정만 가능하게 함
 				}
@@ -305,7 +312,7 @@
 				var content = $('#replyContent').val();
 				var rNo = '<%= rb.getReqNo() %>';
 				
-				if (content != '') {
+				if (content.trim() != '') {
 					$.ajax({
 						url: 'insertReply.cs',
 						data: {content:content, rNo:rNo},
