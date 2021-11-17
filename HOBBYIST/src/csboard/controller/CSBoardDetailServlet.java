@@ -41,12 +41,12 @@ public class CSBoardDetailServlet extends HttpServlet {
 		
 		ArrayList<Reply> list = new CSBoardService().selectReplyList(rNo); // 댓글(답변)
 			
-		String loginUserEmail = ((Member)request.getSession().getAttribute("loginUser")).getMemberEmail();
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 		
 		response.setContentType("text/html; charset=UTF-8");
 		String page = null;
 		if(board != null) {
-			if (!(board.getReqWriter().equals(loginUserEmail) || loginUserEmail.equals("admin@hobbyist.com"))) { // 작성자와 관리자만 열람할 수 있게
+			if (!(board.getReqWriter().equals(loginUser.getMemberEmail()) || loginUser.getMemberGrade().equals("A"))) { // 작성자와 관리자(등급A)만 열람할 수 있게
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('작성자만 열람할 수 있습니다.')");

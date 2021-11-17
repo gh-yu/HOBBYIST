@@ -100,6 +100,67 @@ public class CSBoardService {
 		
 		return result;	
 	}
+
+	public ArrayList<Reply> insertReply(Reply r) {
+		Connection conn = getConnection();
+		
+		int result = cDAO.insertReply(conn, r);
+		
+		ArrayList<Reply> list = null;
+		if (result > 0) {
+			list = cDAO.selectReplyList(conn, r.getReqNo()); // insert한 결과가 성공이면 댓글리스트 select해옴
+			int updateReplyStatus = cDAO.updateReplyStatus(conn, r.getReqNo());
+			if (list != null && updateReplyStatus > 0) {  // list가 있으면 커밋 아니면 롤백
+				commit(conn);
+			} else {
+				rollback(conn);
+			}
+		} else {
+			rollback(conn);
+		}
+		
+		return list;
+	}
+
+	public ArrayList<Reply> updateReply(Reply r) {
+		Connection conn = getConnection();
+		
+		int result = cDAO.updateReply(conn, r);
+		
+		ArrayList<Reply> list = null;
+		if (result > 0) {
+			list = cDAO.selectReplyList(conn, r.getReqNo()); // update한 결과가 성공이면 댓글리스트 select해옴
+			if (list != null) {  // list가 있으면 커밋 아니면 롤백
+				commit(conn);
+			} else {
+				rollback(conn);
+			}
+		} else {
+			rollback(conn);
+		}
+		
+		return list;
+	}
+
+	public ArrayList<Reply> deleteReply(Reply r) {
+		Connection conn = getConnection();
+		
+		int result = cDAO.deleteReply(conn, r);
+		
+		ArrayList<Reply> list = null;
+		if (result > 0) {
+			list = cDAO.selectReplyList(conn, r.getReqNo()); // delete한 결과가 성공이면 댓글리스트 select해옴
+			if (list != null) {  // list가 있으면 커밋 아니면 롤백
+				commit(conn);
+			} else {
+				rollback(conn);
+			}
+		} else {
+			rollback(conn);
+		}
+		
+		return list;
+	}
 	
 
 }

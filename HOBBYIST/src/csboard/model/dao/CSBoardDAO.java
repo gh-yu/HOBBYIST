@@ -227,9 +227,11 @@ public class CSBoardDAO {
 			list = new ArrayList<Reply>();
 			while(rset.next()) {
 				list.add(new Reply(rset.getInt("REPLY_NO"), 
-						replyContent, createDate, modifyDate, rset.getInt("REQ_NO")));
+								   rset.getString("REPLY_BOARD_CONTENT"),
+								   rset.getDate("REPLY_CREATE_DATE"),
+								   rset.getDate("REPLY_MODIFY_DATE"),
+								   rset.getInt("REQ_NO")));
 			}
-			REPLY_NO, REPLY_BOARD_CONTENT, REPLY_CREATE_DATE, REPLY_MODIFY_DATE, REQ_NO
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -237,8 +239,89 @@ public class CSBoardDAO {
 			close(pstmt);
 		}
 		
-		
 		return list;
+	}
+
+	public int insertReply(Connection conn, Reply r) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertReply");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, r.getReplyContent());
+			pstmt.setInt(2, r.getReqNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateReplyStatus(Connection conn, int rNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateReplyStatus");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, rNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateReply(Connection conn, Reply r) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateReply");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, r.getReplyContent());
+			pstmt.setInt(2, r.getReplyNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteReply(Connection conn, Reply r) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteReply");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, r.getReplyNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 	
 	// String query = "SELECT * FROM CS_REQ_BOARD JOIN FILES ON(BOARD_NO = REQ_NO) WHERE FILE_TABLE_NAME = 'CS_REQ_BOARD' AND STATUS = 1";
