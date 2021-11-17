@@ -77,15 +77,13 @@
 		var nList = new Array();
  		<% if(!list.isEmpty()) { %>
 			<% for(int i = 0; i < list.size(); i++){ %>
-					nList[i].noticeNo = "<%= list.get(i).getNoticeNo() %>";
+					nList[i].noticeNo = "<%= list.get(i).getClassBoardNo() %>";
 					console.log(nList[0].noticeNo);
 				
 		<% }} %>
-		
-		
- 		 (function(){
+		(function(){
 				listArea.
 			})();
-	</script> --%>
+	</script>--%>
 </body>
 </html>
