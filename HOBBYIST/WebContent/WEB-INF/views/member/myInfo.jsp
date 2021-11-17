@@ -84,7 +84,7 @@
 						<li><a href=""> 
 							<span class="app-dashboard-sidebar-text">결제정보</span>
 						</a></li>
-						<li><a href=""> 
+						<li><a href="<%= request.getContextPath() %>/delete.me"> 
 							<span class="app-dashboard-sidebar-text">튜티 탈퇴</span>
 						</a></li>
 						<br><br><br>
@@ -140,13 +140,13 @@
 						<input type="hidden" id="phone" name="phone" value="<%= loginUser.getMemberPhone() %>"><br><br>
 
 						<input type="submit" id="btnSub" value="수정하기"><br>
-						<input type="button" id="updatePwdBtn" value="비밀번호 변경하기" onclick="location.href='updatePwdForm.me'">
+						<input type="button" id="updatePwdBtn" value="비밀번호 변경하기" onclick="location.href='<%= request.getContextPath() %>/updatePwdForm.me'">
 						
 					</div>
 				</form>
 			</div>
 		</div>	
-			
+					
 		</div>
 		
 			<!-- FOOTER -->
