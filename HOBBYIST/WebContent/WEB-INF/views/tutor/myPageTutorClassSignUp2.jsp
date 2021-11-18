@@ -84,6 +84,10 @@ img.ui-datepicker-trigger {
 	vertical-align: middle;
 	cursor: pointer;
 }
+/* #image_container{ */
+/* 	widght: 100px; */
+/* 	height: 50px; */
+/* } */
 </style>
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
@@ -298,168 +302,141 @@ img.ui-datepicker-trigger {
 			<!-- 본문 내용 시작 -->
 			<div class="app-dashboard-body-content off-canvas-content"
 				data-off-canvas-content>
-				<form action="<%= request.getContextPath() %>/thumbinsert.th" method="post">
-				<div id="margin_check">
-					<h2>클래스 신청하기</h2>
-					<table>
-						<tr>
-							<th>카테고리</th>
-							<td><select id="category_class" name ="category">
+				<form action ="/form" method="post" >
+				<table>
+					<div id="margin_check">
+						<!-- 수강중인 클래스 -->
+						<h3>클래스 신청</h3>
+						<hr>
+						<div id="enroll_tutor_form">
+							<form action="#" class="enroll_tutor">
+
+
+								<b>카테고리</b><br> 
+								<select id="category_class">
 									<option value=" " disabled selected hidden>카테고리를
 										선택해주세요.</option>
-									<option value="1">라이브</option>
-									<option value="2">개발/코딩</option>
-									<option value="3">인테리어</option>
-									<option value="4">요리</option>
-									<option value="5">악기</option>
-									<option value="6">건강/헬스</option>
-									<option value="7">글쓰기</option>
-									<option value="8">사진</option>
-									<option value="9">디지털 드로잉</option>
-									<option value="10">드로잉</option>
-									<option value="11">영상 편집</option>
-									<option value="12">주식</option>
-									<option value="13">사주/타로</option>
-							</select></td>
-						</tr>
-						<tr>
-							<th>클래스 제목</th>
-							<td><input type="text"
-								placeholder="컨셉이 잘 드러나는 클래스의 제목을 정해주세요" id="tutor_nickname" name="title"></td>
-						</tr>
-						<tr>
-							<th>썸네일 첨부</th>
-							<td colspan="3">
-								<div id="titleImgArea">
-									<img id="titleImg" width="350" height="200">
-								</div>
-							</td>
-						</tr>
-						<tr>
-						<th>이미지 추가</th>
-						<td>
-							<div id="contentImgArea1">
-								<img id="contentImg1" width="120" height="100"> 
-							</div>
-						</td>
-						<td>
-							<div id="contentImgArea2">
-								<img id="contentImg2" width="120" height="100"> 
-							</div>
-						</td>
-						<td>
-							<div id="contentImgArea3">
-								<img id="contentImg3" width="120" height="100"> 
-							</div>
-						</td>
-					</tr>
-						<tr>
-							<th width="100px">클래스 소개</th>
-							<td colspan="3"><textarea id="tutor_introduction"
-									name="content" rows="5" cols="50"
-									placeholder="클래스 소개글을 부탁드립니다 ^^" style="resize: none;"></textarea>
-						</tr>
-						<tr>
-							<th>클래스 신청 날짜</th>
-							<td>
-								오늘 날짜 : <span id="today"></span> <br>
+									<option value="live_class">라이브</option>
+									<option value="codding_class">개발/코딩</option>
+									<option value="interior_class">인테리어</option>
+									<option value="cooking_class">요리</option>
+									<option value="music_class">악기</option>
+									<option value="health_class">건강/헬스</option>
+									<option value="writing_class">글쓰기</option>
+									<option value="photo_class">사진</option>
+									<option value="digitaldrawing_class">디지털 드로잉</option>
+									<option value="drawing_class">드로잉</option>
+									<option value="Videoediting_class">영상 편집</option>
+									<option value="stock_class">주식</option>
+									<option value="tarot_class">사주/타로</option>
+								</select> 
+								<br> <br> 
+								<b>클래스 제목</b>
+								<input type="text" placeholder="컨셉이 잘 드러나는 클래스의 제목을 정해주세요" id="tutor_nickname">
+								
+								<br>
+								<br>
+								<b>이미지 첨부</b><br> 
+								<input type="file" id="image" accept="image/*" onchange="setThumbnail(event);" />
+								<div id="image_container"><img id="titleImg" width="350" height="200"></div>
+								<script>
+									function setThumbnail(event) {
+										var reader = new FileReader();
+										reader.onload = function(event) {
+											var img = document
+													.createElement("img");
+											img.setAttribute("src",
+													event.target.result);
+											document.querySelector(
+													"div#image_container")
+													.appendChild(img);
+										};
+										reader
+												.readAsDataURL(event.target.files[0]);
+									}
+								</script>
+								<!-- 							<input style="display: block;" type="file" id="input-multiple-image" multiple> -->
+								<!-- 								<div id="multiple-container"> -->
+								<!-- 								</div> -->
+
+								<br> <br> <br> <b>클래스 소개</b><br>
+								<textarea id="tutor_introduction"
+									placeholder="클래스 소개글을 부탁드립니다 ^^"></textarea>
+								<br>
+								<div>
+									<h3>클래스 신청</h3>
+									오늘 날짜 : <span id="today"></span> <br>
 									<form>
 										<label for="fromDate">시작일</label> <input type="text"
 											name="fromDate" id="fromDate"> ~ <label for="toDate">종료일</label>
 										<input type="text" name="toDate" id="toDate">
 									</form>
-							</td>
-						</tr>
-						<tr>
-							<th>강의 시간</th>
-							<td>시작 시간<input type="time" min="09:00:00" max="22:00:00" name = "time"></td>
-							<!-- 						<td> 수업은 2시간 단위로 진행합니다.</td> -->
-						</tr>
-						<tr>
-							<th>클래스 모집 인원</th>
-							<td>최소 인원<input type="number" id="tentacles" name="min" min="1" max="100"></td>
-							<td>최대 인원<input type="number" id="tentacles" name="max" min="10" max="100"></td>
-						</tr>
-						<tr>
-							<th>강의료</th>
-							<td><input type="text" style="text-align: right;"
-								pattern="[0-9]+" id="price" onkeyup="inputNumberFormat(this)" name ="fee" />원
-							</td>
-						</tr>
+								</div>
+								<br>
+								<div>
+									<h3>요일 선택</h3>
 
-					</table>
+									<span>월<input id="dayOfWeek1" type="checkbox"></span> 
+									<span>화<input id="dayOfWeek2" type="checkbox"></span> 
+									<span>수<input id="dayOfWeek3" type="checkbox"></span> 
+									<span>목 <input id="dayOfWeek4" type="checkbox"></span> 
+									<span>금 <input id="dayOfWeek5" type="checkbox"></span>
+									<span>토<input id="dayOfWeek6" type="checkbox"></span>
+									<span>일<input id="dayOfWeek7" type="checkbox"></span>
 
-					<div id="fileArea">
-						<input type="file" id="thumbnailImg1" multiple="multiple"
-							name="thumbnailImg1" onchange="LoadImg(this,1)"> <input
-							type="file" id="thumbnailImg2" multiple="multiple"
-							name="thumbnailImg2" onchange="LoadImg(this,2)"> <input
-							type="file" id="thumbnailImg3" multiple="multiple"
-							name="thumbnailImg3" onchange="LoadImg(this,3)"> <input
-							type="file" id="thumbnailImg4" multiple="multiple"
-							name="thumbnailImg4" onchange="LoadImg(this,4)">
+								</div>
+								<div>
+									<h3>강의 시간</h3>
+									<form>
+										<p>
+											시작 시간<input type="time" min="09:00:00" max="22:00:00">
+											~ 종료 시간<input type="time">
+										</p>
+									</form>
+								</div>
+								<div>
+									<span font-size="15px">수강료</span> <input type="text"
+										style="text-align: right;" pattern="[0-9]+" id="price"
+										onkeyup="inputNumberFormat(this)" />원
+								</div>
+								<br>
+								<div>
+									<h3>클래스 모집 인원</h3>
+									최소 인원<input type="number" id="tentacles" name="tentacles" min="1" max="100">
+									~
+									최대 인원 <input type="number" id="tentacles" name="tentacles" min="10" max="100">
+								</div>
+
+								<div>
+									<h3>클래스 수강 방법</h3>
+									<form name="sendForm">
+										<input type="radio" name="checkbox1" value="a1"
+											onclick="oneCheckbox(this)">라이브 강의 <input
+											type="radio" name="checkbox1" value="a2"
+											onclick="oneCheckbox(this)">오프라인 강의 <br> 오프라인 강의
+										선택시 클래스 제공 장소 기입<br>
+										<input type= "text"  id="tutor_classplace" placeholder="주소를 입력해주시기 바랍니다.">
+									</form>
+								</div>
+								<br><br>
+
+									<div align="center">
+										<input type="submit" id="tutor_enroll_complete" value="클래스 신청">
+										<input type="reset" onclick="location.href='javascript:history.go(-1);'" id="tutor_enroll_cancel" value="취소">
+									</div>
+
+								<br>
+							</form>
+						</div>
 					</div>
-					<script>
-						// 내용 작성 부분의 공간을 클릭할 때 파일 첨부 창이 뜨도록 설정하는 함수
-						$(function() {
-							$("#fileArea").hide();
-
-							$("#titleImgArea").click(function() {
-								$("#thumbnailImg1").click();
-							});
-							$("#contentImgArea1").click(function() {
-								$("#thumbnailImg2").click();
-							});
-							$("#contentImgArea2").click(function() {
-								$("#thumbnailImg3").click();
-							});
-							$("#contentImgArea3").click(function() {
-								$("#thumbnailImg4").click();
-							});
-						});
-
-						// 각각의 영역에 파일을 첨부 했을 경우 미리 보기가 가능하도록 하는 함수
-						function LoadImg(value, num) {
-							if (value.files && value.files[0]) {
-								var reader = new FileReader();
-
-								reader.onload = function(e) {
-									switch (num) {
-									case 1:
-										$("#titleImg").attr("src",
-												e.target.result);
-										break;
-									case 2:
-										$("#contentImg1").attr("src",
-												e.target.result);
-										break;
-									case 3:
-										$("#contentImg2").attr("src",
-												e.target.result);
-										break;
-									case 4:
-										$("#contentImg3").attr("src",
-												e.target.result);
-										break;
-									}
-								}
-
-								reader.readAsDataURL(value.files[0]);
-							}
-						}
-					</script>
-					<div class="btnArea">
-						<input type="submit" id="tutor_enroll_complete" value="작성완료"> 
-						<input type="button" id="tutor_enroll_cancel"
-							onclick="location.href='<%=request.getContextPath()%>/classNoticeList.no'"
-							value="취소하기">
-					</div>
-					</div>
-				</form>
+						
+				</div>
+			</table>
+			</form>
+			
 			</div>
 
-
-
+		
 		</div>
 		<footer class="container"
 			style="text-align: center; background: #F5F5F5;">

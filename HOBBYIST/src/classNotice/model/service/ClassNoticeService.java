@@ -93,6 +93,7 @@ public class ClassNoticeService {
 		close(conn);
 		return result;
 	}
+	
 	public int getListCount() {
 		Connection conn = getConnection();
 		

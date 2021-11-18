@@ -18,6 +18,7 @@
 	th{border-bottom: 1px solid grey;}
 	#writeNoBtn{background: #B2CCFF;}
 </style>
+<script src="js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 	<%@ include file="../common/topbar.jsp" %>
@@ -59,7 +60,7 @@
 	</div>
 	<script>
 		$('#listArea td').mouseenter(function(){
-			$(this).parent().css({'background':'lightgray', 'cursor':'pointer'});
+			$(this).parent().css({'background':'#9ED4C2', 'cursor':'pointer'});
 		}).mouseout(function(){
 			$(this).parent().css({'background':'none'});
 		}).click(function(){

@@ -144,8 +144,7 @@ img.ui-datepicker-trigger {
 </style>
 </head>
 <body>
-
-	<div class="app-dashboard shrink-medium">
+<div class="app-dashboard shrink-medium">
 
 		<!-- 상단바 -->
 		<div class="row expanded app-dashboard-top-nav-bar">
@@ -294,38 +293,37 @@ img.ui-datepicker-trigger {
 
 				</div>
 			</div>
-
 			<!-- 본문 내용 시작 -->
 			<div class="app-dashboard-body-content off-canvas-content"
 				data-off-canvas-content>
-				<form action="<%= request.getContextPath() %>/thumbinsert.th" method="post">
+				<form action="/form" method="post">
 				<div id="margin_check">
 					<h2>클래스 신청하기</h2>
 					<table>
 						<tr>
 							<th>카테고리</th>
-							<td><select id="category_class" name ="category">
+							<td><select id="category_class">
 									<option value=" " disabled selected hidden>카테고리를
 										선택해주세요.</option>
-									<option value="1">라이브</option>
-									<option value="2">개발/코딩</option>
-									<option value="3">인테리어</option>
-									<option value="4">요리</option>
-									<option value="5">악기</option>
-									<option value="6">건강/헬스</option>
-									<option value="7">글쓰기</option>
-									<option value="8">사진</option>
-									<option value="9">디지털 드로잉</option>
-									<option value="10">드로잉</option>
-									<option value="11">영상 편집</option>
-									<option value="12">주식</option>
-									<option value="13">사주/타로</option>
+									<option value="live_class">라이브</option>
+									<option value="codding_class">개발/코딩</option>
+									<option value="interior_class">인테리어</option>
+									<option value="cooking_class">요리</option>
+									<option value="music_class">악기</option>
+									<option value="health_class">건강/헬스</option>
+									<option value="writing_class">글쓰기</option>
+									<option value="photo_class">사진</option>
+									<option value="digitaldrawing_class">디지털 드로잉</option>
+									<option value="drawing_class">드로잉</option>
+									<option value="Videoediting_class">영상 편집</option>
+									<option value="stock_class">주식</option>
+									<option value="tarot_class">사주/타로</option>
 							</select></td>
 						</tr>
 						<tr>
 							<th>클래스 제목</th>
 							<td><input type="text"
-								placeholder="컨셉이 잘 드러나는 클래스의 제목을 정해주세요" id="tutor_nickname" name="title"></td>
+								placeholder="컨셉이 잘 드러나는 클래스의 제목을 정해주세요" id="tutor_nickname"></td>
 						</tr>
 						<tr>
 							<th>썸네일 첨부</th>
@@ -372,18 +370,13 @@ img.ui-datepicker-trigger {
 						</tr>
 						<tr>
 							<th>강의 시간</th>
-							<td>시작 시간<input type="time" min="09:00:00" max="22:00:00" name = "time"></td>
+							<td>시작 시간<input type="time" min="09:00:00" max="22:00:00"></td>
 							<!-- 						<td> 수업은 2시간 단위로 진행합니다.</td> -->
-						</tr>
-						<tr>
-							<th>클래스 모집 인원</th>
-							<td>최소 인원<input type="number" id="tentacles" name="min" min="1" max="100"></td>
-							<td>최대 인원<input type="number" id="tentacles" name="max" min="10" max="100"></td>
 						</tr>
 						<tr>
 							<th>강의료</th>
 							<td><input type="text" style="text-align: right;"
-								pattern="[0-9]+" id="price" onkeyup="inputNumberFormat(this)" name ="fee" />원
+								pattern="[0-9]+" id="price" onkeyup="inputNumberFormat(this)" />원
 							</td>
 						</tr>
 
@@ -449,9 +442,9 @@ img.ui-datepicker-trigger {
 						}
 					</script>
 					<div class="btnArea">
-						<input type="submit" id="tutor_enroll_complete" value="작성완료"> 
+						<input type="submit" id="tutor_enroll_complete" value="수정완료"> 
 						<input type="button" id="tutor_enroll_cancel"
-							onclick="location.href='<%=request.getContextPath()%>/classNoticeList.no'"
+							onclick="location.href='<%=request.getContextPath()%>/list.th'"
 							value="취소하기">
 					</div>
 					</div>
@@ -474,5 +467,8 @@ img.ui-datepicker-trigger {
 			</p>
 		</footer>
 	</div>
+</body>
+</html>
+			
 </body>
 </html>

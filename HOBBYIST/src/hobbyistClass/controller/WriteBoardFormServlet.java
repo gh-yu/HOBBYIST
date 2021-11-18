@@ -1,4 +1,4 @@
-package classNotice.controller;
+package hobbyistClass.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ClassSignUpServlet
+ * Servlet implementation class writeBoaredFormServlet
  */
-@WebServlet("/classSignUp.me")
-public class ClassSignUpServlet extends HttpServlet {
+@WebServlet("/writeBoardForm.bo")
+public class WriteBoardFormServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ClassSignUpServlet() {
+    public WriteBoardFormServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,7 +26,8 @@ public class ClassSignUpServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("WEB-INF/views/tutor/myPageTutorClassSignUp.jsp").forward(request, response);
+		// sendRedirect방식으로 하면 url노출되기 때문에 foward방식으로
+		request.getRequestDispatcher("WEB-INF/views/board/boardWriteForm.jsp").forward(request, response);
 	}
 
 	/**

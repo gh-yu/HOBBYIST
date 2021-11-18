@@ -17,6 +17,7 @@
 	#updateNoBtn{background: #B2CCFF;}
 	#cancelBtn{background: #D1B2FF;}
 </style>
+<script src="js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <%-- 	<%@ include file="../common/menubar.jsp" %> --%>
