@@ -1,7 +1,7 @@
-package member.controller;
+package hobbyistClass.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import member.model.service.MemberService;
-import member.model.vo.Member;
+import hobbyistClass.model.service.HClassService;
+import hobbyistClass.model.vo.HClass;
 
 /**
- * Servlet implementation class CheckNickFormServlet
+ * Servlet implementation class ClassListServlet
  */
-@WebServlet("/checkNick.me")
-public class CheckNickServlet extends HttpServlet {
+@WebServlet("/ClassListServlet")
+public class ClassListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CheckNickServlet() {
+    public ClassListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,15 +31,7 @@ public class CheckNickServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		String inputNickName = request.getParameter("inputNickName").trim();
-		int result = new MemberService().checkNick(inputNickName); // 회원가입시 저장될 때도 trim() 처리 필요(아니면 공백 여부에 따라 중복여부 달라짐)
-		
-		// ajax방식
-		PrintWriter out = response.getWriter(); 
-		out.println(result);
-		out.flush();
-		out.close();
+		ArrayList<HClass> list = new HClassService().selectClassList();
 	}
 
 	/**

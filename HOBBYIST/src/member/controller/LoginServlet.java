@@ -44,7 +44,46 @@ public class LoginServlet extends HttpServlet {
 			request.getRequestDispatcher("WEB-INF/views/member/loginAction.jsp").forward(request, response);
 			// request.setAttribute("msg", "로그인 실패");
 			// request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
-		}
+		
+//			MemberDAO mDAO = new MemberDAO();
+//			int result = new MemberService().login(member.getMemberEmail(), member.getMemberPwd());
+//			Member loginUser = new MemberService().loginMember(member.getMemberEmail(), member.getMemberPwd());
+//			if (loginUser.getMemberGrade().equals("B")) {
+//				Tutor tutor = new MemberService().selectTutor(loginUser.getMemberEmail());
+//			}
+//			if(result ==1) {
+//				PrintWriter script = response.getWriter();
+//				script.println("<script>");
+//				script.println("location.href='index.jsp'");
+//				script.println("</script>");
+//				if (tutor != null) {
+//					request.getSession().setAttribute("tutor", tutor);
+//				}
+//				if(loginUser != null) {
+//					request.getSession().setAttribute("loginUser", loginUser);
+//					response.sendRedirect(request.getContextPath());
+//				}
+//			} else if(result == 0) {
+//				PrintWriter script = response.getWriter();
+//				script.println("<script>");
+//				script.println("alert('비밀번호가 일치하지 않습니다.')");
+//				script.println("history.back()");
+//				script.println("</script>");
+//			} else if(result == -1) {
+//				PrintWriter script = response.getWriter();
+//				script.println("<script>");
+//				script.println("alert('존재하지 않는 아이디입니다.')");
+//				script.println("history.back()");
+//				script.println("</script>");
+//			} else if(result == -2) {
+//				PrintWriter script = response.getWriter();
+//				script.println("<script>");
+//				script.println("alert('DB 오류가 발생했습니다.')");
+//				script.println("history.back()");
+//				script.println("</script>");
+//			} 
+	
+	}
 	
 
 	/**

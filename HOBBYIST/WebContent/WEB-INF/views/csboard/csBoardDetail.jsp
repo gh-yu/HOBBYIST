@@ -283,7 +283,6 @@
 
 								var html = "";
 								for (var i in data) {
-								
 									html += "<tr><td  colspan='3'><textarea readonly>" + data[i].replyContent + "</textarea></td>" 
 											+ "<tr><td>" + data[i].modifyDate + "</td>"
 											+ "<td><button class='btn deleteReply'>답변 삭제</button>"

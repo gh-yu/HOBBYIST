@@ -40,7 +40,7 @@ public class CSBoardDetailServlet extends HttpServlet {
 		RequestBoard board = new CSBoardService().selectBoard(rNo);
 		
 		ArrayList<Reply> list = new CSBoardService().selectReplyList(rNo); // 댓글(답변)
-			
+
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 		
 		response.setContentType("text/html; charset=UTF-8");

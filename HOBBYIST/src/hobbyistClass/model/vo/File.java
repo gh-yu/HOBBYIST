@@ -1,4 +1,4 @@
-package csBoard.model.vo;
+package hobbyistClass.model.vo;
 
 import java.sql.Date;
 
