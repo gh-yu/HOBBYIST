@@ -57,65 +57,100 @@
 				</div>
 				
 				<!-- 사이드바 -->
-				<div class="app-dashboard-sidebar-inner">
-					<ul class="menu vertical">
-						<li><a href="<%= request.getContextPath() %>/myClass.te">
-							<span class="app-dashboard-sidebar-text"><h3>나의 클래스룸</h3></span>
-						</a></li>
-						<li><a href="#">
-							<span class="app-dashboard-sidebar-text">수강중인 클래스</span>
-						</a></li>
-						<li><a href="#"> 
-							<span class="app-dashboard-sidebar-text">수강완료 클래스</span>
-						</a></li>
-						<li><a href="#"> 
-							<span class="app-dashboard-sidebar-text">찜한 클래스</span>
-						</a></li>
-						<li><a href="#"> 
-							<span class="app-dashboard-sidebar-text">내가 쓴 후기</span>
-						</a></li>
-						<br>
-						<li><a href="<%= request.getContextPath() %>/myInfo.me"> 
-							<span class="app-dashboard-sidebar-text"><h3>내 정보</h3></span>
-						</a></li>
-						<li><a href="<%= request.getContextPath() %>/updateForm.me"> 
-							<span class="app-dashboard-sidebar-text">내 정보 수정</span>
-						</a></li>
-						<li><a href=""> 
-							<span class="app-dashboard-sidebar-text">결제정보</span>
-						</a></li>
-						<li><a href="<%= request.getContextPath() %>/delete.me"> 
-							<span class="app-dashboard-sidebar-text">튜티 탈퇴</span>
-						</a></li>
-						<br><br><br>
-						
-						<% if(loginUser != null && loginUser.getMemberGrade().equals("B")) { %>  
-						<li>
-							<span class="app-dashboard-sidebar-text"><h3>튜터</h3></span> 
-						</li>
-						<li ><a href="<%= request.getContextPath() %>/classNoticeList.no"> 
-							<span class="app-dashboard-sidebar-text">내 클래스</span> 
-						</a></li>
-						<li style="color: #9ED4C2"><a href="<%= request.getContextPath() %>/tutorInform.me"> 
-							<span class="app-dashboard-sidebar-text">튜터 정보</span>
-						</a></li>
-						<li style="color: #9ED4C2"><a href=""> 
-							<span class="app-dashboard-sidebar-text">정산하기</span>
-						</a></li>		
-						
-						<% } else { %>  <%-- 로그인한 유저의 그레이드가 'B'즉 튜터가 아니면 튜터 신청 버튼 활성화 --%>
-						<li>
-							<a href="<%= request.getContextPath() %>/tuteeEnroll.me">
-							<span class="app-dashboard-sidebar-text"><button id="apply-tutor-btn">튜터 신청하기</button></span></a>
-						</li> <%-- span class="app-dashboard-sidebar-text"가 있어야 사이드바 닫힐때 안 보임  --%>	
-						
-						<% }  %>
-						<br><br><br>
-					</ul>
-					
-					
-				</div>
+				<% if(loginUser != null && loginUser.getMemberGrade().equals("A")) { %>
+					<div class="app-dashboard-sidebar-inner">
+						<ul class="menu vertical">
+							<li><a href="#">
+								<span class="app-dashboard-sidebar-text"><h3>클래스 관리</h3></span>
+							</a></li>
+							<li><a href="<%= request.getContextPath() %>/apvList.cl">
+								<span class="app-dashboard-sidebar-text">클래스 승인</span>
+							</a></li>
+							<li><a href="#"> 
+								<span class="app-dashboard-sidebar-text">클래스 후기 관리</span>
+							</a></li>
+							<br><br>
+							<li><a href="#"> 
+								<span class="app-dashboard-sidebar-text"><h3>고객 요청 관리</h3></span>
+							</a></li>
+							<li><a href="<%= request.getContextPath() %>/list.cs"> 
+								<span class="app-dashboard-sidebar-text">1:1 문의</span>
+							</a></li>
+							<li><a href="<%= request.getContextPath() %>/FAQ.bo"> 
+								<span class="app-dashboard-sidebar-text">자주 묻는 질문(FAQ)</h3></span>
+							</a></li>
+							<br><br>
+							<li><a href="#"> 
+								<span class="app-dashboard-sidebar-text"><h3>회원 관리</h3></span>
+							</a></li>
+							<li><a href="#"> 
+								<span class="app-dashboard-sidebar-text">튜티(Tutee)목록</span>
+							</a></li>
+							<li><a href="#"> 
+								<span class="app-dashboard-sidebar-text">튜터(Tutor)목록</span>
+							</a></li>
+										
+						</ul>
+					</div>
+				<% } else { %>
+					<div class="app-dashboard-sidebar-inner">
+						<ul class="menu vertical">
+							<li><a href="<%= request.getContextPath() %>/myClass.te">
+								<span class="app-dashboard-sidebar-text"><h3>나의 클래스룸</h3></span>
+							</a></li>
+							<li><a href="#">
+								<span class="app-dashboard-sidebar-text">수강중인 클래스</span>
+							</a></li>
+							<li><a href="#"> 
+								<span class="app-dashboard-sidebar-text">수강완료 클래스</span>
+							</a></li>
+							<li><a href="#"> 
+								<span class="app-dashboard-sidebar-text">찜한 클래스</span>
+							</a></li>
+							<li><a href="#"> 
+								<span class="app-dashboard-sidebar-text">내가 쓴 후기</span>
+							</a></li>
+							<br>
+							<li><a href="<%= request.getContextPath() %>/myInfo.me"> 
+								<span class="app-dashboard-sidebar-text"><h3>내 정보</h3></span>
+							</a></li>
+							<li><a href="<%= request.getContextPath() %>/updateForm.me"> 
+								<span class="app-dashboard-sidebar-text">내 정보 수정</span>
+							</a></li>
+							<li><a href=""> 
+								<span class="app-dashboard-sidebar-text">결제정보</span>
+							</a></li>
+							<li><a href="<%= request.getContextPath() %>/delete.me"> 
+								<span class="app-dashboard-sidebar-text">튜티 탈퇴</span>
+							</a></li>
+							<br>
+							
+							<% if(loginUser != null && loginUser.getMemberGrade().equals("B")) { %>  
+								<li>
+									<span class="app-dashboard-sidebar-text"><h3>튜터</h3></span> 
+								</li>
+								<li ><a href="<%= request.getContextPath() %>/classNoticeList.no"> 
+									<span class="app-dashboard-sidebar-text">내 클래스</span> 
+								</a></li>
+								<li style="color: #9ED4C2"><a href="<%= request.getContextPath() %>/tutorInform.me"> 
+									<span class="app-dashboard-sidebar-text">튜터 정보</span>
+								</a></li>
+								<li style="color: #9ED4C2"><a href=""> 
+									<span class="app-dashboard-sidebar-text">정산하기</span>
+								</a></li>		
+							
+							<% } else { %>  <%-- 로그인한 유저의 그레이드가 'B'즉 튜터가 아니면 튜터 신청 버튼 활성화 --%>
+							<li>
+								<a href="<%= request.getContextPath() %>/tuteeEnroll.me">
+								<span class="app-dashboard-sidebar-text"><button id="apply-tutor-btn">튜터 신청하기</button></span></a>
+							</li> <%-- span class="app-dashboard-sidebar-text"가 있어야 사이드바 닫힐때 안 보임  --%>	
+							<% }  %>
+							<br><br><br>
+						</ul>
+					</div>
+				<% } %>
 			</div>
+				
 
 			<!-- 본문 영역 -->
 			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>

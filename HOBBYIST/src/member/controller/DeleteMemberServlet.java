@@ -34,20 +34,19 @@ public class DeleteMemberServlet extends HttpServlet {
 		request.getRequestDispatcher("WEB-INF/views/member/deleteMember.jsp").forward(request, response);
 		
 		
-		
-		HttpSession session = request.getSession(true); //로그인 된 상태에서 탈퇴하는 거니까 세션에서 정보 받아옴
-        String memberEmail = ((Member)session.getAttribute("loginUser")).getMemberEmail();
-
-        int result = new MemberService().deleteMember(memberEmail);
-
-        if(result > 0) {
-            System.out.println("확");
-            session.invalidate(); //세션 무효화 한 번더 !
-            response.sendRedirect(request.getContextPath());
-        } else {
-            request.setAttribute("msg", "회원 탈퇴에 실패했습니다.");
-            request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
-        }
+//		
+//		HttpSession session = request.getSession(true); //로그인 된 상태에서 탈퇴하는 거니까 세션에서 정보 받아옴
+//        String memberEmail = ((Member)session.getAttribute("loginUser")).getMemberEmail();
+//
+//        int result = new MemberService().deleteMember(memberEmail);
+//
+//        if(result > 0) {
+//            session.invalidate();
+//            response.sendRedirect(request.getContextPath());
+//        } else {
+//            request.setAttribute("msg", "회원 탈퇴에 실패했습니다.");
+//            request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
+//        }
     }
         
 	

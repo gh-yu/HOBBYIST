@@ -2,10 +2,6 @@
     pageEncoding="UTF-8" import="java.util.ArrayList, faq.model.vo.FAQ" %>
 <% 
 	ArrayList<FAQ> list = (ArrayList<FAQ>)request.getAttribute("list");
-
-//	if(list == null){
-//	    list = new ArrayList<FAQ>();
-// 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 %>
 <!DOCTYPE html>
 <html>
@@ -96,11 +92,11 @@
 				<!-- 사이드바 -->
 				<div class="app-dashboard-sidebar-inner">
 					<ul class="menu vertical">
-						<li><a href="<%= request.getContextPath() %>/FAQ.bo">
-							<span class="app-dashboard-sidebar-text"><h3>FAQ</h3></span>
-						</a></li>
 						<li><a href="<%= request.getContextPath() %>/list.cs">
 							<span class="app-dashboard-sidebar-text"><h3>1:1문의</h3></span>
+						</a></li>
+						<li><a href="<%= request.getContextPath() %>/FAQ.bo">
+							<span class="app-dashboard-sidebar-text"><h3>FAQ</h3></span>
 						</a></li>
 						<br><br><br>
 					</ul>

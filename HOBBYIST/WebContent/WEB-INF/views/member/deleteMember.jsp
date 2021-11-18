@@ -30,7 +30,7 @@
 		<br><br>
 		<h1 align="center">정말 탈퇴하시겠습니까?😢</h1>
 		<div align="center">
-			<button id="cancelBtn" onclick="history.back();"><b>취소</b></button>
+			<button id="cancelBtn" onclick="history.back();"><b>취소</b></button> <%-- <%= request.getContextPath() %> --%>
 			<button id="confirmBtn" onclick="location.href='<%= request.getContextPath() %>/deleteConfirm.me'"><b>확인</b></button>
 		</div>
 
