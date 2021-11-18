@@ -33,15 +33,15 @@ public class FAQInsertServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
-		String faqCategory = request.getParameter("category");
+//		int faqNo = Integer.parseInt(request.getParameter("faqNo")); //왜 null...?
+//		System.out.println(faqNo);
 		String faqTitle = request.getParameter("title");
 		String faqReply = request.getParameter("reply");
+		String faqCategory = request.getParameter("category");
 		
-		System.out.println(faqCategory);
+		FAQ faq = new FAQ(0, faqTitle, faqReply, faqCategory);
 		
-		FAQ f = new FAQ(0, faqCategory, faqTitle, faqReply);
-		
-		int result = new FAQService().insertFAQ(f);
+		int result = new FAQService().insertFAQ(faq);
 		
 		if(result > 0) {
 			response.sendRedirect("FAQ.bo");

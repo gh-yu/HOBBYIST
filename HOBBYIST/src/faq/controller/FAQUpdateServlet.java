@@ -1,4 +1,4 @@
-package csBoard.controller;
+package faq.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,20 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import csBoard.model.service.CSBoardService;
-import csBoard.model.vo.RequestBoard;
+import faq.model.service.FAQService;
+import faq.model.vo.FAQ;
 
 /**
- * Servlet implementation class CSBoardInsertServlet
+ * Servlet implementation class FAQUpdateServlet
  */
-@WebServlet("/insert.cs")
-public class CSBoardInsertServlet extends HttpServlet {
+@WebServlet("/FAQUpdate.bo")
+public class FAQUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CSBoardInsertServlet() {
+    public FAQUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,25 +29,22 @@ public class CSBoardInsertServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String title = request.getParameter("title");
-		String category = request.getParameter("category").trim();
-		String contactEmail = request.getParameter("contactEmail");
-		String content = request.getParameter("content");
-		String writer = request.getParameter("writer");
+		request.setCharacterEncoding("UTF-8");
 		
-		RequestBoard board = new RequestBoard();
-		board.setReqTitle(title);
-		board.setReqCategory(category);
-		board.setContactEmail(contactEmail);
-		board.setReqContent(content);
-		board.setReqWriter(writer);
+		int no = Integer.parseInt(request.getParameter("no"));
+		String faqTitle = request.getParameter("title");
+		String faqReply = request.getParameter("reply");
+		String faqCategory = request.getParameter("category");
 		
-		int result = new CSBoardService().insertBoard(board);
+		FAQ faq = new FAQ(no, faqTitle, faqReply, faqCategory);
 		
-		if (result > 0) {
-			response.sendRedirect("list.cs");
+		int result = new FAQService().updateFAQ(faq);
+		
+		if(result > 0) {
+			request.setAttribute("faq", faq);
+			request.getRequestDispatcher("WEB-INF/views/faq/faqDetail.jsp").forward(request, response);
 		} else {
-			request.setAttribute("msg", "1:1문의글 작성 실패");
+			request.setAttribute("msg", "FAQ 수정 실패");
 			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
 		}
 	}

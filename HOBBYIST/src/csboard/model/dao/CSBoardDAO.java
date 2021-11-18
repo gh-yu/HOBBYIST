@@ -13,6 +13,7 @@ import java.util.Properties;
 import static common.JDBCTemplate.close;
 
 import csBoard.model.vo.PageInfo;
+import csBoard.model.vo.Reply;
 import csBoard.model.vo.RequestBoard;
 import member.model.dao.MemberDAO;
 
@@ -87,7 +88,8 @@ public class CSBoardDAO {
 												   rset.getDate("REQ_CREATE_DATE"),
 												   rset.getDate("REQ_MODIFY_DATE"),
 												   rset.getInt("REQ_STATUS"),
-												   rset.getString("REQ_REPLY_STATUS"));
+												   rset.getString("REQ_REPLY_STATUS"),
+												   rset.getString("REQ_CONTACT_EMAIL"));
 				list.add(rb);
 												   
 			}
@@ -125,8 +127,9 @@ public class CSBoardDAO {
 									   rset.getDate("REQ_CREATE_DATE"),
 									   rset.getDate("REQ_MODIFY_DATE"),
 									   rset.getInt("REQ_STATUS"),
-									   rset.getString("REQ_REPLY_STATUS"));
-			}	
+									   rset.getString("REQ_REPLY_STATUS"),
+									   rset.getString("REQ_CONTACT_EMAIL"));
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -148,7 +151,8 @@ public class CSBoardDAO {
 			pstmt.setString(1, board.getReqCategory());
 			pstmt.setString(2, board.getReqTitle());
 			pstmt.setString(3, board.getReqContent());
-			pstmt.setString(4, board.getReqWriter());
+			pstmt.setString(4, board.getContactEmail());
+			pstmt.setString(5, board.getReqWriter());
 			
 			result = pstmt.executeUpdate();
 			
@@ -159,6 +163,82 @@ public class CSBoardDAO {
 		}
 		
 		return result;
+	}
+
+	public int updateBoard(Connection conn, RequestBoard board) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, board.getReqCategory());
+			pstmt.setString(2, board.getReqTitle());
+			pstmt.setString(3, board.getReqContent());
+			pstmt.setString(4, board.getContactEmail());
+			pstmt.setInt(5, board.getReqNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteBoard(Connection conn, int rNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, rNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public ArrayList<Reply> selectReplyList(Connection conn, int rNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Reply> list = null;
+		
+		String query = prop.getProperty("selectReplyList");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, rNo);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Reply>();
+			while(rset.next()) {
+				list.add(new Reply(rset.getInt("REPLY_NO"), 
+						replyContent, createDate, modifyDate, rset.getInt("REQ_NO")));
+			}
+			REPLY_NO, REPLY_BOARD_CONTENT, REPLY_CREATE_DATE, REPLY_MODIFY_DATE, REQ_NO
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
 	}
 	
 	// String query = "SELECT * FROM CS_REQ_BOARD JOIN FILES ON(BOARD_NO = REQ_NO) WHERE FILE_TABLE_NAME = 'CS_REQ_BOARD' AND STATUS = 1";

@@ -3,9 +3,10 @@
 	import="java.util.ArrayList, classNotice.model.vo.*, member.model.vo.Member"%>
 <%
 	Member loginUser = (Member) session.getAttribute("loginUser");
-ArrayList<ClassNotice> list = (ArrayList) request.getAttribute("list");
-ArrayList<Member> member = (ArrayList) request.getAttribute("member");
-PageInfo pi = (PageInfo) request.getAttribute("pi");
+	ArrayList<ClassNotice> list = (ArrayList) request.getAttribute("list");
+	ArrayList<Member> member = (ArrayList) request.getAttribute("member");
+	PageInfo pi = (PageInfo) request.getAttribute("pi");
+
 
 /* Tutor tutor = (Tutor)session.getAttribute("tutor"); */
 %>
@@ -320,57 +321,36 @@ PageInfo pi = (PageInfo) request.getAttribute("pi");
 									<th width="150px">신청 날짜</th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr class="table-expand-row" data-open-details>
-									<td class="text-right">1</td>
-									<td>강건강</td>
-									<td class="text-right">강건강123</td>
-									<td>010-1111-2222</td>
-									<td>kang123@naver.com</td>
-									<td>2021.01.01</td>
-								</tr>
-								<tr class="table-expand-row" data-open-details>
-									<td class="text-right">2</td>
-									<td></td>
-									<td class="text-right"></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr class="table-expand-row" data-open-details>
-									<td class="text-right">3</td>
-									<td></td>
-									<td class="text-right"></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr class="table-expand-row" data-open-details>
-									<td class="text-right">4</td>
-									<td></td>
-									<td class="text-right"></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr class="table-expand-row" data-open-details>
-									<td class="text-right">5</td>
-									<td></td>
-									<td class="text-right"></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr class="table-expand-row" data-open-details>
-									<td class="text-right">6</td>
-									<td></td>
-									<td class="text-right"></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
+<!-- 							<tbody> -->
+<!-- 								<tbody> -->
+<%-- 								<% --%>
+<%-- -									if (list.isEmpty()) {
+<%-- 								%> --%>
+<!-- 								<tr> -->
+<!-- 									<td colspan="6">수강 인원이 없습니다.</td> -->
+<!-- 								</tr> -->
+<%-- 								<% --%>
+<%-- 									} else {
+<%-- 								%> --%>
+<%-- 								<% --%>
+ <%-- 									for (int i = 0; i < list.size(); i++) {
+<%-- 								%> --%>
+<!-- 								<tr> -->
+<%-- 									<td><%=list.get(i).getClassBoardNo()%></td> --%>
+<%-- 									<td><%=list.get(i).getClassBoardName()%></td> --%>
+<%-- 									<td><%=list.get(i).getClassBoardWriter()%></td> --%>
+<%-- 									<td><%=list.get(i).getClassBoardViews()%></td> --%>
+<%-- 									<td><%=list.get(i).getClassBoardDate()%></td> --%>
+<%-- 									<td><%=list.get(i).getClassBoardDate()%></td> --%>
+<!-- 								</tr> -->
+<%-- 								<% --%>
+ <%-- 									}
+<%-- 								%> --%>
+<%-- 								<% --%>
+<%-- 									}
+<%-- 								%> --%>
+<!-- 							</tbody> -->
 
-							</tbody>
 						</table>
 					</div>
 				</div>

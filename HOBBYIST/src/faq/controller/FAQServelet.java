@@ -36,7 +36,8 @@ public class FAQServelet extends HttpServlet {
 		String page = null;
 		if(list != null) {
 			request.setAttribute("list", list);
-			page = "WEB-INF/views/contact/faqList.jsp";
+			page = "WEB-INF/views/faq/faqList.jsp";
+//			page = "WEB-INF/views/faq/ttestt.jsp"; //토글테스트용
 		} else {
 			request.setAttribute("msg", "FAQ 조회 실패");
 			page = "WEB-INF/views/common/errorPage.jsp";

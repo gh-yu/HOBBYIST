@@ -1,4 +1,4 @@
-package csBoard.controller;
+package faq.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,20 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import csBoard.model.service.CSBoardService;
-import csBoard.model.vo.RequestBoard;
+import faq.model.service.FAQService;
 
 /**
- * Servlet implementation class CSBoardInsertServlet
+ * Servlet implementation class FAQDeleteServlet
  */
-@WebServlet("/insert.cs")
-public class CSBoardInsertServlet extends HttpServlet {
+@WebServlet("/FAQdelete.bo")
+public class FAQDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CSBoardInsertServlet() {
+    public FAQDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,25 +28,15 @@ public class CSBoardInsertServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String title = request.getParameter("title");
-		String category = request.getParameter("category").trim();
-		String contactEmail = request.getParameter("contactEmail");
-		String content = request.getParameter("content");
-		String writer = request.getParameter("writer");
+		int no = Integer.parseInt(request.getParameter("no"));
 		
-		RequestBoard board = new RequestBoard();
-		board.setReqTitle(title);
-		board.setReqCategory(category);
-		board.setContactEmail(contactEmail);
-		board.setReqContent(content);
-		board.setReqWriter(writer);
+		int result = new FAQService().deleteFAQ(no);
+		System.out.println(result);
 		
-		int result = new CSBoardService().insertBoard(board);
-		
-		if (result > 0) {
-			response.sendRedirect("list.cs");
+		if(result > 0) {
+			response.sendRedirect("FAQ.bo");
 		} else {
-			request.setAttribute("msg", "1:1문의글 작성 실패");
+			request.setAttribute("msg", "FAQ 삭제 실패");
 			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
 		}
 	}

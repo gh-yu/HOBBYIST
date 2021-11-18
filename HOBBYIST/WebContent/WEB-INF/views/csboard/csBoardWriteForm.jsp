@@ -21,7 +21,9 @@
 	#listBtn{background: lightgray;}
 	button:hover{cursor: pointer;}
 	table{align: center;}
-	
+
+	/* 개인정보 수집 이용 동의 table 관련 css */
+	.table_myroom{border-top:solid #99bddd 1px;border-bottom:solid #99bddd 1px;} .table_myroom th{color:#1770b4;padding:8px 0 7px 0;background-color:#f7f7f7;font-size:11px;border-left:solid #dadada 1px;} .table_myroom th.first{border-left:none;} .table_myroom th.line{border-top:solid #dadada 1px;} .table_myroom tr.bgG th,.table_myroom tr.bgG td  {background:#f7f7f7;} .table_myroom td{color:#666;padding:5px 0;font-size:11px;border-left:solid #dadada 1px;border-top:solid #dadada 1px;text-align:center;} .table_myroom td.first{border-left:none;} .table_myroom td.left{text-align:left;padding-left:10px;} .table_myroom td a{font-size:11px;} .table_myroom td a:hover, .table_myroom td a:active{font-size:11px;color:#666;text-decoration:underline;} .table_myroom td.none_data{padding:20px 0 20px 0;color:#1770b5;text-align:center;font-weight:bold;} .table_myroom th { text-align:center;}
 </style>
 </head>
 <body>
@@ -63,11 +65,11 @@
 				<!-- 사이드바 -->
 				<div class="app-dashboard-sidebar-inner">
 					<ul class="menu vertical">
-						<li><a href="#">
-							<span class="app-dashboard-sidebar-text"><h3>FAQ</h3></span>
-						</a></li>
 						<li><a href="">
 							<span class="app-dashboard-sidebar-text"><h3>1:1문의</h3></span>
+						</a></li>
+						<li><a href="#">
+							<span class="app-dashboard-sidebar-text"><h3>FAQ</h3></span>
 						</a></li>
 						<br><br><br>
 					</ul>
@@ -87,7 +89,7 @@
 								<thead>
 									<tr>
 										<th height="20px">제목</th>
-										<td colspan="5" height="30px;">
+										<td colspan="8" height="30px;">
 											<input type="text" name="title" required style="width: 98%;">
 										</td>
 									</tr>
@@ -95,7 +97,7 @@
 									</tr>
 									<tr>
 										<th height="50px">분야</th>
-										<td>
+										<td colspan="3" width="350px">
 											<select name="category">
 												<option value="계정">계정</option>
 												<option value="수강">수강</option>
@@ -104,30 +106,66 @@
 											</select>
 										</td>
 										<th>작성자</th>
-										<td>
+										<td width="80px">
 											<%= loginUser.getMemberNickName() %>
 											<input type="hidden" name="nickName" value="<%= loginUser.getMemberNickName() %>">
 										</td>
-										<th>이메일</th>
-										<td>
-											<%= loginUser.getMemberEmail() %>
-											<input type="hidden" name="email" value="<%= loginUser.getMemberEmail() %>">
+										<th>이메일*</th>
+										<td colspan="2" width="250px">
+											<input type="email" name="contactEmail" required style="width: 250px;">
 										</td>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
-										<th colspan="6" height="30px">내용</th>
+										<th colspan="9" height="30px">내용</th>
 									</tr>
 									<tr>
-										<td colspan="6" style="min-height: 250px;">
+										<td colspan="9" style="min-height: 250px;">
 											<textarea name="content" cols="120" rows="15" style="resize:none;" required></textarea>
 										</td>
 									</tr>
 								</tbody>
-
+								
 							</table>
+											
+							<div id="privacy-term" class="signup-group">
+							<h4 class="rgb">개인정보 수집 및 이용에 대한 안내</h4>
+								<div class="text-box style">
+			
+									<div class="term_list_area margin_top10">
+										<div class="term_box02" tabindex="0">
+											원활한 고객상담을 위해 아래와 같은 개인정보를 수집하고 있습니다.</p>
+											<table class="table_myroom margin_top5" width="100%" cellspacing="0" cellpadding="0">
+												<colgroup>
+												<col width="*" />
+												<col width="20%" />
+												<col width="30%" /> </colgroup>
+												<tbody>
+												<tr>
+												<th scope="col">수집목적</th>
+												<th scope="col">수집 항목</th>
+												<th scope="col">보유 및 이용기간</th>
+												</tr>
+												<tr>
+												<td>1:1 고객 문의/불편사항 처리</td>
+												<td>이메일</td>
+												<td>수집목적 달성후 즉시 폐기</td>
+												</tr>
+												</tbody>
+											</table>
+											<p>* 1:1문의 이용시 개인정보 수집ㆍ이용에 대한 동의를 하지 않을 권리가 있으며, 동의 거부시에는 1:1문의를 이용할 수 없습니다.</p>
+										</div>
+									</div>
+								</div>
+							</div> 
+							<div class="author-agree-wrap row">
+								<label><input type="checkbox" name="agreewith" value="1" required class="required">위의 이메일 정보 수집 및 이용에 대해 동의 함<strong>(필수)</strong></label>
+							</div>
 							
+							<input type="hidden" name="writer" value="<%= loginUser.getMemberEmail() %>">
+							
+							<br><br clear="all">
 							<div align="center">
 								<input type="submit" class="btn" id="writeBtn" value="작성완료">
 								<input type="button" onclick="location.href='<%= request.getContextPath() %>/list.cs'" class="btn" id="listBtn" value="목록으로">
@@ -136,25 +174,7 @@
 					</div>
 							
 				</div>	
-			</div>
-					<script>
-					
-						$('#listArea td').mouseenter(function(){
-							$(this).parent().css({'text-decoration':'underline', 'cursor':'pointer'})
-						}).mouseout(function(){
-							$(this).parent().css('text-decoration', 'none');
-						}).click(function(){
-							var rNo = $(this).parent().children().eq(0).text();
-							var userEmail = $(this).parent().children().eq(6).text();
-							
-							if ('<%= loginUser %>' == 'null') {
-								alert('작성자만 열람할 수 있습니다.');
-							} else {
-								location.href='<%= request.getContextPath() %>/detail.cs?rNo=' + rNo;
-							}
-						})
-						
-					</script>				
+			</div>		
 		</div>
 		
 			<!-- FOOTER -->

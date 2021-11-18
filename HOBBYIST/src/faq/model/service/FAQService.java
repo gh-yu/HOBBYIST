@@ -23,10 +23,10 @@ public class FAQService {
 		return list;
 	}
 
-	public int insertFAQ(FAQ f) {
+	public int insertFAQ(FAQ faq) {
 		Connection conn = getConnection();
 		
-		int result = fDAO.insertFAQ(conn,f);
+		int result = fDAO.insertFAQ(conn,faq);
 		
 		if(result > 0) {
 			commit(conn);
@@ -38,4 +38,47 @@ public class FAQService {
 		
 		return result;
 	}
+
+	public FAQ detailFAQ(int faqNo) {
+		Connection conn = getConnection();
+		
+		FAQ faq = fDAO.detailFAQ(conn, faqNo);
+		
+		close(conn);
+		
+		return faq;
+	}
+
+	public int updateFAQ(FAQ faq) {
+		Connection conn = getConnection();
+		
+		int result = fDAO.updateFAQ(conn, faq);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
+
+	public int deleteFAQ(int no) {
+		Connection conn = getConnection();
+		
+		int result = fDAO.deleteFAQ(conn, no);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
+
 }

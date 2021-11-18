@@ -59,8 +59,8 @@ public class ClassNoticeUpdateServlet extends HttpServlet {
 		
 		String page = null;
 		if (result > 0) {
-			request.setAttribute("notice", notice);
-			page = "WEB-INF/views/notice/noticeDetail.jsp";
+			request.setAttribute("classnotice", notice);
+			page = "WEB-INF/views/tutor/noticeDetail.jsp";
 		} else {
 			request.setAttribute("msg", "공지사항 수정 실패");
 			page = "WEB-INF/views/common/errorPage.jsp";
