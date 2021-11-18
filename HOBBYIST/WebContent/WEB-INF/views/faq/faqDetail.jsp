@@ -61,7 +61,7 @@
 	}
 	
 	#btnArea {
-		margin-left: 457px;
+		margin-left: 467px;
 	}
 	
 	
@@ -109,11 +109,11 @@
 				<!-- 사이드바 -->
 				<div class="app-dashboard-sidebar-inner">
 					<ul class="menu vertical">
+						<li><a href="<%= request.getContextPath() %>/list.cs">
+							<span class="app-dashboard-sidebar-text"><h3>1:1문의</h3></span>
+						</a></li>
 						<li><a href="<%= request.getContextPath() %>/FAQ.bo">
 							<span class="app-dashboard-sidebar-text"><h3>FAQ</h3></span>
-						</a></li>
-						<li><a href="">
-							<span class="app-dashboard-sidebar-text"><h3>1:1문의</h3></span>
 						</a></li>
 						<br><br><br>
 					</ul>
@@ -164,8 +164,8 @@
 						</div>
 						<div id="btnArea">
 							<% if (loginUser != null && loginUser.getMemberEmail().equals("admin@hobbyist.com")) { %> <%-- 로그인을 했으면서, admin인  경우--%>
-								<input type="button" id="FAQcancel" value="목록" onclick="location.href='javascript:history.go(-1);'">
-								<input type="submit" id="editFaqBtn" value="수정">
+								<input type="button" id="FAQcancel" value="목록으로" onclick="location.href='javascript:history.go(-1);'">
+								<input type="submit" id="editFaqBtn" value="수정하기">
 							<% } %>
 						</div>
 					</form>

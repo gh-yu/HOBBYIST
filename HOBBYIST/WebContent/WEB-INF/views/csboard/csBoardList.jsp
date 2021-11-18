@@ -66,11 +66,11 @@
 				<!-- 사이드바 -->
 				<div class="app-dashboard-sidebar-inner">
 					<ul class="menu vertical">
-						<li><a href="#">
-							<span class="app-dashboard-sidebar-text"><h3>FAQ</h3></span>
-						</a></li>
 						<li><a href="<%= request.getContextPath() %>/list.cs">
 							<span class="app-dashboard-sidebar-text"><h3>1:1문의</h3></span>
+						</a></li>
+						<li><a href="<%= request.getContextPath() %>/FAQ.bo">
+							<span class="app-dashboard-sidebar-text"><h3>FAQ</h3></span>
 						</a></li>
 						<br><br><br>
 					</ul>

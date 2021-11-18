@@ -20,6 +20,7 @@ public class HClass {
 	private int tutorNo;
 	private int classCategoryNo;
 	private Date classStartDate;
+	private String categoryName;
 	
 	public HClass() {}
 
@@ -47,12 +48,15 @@ public class HClass {
 		this.classStartDate = classStartDate;
 	}
 	
-	public HClass(int classNo, int tutorNo, int classCategoryNo, String className, 
+	
+
+	public HClass(Date classEnrollDate, int classNo, int tutorNo, String categoryName, String className, 
 				String classApvYn, Date classApvDate) {
 		super();
+		this.classEnrollDate = classEnrollDate;
 		this.classNo = classNo;
 		this.tutorNo = tutorNo;
-		this.classCategoryNo = classCategoryNo;
+		this.categoryName = categoryName;
 		this.className = className;
 		this.classApvYn = classApvYn;
 		this.classApvDate = classApvDate;
@@ -193,6 +197,14 @@ public class HClass {
 
 	public void setClassStartDate(Date classStartDate) {
 		this.classStartDate = classStartDate;
+	}
+	
+	public String getcategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
 	@Override

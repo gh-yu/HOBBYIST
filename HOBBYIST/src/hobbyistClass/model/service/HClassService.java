@@ -1,21 +1,38 @@
 package hobbyistClass.model.service;
 
+import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.*;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import hobbyistClass.model.dao.HClassDAO;
+import hobbyistClass.model.vo.ApvPageInfo;
 import hobbyistClass.model.vo.HClass;
-import static common.JDBCTemplate.getConnection;
-import static common.JDBCTemplate.close;
-import static common.JDBCTemplate.commit;
-import static common.JDBCTemplate.rollback;
 
 public class HClassService {
 
-	public ArrayList<HClass> selectClassList() {
+	private HClassDAO hDAO = new HClassDAO();
+	
+	public int getListCount() {
 		Connection conn = getConnection();
 		
+		int listCount = hDAO.getListCount(conn);
+		
 		close(conn);
-		return null;
+		
+		return listCount;
+	}
+	
+	public ArrayList<HClass> selectApvList(ApvPageInfo pi){
+		Connection conn = getConnection();
+		
+		ArrayList<HClass> list = hDAO.selectApvList(conn, pi);
+		
+		close(conn);
+		
+		return list;
 	}
 
+	
 }
