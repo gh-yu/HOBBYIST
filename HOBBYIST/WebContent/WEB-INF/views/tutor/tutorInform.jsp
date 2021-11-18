@@ -453,7 +453,7 @@ label[for="fabk"], [for="twit"], [for="insta"], [for="pinter"], [for="youtu"] {
 						<li><a href=""> 
 							<span class="app-dashboard-sidebar-text" onclick="deleteMember()">튜티 탈퇴</span>
 						</a></li>
-						<br><br><br>
+						<br>
 						
 						<% if(loginUser != null && loginUser.getMemberGrade().equals("B")) { %>  
 						<li>

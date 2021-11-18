@@ -15,13 +15,13 @@ import member.model.vo.Member;
  * Servlet implementation class deleteConfirmServlete
  */
 @WebServlet("/deleteConfirm.me")
-public class deleteConfirmServlete extends HttpServlet {
+public class DeleteConfirmServlete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public deleteConfirmServlete() {
+    public DeleteConfirmServlete() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,7 +36,7 @@ public class deleteConfirmServlete extends HttpServlet {
 		int result = new MemberService().deleteMember(memberEmail);
 		
 		if(result > 0) {
-			session.invalidate(); //세션 무효화 한 번더 !
+			session.invalidate();
 			response.sendRedirect(request.getContextPath());
 			
 		} else {
