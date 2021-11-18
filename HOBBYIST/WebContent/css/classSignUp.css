@@ -92,20 +92,3 @@ select option, select optgroup{
 	padding: 20px;
 	margin-top: 20px;
 }
-
-/*강사님 코드*/
-	.outer {
-		width:1000px; height:650px; background: rgba(255, 255, 255, 0.4); border: 5px solid white;
-		margin-left:auto; margin-right:auto; margin-top:50px;
-	}
-	.insertArea {width:500px; height:450px; margin-left:auto; margin-right:auto;}
-	.btnArea {width:180px; margin-left:auto; margin-right:auto;}
-	#titleImgArea {width:350px; height:200px; border:2px dashed darkgray; text-align:center; display:table-cell; vertical-align:middle;}
-	#titleImgArea:hover, #contentImgArea1:hover, #contentImgArea2:hover, #contentImgArea3:hover {cursor:pointer;}
-	#contentImgArea1, #contentImgArea2, #contentImgArea3 {
-		width:150px; height:100px; border:2px dashed darkgray;
-		text-align:center; display:table-cell; vertical-align:middle;
-	}
-	#insertBtn{background: #D1B2FF;}
-	#cancelBtn{background: #B2CCFF}
-	#insertThumbTable{margin: auto;}
