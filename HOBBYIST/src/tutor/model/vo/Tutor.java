@@ -2,8 +2,9 @@ package tutor.model.vo;
 
 import java.sql.Date;
 
-public class TutorInform {
+public class Tutor {
 	private int tutorNo;
+	private String tutorNickName;
 	private Date tutorEnrollDate;
 	private String tutorBankAccount;
 	private String tutorReport;
@@ -13,13 +14,16 @@ public class TutorInform {
 	private String tutorImgName;
 	private int tutorImagSize;
 	private String memberEmail;			// MEMBER테이블에서 JOIN
+	private String memberPhone;
 	
-	public TutorInform() {}
+	public Tutor() {}
 
-	public TutorInform(int tutorNo, Date tutorEnrollDate, String tutorBankAccount, String tutorReport, String tutorSns,
-			String tutorImgPath, Date tutorImgUpdate, String tutorImgName, int tutorImagSize, String memberEmail) {
+	public Tutor(int tutorNo, String tutorNickName, Date tutorEnrollDate, String tutorBankAccount, String tutorReport,
+			String tutorSns, String tutorImgPath, Date tutorImgUpdate, String tutorImgName, int tutorImagSize,
+			String memberEmail, String memberPhone) {
 		super();
 		this.tutorNo = tutorNo;
+		this.tutorNickName = tutorNickName;
 		this.tutorEnrollDate = tutorEnrollDate;
 		this.tutorBankAccount = tutorBankAccount;
 		this.tutorReport = tutorReport;
@@ -29,6 +33,7 @@ public class TutorInform {
 		this.tutorImgName = tutorImgName;
 		this.tutorImagSize = tutorImagSize;
 		this.memberEmail = memberEmail;
+		this.memberPhone = memberPhone;
 	}
 
 	public int getTutorNo() {
@@ -37,6 +42,14 @@ public class TutorInform {
 
 	public void setTutorNo(int tutorNo) {
 		this.tutorNo = tutorNo;
+	}
+
+	public String getTutorNickName() {
+		return tutorNickName;
+	}
+
+	public void setTutorNickName(String tutorNickName) {
+		this.tutorNickName = tutorNickName;
 	}
 
 	public Date getTutorEnrollDate() {
@@ -111,14 +124,22 @@ public class TutorInform {
 		this.memberEmail = memberEmail;
 	}
 
+	public String getTutorPhone() {
+		return memberPhone;
+	}
+
+	public void setTutorPhone(String tutorPhone) {
+		this.memberPhone = tutorPhone;
+	}
+
 	@Override
 	public String toString() {
-		return "TutorInform [tutorNo=" + tutorNo + ", tutorEnrollDate=" + tutorEnrollDate + ", tutorBankAccount="
-				+ tutorBankAccount + ", tutorReport=" + tutorReport + ", tutorSns=" + tutorSns + ", tutorImgPath="
-				+ tutorImgPath + ", tutorImgUpdate=" + tutorImgUpdate + ", tutorImgName=" + tutorImgName
-				+ ", tutorImagSize=" + tutorImagSize + ", memberEmail=" + memberEmail + "]";
+		return "Tutor [tutorNo=" + tutorNo + ", tutorNickName=" + tutorNickName + ", tutorEnrollDate=" + tutorEnrollDate
+				+ ", tutorBankAccount=" + tutorBankAccount + ", tutorReport=" + tutorReport + ", tutorSns=" + tutorSns
+				+ ", tutorImgPath=" + tutorImgPath + ", tutorImgUpdate=" + tutorImgUpdate + ", tutorImgName="
+				+ tutorImgName + ", tutorImagSize=" + tutorImagSize + ", memberEmail=" + memberEmail + ", tutorPhone="
+				+ memberPhone + "]";
 	}
-	
-	
-
 }
+
+	
