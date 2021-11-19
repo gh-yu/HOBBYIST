@@ -33,6 +33,33 @@ public class HClassService {
 		
 		return list;
 	}
+<<<<<<< HEAD
+
+	public HClass selectApvList(int classNo) {
+		Connection conn = getConnection();
+		
+		HClass apvList = hDAO.selectApvList(conn, classNo);
+		
+		close(conn);
+		
+		return apvList;
+	}
+
+	public int confirmClass(HClass apvList) {
+		Connection conn = getConnection();
+		
+		int result = hDAO.confirmClass(conn, apvList);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+=======
 	
 	public ArrayList<HClass> selectClassListOrderByLike() {
 		Connection conn = getConnection();
@@ -42,6 +69,41 @@ public class HClassService {
 		close(conn);
 		
 		return list;
+>>>>>>> e39706c8f80829346fb088cafe3c6a172762c677
 	}
 	
+//	public int confirmClass(HClass h) {
+//		Connection conn = getConnection();
+//		
+//		int result = hDAO.confirmClass(conn, h);
+//		
+//		if(result > 0) {
+//			commit(conn);
+//		} else {
+//			rollback(conn);
+//		}
+//		
+//		close(conn);
+//		
+//		return result;
+//	}
+
+//	public int confirmClass(int classNo) {
+//		Connection conn = getConnection();
+//		
+//		int result = hDAO.confirmClass(conn, classNo);
+//		
+//		if(result > 0) {
+//			commit(conn);
+//		} else {
+//			rollback(conn);
+//		}
+//		
+//		close(conn);
+//		
+//		return result;
+//	}
+
+
+
 }

@@ -175,36 +175,61 @@
 				<div id="outer">
 					<h1> 클래스 승인 리스트 </h1>
 						<div class="tableArea">
-							<table id="listArea">
-								<tr>
-									<th width = 120px> 신청일 </th>
-									<th width = 120px> 클래스 번호 </th>
-									<th width = 120px> 튜터 번호  </th>
-									<th width = 120px> 카테고리  </th>
-									<th width = 400px> 클래스명 </th>
-									<th width = 160px> 클래스 신청 내용 </th>
-									<th width = 120px> 승인/반려 </th>
-									<th width = 80px> 승인여부<br>(Y/N) </th>
-								</tr>
-		 						<% if(apvList.isEmpty()) { %>
+							<form action="confirmClass.cl" method="post">
+								<table id="listArea">
 									<tr>
-										<td colspan = "8"> 조회된 리스트가 없습니다. </td>
+										<th width = 120px> 신청일 </th>
+										<th width = 120px> 클래스 번호 </th>
+										<th width = 120px> 튜터 번호  </th>
+										<th width = 120px> 카테고리  </th>
+										<th width = 400px> 클래스명 </th>
+										<th width = 160px> 클래스 신청 내용 </th>
+										<th width = 120px> 승인/반려 </th>
+										<th width = 80px> 승인여부<br>(Y/N) </th>
 									</tr>
-								<% } else { %>
-									<%	for(int i = 0; i < apvList.size(); i++){ %>
-										<tr> 
-											<td><%= apvList.get(i).getClassEnrollDate() %></td>
-											<td><%= apvList.get(i).getClassNo() %></td>
-											<td><%= apvList.get(i).getTutorNo() %></td>
-											<td><%= apvList.get(i).getcategoryName() %></td>
-											<td><%= apvList.get(i).getClassName() %></td>
-											<td><button id="detailClass">클래스 신청서 확인</button></td>
-											<td><button id="APV">승인</button><button id="REJECT">반려</button></td>
-											<td><%= apvList.get(i).getClassApvYn() %></td>
-										</tr> 
-									<%  } %>
-								<% } %> 
-							</table>
+			 						<% if(apvList.isEmpty()) { %>
+										<tr>
+											<td colspan = "8"> 조회된 리스트가 없습니다. </td>
+										</tr>
+									<% } else { %>
+										<%	for(int i = 0; i < apvList.size(); i++){ %>
+											<tr> 
+												<td>
+													<%= apvList.get(i).getClassEnrollDate() %>
+													<input type="hidden" id="classEnrollDate" name="classEnrollDate" value="<%= apvList.get(i).getClassEnrollDate() %>">
+												</td>
+												<td>
+													<%= apvList.get(i).getClassNo() %>
+													<input type="hidden" id="classNo" name="classNo" value="<%= apvList.get(i).getClassNo() %>">
+												</td>
+												<td>
+													<%= apvList.get(i).getTutorNo() %>
+													<input type="hidden" id="tutorNo" name="tutorNo" value="<%= apvList.get(i).getTutorNo() %>">	
+												</td>
+												<td>
+													<%= apvList.get(i).getCategoryName() %>
+													<input type="hidden" id="categoryName" name="categoryName" value="<%= apvList.get(i).getCategoryName() %>">
+												</td>
+												<td>
+													<%= apvList.get(i).getClassName() %>
+													<input type="hidden" id="className" name="className" value="<%= apvList.get(i).getClassName() %>">
+												</td>
+												<td><button id="detailClass">클래스 신청서 확인</button></td>
+												<td>
+													<input type="submit" id="APV" value="승인" onclick="confirmClass()">
+													<input type="button" id="REJECT" value="반려">
+	<!-- 											<button id="APV" onclick="confirmClass();">승인</button> -->
+	<!-- 											<button id="REJECT">반려</button> -->
+												</td>
+												<td>
+													<%= apvList.get(i).getClassApvYn() %>
+													<input type="hidden" id="classApvYn" name="classApvYn" value="<%= apvList.get(i).getClassName() %>">
+												</td>
+											</tr> 
+										<%  } %>
+									<% } %> 
+								</table>
+							</form>
 							<div class="pagingArea" align="center">
 			
 								<!-- 처음으로 -->
@@ -249,11 +274,20 @@
 			
 			
 			<script>
-			$('#listArea td').mouseenter(function(){
-				$(this).parent().css({'background':'#9ED4C2', 'font-weight' :'bold', 'color' : 'white'});
-			}).mouseout(function(){
-				$(this).parent().css({'background':'none', 'font-weight' :'normal', 'color' : 'black'});
-			});
+				$('#listArea td').mouseenter(function(){
+					$(this).parent().css({'background':'#9ED4C2', 'font-weight' :'bold', 'color' : 'white'});
+				}).mouseout(function(){
+					$(this).parent().css({'background':'none', 'font-weight' :'normal', 'color' : 'black'});
+				});
+			</script>
+				
+			<script>
+				function confirmClass(){
+					if(confirm('클래스를 승인하시겠습니까?')){
+<%-- 					location.href='<%= request.getContextPath() %>/confirmClass.cl'; --%>
+						submit();
+					}
+				}
 			</script>
 			
 			<!-- FOOTER -->
