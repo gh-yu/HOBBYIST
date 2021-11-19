@@ -8,6 +8,7 @@ import static common.JDBCTemplate.commit;
 import static common.JDBCTemplate.rollback;
 
 import csBoard.model.dao.CSBoardDAO;
+import csBoard.model.vo.CSBoardFile;
 import csBoard.model.vo.PageInfo;
 import csBoard.model.vo.Reply;
 import csBoard.model.vo.RequestBoard;
@@ -56,34 +57,42 @@ public class CSBoardService {
 		return list;
 	}
 
-	public int insertBoard(RequestBoard board) {
+	public int insertBoard(RequestBoard board, ArrayList<CSBoardFile> fileList) {
 		Connection conn = getConnection();
 		
-		int result = cDAO.insertBoard(conn, board);
+		int result1 = cDAO.insertBoard(conn, board);
+		int result2 = 0;
+		if (!fileList.isEmpty()) { // file 첨부된게 있을 때만 file insert 실행
+			result2 = cDAO.insertBoardFile(conn, fileList);
+		} 
 		
-		if (result > 0) {
+		if (result1 > 0 && result2 >= fileList.size()) { // 게시글 insert됐고, 모든 파일이 insert가 됐으면
 			commit(conn);
 		} else {
 			rollback(conn);
 		}
 		close(conn);
 		
-		return result;
+		return result1 + result2;
 	}
 
-	public int updateBoard(RequestBoard board) {
+	public int updateBoard(RequestBoard board, ArrayList<CSBoardFile> fileList) {
 		Connection conn = getConnection();
 		
-		int result = cDAO.updateBoard(conn, board);
-
-		if (result > 0) {
+		int result1 = cDAO.updateBoard(conn, board);
+		int result2 = 0;
+		if (!fileList.isEmpty()) { // file 첨부된게 있을 때만 file insert 실행
+			result2 = cDAO.updateBoardFile(conn, fileList, board.getReqNo());
+		} 
+		
+		if (result1 > 0 && result2 >= fileList.size()) {
 			commit(conn);
 		} else {
 			rollback(conn);
 		}
 		close(conn);
 		
-		return result;
+		return result1 + result2;
 	}
 
 	public int deleteBoard(int rNo) {
@@ -160,6 +169,32 @@ public class CSBoardService {
 		}
 		
 		return list;
+	}
+
+	public ArrayList<CSBoardFile> selectFileList(int rNo) {
+		Connection conn = getConnection();
+		
+		ArrayList<CSBoardFile> list = cDAO.selectFileList(conn, rNo);
+		
+		close(conn);
+		
+		return list;
+	}
+
+	public int deleteFile(int fNo) {
+		Connection conn = getConnection();
+		
+		int result = cDAO.deleteFile(conn, fNo);
+
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;	
 	}
 	
 

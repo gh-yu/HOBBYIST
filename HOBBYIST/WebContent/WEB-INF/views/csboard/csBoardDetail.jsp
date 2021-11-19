@@ -3,6 +3,7 @@
 <%
 	RequestBoard rb = (RequestBoard)request.getAttribute("board");
 	ArrayList<Reply> list = (ArrayList<Reply>)request.getAttribute("list");
+	ArrayList<CSBoardFile> fList = (ArrayList<CSBoardFile>)request.getAttribute("fList");
 %>
 <!DOCTYPE html>
 <html>
@@ -30,8 +31,10 @@
  	.tableArea {width: 450px; height:350px; margin-left:auto; margin-right:auto; align: center;}
 	.modifyReply, .deleteReply{float: right; margin-left: 10px;}
 	.deleteReply{background: #BC8F8F;}
-	 #replyList textarea, .replyWriterArea textarea{resize: none;  width: 810px; height: 100px;}
-	 .gap{height: 30px;}
+	#replyList textarea, .replyWriterArea textarea{resize: none;  width: 810px; height: 100px;}
+	.gap{height: 30px;}
+	a:link{color: black;}
+	a:visited{color: black;}
 </style>
 </head>
 <body>
@@ -131,6 +134,20 @@
 											<%-- <input type="hidden" name="modifyDate" value="<%= rb.getModifyDate() %>"> --%>
 										</td>
 									</tr>
+									<tr>
+										<th>첨부파일</th>		
+									<% if (fList.isEmpty()) { %>
+										<td>첨부파일이 없습니다.</td>
+									</tr>						
+									<% } else { %>
+									<% 		for (int i = 0; i < fList.size(); i++) { %> 
+									<tr>
+										<td colspan="10">
+											<a class="uploadFile" id="uploadFile<%= i %>" href="<%= request.getContextPath() %>/uploadFiles/<%= fList.get(i).getChangeName() %>"><%= fList.get(i).getOriginName() %></a>
+										</td>
+									</tr>
+									<% 	   } %>
+									<% } %>
 								</thead>
 								<tbody>
 									<tr>
@@ -170,7 +187,9 @@
 							<h3>답변 내역</h3>
 							<table id="replyList">
 							<% if(list.isEmpty()){ %>
-								<tr><td colspan="3">답변이 없습니다.</td></tr>
+								<tr>
+									<td colspan="3">답변이 없습니다.</td>
+								</tr>
 							<% } else { %>
 								
 									<% for(int i = 0; i < list.size(); i++) { %>

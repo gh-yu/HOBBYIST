@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 import static common.JDBCTemplate.close;
 
+import csBoard.model.vo.CSBoardFile;
 import csBoard.model.vo.PageInfo;
 import csBoard.model.vo.Reply;
 import csBoard.model.vo.RequestBoard;
@@ -323,9 +324,106 @@ public class CSBoardDAO {
 		
 		return result;
 	}
+
+	public int insertBoardFile(Connection conn, ArrayList<CSBoardFile> fileList) {
+		PreparedStatement pstmt = null;
+		int result = 0; 
+		
+		String query = prop.getProperty("insertBoardFile");
+		try {
+			pstmt = conn.prepareStatement(query);
+
+			for (int i = 0; i < fileList.size(); i++) {
+				pstmt.setString(1, fileList.get(i).getFilePath());
+				pstmt.setString(2, fileList.get(i).getOriginName());
+				pstmt.setString(3, fileList.get(i).getChangeName());
+				pstmt.setLong(4, fileList.get(i).getFileSize());
+				
+				result += pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;	
+	}
+
+	public ArrayList<CSBoardFile> selectFileList(Connection conn, int rNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<CSBoardFile> list = null;
+		
+		String query = prop.getProperty("selectFileList");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "CS_REQ_BOARD");
+			pstmt.setInt(2, rNo);
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<CSBoardFile>();
+			while(rset.next()) {
+				CSBoardFile f = new CSBoardFile();
+				f.setFileNo(rset.getInt("FILE_NO"));
+				f.setOriginName(rset.getString("ORIGIN_NAME"));
+				f.setChangeName(rset.getString("CHANGE_NAME"));
+				f.setFilePath(rset.getString("FILE_PATH"));
+				f.setUploadDate(rset.getDate("FILE_UPLOAD"));
+				list.add(f);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public int deleteFile(Connection conn, int fNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteFile");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, fNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateBoardFile(Connection conn, ArrayList<CSBoardFile> fileList, int reqNo) {
+		PreparedStatement pstmt = null;
+		int result = 0; 
+		
+		String query = prop.getProperty("updateBoardFile");
+		try {
+			pstmt = conn.prepareStatement(query);
+
+			for (int i = 0; i < fileList.size(); i++) {
+				pstmt.setString(1, fileList.get(i).getFilePath());
+				pstmt.setString(2, fileList.get(i).getOriginName());
+				pstmt.setString(3, fileList.get(i).getChangeName());
+				pstmt.setLong(4, fileList.get(i).getFileSize());
+				pstmt.setInt(5, reqNo);
+				
+				result += pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;	
+	}
 	
-	// String query = "SELECT * FROM CS_REQ_BOARD JOIN FILES ON(BOARD_NO = REQ_NO) WHERE FILE_TABLE_NAME = 'CS_REQ_BOARD' AND STATUS = 1";
-	
-	
-	// 게시판 작성 및 수정시 들어온 사진이 있으면 파일 테이블 조인 및 업데이트 같이 해야함, else 게시판만 insert, update
 }

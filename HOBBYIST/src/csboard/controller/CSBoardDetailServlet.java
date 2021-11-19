@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import csBoard.model.service.CSBoardService;
+import csBoard.model.vo.CSBoardFile;
 import csBoard.model.vo.Reply;
 import csBoard.model.vo.RequestBoard;
 import member.model.vo.Member;
@@ -40,6 +41,8 @@ public class CSBoardDetailServlet extends HttpServlet {
 		RequestBoard board = new CSBoardService().selectBoard(rNo);
 		
 		ArrayList<Reply> list = new CSBoardService().selectReplyList(rNo); // 댓글(답변)
+		
+		ArrayList<CSBoardFile> fList = new CSBoardService().selectFileList(rNo);
 
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 		
@@ -56,6 +59,7 @@ public class CSBoardDetailServlet extends HttpServlet {
 				page = "WEB-INF/views/csboard/csBoardDetail.jsp";
 				request.setAttribute("board", board);
 				request.setAttribute("list", list);
+				request.setAttribute("fList", fList);
 			}
 		} else {
 			page = "WEB-INF/views/common/errorPage.jsp";
