@@ -434,7 +434,6 @@ public class HClassDAO {
 //	}
 
 
-=======
 	public ArrayList<HClass> selectClassListOrderByLike(Connection conn) {
 		Statement stmt = null;
 		ResultSet rset = null;
@@ -472,6 +471,4 @@ public class HClassDAO {
 		return list;
 	}
 
-	
->>>>>>> e39706c8f80829346fb088cafe3c6a172762c677
 }
