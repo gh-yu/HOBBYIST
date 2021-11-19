@@ -26,7 +26,7 @@ public class HClass {
 
 	public HClass(int classNo, String className, Date classEnrollDate, Date classEndDate, Date classApvDate,
 			String classApvYn, String classStatus, double classTime, int classTuteeMin, int classTuteeMax,
-			String classContent, int classFee, String classLivesYn, String classPlace, int tutorNo,
+			String classContent, int classFee, int tutorNo,
 			int classCategoryNo, Date classStartDate) {
 		super();
 		this.classNo = classNo;
@@ -199,7 +199,7 @@ public class HClass {
 		this.classStartDate = classStartDate;
 	}
 	
-	public String getcategoryName() {
+	public String getCategoryName() {
 		return categoryName;
 	}
 

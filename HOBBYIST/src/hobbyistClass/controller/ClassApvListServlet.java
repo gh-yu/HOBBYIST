@@ -17,13 +17,13 @@ import hobbyistClass.model.vo.HClass;
  * Servlet implementation class ClassApvServlet
  */
 @WebServlet("/apvList.cl")
-public class ClassApvServlet extends HttpServlet {
+public class ClassApvListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ClassApvServlet() {
+    public ClassApvListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -76,11 +76,12 @@ public class ClassApvServlet extends HttpServlet {
 		if(apvList != null) {
 			request.setAttribute("apvList", apvList);
 			request.setAttribute("pi", pi);
-			page = "WEB-INF/views/admin/classApv.jsp";
+			page = "WEB-INF/views/admin/classApvList.jsp";
 		} else {
 			request.setAttribute("msg", "클래스 승인 내역 조회 실패");
 			page = "WEB-INF/views/common/errorPage.jsp";
 		}
+
 		request.getRequestDispatcher(page).forward(request, response);
 	}
 
