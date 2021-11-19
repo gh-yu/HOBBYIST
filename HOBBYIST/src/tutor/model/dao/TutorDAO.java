@@ -42,10 +42,9 @@ public class TutorDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, tutor.getTutorNickName());
-			pstmt.setString(2, tutor.getTutorReport());
-			pstmt.setString(3, tutor.getTutorSns());
-//			pstmt.setString(4, member.getMemberPhone());
+			pstmt.setString(1, tutor.getTutorReport());
+			pstmt.setString(2, tutor.getTutorSns());
+			pstmt.setString(3, member.getMemberPhone());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {

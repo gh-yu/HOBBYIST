@@ -45,7 +45,7 @@ public class TutorProfileServlet extends HttpServlet {
 		
 		int maxSize = 120 * 120 * 20;
 		String root = request.getSession().getServletContext().getRealPath("/");
-		String savePath = root + "thumbnail_uploadFiles/";
+		String savePath = root + "uploadFiles/";
 		
 		File f = new File(savePath);
 		if(!f.exists()) {

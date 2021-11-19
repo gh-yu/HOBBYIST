@@ -236,14 +236,6 @@ body{
 							<div class="tutorPro">
 							<img id="target_img" class="card-profile-stats-intro-pic" src="./images/gosim2.jpg" alt="profile-image" />
 							</div><br>
-						<div class="input-container">
-							<input type="text" name="tNickName" required=""/>
-							<label>Nick Name</label>		
-						</div>
-						<div class="input-container">		
-							<input type="text" name="tPhone" required=""/>
-							<label>Phone</label>
-						</div>
 						<div class="input-container">		
 							<input type="text" name="tSns" required=""/>
 							<label>SNS</label>

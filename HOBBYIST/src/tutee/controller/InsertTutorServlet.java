@@ -1,12 +1,15 @@
 package tutee.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import member.model.vo.Member;
 import tutor.model.service.TutorService;
 import tutor.model.vo.Tutor;
 
@@ -30,15 +33,17 @@ public class InsertTutorServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String NickName = request.getParameter("tNickName");
-		String Phone = request.getParameter("tPhone");
+		HttpSession session = request.getSession();
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
 		String Sns = request.getParameter("tSns");
 		String Report = request.getParameter("tReport");
 		
-		Tutor tutor = new Tutor(0, NickName, null, null, Report, Sns, null, null, null, 0, null, Phone);
+		Tutor tutor = new Tutor(0, null, null, Report, Sns, null, null, null, null);
 		int result = new TutorService().insertTutor(tutor);
 		
 		if(result > 0) {
+			session.setAttribute(name, value);
 			response.sendRedirect(request.getContextPath());
 		} else {
 			request.setAttribute("msg", "튜터 신청에 실패했습니다.");

@@ -485,7 +485,8 @@ label[for="fabk"], [for="twit"], [for="insta"], [for="pinter"], [for="youtu"] {
 		
 			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
 			<p id="classtitle"> [오전] 아이패드 드로잉 (3개월 과정)</p>
-			<form action="<%= request.getContextPath() %>/inform" encType="multipart/form-data">
+			<form encType="multipart/form-data">
+<%-- 			<form action="<%= request.getContextPath() %>" encType="multipart/form-data"> --%>
  			<div class="box1"> 
 			<div class="card-profile-stats">
 		  <div class="card-profile-stats-intro">
@@ -517,11 +518,11 @@ label[for="fabk"], [for="twit"], [for="insta"], [for="pinter"], [for="youtu"] {
 		    <p class="card-profile-stats-more-link"><a href="#"><i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
 		    <div class="card-profile-stats-more-content">	<!-- 클릭하면 접히는 화살표 -->
 		    	<div>
-			      <input type="text" name="content" placeholder="간단한 자기소개" style="width:500px;height:40px;" >
+			     	자기소개 자기소개 자기소개
 			      <br><br>
 		      	</div>
 		      	<!-- use a tag for links to other locations -->
-			<input type="submit" class="button button-rounded-hover" value="자기소개 수정" onclick=""><br>
+			<input type="submit" class="button button-rounded-hover" value="자기소개 수정" onclick="href='<%=request.getContextPath)%>updateProfileForm.me'"><br>
 		    </div> <!-- /.card-profile-stats-more-content -->
 		  </div> <!-- /.card-profile-stats-more -->
 		</div> <!-- /.card-profile-stats -->

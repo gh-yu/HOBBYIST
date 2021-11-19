@@ -4,7 +4,6 @@ import java.sql.Date;
 
 public class Tutor {
 	private int tutorNo;
-	private String tutorNickName;
 	private Date tutorEnrollDate;
 	private String tutorBankAccount;
 	private String tutorReport;
@@ -12,18 +11,14 @@ public class Tutor {
 	private String tutorImgPath;
 	private Date tutorImgUpdate;
 	private String tutorImgName;
-	private int tutorImagSize;
-	private String memberEmail;			// MEMBER테이블에서 JOIN
-	private String memberPhone;
+	private int tutorImgSize;
 	
 	public Tutor() {}
 
-	public Tutor(int tutorNo, String tutorNickName, Date tutorEnrollDate, String tutorBankAccount, String tutorReport,
-			String tutorSns, String tutorImgPath, Date tutorImgUpdate, String tutorImgName, int tutorImagSize,
-			String memberEmail, String memberPhone) {
+	public Tutor(int tutorNo, Date tutorEnrollDate, String tutorBankAccount, String tutorReport, String tutorSns,
+			String tutorImgPath, Date tutorImgUpdate, String tutorImgName, int tutorImgSize) {
 		super();
 		this.tutorNo = tutorNo;
-		this.tutorNickName = tutorNickName;
 		this.tutorEnrollDate = tutorEnrollDate;
 		this.tutorBankAccount = tutorBankAccount;
 		this.tutorReport = tutorReport;
@@ -31,9 +26,7 @@ public class Tutor {
 		this.tutorImgPath = tutorImgPath;
 		this.tutorImgUpdate = tutorImgUpdate;
 		this.tutorImgName = tutorImgName;
-		this.tutorImagSize = tutorImagSize;
-		this.memberEmail = memberEmail;
-		this.memberPhone = memberPhone;
+		this.tutorImgSize = tutorImgSize;
 	}
 
 	public int getTutorNo() {
@@ -42,14 +35,6 @@ public class Tutor {
 
 	public void setTutorNo(int tutorNo) {
 		this.tutorNo = tutorNo;
-	}
-
-	public String getTutorNickName() {
-		return tutorNickName;
-	}
-
-	public void setTutorNickName(String tutorNickName) {
-		this.tutorNickName = tutorNickName;
 	}
 
 	public Date getTutorEnrollDate() {
@@ -109,37 +94,21 @@ public class Tutor {
 	}
 
 	public int getTutorImagSize() {
-		return tutorImagSize;
+		return tutorImgSize;
 	}
 
 	public void setTutorImagSize(int tutorImagSize) {
-		this.tutorImagSize = tutorImagSize;
-	}
-
-	public String getMemberEmail() {
-		return memberEmail;
-	}
-
-	public void setMemberEmail(String memberEmail) {
-		this.memberEmail = memberEmail;
-	}
-
-	public String getTutorPhone() {
-		return memberPhone;
-	}
-
-	public void setTutorPhone(String tutorPhone) {
-		this.memberPhone = tutorPhone;
+		this.tutorImgSize = tutorImagSize;
 	}
 
 	@Override
 	public String toString() {
-		return "Tutor [tutorNo=" + tutorNo + ", tutorNickName=" + tutorNickName + ", tutorEnrollDate=" + tutorEnrollDate
-				+ ", tutorBankAccount=" + tutorBankAccount + ", tutorReport=" + tutorReport + ", tutorSns=" + tutorSns
-				+ ", tutorImgPath=" + tutorImgPath + ", tutorImgUpdate=" + tutorImgUpdate + ", tutorImgName="
-				+ tutorImgName + ", tutorImagSize=" + tutorImagSize + ", memberEmail=" + memberEmail + ", tutorPhone="
-				+ memberPhone + "]";
+		return "Tutor [tutorNo=" + tutorNo + ", tutorEnrollDate=" + tutorEnrollDate + ", tutorBankAccount="
+				+ tutorBankAccount + ", tutorReport=" + tutorReport + ", tutorSns=" + tutorSns + ", tutorImgPath="
+				+ tutorImgPath + ", tutorImgUpdate=" + tutorImgUpdate + ", tutorImgName=" + tutorImgName
+				+ ", tutorImagSize=" + tutorImgSize + "]";
 	}
+	
 }
 
-	
+		
