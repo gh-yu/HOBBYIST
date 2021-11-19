@@ -21,9 +21,56 @@
 	#listBtn{background: lightgray;}
 	button:hover{cursor: pointer;}
 	table{align: center;}
-
+	
 	/* 개인정보 수집 이용 동의 table 관련 css */
 	.table_myroom{border-top:solid #99bddd 1px;border-bottom:solid #99bddd 1px;} .table_myroom th{color:#1770b4;padding:8px 0 7px 0;background-color:#f7f7f7;font-size:11px;border-left:solid #dadada 1px;} .table_myroom th.first{border-left:none;} .table_myroom th.line{border-top:solid #dadada 1px;} .table_myroom tr.bgG th,.table_myroom tr.bgG td  {background:#f7f7f7;} .table_myroom td{color:#666;padding:5px 0;font-size:11px;border-left:solid #dadada 1px;border-top:solid #dadada 1px;text-align:center;} .table_myroom td.first{border-left:none;} .table_myroom td.left{text-align:left;padding-left:10px;} .table_myroom td a{font-size:11px;} .table_myroom td a:hover, .table_myroom td a:active{font-size:11px;color:#666;text-decoration:underline;} .table_myroom td.none_data{padding:20px 0 20px 0;color:#1770b5;text-align:center;font-weight:bold;} .table_myroom th { text-align:center;}
+	
+	/* 파일 업로드 관련 css */
+	.filebox input[type="file"] {
+	  position: absolute;
+	  width: 1px;
+	  height: 1px;
+	  padding: 0;
+	  margin: -1px;
+	  overflow: hidden;
+	  clip:rect(0,0,0,0);
+	  border: 0;
+	}
+
+	.filebox label {
+	  display: inline-block;
+	  padding: .5em .75em;
+	  color: #999;
+	  font-size: inherit;
+	  line-height: normal;
+	  vertical-align: middle;
+	  cursor: pointer;
+	  border: 1px solid #ebebeb;
+	  border-bottom-color: #e2e2e2;
+	  border-radius: .25em;		  
+	  color: #fff;
+	  background-color: #337ab7;
+	  border-color: #2e6da4;
+	}
+
+	/* named upload */
+	.filebox .upload-name {
+	  display: inline-block;
+	  padding: .5em .75em;
+	  font-size: inherit;
+	  font-family: inherit;
+	  line-height: normal;
+	  vertical-align: middle;
+	  background-color: #f5f5f5;
+	  border: 1px solid #ebebeb;
+	  border-bottom-color: #e2e2e2;
+	  border-radius: .25em;
+	  -webkit-appearance: none; /* 네이티브 외형 감추기 */
+	  -moz-appearance: none;
+	  appearance: none;
+	}
+	
+	.cancelBtn:hover{cursor: pointer;}
 </style>
 </head>
 <body>
@@ -82,9 +129,9 @@
 				<div class="wrapBaord">
 					<br>
 					<h2 align="center">1:1문의</h2>
-					<h4 align="left">문의 내용</h4>
+					<h3 align="left">문의 내용</h3>
 					<div class="contentArea">
-						<form action="<%= request.getContextPath() %>/insert.cs" id="detailForm" method="post">
+						<form action="<%= request.getContextPath() %>/insert.cs" id="detailForm" method="post" encType="multipart/form-data" onsubmit="return fileCheck(this.form.file)">
 							<table id="boardArea">
 								<thead>
 									<tr>
@@ -94,10 +141,38 @@
 										</td>
 									</tr>
 									<tr>
+										<td colspan="9" class="filebox">
+											<div class="filebox bs3-primary preview-image">
+								             	 <input class="upload-name" value="파일 선택" disabled="disabled" style="width: 200px;" onchange="checkFile(this)">
+												<label for="input_file1">파일 선택</label>
+												<input type="file" class="upload-hidden" id="input_file1" name="file1" accept=".jpg,.jpeg,.gif,.png,.bmp,.tif,.txt,.xls,.xlsx,.pdf,.xdf,.ppt,.pptx,.docx,.doc,.hwp,.hwpx" style="display: none;">
+												<i class="cancelBtn">
+													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
+													  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+													  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+													</svg>
+												</i>
+											</div>
+										</td>		
+									</tr>
+									<tr>
+										<td colspan="9" class="filebox">
+											<div class="filebox bs3-primary preview-image">
+								             	 <input class="upload-name" value="파일 선택" disabled="disabled" style="width: 200px;" onchange="checkFile(this)">
+												<label for="input_file2">파일 선택</label>
+												<input type="file" class="upload-hidden" id="input_file2" name="file2" accept=".jpg,.jpeg,.gif,.png,.bmp,.tif,.txt,.xls,.xlsx,.pdf,.xdf,.ppt,.pptx,.docx,.doc,.hwp,.hwpx" style="display: none;">
+												<i class="cancelBtn">
+													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
+													  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+													  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+													</svg>
+												</i>
+											</div>
+										</td>		
 									</tr>
 									<tr>
 										<th height="50px">분야</th>
-										<td colspan="3" width="350px">
+										<td colspan="3" width="230px">
 											<select name="category">
 												<option value="계정">계정</option>
 												<option value="수강">수강</option>
@@ -106,7 +181,7 @@
 											</select>
 										</td>
 										<th>작성자</th>
-										<td width="80px">
+										<td width="200px">
 											<%= loginUser.getMemberNickName() %>
 											<input type="hidden" name="nickName" value="<%= loginUser.getMemberNickName() %>">
 										</td>
@@ -176,8 +251,38 @@
 				</div>	
 			</div>		
 		</div>
-		
+		<script>
+			$(".upload-hidden").off().on("change", function() {
+				if (this.files && this.files[0]) {
+					 // 선택한 파일명 보기
+			    	var filename = '';
+			        if(window.FileReader){
+			           filename = $(this)[0].files[0].name + ' '; // 파일명 추출
+			        } else {
+			            // Old IE 파일명 추출
+			            var filename = $(this).val().split('/').pop().split('\\').pop();
+			        };
+			        $(this).siblings('.upload-name').val(filename);
+					
+					// 파일 용량 제한
+					var maxSize =  1024 * 1024 * 10;
+			 		var fileSize = this.files[0].size; // 파일의 용량 정보
+			 			if(fileSize > maxSize){
+							// 용량 초과시 경고후 해당 파일의 용량도 보여줌
+							alert('10MB 이하 파일만 등록할 수 있습니다.\n\n' + this.files[0].name + '의 용량 : ' + (Math.round(fileSize / 1024 / 1024*100) / 100) + 'MB');
+							$(this).val('');
+							$(this).siblings('.upload-name').val('파일 선택');
+						} 
+					} 
+				
+			});
+			
+			$(".cancelBtn").off().on("click", function() {
+				$(this).parent().find('.upload-hidden').val('').siblings('.upload-name').val('파일 선택');
+			});
+		</script>
 			<!-- FOOTER -->
+		<section>
 			<footer class="container" style="text-align: center; background: #F5F5F5;">
 			
 				<p class="float-end">
@@ -188,6 +293,7 @@
 					<!-- &middot; <a href="#">Terms</a> -->
 				</p>
 			</footer> 
+		</section>
 	</div>
 </body>
 </html>

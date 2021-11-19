@@ -325,5 +325,42 @@ public class HClassDAO {
 		return h;
 	}
 
+	public ArrayList<HClass> selectClassListOrderByLike(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		ArrayList<HClass> list = null;
+		
+		String query = prop.getProperty("selectClassListOrderByLike");
+		
+		try {
+			stmt = conn.createStatement();
+			rset  = stmt.executeQuery(query);
+			
+			list = new ArrayList<HClass>();
+			while(rset.next()) {
+				HClass c = new HClass(rset.getInt("CLASS_NO"), 
+									  rset.getString("CLASS_NAME"),
+									  rset.getDate("CLASS_ENROLL_DATE"),
+									  rset.getDate("CLASS_END_DATE"),
+									  rset.getDate("CLASS_APV_DATE"),
+									  rset.getString("CLASS_APV_YN"),
+									  rset.getString("CLASS_STATUS"),
+									  rset.getDouble("CLASS_TIME"),
+									  rset.getInt("CLASS_TUTEE_MIN"),
+									  rset.getInt("CLASS_TUTEE_MAX"),
+									  rset.getString("CLASS_CONTENT"),
+									  rset.getInt("CLASS_FEE"),
+									  rset.getInt("TUTOR_NO"),
+									  rset.getDate("CLASS_START_DATE"),
+									  rset.getString("CATEGORY_NAME"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
 	
 }
