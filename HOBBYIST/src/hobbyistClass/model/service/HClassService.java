@@ -58,6 +58,7 @@ public class HClassService {
 		close(conn);
 		
 		return result;
+	}
 	
 	public ArrayList<HClass> selectClassListOrderByLike() {
 		Connection conn = getConnection();

@@ -207,8 +207,8 @@
 													<input type="hidden" id="tutorNo" name="tutorNo" value="<%= apvList.get(i).getTutorNo() %>">	
 												</td>
 												<td>
-													<%= apvList.get(i).getCategoryName() %>
-													<input type="hidden" id="categoryName" name="categoryName" value="<%= apvList.get(i).getCategoryName() %>">
+													<%= apvList.get(i).getcategoryName() %>
+													<input type="hidden" id="categoryName" name="categoryName" value="<%= apvList.get(i).getcategoryName() %>">
 												</td>
 												<td>
 													<%= apvList.get(i).getClassName() %>
