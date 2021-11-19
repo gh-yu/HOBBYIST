@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -14,7 +15,6 @@ import tutor.model.vo.Files;
 import tutor.model.vo.Tutor;
 
 public class TutorDAO {
-	private Connection conn = null;
 	private Properties prop = null;
 	
 	public TutorDAO() {
@@ -44,7 +44,6 @@ public class TutorDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, tutor.getTutorReport());
 			pstmt.setString(2, tutor.getTutorSns());
-			pstmt.setString(3, member.getMemberPhone());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -79,6 +78,39 @@ public class TutorDAO {
 		}
 		
 		return result;
+	}
+	
+	public Tutor selectTutor(Connection conn, String memberEmail) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Tutor t = null;
+
+		String query = prop.getProperty("selectTutor");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberEmail);
+
+			rset = pstmt.executeQuery();
+			t = new Tutor();
+			if (rset.next()) {
+				t = new Tutor(rset.getInt("TUTOR_NO"),
+							  rset.getDate("TUTOR_ENROLL_DATE"),
+							  rset.getString("TUTOR_BANK_ACCOUNT"),
+						      rset.getString("TUTOR_REPORT"), 
+							  rset.getString("TUTOR_SNS"), 
+							  rset.getString("TUTOR_IMG_PATH"), 
+							  rset.getDate("TUTOR_IMG_UPDATE"), 
+							  rset.getString("TUTOR_IMG_ORIGIN_NAME"), 
+							  rset.getString("TUTOR_IMG_CHANGE_NAME"),
+							  rset.getLong("TUTOR_IMG_SIZE"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return t;
 	}
 
 }

@@ -60,11 +60,19 @@ public class HClassService {
 		return result;
 	}
 	
-	public ArrayList<HClass> selectClassListOrderByLike() {
+	public ArrayList<HClass> selectClassList() {
 		Connection conn = getConnection();
 		
-		ArrayList<HClass> list = hDAO.selectClassListOrderByLike(conn);
+		int result = hDAO.updateClassStatus(conn); // list 가져오기 전 class_status를 강의 시작일자와 종료일자에 맞게 변경
 		
+		ArrayList<HClass> list = hDAO.selectClassList(conn);
+		
+		if(result > 0 && list != null) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+	
 		close(conn);
 		
 		return list;

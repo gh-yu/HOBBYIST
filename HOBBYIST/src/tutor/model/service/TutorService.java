@@ -45,5 +45,14 @@ public class TutorService {
 		close(conn);
 		return result;
 	}
+	
+	public Tutor selectTutor(String memberEmail) {
+		Connection conn = getConnection();
 
+		Tutor tutor = tDAO.selectTutor(conn, memberEmail);
+
+		close(conn);
+
+		return tutor;
+	}
 }

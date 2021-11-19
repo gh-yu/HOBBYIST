@@ -10,13 +10,15 @@ public class Tutor {
 	private String tutorSns;
 	private String tutorImgPath;
 	private Date tutorImgUpdate;
-	private String tutorImgName;
-	private int tutorImgSize;
+	private String tutorImgOriginName;
+	private String tutorImgChangeName;
+	private long tutorImagSize;
 	
 	public Tutor() {}
 
 	public Tutor(int tutorNo, Date tutorEnrollDate, String tutorBankAccount, String tutorReport, String tutorSns,
-			String tutorImgPath, Date tutorImgUpdate, String tutorImgName, int tutorImgSize) {
+			String tutorImgPath, Date tutorImgUpdate, String tutorImgOriginName, String tutorImgChangeName,
+			long tutorImagSize) {
 		super();
 		this.tutorNo = tutorNo;
 		this.tutorEnrollDate = tutorEnrollDate;
@@ -25,8 +27,9 @@ public class Tutor {
 		this.tutorSns = tutorSns;
 		this.tutorImgPath = tutorImgPath;
 		this.tutorImgUpdate = tutorImgUpdate;
-		this.tutorImgName = tutorImgName;
-		this.tutorImgSize = tutorImgSize;
+		this.tutorImgOriginName = tutorImgOriginName;
+		this.tutorImgChangeName = tutorImgChangeName;
+		this.tutorImagSize = tutorImagSize;
 	}
 
 	public int getTutorNo() {
@@ -85,29 +88,38 @@ public class Tutor {
 		this.tutorImgUpdate = tutorImgUpdate;
 	}
 
-	public String getTutorImgName() {
-		return tutorImgName;
+	public String getTutorImgOriginName() {
+		return tutorImgOriginName;
 	}
 
-	public void setTutorImgName(String tutorImgName) {
-		this.tutorImgName = tutorImgName;
+	public void setTutorImgOriginName(String tutorImgOriginName) {
+		this.tutorImgOriginName = tutorImgOriginName;
 	}
 
-	public int getTutorImagSize() {
-		return tutorImgSize;
+	public String getTutorImgChangeName() {
+		return tutorImgChangeName;
 	}
 
-	public void setTutorImagSize(int tutorImagSize) {
-		this.tutorImgSize = tutorImagSize;
+	public void setTutorImgChangeName(String tutorImgChangeName) {
+		this.tutorImgChangeName = tutorImgChangeName;
+	}
+
+	public long getTutorImagSize() {
+		return tutorImagSize;
+	}
+
+	public void setTutorImagSize(long tutorImagSize) {
+		this.tutorImagSize = tutorImagSize;
 	}
 
 	@Override
 	public String toString() {
 		return "Tutor [tutorNo=" + tutorNo + ", tutorEnrollDate=" + tutorEnrollDate + ", tutorBankAccount="
 				+ tutorBankAccount + ", tutorReport=" + tutorReport + ", tutorSns=" + tutorSns + ", tutorImgPath="
-				+ tutorImgPath + ", tutorImgUpdate=" + tutorImgUpdate + ", tutorImgName=" + tutorImgName
-				+ ", tutorImagSize=" + tutorImgSize + "]";
+				+ tutorImgPath + ", tutorImgUpdate=" + tutorImgUpdate + ", tutorImgOriginName=" + tutorImgOriginName
+				+ ", tutorImgChangeName=" + tutorImgChangeName + ", tutorImagSize=" + tutorImagSize + "]";
 	}
+
 	
 }
 

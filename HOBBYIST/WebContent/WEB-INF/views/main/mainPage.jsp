@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="hobbyistClass.model.service.HClassService "%>
+    pageEncoding="UTF-8" import="hobbyistClass.model.vo.*, hobbyistClass.model.service.HClassService, java.util.ArrayList"%>
 <%
-	new HClassService().selectClassListOrderByLike();
+	ArrayList<HClass> list = new HClassService().selectClassList();
 %>
 <!DOCTYPE html>
 <html>
@@ -153,8 +153,8 @@
 			<div class="album py-5 bg-light">
 				<div class="container">
 
-					<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"> <%-- 149~240줄까지 클래스 영역 틀, 껍데기로 나중에 지울 영역 --%>
-						<div class="col">
+					<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">  <%-- 156~246줄까지 클래스 영역 틀, 껍데기로 나중에 지울 영역 --%>
+						<div class="col"> 
 							<div class="card shadow-sm">
 								<svg class="bd-placeholder-img card-img-top" width="100%"
 									height="225" xmlns="http://www.w3.org/2000/svg" role="img"
@@ -243,12 +243,40 @@
 									</div>
 								</div>
 							</div>
-						</div>		
-					</div>
+						</div>
+					</div> 	<!-- 여기까지 지울 영역 -->	
 					
 					<br><br>
 					<div id="classContent" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+					<% if (list.isEmpty()) { %>
+					<div align="center">
+						<h4>클래스 서비스 준비중입니다.</h4>
+					</div>
+					<% } else { %>
+						<% for (HClass hc : list) { %>
 						<div class="col">
+							<div class="card shadow-sm">
+								<img id="thumbnail" src="" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="Thumbnail">
+								<div class="card-body">
+									<p class="card-text class-title"><%= hc.getClassName() %></p>
+									<div class="d-flex justify-content-between align-items-center">
+										<%-- <small id="views" class="text-muted"></small>	--%>
+										<button id="likeBtn" class="button-like"> 
+											<!-- i : 아이콘 태그 -->
+											<i class="fa fa-heart">
+												<svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+  													<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+												</svg>
+											</i>
+											<span>Like</span>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>	
+					<% 		}  %>
+					<% }  %>
+	<!-- 					<div class="col">
 							<div class="card shadow-sm">
 								<img id="thumbnail" src="" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="Thumbnail">
 								<div class="card-body">
@@ -256,7 +284,7 @@
 									<div class="d-flex justify-content-between align-items-center">
 										<small id="views" class="text-muted">조회수</small>	
 										<button id="likeBtn" class="button-like"> 
-											<!-- i : 아이콘 태그 -->
+											i : 아이콘 태그
 											<i class="fa fa-heart">
 												<svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
   													<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
@@ -276,27 +304,7 @@
 									<div class="d-flex justify-content-between align-items-center">
 										<small id="views" class="text-muted">조회수</small>	
 										<button id="likeBtn" class="button-like"> 
-											<!-- i : 아이콘 태그 -->
-											<i class="fa fa-heart">
-												<svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-  													<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
-												</svg>
-											</i>
-											<span>Like</span>
-										</button>
-									</div>
-								</div>
-							</div>
-						</div>	
-						<div class="col">
-							<div class="card shadow-sm">
-								<img id="thumbnail" src="" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="Thumbnail">
-								<div class="card-body">
-									<p class="card-text class-title" >코딩 너도 할 수 있어</p>
-									<div class="d-flex justify-content-between align-items-center">
-										<small id="views" class="text-muted">조회수</small>	
-										<button id="likeBtn" class="button-like"> 
-											<!-- i : 아이콘 태그 -->
+											i : 아이콘 태그
 											<i class="fa fa-heart">
 												<svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
   													<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
@@ -308,10 +316,21 @@
 								</div>
 							</div>
 						</div>		
-					</div>					
+					</div>					 -->
 					<script>
 							$(function() {
-								// ajax로 클래스 select해오기 -> 처음에는 카테고리 상관 없이 조회수순으로 가져오기
+								// 좋아요수 기준으로 select해온 classList 보여주기
+								
+								
+								
+							});
+											
+							// 카테고리 선택시 카테고리 별로 보이게 ajax로 select
+							// category.click시-> 
+							// var category = $(this).attr('name') <- 각 카테고리 name을 카테고리번호로 설정해놓기
+							// 이 category를 ajax방식으로 url요청해서 DB의 class_category_no와 같은 걸로 select(where class_category_no = ?)
+							// select해 온  list를 클래스 div영역에 넣기 (append 또는 html에 값 넣기)
+							$(document).on('click', '.category', function(){
 								
 								$.ajax({
 									url: 'list.hcl',
@@ -324,23 +343,14 @@
 									error: function(data){
 										console.log(data);
 									}
-								});
-							});
-											
-							// 카테고리 선택시 카테고리 별로 보이게 ajax로 select
-							// category.click시-> 
-							// var category = $(this).attr('name') <- 각 카테고리 name을 카테고리번호로 설정해놓기
-							// 이 category를 ajax방식으로 url요청해서 DB의 class_category_no와 같은 걸로 select(where class_category_no = ?)
-							// select해 온  list를 클래스 div영역에 넣기 (append 또는 html에 값 넣기)
-							$(document).on('click', '.category', function(){
-												
+								});			
 							});
 											
 							// like-button js
 							$(function() {
 								// 화면 로드될때 실행되는 함수, window.onload = function(){}과 같음
 								// like_class테이블애서 select count(*)해오는 ajax함수 써서 
-								// 멤버이메일과 클래스가 like_class테이블에 존재하면 $(this).toggleClass("liked");
+								// 멤버이메일과 클래스번호가 like_class테이블에 존재하면 $(this).toggleClass("liked");
 								
 								$('.button-like').bind('click', function(event) {
 									if ('<%= loginUser %>' == 'null') {
@@ -351,13 +361,15 @@
 											// 누른 클래스의 class속성에 'liked'라는 문자열이 포함되어 있으면 true -> 좋아요인 상태일때
 											// delete ajax
 															
+											$(this).toggleClass("liked"); // ajax실행 success 안쪽에서 toggleClass()실행 
 										} else {
 											// 좋아요가 아닌 상태일때
 											// insert ajax
+											$(this).toggleClass("liked"); // ajax실행 success 안쪽에서 toggleClass()실행 
 										}
 									}
 									
-									$(this).toggleClass("liked"); // ajax실행 후 toggleClass()실행 
+									
 								});
 													
 							});

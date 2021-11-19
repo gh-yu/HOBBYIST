@@ -5,6 +5,7 @@ import static common.JDBCTemplate.close;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -176,11 +177,9 @@ public class HClassDAO {
 									  rset.getInt("CLASS_TUTEE_MAX"),
 									  rset.getString("CLASS_CONTENT"),
 									  rset.getInt("CLASS_FEE"),
-									  rset.getString("CLASS_LIVES_YN"),
-									  rset.getString("CLASS_PLACE"),
 									  rset.getInt("TUTOR_NO"),
-									  rset.getString("CATEGORY_NAME"),
-									  rset.getDate("CLASS_START_DATE"));
+									  rset.getDate("CLASS_START_DATE"),
+									  rset.getString("CATEGORY_NAME"));
 				list.add(h);
 			}
 
@@ -308,13 +307,11 @@ public class HClassDAO {
 						  rset.getInt("CLASS_TUTEE_MAX"),
 						  rset.getString("CLASS_CONTENT"),
 						  rset.getInt("CLASS_FEE"),
-						  rset.getString("CLASS_LIVES_YN"),
-						  rset.getString("CLASS_PLACE"),
 						  rset.getInt("TUTOR_NO"),
-						  rset.getString("CATEGORY_NAME"),
-						  rset.getDate("CLASS_START_DATE")); 
+						  rset.getDate("CLASS_START_DATE"),
+						  rset.getString("CATEGORY_NAME"));
 			}
-
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -433,12 +430,12 @@ public class HClassDAO {
 //	}
 
 
-	public ArrayList<HClass> selectClassListOrderByLike(Connection conn) {
+	public ArrayList<HClass> selectClassList(Connection conn) {
 		Statement stmt = null;
 		ResultSet rset = null;
 		ArrayList<HClass> list = null;
 		
-		String query = prop.getProperty("selectClassListOrderByLike");
+		String query = prop.getProperty("selectClassList");
 		
 		try {
 			stmt = conn.createStatement();
@@ -461,13 +458,41 @@ public class HClassDAO {
 									  rset.getInt("TUTOR_NO"),
 									  rset.getDate("CLASS_START_DATE"),
 									  rset.getString("CATEGORY_NAME"));
+				list.add(c);
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
 		}
 		
 		return list;
+	}
+
+	public int updateClassStatus(Connection conn) {
+		CallableStatement cstmt = null; // CallableStatement : 프로시저 호출을 위해 필요
+		int result = 0;
+		
+		String query = prop.getProperty("updateClassStatus");
+		// updateClassStatus={CALL UPDATE_ALL_CLASS}
+		
+		try {
+			cstmt = conn.prepareCall(query);
+			result = cstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
 	}
 
 }
