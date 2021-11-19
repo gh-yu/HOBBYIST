@@ -97,7 +97,6 @@ public class ClassNoticeListServlet extends HttpServlet {
 
 		String page = null;
 		if (list != null) {
-			System.out.println("list" + list);
 			request.setAttribute("list", list);
 			page = "WEB-INF/views/tutor/myPageTutorMyClass.jsp";
 //			request.getRequestDispatcher("WEB-INF/views/tutor/myPageTutorMyClass.jsp").forward(request, response);

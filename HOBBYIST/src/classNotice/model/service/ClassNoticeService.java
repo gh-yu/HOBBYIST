@@ -39,7 +39,7 @@ public class ClassNoticeService {
 		}
 		
 		close(conn);
-		System.out.println("result : "+result);
+		
 		return result;
 	}
 
@@ -50,7 +50,7 @@ public class ClassNoticeService {
 		
 		ClassNotice classBoard = null;
 		if (result > 0) {
-			System.out.println("result :" +result);
+			
 			classBoard = nDAO.selectClassNotice(conn, classBoardNo);
 			if (classBoard != null) {
 				commit(conn);

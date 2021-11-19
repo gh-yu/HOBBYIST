@@ -258,7 +258,7 @@
 
 										<div class="card-body">
 											<h3>아이와 함께하는 드로잉 클래스</h3>
-											<button>클래스 수정하기</button>
+											<button onclick="location.href = '<%=request.getContextPath()%>/classopendetail.me'">클래스 수정하기</button>
 
 
 										</div>

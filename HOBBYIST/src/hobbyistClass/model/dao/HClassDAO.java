@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import hobbyistClass.model.vo.ApvPageInfo;
+import hobbyistClass.model.vo.HClassFiles;
 import hobbyistClass.model.vo.HClass;
 
 public class HClassDAO {
@@ -90,6 +91,238 @@ public class HClassDAO {
 		}
 //		System.out.println(apvList);
 		return apvList;
+	}
+	
+	
+	public int insertClass(Connection conn, HClass hclass) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertClass");
+		System.out.println("insertClassquery : "+query);
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, hclass.getClassName());
+			pstmt.setDate(2, hclass.getClassEndDate());
+			pstmt.setDouble(3, hclass.getClassTime());
+			pstmt.setInt(4, hclass.getClassTuteeMin());
+			pstmt.setInt(5, hclass.getClassTuteeMax());
+			pstmt.setString(6, hclass.getClassContent());
+			pstmt.setInt(7, hclass.getClassFee());
+			pstmt.setDate(8, hclass.getClassStartDate());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+	
+	public int insertFile(Connection conn, ArrayList<HClassFiles> fileList) {
+		PreparedStatement pstmt = null;
+		int result = 0; 
+		
+		String query = prop.getProperty("insertFile");
+		
+		System.out.println("insertFile query : "+query);
+		try {
+			pstmt = conn.prepareStatement(query);
+
+			for (int i = 0; i < fileList.size(); i++) {
+				
+				pstmt.setString(1, fileList.get(i).getOriginName());
+				pstmt.setString(2, fileList.get(i).getChangeName());
+				pstmt.setString(3, fileList.get(i).getFilePath());
+				pstmt.setLong(4, fileList.get(i).getFileSize());
+				pstmt.setString(5, fileList.get(i).getFileThumbYn());
+				
+				result += pstmt.executeUpdate();				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	public ArrayList selecBList(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		ArrayList<HClass> list = null;
+		
+		String query = prop.getProperty("selectCList");
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			list = new ArrayList<HClass>();
+			while(rset.next()) {
+				HClass h = new HClass(rset.getInt("CLASS_NO"),
+									  rset.getString("CLASS_NAME"),
+									  rset.getDate("CLASS_ENROLL_DATE"),
+									  rset.getDate("CLASS_END_DATE"),
+									  rset.getDate("CLASS_APV_DATE"),
+									  rset.getString("CLASS_APV_YN"),
+									  rset.getString("CLASS_STATUS"),
+									  rset.getDouble("CLASS_TIME"),
+									  rset.getInt("CLASS_TUTEE_MIN"),
+									  rset.getInt("CLASS_TUTEE_MAX"),
+									  rset.getString("CLASS_CONTENT"),
+									  rset.getInt("CLASS_FEE"),
+									  rset.getString("CLASS_LIVES_YN"),
+									  rset.getString("CLASS_PLACE"),
+									  rset.getInt("TUTOR_NO"),
+									  rset.getString("CATEGORY_NAME"),
+									  rset.getDate("CLASS_START_DATE"));
+				list.add(h);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return list;
+	}
+	
+	public ArrayList selectFList(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		ArrayList<HClassFiles> list = null;
+		
+		String query = prop.getProperty("selectCFList");
+		// selectFList=SELECT * FROM ATTACHMENT WHERE STATUS = 'Y' AND FILE_LEVEL = 0 
+		// FILE_LEVEL = 0 썸네일인 것만 가져옴(list이기 때문)
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			list = new ArrayList<HClassFiles>();
+			
+			while (rset.next()) {
+				HClassFiles f = new HClassFiles();
+				f.setBoardNo(rset.getInt("BOARD_NO"));
+				f.setChangeName(rset.getString("CHANGE_NAME"));
+				
+				list.add(f);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return list;
+	}
+
+	public ArrayList<HClassFiles> selectTumbnail(int bId, Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<HClassFiles> list = null;
+		
+		String query = prop.getProperty("selectFile");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bId);
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<HClassFiles>();
+			while (rset.next()) {
+
+				HClassFiles f = new HClassFiles(); 
+				f.setFileNo(rset.getInt("FILE_NO"));
+				f.setOriginName(rset.getString("ORIGIN_NAME"));
+				f.setChangeName(rset.getString("CHANGE_NAME"));
+				f.setFilePath(rset.getString("FILE_PATH"));
+				f.setFileUpload(rset.getDate("FILE_UPDATE"));
+				f.setFileThumbYn(rset.getString("FILE_THUMB_YN")); // 여기서 file_level 가져오지 않아도 첫번째 사진이 썸네일이기 때문에 굳이 하지 않아도 됨
+				
+				list.add(f);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public int updateHClassCount(Connection conn, int bId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		String query = prop.getProperty("updateCount");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bId);
+
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+	public HClass selectHClass(Connection conn, int bId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HClass h = null;
+
+		String query = prop.getProperty("selectBoard");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bId);
+			rset = pstmt.executeQuery();
+
+			if(rset.next()) { 
+				h = new HClass(rset.getInt("CLASS_NO"),
+						  rset.getString("CLASS_NAME"),
+						  rset.getDate("CLASS_ENROLL_DATE"),
+						  rset.getDate("CLASS_END_DATE"),
+						  rset.getDate("CLASS_APV_DATE"),
+						  rset.getString("CLASS_APV_YN"),
+						  rset.getString("CLASS_STATUS"),
+						  rset.getDouble("CLASS_TIME"),
+						  rset.getInt("CLASS_TUTEE_MIN"),
+						  rset.getInt("CLASS_TUTEE_MAX"),
+						  rset.getString("CLASS_CONTENT"),
+						  rset.getInt("CLASS_FEE"),
+						  rset.getString("CLASS_LIVES_YN"),
+						  rset.getString("CLASS_PLACE"),
+						  rset.getInt("TUTOR_NO"),
+						  rset.getString("CATEGORY_NAME"),
+						  rset.getDate("CLASS_START_DATE")); 
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return h;
 	}
 
 	
