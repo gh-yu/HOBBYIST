@@ -40,25 +40,6 @@ public class CheckNickServlet extends HttpServlet {
 		out.println(result);
 		out.flush();
 		out.close();
-		
-//		 --> ajax방식 쓰기 전 중복확인 체크시 새 창에서 msg출력하는 방식
-//		String inputNickName = request.getParameter("nickName").trim();
-//		String originNickName =((Member)request.getSession().getAttribute("loginUser")).getNickName().trim();		
-//		int result = 0;
-//		if (inputNickName.equals("")) {
-//			request.setAttribute("msg", "닉네임이 빈 칸입니다.");
-//		} else if (originNickName.equals(inputNickName)) {
-//			request.setAttribute("msg", "닉네임 변경 후 중복확인 버튼을 눌러주세요.");
-//		} else {
-//			result = new MemberService().checkNick(inputNickName);
-//			if (result > 0) {
-//				request.setAttribute("msg", "이미 사용 중인 닉네임입니다.");
-//			} else {
-//				request.setAttribute("msg", "사용 가능한 닉네임입니다.");
-//			}
-//		} 
-//		request.getSession().setAttribute("nickCheckResult", result);
-//		request.getRequestDispatcher("WEB-INF/views/member/checkNick.jsp").forward(request, response);
 	}
 
 	/**

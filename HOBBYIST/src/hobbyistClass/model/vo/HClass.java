@@ -15,10 +15,7 @@ public class HClass {
 	private int classTuteeMax;
 	private String classContent;
 	private int classFee;
-//	private String classLivesYn;
-//	private String classPlace;
 	private int tutorNo;
-	private int classCategoryNo;
 	private Date classStartDate;
 	private String categoryName;
 	
@@ -26,8 +23,7 @@ public class HClass {
 
 	public HClass(int classNo, String className, Date classEnrollDate, Date classEndDate, Date classApvDate,
 			String classApvYn, String classStatus, double classTime, int classTuteeMin, int classTuteeMax,
-			String classContent, int classFee, String classLivesYn, String classPlace, int tutorNo,
-			int classCategoryNo, Date classStartDate) {
+			String classContent, int classFee, int tutorNo, Date classStartDate, String categoryName) {
 		super();
 		this.classNo = classNo;
 		this.className = className;
@@ -41,14 +37,12 @@ public class HClass {
 		this.classTuteeMax = classTuteeMax;
 		this.classContent = classContent;
 		this.classFee = classFee;
-//		this.classLivesYn = classLivesYn;
-//		this.classPlace = classPlace;
 		this.tutorNo = tutorNo;
-		this.classCategoryNo = classCategoryNo;
 		this.classStartDate = classStartDate;
+		this.categoryName = categoryName;
 	}
-	
-	
+
+
 
 	public HClass(Date classEnrollDate, int classNo, int tutorNo, String categoryName, String className, 
 				String classApvYn, Date classApvDate) {
@@ -159,36 +153,12 @@ public class HClass {
 		this.classFee = classFee;
 	}
 
-//	public String getClassLivesYn() {
-//		return classLivesYn;
-//	}
-//
-//	public void setClassLivesYn(String classLivesYn) {
-//		this.classLivesYn = classLivesYn;
-//	}
-//
-//	public String getClassPlace() {
-//		return classPlace;
-//	}
-//
-//	public void setClassPlace(String classPlace) {
-//		this.classPlace = classPlace;
-//	}
-
 	public int getTutorNo() {
 		return tutorNo;
 	}
 
 	public void setTutorNo(int tutorNo) {
 		this.tutorNo = tutorNo;
-	}
-
-	public int getClassCategoryNo() {
-		return classCategoryNo;
-	}
-
-	public void setClassCategoryNo(int classCategoryNo) {
-		this.classCategoryNo = classCategoryNo;
 	}
 	
 	public Date getClassStartDate() {
@@ -209,13 +179,12 @@ public class HClass {
 
 	@Override
 	public String toString() {
-		return "Class [classNo=" + classNo + ", className=" + className + ", classEnrollDate=" + classEnrollDate
+		return "HClass [classNo=" + classNo + ", className=" + className + ", classEnrollDate=" + classEnrollDate
 				+ ", classEndDate=" + classEndDate + ", classApvDate=" + classApvDate + ", classApvYn=" + classApvYn
 				+ ", classStatus=" + classStatus + ", classTime=" + classTime + ", classTuteeMin=" + classTuteeMin
 				+ ", classTuteeMax=" + classTuteeMax + ", classContent=" + classContent + ", classFee=" + classFee
-				+ /*", classLivesYn=" + classLivesYn + ", classPlace=" + classPlace +*/ ", tutorNo=" + tutorNo
-				+ ", classCategoryNo=" + classCategoryNo + ", classStartDate=" + classStartDate +"]";
+				+ ", tutorNo=" + tutorNo + ", classStartDate=" + classStartDate + ", categoryName=" + categoryName
+				+ "]";
 	}
-	
 	
 }

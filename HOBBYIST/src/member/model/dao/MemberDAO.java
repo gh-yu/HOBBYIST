@@ -17,7 +17,6 @@ import static common.JDBCTemplate.rollback;
 import member.model.vo.Member;
 
 public class MemberDAO {
-	private Connection conn = null;
 	private Properties prop = null;
 	
 	public MemberDAO() {
@@ -160,7 +159,7 @@ public class MemberDAO {
 		ResultSet rset = null;
 		int result = 0;
 		
-		String query = "SELECT COUNT(*) FROM MEMBER WHERE MEMBER_NICKNAME = ?";
+		String query = "SELECT COUNT(*) FROM MEMBER WHERE MEMBER_NICKNAME = ? AND MEMBER_STATUS = 1";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
