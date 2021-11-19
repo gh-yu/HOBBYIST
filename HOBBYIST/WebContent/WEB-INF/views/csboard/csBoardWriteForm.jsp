@@ -129,7 +129,7 @@
 				<div class="wrapBaord">
 					<br>
 					<h2 align="center">1:1문의</h2>
-					<h4 align="left">문의 내용</h4>
+					<h3 align="left">문의 내용</h3>
 					<div class="contentArea">
 						<form action="<%= request.getContextPath() %>/insert.cs" id="detailForm" method="post" encType="multipart/form-data" onsubmit="return fileCheck(this.form.file)">
 							<table id="boardArea">

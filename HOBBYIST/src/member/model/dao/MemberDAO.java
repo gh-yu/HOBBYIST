@@ -17,7 +17,6 @@ import static common.JDBCTemplate.rollback;
 import member.model.vo.Member;
 
 public class MemberDAO {
-	private Connection conn = null;
 	private Properties prop = null;
 	
 	public MemberDAO() {

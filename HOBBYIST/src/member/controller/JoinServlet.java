@@ -31,7 +31,6 @@ public class JoinServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		request.setCharacterEncoding("UTF-8");
 		
 		String memberEmail = request.getParameter("memberEmail");
@@ -47,6 +46,7 @@ public class JoinServlet extends HttpServlet {
 		member.setMemberPhone(memberPhone);
 		member.setMemberPwd(memberPwd);
 		
+		response.setContentType("text/html; charset=UTF-8");
 		if(memberEmail == null || memberName == null || memberNickName == null ||
 				memberPhone == null || memberPwd == null) {
 			PrintWriter script = response.getWriter();

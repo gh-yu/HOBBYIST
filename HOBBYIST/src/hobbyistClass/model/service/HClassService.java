@@ -33,6 +33,15 @@ public class HClassService {
 		
 		return list;
 	}
-
+	
+	public ArrayList<HClass> selectClassListOrderByLike() {
+		Connection conn = getConnection();
+		
+		ArrayList<HClass> list = hDAO.selectClassListOrderByLike(conn);
+		
+		close(conn);
+		
+		return list;
+	}
 	
 }

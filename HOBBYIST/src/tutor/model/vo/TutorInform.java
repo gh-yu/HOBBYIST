@@ -10,14 +10,16 @@ public class TutorInform {
 	private String tutorSns;
 	private String tutorImgPath;
 	private Date tutorImgUpdate;
-	private String tutorImgName;
-	private int tutorImagSize;
+	private String tutorImgOriginName;
+	private String tutorImgChangeName; // 기존의 imgName을 origin과 changeName으로 구분
+	private long tutorImagSize;
 	private String memberEmail;			// MEMBER테이블에서 JOIN
 	
 	public TutorInform() {}
 
 	public TutorInform(int tutorNo, Date tutorEnrollDate, String tutorBankAccount, String tutorReport, String tutorSns,
-			String tutorImgPath, Date tutorImgUpdate, String tutorImgName, int tutorImagSize, String memberEmail) {
+			String tutorImgPath, Date tutorImgUpdate, String tutorImgOriginName, String tutorImgChangeName,
+			long tutorImagSize, String memberEmail) {
 		super();
 		this.tutorNo = tutorNo;
 		this.tutorEnrollDate = tutorEnrollDate;
@@ -26,7 +28,8 @@ public class TutorInform {
 		this.tutorSns = tutorSns;
 		this.tutorImgPath = tutorImgPath;
 		this.tutorImgUpdate = tutorImgUpdate;
-		this.tutorImgName = tutorImgName;
+		this.tutorImgOriginName = tutorImgOriginName;
+		this.tutorImgChangeName = tutorImgChangeName;
 		this.tutorImagSize = tutorImagSize;
 		this.memberEmail = memberEmail;
 	}
@@ -87,15 +90,23 @@ public class TutorInform {
 		this.tutorImgUpdate = tutorImgUpdate;
 	}
 
-	public String getTutorImgName() {
-		return tutorImgName;
+	public String getTutorImgOriginName() {
+		return tutorImgOriginName;
 	}
 
-	public void setTutorImgName(String tutorImgName) {
-		this.tutorImgName = tutorImgName;
+	public void setTutorImgOriginName(String tutorImgOriginName) {
+		this.tutorImgOriginName = tutorImgOriginName;
 	}
 
-	public int getTutorImagSize() {
+	public String getTutorImgChangeName() {
+		return tutorImgChangeName;
+	}
+
+	public void setTutorImgChangeName(String tutorImgChangeName) {
+		this.tutorImgChangeName = tutorImgChangeName;
+	}
+
+	public long getTutorImagSize() {
 		return tutorImagSize;
 	}
 
@@ -115,10 +126,10 @@ public class TutorInform {
 	public String toString() {
 		return "TutorInform [tutorNo=" + tutorNo + ", tutorEnrollDate=" + tutorEnrollDate + ", tutorBankAccount="
 				+ tutorBankAccount + ", tutorReport=" + tutorReport + ", tutorSns=" + tutorSns + ", tutorImgPath="
-				+ tutorImgPath + ", tutorImgUpdate=" + tutorImgUpdate + ", tutorImgName=" + tutorImgName
-				+ ", tutorImagSize=" + tutorImagSize + ", memberEmail=" + memberEmail + "]";
+				+ tutorImgPath + ", tutorImgUpdate=" + tutorImgUpdate + ", tutorImgOriginName=" + tutorImgOriginName
+				+ ", tutorImgChangeName=" + tutorImgChangeName + ", tutorImagSize=" + tutorImagSize + ", memberEmail="
+				+ memberEmail + "]";
 	}
-	
-	
+
 
 }

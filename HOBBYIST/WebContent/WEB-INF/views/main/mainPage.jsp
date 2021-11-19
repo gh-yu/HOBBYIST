@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="hobbyistClass.model.service.HClassService "%>
+<%
+	new HClassService().selectClassListOrderByLike();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +11,8 @@
 <script src="js/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/mainPage.css">
 <style>
-	#title{height: 40px; font-size: }
+	.card-text{font-size: large; text-align: center; font-weight: bold;}
+	.class-title{height: 50px;}
 </style>
 </head>
 <body>
@@ -246,51 +250,12 @@
 					<div id="classContent" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 						<div class="col">
 							<div class="card shadow-sm">
-								<svg class="bd-placeholder-img card-img-top" width="100%"
-									height="225" xmlns="http://www.w3.org/2000/svg" role="img"
-									aria-label="Placeholder: Thumbnail"
-									preserveAspectRatio="xMidYMid slice" focusable="false">
-									<title>Placeholder</title><rect width="100%" height="100%"
-										fill="#55595c" />
-									<text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
+								<img id="thumbnail" src="" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="Thumbnail">
 								<div class="card-body">
-									<p class="card-text">This is a wider card with supporting
-										text below as a natural lead-in to additional content. This
-										content is a little bit longer.</p>
+									<p class="card-text class-title" >코딩 너도 할 수 있어</p>
 									<div class="d-flex justify-content-between align-items-center">
-										<small class="text-muted">조회수</small>
-										<button class="button-like"> 
-											<!-- i : 아이콘 태그 -->
-											<i class="fa fa-heart">
-												<svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-  													<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
-												</svg>
-											</i>
-											<span>Like</span>
-										</button>
-										<!-- </div> -->
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col">
-							<div class="card shadow-sm">
-								<svg class="bd-placeholder-img card-img-top" width="100%"
-									height="225" xmlns="http://www.w3.org/2000/svg" role="img"
-									aria-label="Placeholder: Thumbnail"
-									preserveAspectRatio="xMidYMid slice" focusable="false">
-									<title>Placeholder</title><rect width="100%" height="100%"
-										fill="#55595c" />
-									<text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
-								<div class="card-body">
-									<p class="card-text">This is a wider card with supporting
-										text below as a natural lead-in to additional content. This
-										content is a little bit longer.</p>
-									<div class="d-flex justify-content-between align-items-center">
-										<small class="text-muted">조회수</small>
-										<button class="button-like"> 
+										<small id="views" class="text-muted">조회수</small>	
+										<button id="likeBtn" class="button-like"> 
 											<!-- i : 아이콘 태그 -->
 											<i class="fa fa-heart">
 												<svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
@@ -302,12 +267,32 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</div>	
 						<div class="col">
 							<div class="card shadow-sm">
 								<img id="thumbnail" src="" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="Thumbnail">
 								<div class="card-body">
-									<p id="title" class="card-text">코딩 너도 할 수 있어</p>
+									<p class="card-text class-title" >코딩 너도 할 수 있어</p>
+									<div class="d-flex justify-content-between align-items-center">
+										<small id="views" class="text-muted">조회수</small>	
+										<button id="likeBtn" class="button-like"> 
+											<!-- i : 아이콘 태그 -->
+											<i class="fa fa-heart">
+												<svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+  													<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+												</svg>
+											</i>
+											<span>Like</span>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>	
+						<div class="col">
+							<div class="card shadow-sm">
+								<img id="thumbnail" src="" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="Thumbnail">
+								<div class="card-body">
+									<p class="card-text class-title" >코딩 너도 할 수 있어</p>
 									<div class="d-flex justify-content-between align-items-center">
 										<small id="views" class="text-muted">조회수</small>	
 										<button id="likeBtn" class="button-like"> 
@@ -359,7 +344,7 @@
 								
 								$('.button-like').bind('click', function(event) {
 									if ('<%= loginUser %>' == 'null') {
-										alert('로그인이 필요한 기능입니다.');
+										alert('로그인이 필요한 서비스입니다.');
 									} else {	
 										var likeClass = $(this).attr('class'); // class속성의 값을 저장
 								    	if (likeClass.includes('liked')) { // includes() : 해당 string이 포함되어 있으면 true, 아니면 false반환
