@@ -486,10 +486,11 @@ label[for="fabk"], [for="twit"], [for="insta"], [for="pinter"], [for="youtu"] {
 			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
 			<p id="classtitle"> [오전] 아이패드 드로잉 (3개월 과정)</p>
 			<form encType="multipart/form-data">
+<%-- 			<form action="<%= request.getContextPath() %>" encType="multipart/form-data"> --%>
  			<div class="box1"> 
 			<div class="card-profile-stats">
 		  <div class="card-profile-stats-intro">
-		    <img id="target_img" class="card-profile-stats-intro-pic" src="./images/gosim.png" alt="profile-image" />
+		    <img id="target_img" class="card-profile-stats-intro-pic" src="./images/gosim.png" alt="profile-image"/>
 		    <div class="card-profile-stats-intro-content">
 		      <h1>김튜터</h1>
 		      <p>START</p> <p>2021.11.16</p>
@@ -516,14 +517,12 @@ label[for="fabk"], [for="twit"], [for="insta"], [for="pinter"], [for="youtu"] {
 		  <div class="card-profile-stats-more">
 		    <p class="card-profile-stats-more-link"><a href="#"><i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
 		    <div class="card-profile-stats-more-content">	<!-- 클릭하면 접히는 화살표 -->
-		    	<div class="자기소개 수정할 영역">
-			      <p style="color:red">
-			       	내 수업 탈주하면 죽음뿐
-			      </p>
-			      <br>
+		    	<div>
+			     	자기소개 자기소개 자기소개
+			      <br><br>
 		      	</div>
 		      	<!-- use a tag for links to other locations -->
-			<input type="button" class="button button-rounded-hover" value="자기소개 수정" onclick="addText"><br>
+			<input type="submit" class="button button-rounded-hover" value="자기소개 수정" onclick="href='<%=request.getContextPath)%>updateProfileForm.me'"><br>
 		    </div> <!-- /.card-profile-stats-more-content -->
 		  </div> <!-- /.card-profile-stats-more -->
 		</div> <!-- /.card-profile-stats -->
@@ -533,6 +532,7 @@ label[for="fabk"], [for="twit"], [for="insta"], [for="pinter"], [for="youtu"] {
 		</div>
 		</div>
 			</form>
+			
 						
 			
 			
@@ -602,6 +602,21 @@ label[for="fabk"], [for="twit"], [for="insta"], [for="pinter"], [for="youtu"] {
 		});
 	});
 	
+	function LoadImg(value, num){
+		if(value.files && value.files[0]){
+				var reader = new FileReader();
+						
+					reader.onload = function(e){								
+						if(num){
+							$("#target_img").attr("src", e.target.result);
+						} else{
+						
+						}
+						}
+					
+						reader.readAsDataURL(value.files[0]);
+					}
+				}
 	
 	// 자기소개 수정
 	

@@ -18,7 +18,8 @@
 		MemberDAO mDAO = new MemberDAO();
 		int result = new MemberService().login(member.getMemberEmail(), member.getMemberPwd());
 		Member loginUser = new MemberService().loginMember(member.getMemberEmail(), member.getMemberPwd());
-		
+// 		if(loginUser.getMemberGrade().equ)
+// 		Tutor tutor = new MemberService().selectTutor();
 		if(result ==1) {
 			PrintWriter script = response.getWriter();
 			script.println("<script>");

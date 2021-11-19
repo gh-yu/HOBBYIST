@@ -1,28 +1,49 @@
 package tutor.model.service;
 
-import tutor.model.dao.TutorDAO;
-import tutor.model.vo.TutorInform;
-
-import static common.JDBCTemplate.getConnection;
 import static common.JDBCTemplate.close;
 import static common.JDBCTemplate.commit;
 import static common.JDBCTemplate.rollback;
+import static common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+
+import tutor.model.dao.TutorDAO;
+import tutor.model.vo.Files;
+import tutor.model.vo.Tutor;
 
 public class TutorService {
-
+	
 	private TutorDAO tDAO = new TutorDAO();
 	
-	public TutorInform selectTutor(String memberEmail) {
+	public int insertTutor(Tutor tutor) {
 		Connection conn = getConnection();
 		
-		TutorInform tutor = tDAO.selectTutor(conn, memberEmail);
+		int result = tDAO.insertTutor(conn, tutor);
+		
+		if(result>0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
 		
 		close(conn);
 		
-		return tutor;
+		return result;
 	}
+
+	public int insertProfile(ArrayList<Files> fileList) {
+		Connection conn = getConnection();
 		
+		int result = tDAO.insertFiles(conn, fileList);
+		
+		if(result>0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 
 }
