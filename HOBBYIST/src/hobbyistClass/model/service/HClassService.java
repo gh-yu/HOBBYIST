@@ -33,7 +33,6 @@ public class HClassService {
 		
 		return list;
 	}
-<<<<<<< HEAD
 
 	public HClass selectApvList(int classNo) {
 		Connection conn = getConnection();
@@ -59,7 +58,8 @@ public class HClassService {
 		close(conn);
 		
 		return result;
-=======
+	}
+
 	
 	public ArrayList<HClass> selectClassListOrderByLike() {
 		Connection conn = getConnection();
@@ -69,7 +69,7 @@ public class HClassService {
 		close(conn);
 		
 		return list;
->>>>>>> e39706c8f80829346fb088cafe3c6a172762c677
+
 	}
 	
 //	public int confirmClass(HClass h) {

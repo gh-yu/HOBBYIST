@@ -92,7 +92,6 @@ public class HClassDAO {
 		return apvList;
 	}
 
-<<<<<<< HEAD
 //	public int confirmClass(Connection conn, HClass h) {
 //		PreparedStatement pstmt1 = null;
 //		PreparedStatement pstmt2 = null;
@@ -148,7 +147,7 @@ public class HClassDAO {
 									rset.getDate("CLASS_END_DATE"), rset.getDate("CLASS_APV_DATE"), rset.getString("CLASS_APV_YN"),
 									rset.getString("CLASS_STATUS"), rset.getDouble("CLASS_TIME"), rset.getInt("CLASS_TUTEE_MIN"),
 									rset.getInt("CLASS_TUTEE_MAX"), rset.getString("CLASS_CONTENT"), rset.getInt("CLASS_FEE"),
-									rset.getInt("TUTOR_NO"), rset.getInt("CLASS_CATEGORY_NO"), rset.getDate("CLASS_START_DATE"));
+									rset.getInt("TUTOR_NO"), rset.getDate("CLASS_START_DATE"), rset.getString("CATEGORY_NAME"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -201,7 +200,6 @@ public class HClassDAO {
 //	}
 
 
-=======
 	public ArrayList<HClass> selectClassListOrderByLike(Connection conn) {
 		Statement stmt = null;
 		ResultSet rset = null;
@@ -240,5 +238,4 @@ public class HClassDAO {
 	}
 
 	
->>>>>>> e39706c8f80829346fb088cafe3c6a172762c677
 }
