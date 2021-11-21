@@ -8,17 +8,17 @@
 	PageInfo pi = (PageInfo) request.getAttribute("pi");
 
 
-/* Tutor tutor = (Tutor)session.getAttribute("tutor"); */
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>My Classroom</title>
+<title>Insert title here</title>
 <script src="js/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/menubar.css">
 <link rel="stylesheet" type="text/css" href="css/tutorBoard.css">
 <script>
+
 		$(function() {
 			// 사이드바 토글 기능
 			$('[data-app-dashboard-toggle-shrink]').on(
@@ -28,18 +28,28 @@
 						$(this).parents('.app-dashboard').toggleClass(
 								'shrink-medium').toggleClass('shrink-large');
 					});
+
+			// like취소-button클릭시 찜한 클래스 삭제 기능
+			$('.button-like').bind('click', function(event) {
+				if (confirm('취소하시겠습니까?')) { // 확인 누를시에만 삭제
+					// $(this).toggleClass("liked"); //여기선 없어도 됨
+					/* $(this).parent().remove(); */
+					// 삭제하는 서블릿으로 이동  location.href="" -> 삭제하고 다시 이 페이지로 돌아오기
+				}
+			});
+
+			// 후기 삭제 버튼 누를시
+			$('.remove').click(function() {
+				if (confirm('삭제하시겠습니까?')) { // 확인 누를시에만 삭제
+					/* $(this).parent().parent().remove(); */
+					// 삭제하는 서블릿으로 이동  location.href="" -> 삭제하고 다시 이 페이지로 돌아오기
+				}
+			});
 		});
-	</script>
-<style>
-#logBtn {
-	/* 임시로 상단바의 로그인버튼 폰트 적용 */
-	font-family: monospace;
-	font-weight: bold;
-}
-</style>
+</script>
 </head>
 <body>
-	<div class="app-dashboard shrink-medium">
+<div class="app-dashboard shrink-medium">
 
 		<!-- 상단바 -->
 		<div class="row expanded app-dashboard-top-nav-bar">
@@ -160,10 +170,10 @@
 						<%-- 로그인한 유저의 그레이드가 'B'즉 튜터가 아니면 튜터 신청 버튼 활성화 --%>
 						<li><span class="app-dashboard-sidebar-text"><h3>튜터</h3></span>
 						</li>
-						<li><a href="#"> <span class="app-dashboard-sidebar-text">내
+						<li><a href="<%= request.getContextPath() %>/tutorMyClass.if"> <span class="app-dashboard-sidebar-text">내
 									클래스</span> <%-- 누르고 서블릿 이동하면 tutor정보도 세션에 저장하기? --%>
 						</a></li>
-						<li style="color: #9ED4C2"><a href="#"> <span
+						<li style="color: #9ED4C2"><a href="<%= request.getContextPath() %>/tutorInform.me"> <span
 								class="app-dashboard-sidebar-text">튜터 정보</span>
 						</a></li>
 						<li style="color: #9ED4C2"><a href="#"> <span
@@ -182,89 +192,169 @@
 						%>
 						<br>
 						<br>
-						<br>
 					</ul>
-
-
 				</div>
 			</div>
-
-			<!-- 본문 내용 -->
 			<div class="app-dashboard-body-content off-canvas-content"
 				data-off-canvas-content>
-				<h2 class="text-center">내 클래스 목록</h2>
-				<button type="button"
-					onclick="location.href = '<%=request.getContextPath()%>/classSignUp.me'"
-					class="button hollow">+ 클래스 신청하기</button>
-
-				<div class="work-feature-block row">
-					<div style="width: 30%; height: 150px; float: left;">
-						<img class="work-feature-block-image"
-							src="https://i.imgur.com/6jMbuU1.jpg" width="300px" />
-					</div>
-					<div class="columns medium-5">
-						<h2 class="work-feature-block-header">[새벽] 디지털 카메라 배우기</h2>
-						<p>수강기간: 2021.11.10 ~ 2022.01.30</p>
-						<p>수강인원: 20/30</p>
-						<button onclick="location.href = '<%=request.getContextPath()%>/classManagement.tt'" type="button" href="#" class="button hollow">클래스
-							관리하기</button>
-					</div>
-				</div>
-				<div class="work-feature-block row">
-					<div style="width: 30%; height: 150px; float: left;">
-						<img class="work-feature-block-image"
-							src="https://i.imgur.com/6jMbuU1.jpg" width="300px" />
-					</div>
-					<div class="columns medium-5">
-						<h2 class="work-feature-block-header">[오전] 아이패드 드로잉</h2>
-						<p>수강기간: 2021.10.20 ~ 2021.12.31</p>
-						<p>수강인원: 27/30</p>
-						<button onclick="location.href = '<%=request.getContextPath()%>/classManagement.tt'" class="button hollow">클래스 관리하기</button>
-					</div>
-				</div>
-
-				<br> <br> <br>
-
+				
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-8">
-							<h2>승인 전 클래스</h2>
-							<div class="row">
-								<div class="col-lg-6">
-									<div class="card mb-4">
-										<img class="card-img-top"
-											src="https://dummyimage.com/300x200/dee2e6/6c757d.jpg"
-											alt="..." /> <img class="card-img-top"
-											src="https://dummyimage.com/300x200/dee2e6/6c757d.jpg"
-											alt="..." />
-
-
-										<div class="card-body">
-											<h3>아이와 함께하는 드로잉 클래스</h3>
-											<button onclick="location.href = '<%=request.getContextPath()%>/classopendetail.me'">클래스 수정하기</button>
-										</div>
-
-									</div>
-									<!-- Blog post-->
-									<div class="card mb-4">
-										<h2>완료 클래스</h2>
-										<a href="#"><img class="card-img-top"
-											src="https://dummyimage.com/300x200/dee2e6/6c757d.jpg"
-											alt="..." /></a>
-										<div class="card-body">
-											<h3>CODING 야 너두 할 수 있어!</h3>
-										</div>
-									</div>
+							<div class="card mb-4">
+								<h1>클래스 관리하기</h1>
+								<button>썸네일 수정</button>
+								<div></div>
+								<img class="card-img-top"
+									src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
+									alt="..." />
+								<div class="card-body">
+									<h2 class="card-title">[Live] 오일 파스텔로 그리는 꽃그림</h2>
+									<h3>클래스 소개</h3>
+									<div>안녕하세요. 오일파스텔로 그리는 꽃그림 클래스 입니다.</div>
+									<button>내용 수정</button>
 								</div>
 							</div>
-
+							<div class="card mb-4">
+								<h2>소개 사진</h2>
+								<button>이미지 추가</button>
+								<div></div>
+								<img class="card-img-top"
+									src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
+									alt="..." />
+								<div class="card-body"></div>
+							</div>
 						</div>
 					</div>
 				</div>
+
+				<div>
+					<h2 align="center">수강 튜티 목록</h2>
+					<div
+						style="width: 1000px; height: 100px; overflow: auto; margin: 0 auto;">
+
+						<table class="table-expand">
+
+							<thead style="background: lightgray;">
+								<tr class="table-expand-row">
+									<th width="30px">No.</th>
+									<th width="200px">아이디</th>
+									<th width="200px">닉네임</th>
+									<th width="150px">전화번호</th>
+									<th width="300px">이메일</th>
+									<th width="150px">신청 날짜</th>
+								</tr>
+							</thead>
+							<!-- 							<tbody> -->
+<!-- 								<tbody> -->
+<%-- 								<% --%>
+<%-- -									if (list.isEmpty()) {
+<%-- 								%> --%>
+<!-- 								<tr> -->
+<!-- 									<td colspan="6">수강 인원이 없습니다.</td> -->
+<!-- 								</tr> -->
+<%-- 								<% --%>
+<%-- 									} else {
+<%-- 								%> --%>
+<%-- 								<% --%>
+ <%-- 									for (int i = 0; i < list.size(); i++) {
+<%-- 								%> --%>
+<!-- 								<tr> -->
+<%-- 									<td><%=list.get(i).getClassBoardNo()%></td> --%>
+<%-- 									<td><%=list.get(i).getClassBoardName()%></td> --%>
+<%-- 									<td><%=list.get(i).getClassBoardWriter()%></td> --%>
+<%-- 									<td><%=list.get(i).getClassBoardViews()%></td> --%>
+<%-- 									<td><%=list.get(i).getClassBoardDate()%></td> --%>
+<%-- 									<td><%=list.get(i).getClassBoardDate()%></td> --%>
+<!-- 								</tr> -->
+<%-- 								<% --%>
+ <%-- 									}
+<%-- 								%> --%>
+<%-- 								<% --%>
+<%-- 									}
+<%-- 								%> --%>
+<!-- 							</tbody> -->
+						</table>
+					</div>
+				</div>
+				<br> <br>
+				<div class="board_list_wrap1">
+					<br>
+					<div>
+						<table class="board_list1" id="listArea">
+							<h2>공지사항</h2>
+							<thead>
+								<tr>
+									<th>글번호</th>
+									<th>글제목</th>
+									<th>작성자</th>
+									<th>조회수</th>
+									<th>작성일</th>
+								</tr>
+							</thead>
+							<tbody>
+								<%
+									if (list.isEmpty()) {
+								%>
+								<tr>
+									<td colspan="5">존재하는 공지사항이 없습니다.</td>
+								</tr>
+								<%
+									} else {
+								%>
+								<%
+									for (int i = 0; i < list.size(); i++) {
+								%>
+								<tr>
+									<td><%=list.get(i).getClassBoardNo()%></td>
+									<td><%=list.get(i).getClassBoardName()%></td>
+									<td><%=list.get(i).getClassBoardWriter()%></td>
+									<td><%=list.get(i).getClassBoardViews()%></td>
+									<td><%=list.get(i).getClassBoardDate()%></td>
+								</tr>
+								<%
+									}
+								%>
+								<%
+									}
+								%>
+							</tbody>
+						</table>
+					</div>
+					
+					<input type="button" id="tutor_enroll_cancel"onclick="location.href='javascript:history.go(-1);'" value ="취소">
+
+					<input type="submit" id="tutor_enroll_complete" value="클래스 신청">
+
+					<div align="right">
+						<%
+							if (loginUser != null && (loginUser.getMemberGrade().equals("B")/*||loginUser.getMemberGrade().equals("A")*/)) {
+						%>
+						<%-- 로그인을 했으면서,튜터 아이디인  경우만--%>
+						<input type="button" id="writeNoBtn" value="글쓰기"
+							onclick="location.href='classNoticeWrite.no'">
+						<%
+							}
+						%>
+					</div>
+
+				</div>
+
 			</div>
-		</div>
-		
-		<!-- FOOTER -->
+			<script>
+		$('#listArea td').mouseenter(function(){
+			$(this).parent().css({'background':'darkgray', 'cursor':'pointer'});
+		}).mouseout(function(){
+			$(this).parent().css({'background':'none'});
+		}).click(function(){
+				var num = $(this).parent().children().eq(0).text(); // 글번호 가져오기
+			location.href = '<%=request.getContextPath()%>/classNoticedetail.no?no='+ num;
+			});
+</script>
+			
+			
+	</div>
+	<!-- FOOTER -->
 		<footer class="container"
 			style="text-align: center; background: #F5F5F5;">
 
@@ -277,7 +367,6 @@
 				<!-- &middot; <a href="#">Terms</a> -->
 			</p>
 		</footer>
-	</div>
-
+</div>
 </body>
 </html>

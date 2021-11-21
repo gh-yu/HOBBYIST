@@ -145,3 +145,9 @@
 #listArea{
 	text-align: center;
 }
+
+#logBtn {
+	/* 임시로 상단바의 로그인버튼 폰트 적용 */
+	font-family: monospace;
+	font-weight: bold;
+}

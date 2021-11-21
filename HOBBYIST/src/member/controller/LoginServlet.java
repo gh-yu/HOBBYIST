@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import member.model.service.MemberService;
 import member.model.vo.Member;
 import tutor.model.service.TutorService;
-import tutor.model.vo.TutorInform; 
+import tutor.model.vo.Tutor; 
 
 /**
  * Servlet implementation class LoginServlet
@@ -48,7 +48,7 @@ public class LoginServlet extends HttpServlet {
 
 			if(loginUser != null) {
 				if (loginUser.getMemberGrade().equals("B")) {
-					TutorInform tutor = new TutorService().selectTutor(loginUser.getMemberEmail());
+					Tutor tutor = new TutorService().selectTutor(loginUser.getMemberEmail());
 					if (tutor != null) { // 로그인시 loginUser가 tutor라면 tutor정보도 세션에 저장 (tutor는 member의 연장선)
 						request.getSession().setAttribute("tutor", tutor);
 						System.out.println(tutor);

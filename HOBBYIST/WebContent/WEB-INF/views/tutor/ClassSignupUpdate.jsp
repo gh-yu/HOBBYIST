@@ -1,15 +1,16 @@
-<%@ page import = "java.util.Date" %>
+<%@ page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
 	import="java.util.ArrayList, hobbyistClass.model.vo.*, member.model.vo.Member"%>
 <%
 	Member loginUser = (Member) session.getAttribute("loginUser");
+	HClass h = (HClass)request.getAttribute("hclass");
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>My Classroom</title>
+<title>Insert title here</title>
 <script src="js/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/menubar.css">
 <!-- <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css"> -->
@@ -187,7 +188,6 @@ img.ui-datepicker-trigger {
 </style>
 </head>
 <body>
-
 	<div class="app-dashboard shrink-medium">
 
 		<!-- 상단바 -->
@@ -340,114 +340,112 @@ img.ui-datepicker-trigger {
 			<!-- 본문 내용 시작 -->
 			<div class="app-dashboard-body-content off-canvas-content"
 				data-off-canvas-content>
-				<form action="<%= request.getContextPath() %>/classopen.th" method="post" encType="multipart/form-data">
+				<form action="<%= request.getContextPath() %>//classupdate.hc" method="post" encType="multipart/form-data">
 					<div id="margin_check">
 						<!-- 수강중인 클래스 -->
 						<h3>클래스 신청</h3>
 						<hr>
 						<div id="enroll_tutor_form">
-							
-								<b>카테고리</b><br> <select id="category_class" name = "category">
-									<option>--------------</option>
-									<option value="1">라이브</option>
-									<option value="2">개발/코딩</option>
-									<option value="3">인테리어</option>
-									<option value="4">요리</option>
-									<option value="5">악기</option>
-									<option value="6">건강/헬스</option>
-									<option value="7">글쓰기</option>
-									<option value="8">사진</option>
-									<option value="9">디지털 드로잉</option>
-									<option value="10">드로잉</option>
-									<option value="11">영상 편집</option>
-									<option value="12">주식</option>
-									<option value="13">사주/타로</option>
+							<input type="hidden" name="bid" value="<%= h.getClassNo() %>">
+							<b>카테고리</b><br> <select id="category_class" name="category">
+								<option>--------------</option>
+								<option value="1">라이브</option>
+								<option value="2">개발/코딩</option>
+								<option value="3">인테리어</option>
+								<option value="4">요리</option>
+								<option value="5">악기</option>
+								<option value="6">건강/헬스</option>
+								<option value="7">글쓰기</option>
+								<option value="8">사진</option>
+								<option value="9">디지털 드로잉</option>
+								<option value="10">드로잉</option>
+								<option value="11">영상 편집</option>
+								<option value="12">주식</option>
+								<option value="13">사주/타로</option>
 
-								</select> <br> <br> <b>클래스 제목</b><input type="text"
-									placeholder="컨셉이 잘 드러나는 클래스의 제목을 정해주세요" id="tutor_nickname" name = "title" required><br>
-									<br><br>
+							</select> <br> <br> <b>클래스 제목</b><input type="text"
+								placeholder="컨셉이 잘 드러나는 클래스의 제목을 정해주세요" id="tutor_nickname"
+								name="title" value = "<%= h.getClassName() %>" required><br> <br>
+							<br>
 
-								<table id="insertThumbTable">
-									<tr>
-										<th>썸네일 사진</th>
-										<td colspan="3">
-											<div id="titleImgArea">
-												<img id="titleImg" width="350" height="200">
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<th>이미지 추가</th>
-										<td>
-											<div id="contentImgArea1">
-												<img id="contentImg1" width="120" height="100">
-											</div>
-										</td>
-										<td>
-											<div id="contentImgArea2">
-												<img id="contentImg2" width="120" height="100">
-											</div>
-										</td>
-										<td>
-											<div id="contentImgArea3">
-												<img id="contentImg3" width="120" height="100">
-											</div>
-										</td>
-									</tr>
-									
-								</table>
+							<table id="insertThumbTable">
+								<tr>
+									<th>썸네일 사진</th>
+									<td colspan="3">
+										<div id="titleImgArea">
+											<img id="titleImg" width="350" height="200">
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th>이미지 추가</th>
+									<td>
+										<div id="contentImgArea1">
+											<img id="contentImg1" width="120" height="100">
+										</div>
+									</td>
+									<td>
+										<div id="contentImgArea2">
+											<img id="contentImg2" width="120" height="100">
+										</div>
+									</td>
+									<td>
+										<div id="contentImgArea3">
+											<img id="contentImg3" width="120" height="100">
+										</div>
+									</td>
+								</tr>
 
-								<!-- 파일 업로드 하는 부분 -->
-								<div id="fileArea">
-									<input type="file" id="thumbnailImg1" multiple="multiple"
-										name="thumbnailImg1" onchange="LoadImg(this,1)"> <input
-										type="file" id="thumbnailImg2" multiple="multiple"
-										name="thumbnailImg2" onchange="LoadImg(this,2)"> <input
-										type="file" id="thumbnailImg3" multiple="multiple"
-										name="thumbnailImg3" onchange="LoadImg(this,3)"> <input
-										type="file" id="thumbnailImg4" multiple="multiple"
-										name="thumbnailImg4" onchange="LoadImg(this,4)">
-								</div>
-								<br> <br> <br> <b>클래스 소개</b><br>
-								<textarea id="tutor_introduction"
-									placeholder="클래스 소개글을 부탁드립니다 ^^" name ="content" required></textarea>
-								<br>
-								
-									<h3>클래스 신청</h3>
-										오늘 날짜 : <span id="today"></span> <br>
-										
-										시작일<input type="date" name="startdate" id ="fromDate"> ~
-										종료일<input type="date" name="enddate"  id ="toDate">
-										
-										
-								<br>
-								<h3>강의 시간</h3>
-								<input type="number" id="tentacles" name="classtime" min="1" max="8" step = "0.5">시간
-							
-								<h3>수강료</h3>
-									<input type="text" name ="fee" style="text-align: right;" pattern="[0-9]+" id="price"
-										onkeyup="inputNumberFormat(this)" />원
-								<br>
-								<div>
-									<h3>클래스 모집 인원</h3>
-									최소 인원<input type="number" id="tentacles" name="minpeople"
-										min="1" max="100"> ~ 최대 인원 <input type="number"
-										id="tentacles" name="maxpeople" min="10" max="100">
-								</div>
+							</table>
 
-								<br>
-								<br>
+							<!-- 파일 업로드 하는 부분 -->
+							<div id="fileArea">
+								<input type="file" id="thumbnailImg1" multiple="multiple"
+									name="thumbnailImg1" onchange="LoadImg(this,1)"> <input
+									type="file" id="thumbnailImg2" multiple="multiple"
+									name="thumbnailImg2" onchange="LoadImg(this,2)"> <input
+									type="file" id="thumbnailImg3" multiple="multiple"
+									name="thumbnailImg3" onchange="LoadImg(this,3)"> <input
+									type="file" id="thumbnailImg4" multiple="multiple"
+									name="thumbnailImg4" onchange="LoadImg(this,4)">
+							</div>
+							<br> <br> <br> <b>클래스 소개</b><br>
+							<textarea id="tutor_introduction"
+								placeholder="클래스 소개글을 부탁드립니다 ^^" name="content" required>
+								<%= h.getClassContent() %></textarea>
+							<br>
 
-								<input type="button" id="tutor_enroll_cancel"onclick="location.href='javascript:history.go(-1);'" value ="취소">
+							<h3>클래스 신청</h3>
+							오늘 날짜 : <span id="today"></span> <br> 시작일<input type="date"
+								name="startdate" id="fromDate"> ~ 종료일<input type="date"
+								name="enddate" id="toDate"> <br>
+							<h3>강의 시간</h3>
+							<input type="number" id="tentacles" name="classtime" min="1"
+								max="8" step="0.5">시간
 
-								<input type="submit" id="tutor_enroll_complete" value="클래스 신청">
+							<h3>수강료</h3>
+							<input type="text" name="fee" style="text-align: right;"
+								pattern="[0-9]+" id="price" onkeyup="inputNumberFormat(this)" />원
+							<br>
+							<div>
+								<h3>클래스 모집 인원</h3>
+								최소 인원<input type="number" id="tentacles" name="minpeople"
+									min="1" max="100"> ~ 최대 인원 <input type="number"
+									id="tentacles" name="maxpeople" min="10" max="100">
+							</div>
+
+							<br> <br>
+							<div align="center">
+								<input type="submit" id="updateNoBtn" value="저장"> <input
+									type="button"
+									onclick="location.href='javascript:history.go(-1);'"
+									id="cancelBtn" value="취소">
+							</div>
 
 
-								<br>
-							
 						</div>
 					</div>
-					</form>
+				</form>
 			</div>
 
 		</div>

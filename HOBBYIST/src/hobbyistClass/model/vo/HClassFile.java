@@ -8,23 +8,22 @@ public class HClassFile {
 	private Date uploadDate;
 	private String originName;
 	private String changeName;
-	private long fileSize;
-	private int fileThumbYn; // 0이면 썸네일, 1이면 일반사진
+	private String fileThumbYn; // 0이면 썸네일, 1이면 일반사진
 	private String fileTableName; 
 	private int boardNo; // 파일이 속한 게시글 번호
 	private int status; // 삭제를 했냐 안했냐의 여부
 	
 	public HClassFile() {}
 
-	public HClassFile(int fileNo, String filePath, Date uploadDate, String originName, String changeName, long fileSize,
-			int fileThumbYn, String fileTableName, int boardNo, int status) {
+	public HClassFile(int fileNo, String filePath, Date uploadDate, String originName, String changeName,
+			String fileThumbYn, String fileTableName, int boardNo, int status) {
 		super();
 		this.fileNo = fileNo;
 		this.filePath = filePath;
 		this.uploadDate = uploadDate;
 		this.originName = originName;
 		this.changeName = changeName;
-		this.fileSize = fileSize;
+//		this.fileSize = fileSize;
 		this.fileThumbYn = fileThumbYn;
 		this.fileTableName = fileTableName;
 		this.boardNo = boardNo;
@@ -71,19 +70,19 @@ public class HClassFile {
 		this.changeName = changeName;
 	}
 
-	public long getFileSize() {
-		return fileSize;
-	}
+//	public long getFileSize() {
+//		return fileSize;
+//	}
+//
+//	public void setFileSize(long fileSize) {
+//		this.fileSize = fileSize;
+//	}
 
-	public void setFileSize(long fileSize) {
-		this.fileSize = fileSize;
-	}
-
-	public int getFileThumbYn() {
+	public String getFileThumbYn() {
 		return fileThumbYn;
 	}
 
-	public void setFileThumbYn(int fileThumbYn) {
+	public void setFileThumbYn(String fileThumbYn) {
 		this.fileThumbYn = fileThumbYn;
 	}
 
@@ -114,8 +113,7 @@ public class HClassFile {
 	@Override
 	public String toString() {
 		return "HClassFile [fileNo=" + fileNo + ", filePath=" + filePath + ", uploadDate=" + uploadDate
-				+ ", originName=" + originName + ", changeName=" + changeName + ", fileSize=" + fileSize
-				+ ", fileThumbYn=" + fileThumbYn + ", fileTableName=" + fileTableName + ", boardNo=" + boardNo
+				+ ", originName=" + originName + ", changeName=" + changeName + ", fileThumbYn=" + fileThumbYn + ", fileTableName=" + fileTableName + ", boardNo=" + boardNo
 				+ ", status=" + status + "]";
 	}
 

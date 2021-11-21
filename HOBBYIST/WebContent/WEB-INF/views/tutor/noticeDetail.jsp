@@ -70,7 +70,7 @@
 					<input type="submit" id="updateNoBtn" value="수정하기">
 					<input type="button" id="deleteNoBtn"onclick="deleteNotice();" value="삭제하기">
 				<% } %> <!-- 로그인하지 않았거나, 게시글 작성자와 로그인한 user의 아이디가 같지 않으면  위의 수정하기 버튼 안 보임-->
-					<input type="button" onclick="location.href='<%= request.getContextPath() %>/classNoticeList.no'" id="cancelBtn" value="뒤로 가기">
+					<input type="button" onclick="location.href='<%= request.getContextPath() %>/classManagement.tt'" id="cancelBtn" value="뒤로 가기">
 				</div>
 				</form>
 		</div>

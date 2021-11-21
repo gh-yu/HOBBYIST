@@ -522,7 +522,7 @@ label[for="fabk"], [for="twit"], [for="insta"], [for="pinter"], [for="youtu"] {
 			      <br><br>
 		      	</div>
 		      	<!-- use a tag for links to other locations -->
-			<input type="submit" class="button button-rounded-hover" value="자기소개 수정" onclick="href='<%=request.getContextPath)%>updateProfileForm.me'"><br>
+		      	<input type="submit" class="button button-rounded-hover" value="자기소개 수정" onclick="href='<%= request.getContextPath() %>updateProfileForm.me'"><br>
 		    </div> <!-- /.card-profile-stats-more-content -->
 		  </div> <!-- /.card-profile-stats-more -->
 		</div> <!-- /.card-profile-stats -->
