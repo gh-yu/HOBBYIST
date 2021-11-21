@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="tutor.model.vo.Tutor"%>
+<%
+	Tutor t = (Tutor)session.getAttribute("loginUser");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,27 +45,11 @@
 /*프로필 박스*/
 .box1{
 	text-align:center;
-	border:1px solid #D5D5D5;
+/* 	border:1px solid #D5D5D5; */
 	width: 650px;
 	height: 520px;
-	float: left;
-	margin: 30px;
+	margin: 0 auto;
 	padding: 30px;
-}
-.box2{
-/* 	text-align:center; */
-	border:1px solid #D5D5D5;
-	width: 650px;
-	height: 500px;
-	float: right;
-	margin: 20px;
-	padding: 30px;
-	positoin:relative;
-	justify-content: center;
-	align-items: center;
-	background: url("./images/art1.png");
-	background-size: 110% 100%;
-	background-color: rgba( 0, 0, 0, 0.3);
 }
 
 
@@ -485,7 +472,7 @@ label[for="fabk"], [for="twit"], [for="insta"], [for="pinter"], [for="youtu"] {
 		
 			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
 			<p id="classtitle"> [오전] 아이패드 드로잉 (3개월 과정)</p>
-			<form encType="multipart/form-data">
+			<form action="<%= request.getContextPath() %>/updateTutor.me" encType="multipart/form-data">
 <%-- 			<form action="<%= request.getContextPath() %>" encType="multipart/form-data"> --%>
  			<div class="box1"> 
 			<div class="card-profile-stats">
@@ -518,11 +505,27 @@ label[for="fabk"], [for="twit"], [for="insta"], [for="pinter"], [for="youtu"] {
 		    <p class="card-profile-stats-more-link"><a href="#"><i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
 		    <div class="card-profile-stats-more-content">	<!-- 클릭하면 접히는 화살표 -->
 		    	<div>
-			     	자기소개 자기소개 자기소개
+		    	  <%= tutor.getTutorReport() %>
+				  <input type="hidden" id="email" name="email" value="<%= tutor.getTutorReport() %>"><br><br>
 			      <br><br>
+			      <div class="rounded-social-buttons">
+				  <a class="social-button facebook" href="#"></a>
+				  <input type="text" name="fbk">
+				  <br><br>
+				  <a class="social-button twitter" href="#"></a>
+				  <input type="text" name="twit">
+				  <br><br>
+				  <a class="social-button youtube" href="#"></a>
+				  <input type="text" name="yout">
+				  <br><br>
+				  <a class="social-button instagram" href="#"></a>
+				 <input type="text" name="insta">
+				  <br><br>
+				
+			</div>
 		      	</div>
 		      	<!-- use a tag for links to other locations -->
-			<input type="submit" class="button button-rounded-hover" value="자기소개 수정" onclick="href='<%=request.getContextPath)%>updateProfileForm.me'"><br>
+			<input type="submit" class="button button-rounded-hover" value="자기소개 수정"><br>
 		    </div> <!-- /.card-profile-stats-more-content -->
 		  </div> <!-- /.card-profile-stats-more -->
 		</div> <!-- /.card-profile-stats -->
@@ -536,31 +539,7 @@ label[for="fabk"], [for="twit"], [for="insta"], [for="pinter"], [for="youtu"] {
 						
 			
 			
-			<div class="box2">
-				<div class="rounded-social-buttons">
-				  <a class="social-button facebook" href="#"></a>
-				  <label for="fabk">@facebook</label>
-				  <br><br>
-				  <a class="social-button twitter" href="#"></a>
-				  <label for="twit">@twitter</label>
-				  <br><br>
-				  <a class="social-button youtube" href="#"></a>
-				  <label for="youtu">@youtube</label>
-				  <br><br>
-				  <a class="social-button instagram" href="#"></a>
-				  <label for="insta">@instagram</label>
-				  <br><br>
-				  <a class="social-button pinterest" href="#"></a>
-				  <label for="pinter">@pinterest</label>
-				  <br><br><br>
-				<!-- use button tag for on page actions -->
-			<button class="button button-rounded-hover">SNS채널 등록하기</button>
-                  
-			</div>
-
-		</div>	
-		</div>
-	
+			
 		
 			
 		<!-- 사이드바, 본문 끝 -->

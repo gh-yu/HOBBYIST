@@ -3,38 +3,33 @@ package tutor.model.vo;
 import java.sql.Date;
 
 public class Tutor {
-	private int tutorNo;
 	private Date tutorEnrollDate;
 	private String tutorBankAccount;
 	private String tutorReport;
 	private String tutorSns;
 	private String tutorImgPath;
 	private Date tutorImgUpdate;
-	private String tutorImgName;
 	private int tutorImgSize;
+	private String tutorImgOriginName;
+	private String tutorImgChangeName;
+//	private String memberEmail;
 	
 	public Tutor() {}
 
-	public Tutor(int tutorNo, Date tutorEnrollDate, String tutorBankAccount, String tutorReport, String tutorSns,
-			String tutorImgPath, Date tutorImgUpdate, String tutorImgName, int tutorImgSize) {
+	public Tutor(Date tutorEnrollDate, String tutorBankAccount, String tutorReport, String tutorSns,
+			String tutorImgPath, Date tutorImgUpdate, int tutorImgSize, String tutorImgOriginName,
+			String tutorImgChangeName) {
 		super();
-		this.tutorNo = tutorNo;
 		this.tutorEnrollDate = tutorEnrollDate;
 		this.tutorBankAccount = tutorBankAccount;
 		this.tutorReport = tutorReport;
 		this.tutorSns = tutorSns;
 		this.tutorImgPath = tutorImgPath;
 		this.tutorImgUpdate = tutorImgUpdate;
-		this.tutorImgName = tutorImgName;
 		this.tutorImgSize = tutorImgSize;
-	}
-
-	public int getTutorNo() {
-		return tutorNo;
-	}
-
-	public void setTutorNo(int tutorNo) {
-		this.tutorNo = tutorNo;
+		this.tutorImgOriginName = tutorImgOriginName;
+		this.tutorImgChangeName = tutorImgChangeName;
+//		this.memberEmail = memberEmail;
 	}
 
 	public Date getTutorEnrollDate() {
@@ -85,30 +80,47 @@ public class Tutor {
 		this.tutorImgUpdate = tutorImgUpdate;
 	}
 
-	public String getTutorImgName() {
-		return tutorImgName;
-	}
-
-	public void setTutorImgName(String tutorImgName) {
-		this.tutorImgName = tutorImgName;
-	}
-
-	public int getTutorImagSize() {
+	public int getTutorImgSize() {
 		return tutorImgSize;
 	}
 
-	public void setTutorImagSize(int tutorImagSize) {
-		this.tutorImgSize = tutorImagSize;
+	public void setTutorImgSize(int tutorImgSize) {
+		this.tutorImgSize = tutorImgSize;
 	}
+
+	public String getTutorImgOriginName() {
+		return tutorImgOriginName;
+	}
+
+	public void setTutorImgOriginName(String tutorImgOriginName) {
+		this.tutorImgOriginName = tutorImgOriginName;
+	}
+
+	public String getTutorImgChangeName() {
+		return tutorImgChangeName;
+	}
+
+	public void setTutorImgChangeName(String tutorImgChangeName) {
+		this.tutorImgChangeName = tutorImgChangeName;
+	}
+
+//	public String getMemberEmail() {
+//		return memberEmail;
+//	}
+//
+//	public void setMemberEmail(String memberEmail) {
+//		this.memberEmail = memberEmail;
+//	}
 
 	@Override
 	public String toString() {
-		return "Tutor [tutorNo=" + tutorNo + ", tutorEnrollDate=" + tutorEnrollDate + ", tutorBankAccount="
-				+ tutorBankAccount + ", tutorReport=" + tutorReport + ", tutorSns=" + tutorSns + ", tutorImgPath="
-				+ tutorImgPath + ", tutorImgUpdate=" + tutorImgUpdate + ", tutorImgName=" + tutorImgName
-				+ ", tutorImagSize=" + tutorImgSize + "]";
+		return "Tutor [tutorEnrollDate=" + tutorEnrollDate + ", tutorBankAccount=" + tutorBankAccount + ", tutorReport="
+				+ tutorReport + ", tutorSns=" + tutorSns + ", tutorImgPath=" + tutorImgPath + ", tutorImgUpdate="
+				+ tutorImgUpdate + ", tutorImgSize=" + tutorImgSize + ", tutorImgOriginName=" + tutorImgOriginName
+				+ ", tutorImgChangeName=" + tutorImgChangeName + "]";
 	}
 	
-}
+	
 
-		
+
+	}	

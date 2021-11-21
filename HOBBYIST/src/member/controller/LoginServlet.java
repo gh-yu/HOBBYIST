@@ -8,11 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import member.model.service.MemberService;
 import member.model.vo.Member;
 import tutor.model.service.TutorService;
-import tutor.model.vo.TutorInform; 
+import tutor.model.vo.Tutor;
 
 /**
  * Servlet implementation class LoginServlet
@@ -39,6 +40,8 @@ public class LoginServlet extends HttpServlet {
 		int result = new MemberService().login(memberEmail, memberPwd);
 		Member loginUser = new MemberService().loginMember(memberEmail, memberPwd);
 		
+		System.out.println(loginUser);
+				
 		response.setContentType("text/html; charset=UTF-8");
 		if(result ==1) {
 			PrintWriter script = response.getWriter();
@@ -48,7 +51,7 @@ public class LoginServlet extends HttpServlet {
 
 			if(loginUser != null) {
 				if (loginUser.getMemberGrade().equals("B")) {
-					TutorInform tutor = new TutorService().selectTutor(loginUser.getMemberEmail());
+					Tutor tutor = new TutorService().selectTutor(loginUser.getMemberEmail());
 					if (tutor != null) { // 로그인시 loginUser가 tutor라면 tutor정보도 세션에 저장 (tutor는 member의 연장선)
 						request.getSession().setAttribute("tutor", tutor);
 						System.out.println(tutor);
