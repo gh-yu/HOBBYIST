@@ -122,6 +122,8 @@ public class HClassService {
 		} else {
 			rollback(conn);
 		}
+		close(conn);
+
 		return result;
 	}
 
@@ -135,7 +137,8 @@ public class HClassService {
 		} else {
 			rollback(conn);
 		}
-
+		close(conn);
+		
 		return result;
 	}
 

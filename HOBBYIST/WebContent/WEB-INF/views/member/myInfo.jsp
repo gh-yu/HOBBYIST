@@ -80,7 +80,7 @@
 								<span class="app-dashboard-sidebar-text">자주 묻는 질문(FAQ)</h3></span>
 							</a></li>
 							<br><br>
-							<li><a href="#"> 
+							<li><a href="<%= request.getContextPath() %>/memberCheck.admin"> 
 								<span class="app-dashboard-sidebar-text"><h3>회원 관리</h3></span>
 							</a></li>
 							<li><a href="#"> 
