@@ -29,11 +29,11 @@ public class MemberService{
 	public Member loginMember(String userEmail, String userPwd) {
 		Connection conn = getConnection();
 		
-		Member m = mDAO.loginMember(conn, userEmail, userPwd);
+		Member loginUser = mDAO.loginMember(conn, userEmail, userPwd);
 		
 		close(conn);
 		
-		return m;
+		return loginUser;
 	}
 	
 	public int join(Member member) {
@@ -78,10 +78,10 @@ public class MemberService{
 		
 	}
 
-	public Member selectMember(String email) {
+	public Member selectMember(String memberEmail) {
 		Connection conn = getConnection();
 		
-		Member m = mDAO.selectMember(conn, email);
+		Member m = mDAO.selectMember(conn, memberEmail);
 		
 		close(conn);
 		
@@ -108,6 +108,20 @@ public class MemberService{
 		Connection conn = getConnection();
 		
 		int result = mDAO.updatePwd(conn, map);
+		if(result > 0){
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return result;
+	}
+
+	public int changeTutee(String memberEmail) {
+		Connection conn = getConnection();
+		
+		int result = mDAO.changeTutee(conn, memberEmail);
+		
 		if(result > 0){
 			commit(conn);
 		} else {

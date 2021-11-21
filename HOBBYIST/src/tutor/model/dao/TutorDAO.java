@@ -34,7 +34,7 @@ public class TutorDAO {
 	
 	
 	// 튜터 정보 넘기기
-	public int insertTutor(Connection conn, Tutor tutor) {
+	public int insertTutor(Connection conn, Tutor tutor, String memberEmail) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -45,6 +45,7 @@ public class TutorDAO {
 			pstmt.setString(1, tutor.getTutorReport());
 			pstmt.setString(2, tutor.getTutorSns());
 //			pstmt.setString(3, member.getMemberPhone());
+			pstmt.setString(3, memberEmail);
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {

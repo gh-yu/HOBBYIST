@@ -176,11 +176,10 @@ public class HClassDAO {
 									  rset.getInt("CLASS_TUTEE_MAX"),
 									  rset.getString("CLASS_CONTENT"),
 									  rset.getInt("CLASS_FEE"),
-									  rset.getString("CLASS_LIVES_YN"),
-									  rset.getString("CLASS_PLACE"),
 									  rset.getInt("TUTOR_NO"),
-									  rset.getString("CATEGORY_NAME"),
-									  rset.getDate("CLASS_START_DATE"));
+									  rset.getDate("CLASS_START_DATE"),
+									  rset.getString("CATEGORY_NAME")
+									  );
 				list.add(h);
 			}
 
@@ -308,11 +307,9 @@ public class HClassDAO {
 						  rset.getInt("CLASS_TUTEE_MAX"),
 						  rset.getString("CLASS_CONTENT"),
 						  rset.getInt("CLASS_FEE"),
-						  rset.getString("CLASS_LIVES_YN"),
-						  rset.getString("CLASS_PLACE"),
 						  rset.getInt("TUTOR_NO"),
-						  rset.getString("CATEGORY_NAME"),
-						  rset.getDate("CLASS_START_DATE")); 
+						  rset.getDate("CLASS_START_DATE"),
+						  rset.getString("CATEGORY_NAME")); 
 			}
 
 		} catch (SQLException e) {
@@ -324,6 +321,7 @@ public class HClassDAO {
 
 		return h;
 	}
+
 
 //	public int confirmClass(Connection conn, HClass h) {
 //		PreparedStatement pstmt1 = null;
@@ -433,6 +431,7 @@ public class HClassDAO {
 //	}
 
 
+
 	public ArrayList<HClass> selectClassListOrderByLike(Connection conn) {
 		Statement stmt = null;
 		ResultSet rset = null;
@@ -469,5 +468,4 @@ public class HClassDAO {
 		
 		return list;
 	}
-
 }

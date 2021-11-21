@@ -147,7 +147,7 @@ form span{
 					
 						<br><br>
 						<b>이메일</b><br>
-						<input type="text" id="emai" name="email" value="<%= loginUser.getMemberEmail() %>" style="background: lightgray" readonly><br><br>
+						<input type="text" id="email" name="email" value="<%= loginUser.getMemberEmail() %>" style="background: lightgray" readonly><br><br>
 						
 						<b>이름</b><br>
 						<input type="text" id="name" name="name" value="<%= loginUser.getMemberName() %>" style="background: lightgray" readonly><br><br>

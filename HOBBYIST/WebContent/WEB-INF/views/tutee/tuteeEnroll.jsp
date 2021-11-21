@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member"%>
+<%
+	Member m = (Member)session.getAttribute("loginUser");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>튜티 마이페이지 - 튜터 신청</title>
+<title>튜터 신청하기 페이지</title>
 <!-- CDN -->
 <script src="js/jquery-3.6.0.min.js"></script>
 
@@ -230,18 +233,28 @@ body{
 			<!-- 본문 영역 -->
 			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
 				<div class="box1">
-				<form action="<%=request.getContextPath()%>/tutorRegister.me" encType="multipart/form-data">
+				<form action="<%=request.getContextPath()%>/insertTutee.me" encType="multipart/form-data">
 					<div class="box">	<!-- sign in 박스 시작 -->
 							<span class="text-center">TUTOR SIGN-IN</span>
 							<div class="tutorPro">
 							<img id="target_img" class="card-profile-stats-intro-pic" src="./images/gosim2.jpg" alt="profile-image" />
 							</div><br>
+						<div class="input-container">
+							<%=m.getMemberNickName() %>
+							<input type="hidden" name="myNickName" required value="<%=m.getMemberNickName() %>">
+							<label>Nick Name</label>		
+						</div>
+						<div class="input-container">
+							<%=m.getMemberPhone() %>		
+							<input type="hidden" name="myPhone" required value="<%=m.getMemberPhone() %>">
+							<label>Phone</label>
+						</div>
 						<div class="input-container">		
-							<input type="text" name="tSns" required=""/>
+							<input type="text" name="mySns" required=""/>
 							<label>SNS</label>
 						</div>
 						<div class="input-container">		
-							<input type="text" name="tReport" required=""/>
+							<input type="text" name="myReport" required=""/>
 							<label>Introduce</label>
 						</div>
 						
@@ -303,6 +316,8 @@ body{
 							reader.readAsDataURL(value.files[0]);
 						}
 					}
+	
+	
 </script>	
 	
 

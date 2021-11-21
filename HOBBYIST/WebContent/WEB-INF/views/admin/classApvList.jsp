@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.ArrayList, hobbyistClass.model.vo.*" %>
 <% 
-	ArrayList<HClass> apvList = (ArrayList<HClass>)request.getAttribute("apvList");
+	ArrayList<HClass> apvList = (ArrayList)request.getAttribute("apvList");
 	ApvPageInfo pi = (ApvPageInfo)request.getAttribute("pi");
 %>
 <!DOCTYPE html>

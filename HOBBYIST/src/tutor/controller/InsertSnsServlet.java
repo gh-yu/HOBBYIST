@@ -7,17 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import tutor.model.service.SnsService;
+import tutor.model.vo.Sns;
+
 /**
- * Servlet implementation class UpdateFormServlet
+ * Servlet implementation class InsertSnsServlet
  */
-@WebServlet("/updateTutor.me")
-public class UpdateProfileServlet extends HttpServlet {
+@WebServlet("/insertSns.me")
+public class InsertSnsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateProfileServlet() {
+    public InsertSnsServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,7 +29,21 @@ public class UpdateProfileServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("WEB-INF/views/tutor/tutorProfile.jsp").forward(request, response);
+		request.setCharacterEncoding("UTF-8");
+		String facebook = request.getParameter("fbk");
+		String twitter = request.getParameter("twit");
+		String youtube = request.getParameter("yout");
+		String instagram = request.getParameter("insta");
+		
+		Sns sns = new Sns(facebook, twitter, youtube, instagram);
+		int result = new SnsService().insertSns(sns);
+		
+		if(result > 0) {
+			response.sendRedirect("tutorInform.me");
+		} else {
+			request.setAttribute("msg", "sns등록 실패");
+			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
+		}
 	}
 
 	/**

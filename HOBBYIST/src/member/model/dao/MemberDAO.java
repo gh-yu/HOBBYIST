@@ -39,7 +39,7 @@ public class MemberDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "SELECT MEMBER_PWD FROM MEMBER WHERE MEMBER_EMAIL = ? ";
+		String query = "SELECT MEMBER_PWD FROM MEMBER WHERE MEMBER_EMAIL = ? AND MEMBER_STATUS = 1";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, memberEmail);
@@ -64,7 +64,7 @@ public class MemberDAO {
 	public Member loginMember(Connection conn, String userEmail, String userPwd) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		Member m = null;
+		Member loginUser = null;
 		
 		String query = "SELECT * FROM MEMBER WHERE MEMBER_EMAIL = ? AND MEMBER_PWD = ? AND MEMBER_STATUS = 1";
 			
@@ -75,7 +75,7 @@ public class MemberDAO {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				m = new Member(rset.getString("MEMBER_EMAIL"), 
+				loginUser = new Member(rset.getString("MEMBER_EMAIL"), 
 								rset.getString("MEMBER_NAME"), 
 								rset.getString("MEMBER_NICKNAME"), 
 								rset.getString("MEMBER_PHONE"), 
@@ -92,7 +92,7 @@ public class MemberDAO {
 			close(rset);
 			close(pstmt);
 		}
-		return m;
+		return loginUser;
 	}
 	
 	// 회원가입
@@ -254,6 +254,24 @@ public class MemberDAO {
 		} finally {
 			close(pstmt);
 		}
+		return result;
+	}
+
+	public int changeTutee(Connection conn, String memberEmail) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("changeTutee");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberEmail);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return result;
 	}
 
