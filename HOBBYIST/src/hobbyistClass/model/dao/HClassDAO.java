@@ -14,9 +14,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import csBoard.model.vo.CSBoardFile;
 import hobbyistClass.model.vo.ApvPageInfo;
 import hobbyistClass.model.vo.HClassFiles;
 import hobbyistClass.model.vo.HClass;
+import hobbyistClass.model.vo.HClassFile;
 
 public class HClassDAO {
 
@@ -493,6 +495,108 @@ public class HClassDAO {
 		}
 		
 		return result;
+	}
+
+	public ArrayList<HClassFile> selectFileList(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		ArrayList<HClassFile> list = null;
+		
+		String query = prop.getProperty("selectFileList");
+
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			list = new ArrayList<HClassFile>();
+			while(rset.next()) {
+				HClassFile f = new HClassFile();
+				f.setFileNo(rset.getInt("FILE_NO"));
+				f.setChangeName(rset.getString("CHANGE_NAME"));
+				f.setBoardNo(rset.getInt("BOARD_NO"));
+				list.add(f);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return list;
+	}
+
+	public HClass selectClass(Connection conn, int cNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HClass c = null;
+		
+		String query = prop.getProperty("selectClassDetail");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, cNo);
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				c = new HClass(rset.getInt("CLASS_NO"), 
+						  rset.getString("CLASS_NAME"),
+						  rset.getDate("CLASS_ENROLL_DATE"),
+						  rset.getDate("CLASS_END_DATE"),
+						  rset.getDate("CLASS_APV_DATE"),
+						  rset.getString("CLASS_APV_YN"),
+						  rset.getString("CLASS_STATUS"),
+						  rset.getDouble("CLASS_TIME"),
+						  rset.getInt("CLASS_TUTEE_MIN"),
+						  rset.getInt("CLASS_TUTEE_MAX"),
+						  rset.getString("CLASS_CONTENT"),
+						  rset.getInt("CLASS_FEE"),
+						  rset.getInt("TUTOR_NO"),
+						  rset.getDate("CLASS_START_DATE"),
+						  rset.getString("CATEGORY_NAME"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return c;
+	}
+
+	public ArrayList<HClassFile> selectDetailFileList(Connection conn, int cNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<HClassFile> list = null;
+		
+		String query = prop.getProperty("selectDetailFileList");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, cNo);
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<HClassFile>();
+			while(rset.next()) {
+				HClassFile f = new HClassFile();
+				f.setFileNo(rset.getInt("FILE_NO"));
+				f.setOriginName(rset.getString("ORIGIN_NAME"));
+				f.setChangeName(rset.getString("CHANGE_NAME"));
+				f.setFilePath(rset.getString("FILE_PATH"));
+				f.setUploadDate(rset.getDate("FILE_UPLOAD"));
+				f.setFileThumbYn(rset.getString("FILE_THUMB_YN"));
+				list.add(f);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 	}
 
 }

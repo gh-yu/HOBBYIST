@@ -252,6 +252,7 @@
 						$.ajax({
 							url: 'updateReply.cs',
 							data: {repNo:repNo, content:content, rNo:rNo},
+							type: 'POST',
 							success: function(data){
 								console.log(data);
 								
@@ -294,6 +295,7 @@
 						$.ajax({
 							url: 'deleteReply.cs',
 							data: {repNo:repNo, rNo:rNo},
+							type: 'POST',
 							success: function(data){
 								console.log(data);
 								
@@ -334,6 +336,7 @@
 					$.ajax({
 						url: 'insertReply.cs',
 						data: {content:content, rNo:rNo},
+						type: 'POST',
 						success: function(data){
 							console.log(data);
 							

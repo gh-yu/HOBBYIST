@@ -15,8 +15,6 @@
 <style type="text/css">
 	#listArea{border-top: 2px solid gray; text-align: center; font-size: small; border-bottom: 1px solid lightgray;}
 	.tableArea{width:1000px; height:270px; margin-right: auto; margin-left: auto;}
-	thead{}
-	tbody{}	
 	#writeBtn{background: #B0C4DE; font-weight: bold; color: white; border: none; cursor: pointer; margin-left: 80%; margin-bottom: 15px; width: 100px; height: 40px; box-shadow: 1px 1px 2px lightgray;}
 	.pagingArea button{border-radius: 15px; /* background: #9ED4C2; */ background: none; border: 1px solid #9ed4c2;} /* #D5D5D5; */
 /* 	.buttonArea{margin-right: 50px; margin-bottom: 50px;}
@@ -175,24 +173,24 @@
 							
 				</div>	
 			</div>
-					<script>
-						if ('<%= list.isEmpty() %>' == 'false') {
-							$('#listArea td').mouseenter(function(){
-								$(this).parent().css({'text-decoration':'underline', 'cursor':'pointer'})
-							}).mouseout(function(){
-								$(this).parent().css('text-decoration', 'none');
-							}).click(function(){
-								var rNo = $(this).parent().children().eq(0).text();
-								var userEmail = $(this).parent().children().eq(6).text();
-								
-								if ('<%= loginUser %>' == 'null') {
-									alert('작성자만 열람할 수 있습니다.');
-								} else {
-									location.href='<%= request.getContextPath() %>/detail.cs?rNo=' + rNo;
-								}
-							})
+			<script>
+				if ('<%= list.isEmpty() %>' == 'false') {
+					$('#listArea td').mouseenter(function(){
+						$(this).parent().css({'text-decoration':'underline', 'cursor':'pointer'})
+					}).mouseout(function(){
+						$(this).parent().css('text-decoration', 'none');
+					}).click(function(){
+						var rNo = $(this).parent().children().eq(0).text();
+						var userEmail = $(this).parent().children().eq(6).text();
+						
+						if ('<%= loginUser %>' == 'null') {
+							alert('작성자만 열람할 수 있습니다.');
+						} else {
+							location.href='<%= request.getContextPath() %>/detail.cs?rNo=' + rNo;
 						}
-					</script>				
+					})
+				}
+			</script>				
 		</div>
 		
 			<!-- FOOTER -->

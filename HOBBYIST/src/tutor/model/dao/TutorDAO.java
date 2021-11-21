@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
-import member.model.vo.Member;
 import tutor.model.vo.Files;
 import tutor.model.vo.Tutor;
 

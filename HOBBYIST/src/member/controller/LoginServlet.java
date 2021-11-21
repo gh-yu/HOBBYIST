@@ -41,17 +41,16 @@ public class LoginServlet extends HttpServlet {
 		
 		response.setContentType("text/html; charset=UTF-8");
 		if(result ==1) {
-			PrintWriter script = response.getWriter();
-			script.println("<script>");
-			script.println("location.href='index.jsp'");
-			script.println("</script>");
+//			PrintWriter script = response.getWriter();
+//			script.println("<script>");
+//			script.println("location.href='index.jsp'");
+//			script.println("</script>");
 
 			if(loginUser != null) {
 				if (loginUser.getMemberGrade().equals("B")) {
 					Tutor tutor = new TutorService().selectTutor(loginUser.getMemberEmail());
 					if (tutor != null) { // 로그인시 loginUser가 tutor라면 tutor정보도 세션에 저장 (tutor는 member의 연장선)
 						request.getSession().setAttribute("tutor", tutor);
-						System.out.println(tutor);
 					}
 				}
 				request.getSession().setAttribute("loginUser", loginUser);

@@ -76,7 +76,7 @@
 	
 	.cancelBtn:hover{cursor: pointer;}
 	.deleteFile:hover{cursor: pointer;}
-}
+
 </style>
 </head>
 <body>
@@ -332,26 +332,30 @@
 						</script>
 						
 						<script>
+							// 기존의 저장된 파일 삭제 버튼 누를시 삭제되고, 새로운 파일 올릴 수 있도록 파일선택 버튼 활성화
 							$(".deleteFile").off().on("click", function() {
-								var fNo = $(this).parent().find('input[type=hidden]').val();
-								$fileArea = $(this).parent();
-								$inputArea = $(this).parent().parent().find('input[type=file]');
-								
-								$.ajax({
-									url: 'deleteFile.cs',
-									data: {fNo:fNo},
-									success: function(data){
-										console.log(data);
-										if (data.trim() == '1') {
+								if (confirm("삭제하신 파일은 복구할 수 없습니다. 정말 삭제하시겠습니까?")) {
+									var fNo = $(this).parent().find('input[type=hidden]').val();
+									$fileArea = $(this).parent();
+									$inputArea = $(this).parent().parent().find('input[type=file]');
+									
+									$.ajax({
+										url: 'deleteFile.cs',
+										data: {fNo:fNo},
+										type: 'POST',
+										success: function(data){
 											console.log(data);
-											$inputArea.attr("disabled", false);
-											$fileArea.remove();
+											if (data.trim() == '1') {
+												console.log(data);
+												$inputArea.attr("disabled", false);
+												$fileArea.remove();
+											}
+										},
+										error: function(data){
+											console.log(data);
 										}
-									},
-									error: function(data){
-										console.log(data);
-									}
-								});
+									});									
+								}
 							});
 						</script>
 						

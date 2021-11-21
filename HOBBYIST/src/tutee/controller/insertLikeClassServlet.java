@@ -1,7 +1,7 @@
-package hobbyistClass.controller;
+package tutee.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,21 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import hobbyistClass.model.service.HClassService;
-import hobbyistClass.model.vo.HClass;
-import hobbyistClass.model.vo.HClassFile;
+import tutee.model.servuce.TuteeService;
 
 /**
- * Servlet implementation class ClassDetailServilet
+ * Servlet implementation class DeleteLikeClassServlet
  */
-@WebServlet("/detail.hcl")
-public class ClassDetailServilet extends HttpServlet {
+@WebServlet("/insertlike.te")
+public class insertLikeClassServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ClassDetailServilet() {
+    public insertLikeClassServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,24 +30,16 @@ public class ClassDetailServilet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String memberEmail = request.getParameter("memberEmail");
 		int cNo = Integer.parseInt(request.getParameter("cNo"));
 		
-		HClassService hService = new HClassService();
+		int result = new TuteeService().insertLikeClass(memberEmail, cNo);
 		
-		HClass c = hService.selectClass(cNo);
+		PrintWriter out = response.getWriter(); 
+		out.println(result);
+		out.flush();
+		out.close();
 		
-		ArrayList<HClassFile> fileList = hService.selectDetailFileList(cNo);
-		
-		String page = null;
-		if (c != null && fileList != null) {
-			page = "WEB-INF/views/hobbyistClass/classDetail.jsp";
-			request.setAttribute("c", c);
-			request.setAttribute("fileList", fileList);
-		} else {
-			request.setAttribute("msg", "클래스 상세보기 실패");
-			page = "WEB-INF/views/common/errorPage.jsp";
-		}
-		request.getRequestDispatcher(page).forward(request, response);
 	}
 
 	/**

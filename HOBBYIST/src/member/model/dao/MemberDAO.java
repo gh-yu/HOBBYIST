@@ -39,7 +39,7 @@ public class MemberDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "SELECT MEMBER_PWD FROM MEMBER WHERE MEMBER_EMAIL = ? ";
+		String query = "SELECT MEMBER_PWD FROM MEMBER WHERE MEMBER_EMAIL = ? AND MEMBER_STATUS = 1";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, memberEmail);

@@ -93,8 +93,7 @@
 							class="app-dashboard-sidebar-close-button show-for-medium"
 							aria-label="Close menu" type="button">
 							<span aria-hidden="true"><a href="#">
-								<i class="large fa fa-angle-double-left"><img
-									src="images/three-dots-vertical.svg"></i></a></span> 
+								<i class="large fa fa-angle-double-left"><img src="images/three-dots-vertical.svg"></i></a></span> 
 						</button>
 					</div>
 					<!-- open button -->
@@ -102,9 +101,7 @@
 						<button id="open-sidebar" data-app-dashboard-toggle-shrink
 							class="app-dashboard-open-sidebar-button show-for-medium"
 							aria-label="open menu" type="button">
-							<span aria-hidden="true"><a href="#"><i
-									class="large fa fa-angle-double-right"><img
-								src="images/three-dots-vertical.svg"></i></a></span> 
+							<span aria-hidden="true"><a href="#"><i class="large fa fa-angle-double-right"><img src="images/three-dots-vertical.svg"></i></a></span> 
 						</button>
 					</div>
 				</div>
@@ -210,8 +207,8 @@
 			
 									<div class="term_list_area margin_top10">
 										<div class="term_box02" tabindex="0">
-											원활한 고객상담을 위해 아래와 같은 개인정보를 수집하고 있습니다.</p>
-											<table class="table_myroom margin_top5" width="100%" cellspacing="0" cellpadding="0">
+											<p>원활한 고객상담을 위해 아래와 같은 개인정보를 수집하고 있습니다.</p>
+											<table class="table_myroom margin_top5" style="width: 100%; cellpadding: 0;">
 												<colgroup>
 												<col width="*" />
 												<col width="20%" />

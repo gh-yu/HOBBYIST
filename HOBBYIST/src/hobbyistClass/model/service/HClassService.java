@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import hobbyistClass.model.dao.HClassDAO;
 import hobbyistClass.model.vo.ApvPageInfo;
 import hobbyistClass.model.vo.HClass;
+import hobbyistClass.model.vo.HClassFile;
 
 public class HClassService {
 
@@ -66,12 +67,42 @@ public class HClassService {
 		int result = hDAO.updateClassStatus(conn); // list 가져오기 전 class_status를 강의 시작일자와 종료일자에 맞게 변경
 		
 		ArrayList<HClass> list = hDAO.selectClassList(conn);
-		
+	
 		if(result > 0 && list != null) {
 			commit(conn);
 		} else {
 			rollback(conn);
 		}
+	
+		close(conn);
+		
+		return list;
+	}
+	
+	public ArrayList<HClassFile> selectFileList() {
+		Connection conn = getConnection();
+		
+		ArrayList<HClassFile> list = hDAO.selectFileList(conn);
+	
+		close(conn);
+		
+		return list;
+	}
+
+	public HClass selectClass(int cNo) {
+		Connection conn = getConnection();
+		
+		HClass c = hDAO.selectClass(conn, cNo);
+		
+		close(conn);
+		
+		return c;
+	}
+
+	public ArrayList<HClassFile> selectDetailFileList(int cNo) {
+		Connection conn = getConnection();
+		
+		ArrayList<HClassFile> list = hDAO.selectDetailFileList(conn, cNo);
 	
 		close(conn);
 		

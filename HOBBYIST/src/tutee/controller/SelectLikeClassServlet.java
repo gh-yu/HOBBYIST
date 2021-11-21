@@ -1,4 +1,4 @@
-package hobbyistClass.controller;
+package tutee.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,21 +9,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import hobbyistClass.model.service.HClassService;
-import hobbyistClass.model.vo.HClass;
-import hobbyistClass.model.vo.HClassFile;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import tutee.model.servuce.TuteeService;
+import tutee.model.vo.LikeClass;
 
 /**
- * Servlet implementation class ClassDetailServilet
+ * Servlet implementation class SelectLikeClassServlet
  */
-@WebServlet("/detail.hcl")
-public class ClassDetailServilet extends HttpServlet {
+@WebServlet("/likeList.te")
+public class SelectLikeClassServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ClassDetailServilet() {
+    public SelectLikeClassServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,24 +34,16 @@ public class ClassDetailServilet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int cNo = Integer.parseInt(request.getParameter("cNo"));
+		String memberEmail = request.getParameter("memberEmail");
 		
-		HClassService hService = new HClassService();
+		ArrayList<LikeClass> list = new TuteeService().selectLikeClass(memberEmail);
 		
-		HClass c = hService.selectClass(cNo);
+		response.setContentType("application/json; charset=UTF-8"); 
+		GsonBuilder gb = new GsonBuilder();
+		GsonBuilder gb2 = gb.setDateFormat("yyyy-MM-dd");  // 원하는 날짜 형식으로 포맷하기 위한 과정
+		Gson gson = gb2.create();
+		gson.toJson(list, response.getWriter()); // GSON방식으로 list 보냄
 		
-		ArrayList<HClassFile> fileList = hService.selectDetailFileList(cNo);
-		
-		String page = null;
-		if (c != null && fileList != null) {
-			page = "WEB-INF/views/hobbyistClass/classDetail.jsp";
-			request.setAttribute("c", c);
-			request.setAttribute("fileList", fileList);
-		} else {
-			request.setAttribute("msg", "클래스 상세보기 실패");
-			page = "WEB-INF/views/common/errorPage.jsp";
-		}
-		request.getRequestDispatcher(page).forward(request, response);
 	}
 
 	/**
