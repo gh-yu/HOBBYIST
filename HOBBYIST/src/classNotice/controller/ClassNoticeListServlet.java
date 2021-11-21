@@ -16,7 +16,7 @@ import classNotice.model.vo.PageInfo;
 /**
  * Servlet implementation class NoticeListServlet
  */
-@WebServlet("/classNoticeList.no")
+@WebServlet("/classManagement.tt")
 public class ClassNoticeListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -98,7 +98,7 @@ public class ClassNoticeListServlet extends HttpServlet {
 		String page = null;
 		if (list != null) {
 			request.setAttribute("list", list);
-			page = "WEB-INF/views/tutor/myPageTutorMyClass.jsp";
+			page = "WEB-INF/views/tutor/myPageClassManagement.jsp";
 //			request.getRequestDispatcher("WEB-INF/views/tutor/myPageTutorMyClass.jsp").forward(request, response);
 		} else {
 			request.setAttribute("msg", "공지사항 조회 실패");

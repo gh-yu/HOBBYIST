@@ -51,7 +51,7 @@ public class InsertClassNoticeServlet extends HttpServlet {
 		int result = new ClassNoticeService().insertClassNotice(n);
 
 		if (result > 0) {
-			response.sendRedirect("classNoticeList.no"); 
+			response.sendRedirect("classManagement.tt"); 
 		} else {
 			request.setAttribute("msg", "공지사항 등록 실패");
 			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);

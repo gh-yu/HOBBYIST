@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import member.model.service.MemberService;
 import member.model.vo.Member;
 import tutor.model.service.TutorService;
-import tutor.model.vo.TutorInform; 
+import tutor.model.vo.Tutor; 
 
 /**
  * Servlet implementation class LoginServlet

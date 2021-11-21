@@ -46,4 +46,9 @@ public class TutorService {
 		return result;
 	}
 
+	public Tutor selectTutor(String memberEmail) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

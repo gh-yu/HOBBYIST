@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import hobbyistClass.model.service.HClassService;
-import hobbyistClass.model.vo.HClassFiles;
 import hobbyistClass.model.vo.HClass;
+import hobbyistClass.model.vo.HClassFile;
 
 /**
  * Servlet implementation class FileListServlet
@@ -37,7 +37,7 @@ public class FileListServlet extends HttpServlet {
 		ArrayList<HClass> cList = hService.selectTList(1);
 		
 		// 파일 리스트 가져오기
-		ArrayList<HClassFiles> cfList = hService.selectTList(2);
+		ArrayList<HClassFile> cfList = hService.selectTList(2);
 		
 		String page = null;
 		if (cList != null && cfList != null) {

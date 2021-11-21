@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import hobbyistClass.model.service.HClassService;
-import hobbyistClass.model.vo.HClassFiles;
+import hobbyistClass.model.vo.HClassFile;
 import hobbyistClass.model.vo.HClass;
 
 
@@ -18,7 +18,7 @@ import hobbyistClass.model.vo.HClass;
 /**
  * Servlet implementation class TumbnailDetailServlet
  */
-@WebServlet("//classopendetail.me")
+@WebServlet("/classopendetail.me")
 public class OpenClassDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -39,12 +39,12 @@ public class OpenClassDetailServlet extends HttpServlet {
 		
 		HClass hClass = service.selectBoard(bId, null);
 		
-		ArrayList<HClassFiles> fileList = service.selectThumnail(bId); // 해당 게시글에 관한 사진들 가져옴
+		ArrayList<HClassFile> fileList = service.selectThumnail(bId); // 해당 게시글에 관한 사진들 가져옴
 		String page = null;
 		if(fileList != null) {
 //			request.setAttribute("HClass", hClass);
 			request.setAttribute("fileList", fileList);
-			page = "WEB-INF/views/thumbnail/thumbnailDetail.jsp";
+			page = "WEB-INF/views/tutor/ClassOpenDetail.jsp";
 		} else {
 			request.setAttribute("msg", "클래스 신청 수정실패");
 			page = "WEB-INF/views/common/errorPage.jsp";

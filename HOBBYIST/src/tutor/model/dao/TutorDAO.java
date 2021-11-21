@@ -44,7 +44,7 @@ public class TutorDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, tutor.getTutorReport());
 			pstmt.setString(2, tutor.getTutorSns());
-			pstmt.setString(3, member.getMemberPhone());
+//			pstmt.setString(3, member.getMemberPhone());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {

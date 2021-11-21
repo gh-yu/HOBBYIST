@@ -16,33 +16,32 @@ public class HClass {
 	private String classContent;
 	private int classFee;
 	private int tutorNo;
-	private Date classStartDate;
 	private String categoryName;
+	private Date classStartDate;
 	
 	public HClass() {}
 
 	public HClass(int classNo, String className, Date classEnrollDate, Date classEndDate, Date classApvDate,
-			String classApvYn, String classStatus, double classTime, int classTuteeMin, int classTuteeMax,
-			String classContent, int classFee, int tutorNo, Date classStartDate, String categoryName) {
-		super();
-		this.classNo = classNo;
-		this.className = className;
-		this.classEnrollDate = classEnrollDate;
-		this.classEndDate = classEndDate;
-		this.classApvDate = classApvDate;
-		this.classApvYn = classApvYn;
-		this.classStatus = classStatus;
-		this.classTime = classTime;
-		this.classTuteeMin = classTuteeMin;
-		this.classTuteeMax = classTuteeMax;
-		this.classContent = classContent;
-		this.classFee = classFee;
-		this.tutorNo = tutorNo;
-		this.classStartDate = classStartDate;
-		this.categoryName = categoryName;
-	}
-
-
+            String classApvYn, String classStatus, double classTime, int classTuteeMin, int classTuteeMax,
+            String classContent, int classFee, int tutorNo, Date classStartDate, String categoryName) {
+        super();
+        this.classNo = classNo;
+        this.className = className;
+        this.classEnrollDate = classEnrollDate;
+        this.classEndDate = classEndDate;
+        this.classApvDate = classApvDate;
+        this.classApvYn = classApvYn;
+        this.classStatus = classStatus;
+        this.classTime = classTime;
+        this.classTuteeMin = classTuteeMin;
+        this.classTuteeMax = classTuteeMax;
+        this.classContent = classContent;
+        this.classFee = classFee;
+        this.tutorNo = tutorNo;
+        this.classStartDate = classStartDate;
+        this.categoryName = categoryName;
+    }
+	
 
 	public HClass(Date classEnrollDate, int classNo, int tutorNo, String categoryName, String className, 
 				String classApvYn, Date classApvDate) {
@@ -160,6 +159,8 @@ public class HClass {
 	public void setTutorNo(int tutorNo) {
 		this.tutorNo = tutorNo;
 	}
+
+
 	
 	public Date getClassStartDate() {
 		return classStartDate;
@@ -179,12 +180,13 @@ public class HClass {
 
 	@Override
 	public String toString() {
-		return "HClass [classNo=" + classNo + ", className=" + className + ", classEnrollDate=" + classEnrollDate
+		return "Class [classNo=" + classNo + ", className=" + className + ", classEnrollDate=" + classEnrollDate
 				+ ", classEndDate=" + classEndDate + ", classApvDate=" + classApvDate + ", classApvYn=" + classApvYn
 				+ ", classStatus=" + classStatus + ", classTime=" + classTime + ", classTuteeMin=" + classTuteeMin
 				+ ", classTuteeMax=" + classTuteeMax + ", classContent=" + classContent + ", classFee=" + classFee
-				+ ", tutorNo=" + tutorNo + ", classStartDate=" + classStartDate + ", categoryName=" + categoryName
-				+ "]";
+				+ /*", classLivesYn=" + classLivesYn + ", classPlace=" + classPlace +*/ ", tutorNo=" + tutorNo
+				+ ", classStartDate=" + classStartDate +"]";
 	}
+	
 	
 }
