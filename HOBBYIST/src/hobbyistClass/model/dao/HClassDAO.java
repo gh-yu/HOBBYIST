@@ -14,9 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import csBoard.model.vo.CSBoardFile;
 import hobbyistClass.model.vo.ApvPageInfo;
-import hobbyistClass.model.vo.HClassFiles;
 import hobbyistClass.model.vo.HClass;
 import hobbyistClass.model.vo.HClassFile;
 
@@ -125,7 +123,7 @@ public class HClassDAO {
 		return result;
 	}
 	
-	public int insertFile(Connection conn, ArrayList<HClassFiles> fileList) {
+	public int insertFile(Connection conn, ArrayList<HClassFile> fileList) {
 		PreparedStatement pstmt = null;
 		int result = 0; 
 		
@@ -140,8 +138,7 @@ public class HClassDAO {
 				pstmt.setString(1, fileList.get(i).getOriginName());
 				pstmt.setString(2, fileList.get(i).getChangeName());
 				pstmt.setString(3, fileList.get(i).getFilePath());
-				pstmt.setLong(4, fileList.get(i).getFileSize());
-				pstmt.setString(5, fileList.get(i).getFileThumbYn());
+				pstmt.setString(4, fileList.get(i).getFileThumbYn());
 				
 				result += pstmt.executeUpdate();				
 			}
@@ -198,7 +195,7 @@ public class HClassDAO {
 	public ArrayList selectFList(Connection conn) {
 		Statement stmt = null;
 		ResultSet rset = null;
-		ArrayList<HClassFiles> list = null;
+		ArrayList<HClassFile> list = null;
 		
 		String query = prop.getProperty("selectCFList");
 		// selectFList=SELECT * FROM ATTACHMENT WHERE STATUS = 'Y' AND FILE_LEVEL = 0 
@@ -208,10 +205,10 @@ public class HClassDAO {
 			stmt = conn.createStatement();
 			rset = stmt.executeQuery(query);
 			
-			list = new ArrayList<HClassFiles>();
+			list = new ArrayList<HClassFile>();
 			
 			while (rset.next()) {
-				HClassFiles f = new HClassFiles();
+				HClassFile f = new HClassFile();
 				f.setBoardNo(rset.getInt("BOARD_NO"));
 				f.setChangeName(rset.getString("CHANGE_NAME"));
 				
@@ -227,10 +224,10 @@ public class HClassDAO {
 		return list;
 	}
 
-	public ArrayList<HClassFiles> selectTumbnail(int bId, Connection conn) {
+	public ArrayList<HClassFile> selectTumbnail(int bId, Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		ArrayList<HClassFiles> list = null;
+		ArrayList<HClassFile> list = null;
 		
 		String query = prop.getProperty("selectFile");
 		
@@ -239,15 +236,15 @@ public class HClassDAO {
 			pstmt.setInt(1, bId);
 			rset = pstmt.executeQuery();
 			
-			list = new ArrayList<HClassFiles>();
+			list = new ArrayList<HClassFile>();
 			while (rset.next()) {
 
-				HClassFiles f = new HClassFiles(); 
+				HClassFile f = new HClassFile(); 
 				f.setFileNo(rset.getInt("FILE_NO"));
 				f.setOriginName(rset.getString("ORIGIN_NAME"));
 				f.setChangeName(rset.getString("CHANGE_NAME"));
 				f.setFilePath(rset.getString("FILE_PATH"));
-				f.setFileUpload(rset.getDate("FILE_UPDATE"));
+				f.setUploadDate(rset.getDate("FILE_UPDATE"));
 				f.setFileThumbYn(rset.getString("FILE_THUMB_YN")); // 여기서 file_level 가져오지 않아도 첫번째 사진이 썸네일이기 때문에 굳이 하지 않아도 됨
 				
 				list.add(f);
