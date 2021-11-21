@@ -34,7 +34,6 @@ public class OpenClassDetailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int bId = Integer.parseInt(request.getParameter("bId"));
-		int classNo = Integer.parseInt(request.getParameter("classNo")); //클래스 승인 리스트에서 클래스번호 넘겨서 해당 클래스 신청건에 대한 상세내역 확인하고자함.
 		
 		HClassService service = new HClassService();
 		

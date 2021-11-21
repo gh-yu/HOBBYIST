@@ -3,33 +3,38 @@ package tutor.model.vo;
 import java.sql.Date;
 
 public class Tutor {
+	private int tutorNo;
 	private Date tutorEnrollDate;
 	private String tutorBankAccount;
 	private String tutorReport;
 	private String tutorSns;
 	private String tutorImgPath;
 	private Date tutorImgUpdate;
-	private int tutorImgSize;
 	private String tutorImgOriginName;
 	private String tutorImgChangeName;
-//	private String memberEmail;
 	
 	public Tutor() {}
 
-	public Tutor(Date tutorEnrollDate, String tutorBankAccount, String tutorReport, String tutorSns,
-			String tutorImgPath, Date tutorImgUpdate, int tutorImgSize, String tutorImgOriginName,
-			String tutorImgChangeName) {
+	public Tutor(int tutorNo, Date tutorEnrollDate, String tutorBankAccount, String tutorReport, String tutorSns,
+			String tutorImgPath, Date tutorImgUpdate, String tutorImgOriginName, String tutorImgChangeName) {
 		super();
+		this.tutorNo = tutorNo;
 		this.tutorEnrollDate = tutorEnrollDate;
 		this.tutorBankAccount = tutorBankAccount;
 		this.tutorReport = tutorReport;
 		this.tutorSns = tutorSns;
 		this.tutorImgPath = tutorImgPath;
 		this.tutorImgUpdate = tutorImgUpdate;
-		this.tutorImgSize = tutorImgSize;
 		this.tutorImgOriginName = tutorImgOriginName;
 		this.tutorImgChangeName = tutorImgChangeName;
-//		this.memberEmail = memberEmail;
+	}
+
+	public int getTutorNo() {
+		return tutorNo;
+	}
+
+	public void setTutorNo(int tutorNo) {
+		this.tutorNo = tutorNo;
 	}
 
 	public Date getTutorEnrollDate() {
@@ -80,14 +85,6 @@ public class Tutor {
 		this.tutorImgUpdate = tutorImgUpdate;
 	}
 
-	public int getTutorImgSize() {
-		return tutorImgSize;
-	}
-
-	public void setTutorImgSize(int tutorImgSize) {
-		this.tutorImgSize = tutorImgSize;
-	}
-
 	public String getTutorImgOriginName() {
 		return tutorImgOriginName;
 	}
@@ -104,23 +101,12 @@ public class Tutor {
 		this.tutorImgChangeName = tutorImgChangeName;
 	}
 
-//	public String getMemberEmail() {
-//		return memberEmail;
-//	}
-//
-//	public void setMemberEmail(String memberEmail) {
-//		this.memberEmail = memberEmail;
-//	}
-
 	@Override
 	public String toString() {
-		return "Tutor [tutorEnrollDate=" + tutorEnrollDate + ", tutorBankAccount=" + tutorBankAccount + ", tutorReport="
-				+ tutorReport + ", tutorSns=" + tutorSns + ", tutorImgPath=" + tutorImgPath + ", tutorImgUpdate="
-				+ tutorImgUpdate + ", tutorImgSize=" + tutorImgSize + ", tutorImgOriginName=" + tutorImgOriginName
+		return "Tutor [tutorNo=" + tutorNo + ", tutorEnrollDate=" + tutorEnrollDate + ", tutorBankAccount="
+				+ tutorBankAccount + ", tutorReport=" + tutorReport + ", tutorSns=" + tutorSns + ", tutorImgPath="
+				+ tutorImgPath + ", tutorImgUpdate=" + tutorImgUpdate + ", tutorImgOriginName=" + tutorImgOriginName
 				+ ", tutorImgChangeName=" + tutorImgChangeName + "]";
 	}
 	
-	
-
-
-	}	
+}	

@@ -130,6 +130,8 @@ public class MemberService{
 		}
 		
 		return result;
+	}
+	
 	public ArrayList<Member> MemberCount() {
 		Connection conn = getConnection();
 		

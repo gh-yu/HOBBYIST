@@ -43,7 +43,6 @@ public class TutorDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, tutor.getTutorReport());
 			pstmt.setString(2, tutor.getTutorSns());
-//			pstmt.setString(3, member.getMemberPhone());
 			pstmt.setString(3, memberEmail);
 			
 			result = pstmt.executeUpdate();
@@ -103,8 +102,7 @@ public class TutorDAO {
 							  rset.getString("TUTOR_IMG_PATH"), 
 							  rset.getDate("TUTOR_IMG_UPDATE"), 
 							  rset.getString("TUTOR_IMG_ORIGIN_NAME"), 
-							  rset.getString("TUTOR_IMG_CHANGE_NAME"),
-							  rset.getLong("TUTOR_IMG_SIZE"));
+							  rset.getString("TUTOR_IMG_CHANGE_NAME"));
 			}
 
 		} catch (SQLException e) {

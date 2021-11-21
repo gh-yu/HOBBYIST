@@ -22,8 +22,8 @@ import com.oreilly.servlet.MultipartRequest;
 
 import common.MyFileRenamePolicy;
 import hobbyistClass.model.service.HClassService;
-import hobbyistClass.model.vo.HClassFiles;
 import hobbyistClass.model.vo.HClass;
+import hobbyistClass.model.vo.HClassFile;
 import member.model.vo.Member;
 
 
@@ -36,7 +36,7 @@ public class ThumbnailInsertServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		request.setCharacterEncoding("UTF-8");
 		// form태그의 속성으로 encType="multipart/form-data" 설정하면 위와 같이 String으로 가져왔을때 인지하지 못함 -> MultipartRequest클래스 객체 생성하여 받아줘야 함
 		
 		// enctype(인코딩타입)이 multipart/form-date로 전송되었는지 확인 
@@ -57,7 +57,7 @@ public class ThumbnailInsertServlet extends HttpServlet {
 			
 			ArrayList<String> saveFiles = new ArrayList<String>();		// 파일의 바뀐 이름을 저장할 ArrayList
 			ArrayList<String> originFiles = new ArrayList<String>();	// 파일의 원래 이름을 저장할 ArryaList
-			ArrayList<Long> fileSizes = new ArrayList<Long>();
+			ArrayList<String> fileTableName = new ArrayList<String>();
 			
 			// multiRequest.getFileNames() : request.getParameter()처럼 form에서 넘어온  file정보 가져옴, 전송 순서의 역순으로 가져옴 thumbnailImg4, ..3, ..2, ..1
 			Enumeration<String> filess = multiRequest.getFileNames(); // multiRequest.getFileNames()의 반환값 -> Enumeration : iterator와 기능이 같음 
@@ -82,40 +82,57 @@ public class ThumbnailInsertServlet extends HttpServlet {
 			DecimalFormat form = new DecimalFormat("#.#");
 			double time = Double.parseDouble(multiRequest.getParameter("classtime"));
 			
-			System.out.println("categoryname :" + categoryname);
-			System.out.println("값 :"+multiRequest.getParameter("minpeople"));
-			System.out.println("min"+min);
-			System.out.println("값 :"+multiRequest.getParameter("maxpeople"));
-			System.out.println("max"+max);
 			System.out.println("값 :"+multiRequest.getParameter("classtime"));
 			System.out.println("time"+time);
-//			
+			System.out.println("content"+content);
+			System.out.println("categoryname"+categoryname);
+			System.out.println("fee"+fee);
 			
-			String date1 = request.getParameter("fromDate"); // date String값으로 넘어오는데 년도-월-일 이렇게 '-'로 구분돼서 넘어옴
-			String date2 = request.getParameter("toDate");
+			String date1 = multiRequest.getParameter("startdate"); // date String값으로 넘어오는데 년도-월-일 이렇게 '-'로 구분돼서 넘어옴
+			String date2 = multiRequest.getParameter("enddate");
+				
 			System.out.println("date1 : "+ date1);
 			System.out.println("date2 : "+ date2);
 			Date fromdate = null;
-
-			Date toDate = null ;
+			Date toDate = null; 
 			
-			HClass h = new HClass(0, title, null, toDate, null, "N", null, time, 0, 0, content, 0, 1, fromdate, categoryname);
+			if(date1.equals("")) { // 관리자가 date를 입력하지 않았을 경우 -> 오늘날짜로 넣음
+				fromdate = new Date(new GregorianCalendar().getTimeInMillis());
+			} else {
+				String[] splitDate = date1.split("-");
+				int year = Integer.parseInt(splitDate[0]);
+				int month = Integer.parseInt(splitDate[1]) - 1;
+				int day = Integer.parseInt(splitDate[2]);
+			
+				fromdate = new Date(new GregorianCalendar(year, month, day).getTimeInMillis());
+			}
+			if(date2.equals("")) { // 관리자가 date를 입력하지 않았을 경우 -> 오늘날짜로 넣음
+				toDate = new Date(new GregorianCalendar().getTimeInMillis());
+			} else {
+				String[] splitDate2 = date2.split("-");
+				int year = Integer.parseInt(splitDate2[0]);
+				int month = Integer.parseInt(splitDate2[1]) - 1;
+				int day = Integer.parseInt(splitDate2[2]);
+			
+				toDate = new Date(new GregorianCalendar(year, month, day).getTimeInMillis());
+			}
+			
+			HClass h = new HClass(0, title, null, toDate, null, "N", "A", time, min, max, content, fee, 1, fromdate,  categoryname);
 			
 			
-			ArrayList<HClassFiles> fileList = new ArrayList<HClassFiles>();
+			ArrayList<HClassFile> fileList = new ArrayList<HClassFile>();
 			for(int i = originFiles.size() - 1; i >= 0; i--) { // 역순으로 파일 저장되어 있기 때문에 거기서 또 역순으로 저장하기
-				HClassFiles fi = new HClassFiles();
+				HClassFile fi = new HClassFile();
 				
 				fi.setFilePath(savePath);
 				fi.setOriginName(originFiles.get(i));
-				fi.setChangeName(saveFiles.get(i));
-				fi.setFileSize(fileSizes.get(i));
-				
+				fi.setChangeName(saveFiles.get(i));				
 				if (i == originFiles.size() - 1) { // 맨 끝에 저장된 사진이라면(맨 처음 입력받았던 썸네일 사진이라면)
 					fi.setFileThumbYn("Y"); // fileLevel이 0 이면 썸네일로 약속
 				} else {
 					fi.setFileThumbYn("N");
 				}
+				
 				
 				fileList.add(fi);
 			}

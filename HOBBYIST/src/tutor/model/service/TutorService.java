@@ -16,10 +16,10 @@ public class TutorService {
 	
 	private TutorDAO tDAO = new TutorDAO();
 	
-	public int insertTutor(Tutor tutor) {
+	public int insertTutor(Tutor tutor, String memberEmail) {
 		Connection conn = getConnection();
 		
-		int result = tDAO.insertTutor(conn, tutor);
+		int result = tDAO.insertTutor(conn, tutor, memberEmail);
 		
 		if(result>0) {
 			commit(conn);
