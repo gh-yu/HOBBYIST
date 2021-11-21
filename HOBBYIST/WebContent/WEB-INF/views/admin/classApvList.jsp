@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.ArrayList, hobbyistClass.model.vo.*" %>
 <% 
-	ArrayList<HClass> apvList = (ArrayList<HClass>)request.getAttribute("apvList");
+	ArrayList<HClass> apvList = (ArrayList)request.getAttribute("apvList");
 	ApvPageInfo pi = (ApvPageInfo)request.getAttribute("pi");
 %>
 <!DOCTYPE html>
@@ -55,7 +55,7 @@
 		cursor : pointer;
 	}
 	
-	#APV, #REJECT {
+	.APV, .REJECT {
 		width : 50px;
 		height : 25px;
 		background : #9ED4C2;
@@ -63,7 +63,7 @@
 		cursor : pointer;
 	}
 	
-	#REJECT {
+	.REJECT {
 		background : lightgray;
 		border : lightgray;
 	}
@@ -175,7 +175,7 @@
 				<div id="outer">
 					<h1> 클래스 승인 리스트 </h1>
 						<div class="tableArea">
-							<form action="confirmClass.cl" method="post">
+							<form method="post"> <!-- action="confirmClass.cl" --> 
 								<table id="listArea">
 									<tr>
 										<th width = 120px> 신청일 </th>
@@ -214,15 +214,15 @@
 													<%= apvList.get(i).getClassName() %>
 													<input type="hidden" id="className" name="className" value="<%= apvList.get(i).getClassName() %>">
 												</td>
-												<td><button id="detailClass">클래스 신청서 확인</button></td>
+												<td><button id="detailClass" onclick="<%= request.getContextPath() %>/classopendetail.me">클래스 신청서 확인</button></td>
 												<td>
-													<input type="submit" id="APV" value="승인" onclick="confirmClass()">
-													<input type="button" id="REJECT" value="반려">
+													<input type="button" class= "APV" value="승인">
+													<input type="button" class= "REJECT" value="반려">
 	<!-- 											<button id="APV" onclick="confirmClass();">승인</button> -->
 	<!-- 											<button id="REJECT">반려</button> -->
 												</td>
 												<td>
-													<%= apvList.get(i).getClassApvYn() %>
+													<span><%= apvList.get(i).getClassApvYn() %></span>
 													<input type="hidden" id="classApvYn" name="classApvYn" value="<%= apvList.get(i).getClassName() %>">
 												</td>
 											</tr> 
@@ -279,16 +279,71 @@
 				}).mouseout(function(){
 					$(this).parent().css({'background':'none', 'font-weight' :'normal', 'color' : 'black'});
 				});
+				
 			</script>
 				
+			
 			<script>
-				function confirmClass(){
+				
+				$('.APV').on('click', function(){
 					if(confirm('클래스를 승인하시겠습니까?')){
-<%-- 					location.href='<%= request.getContextPath() %>/confirmClass.cl'; --%>
-						submit();
+						
+						//변수는 $.ajax밖에서 선언하기!!! ajax안에서 선언하면 ajax자체가 선택됨
+						$btn = $(this);
+						console.log($btn);
+						console.log($btn.value);
+						
+						$.ajax({
+							url: 'confirmClass.cl',
+							data : {classNo:$(this).parent().parent().find('input[name=classNo]').val()},
+							success : function(data){
+								console.log(data);
+								
+								$btn.parent().parent().find('span').text('Y');															
+// 	참고용) 실행안됨					$(this).parent().parent().find('span').text('Y'); 
+
+							},
+							error: function(data){
+								console.log(data);
+							}
+						});
 					}
-				}
+				});
+			
 			</script>
+			
+			<script>
+				
+				$('.REJECT').on('click', function(){
+												
+					if(confirm('클래스를 반려하시겠습니까?')){
+	
+						$btn = $(this);
+	
+						$.ajax({
+							url: 'rejectClass.cl',
+							data : {classNo:$btn.parent().parent().find('input[name=classNo]').val()},
+							success : function(data){
+								
+// 								if($btn.parent().parent().find('input[name=classApnYn]').val() =='N'){
+// 									console.log($btn.parent().parent().find('input[name=classApnYn]').val());
+									console.log('반려성공');
+									console.log(data);
+									$btn.parent().parent().find('span').text('C');
+								
+// 								} else {
+// 									alert('이미 승인하거나 반려한 클래스는 다시 반려할 수 없습니다.');
+// 								}
+							},
+							error: function(data){
+								console.log('반려실패');
+							}
+						});
+					}		
+				});
+			
+			</script>
+			
 			
 			<!-- FOOTER -->
 			<footer class="container" style="text-align: center; background: #F5F5F5;">

@@ -43,7 +43,6 @@ public class HClass {
 	}
 
 
-
 	public HClass(Date classEnrollDate, int classNo, int tutorNo, String categoryName, String className, 
 				String classApvYn, Date classApvDate) {
 		super();

@@ -14,19 +14,20 @@ import com.google.gson.Gson;
 
 import hobbyistClass.model.service.HClassService;
 import hobbyistClass.model.vo.HClass;
+import member.model.service.MemberService;
 
 
 /**
  * Servlet implementation class ClassApvServlet
  */
-@WebServlet("/confirmClass.cl")
-public class ClassConfrimServlet extends HttpServlet {
+@WebServlet("/rejectClass.cl")
+public class ClassRejectServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ClassConfrimServlet() {
+    public ClassRejectServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,17 +38,15 @@ public class ClassConfrimServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int classNo = Integer.parseInt(request.getParameter("classNo"));
-//		ArrayList<HClass> apvList = new HClassService().confirmClass(classNo);
-		int result = new HClassService().confirmClass(classNo);
+		
+		int result = new HClassService().rejectClass(classNo);
 		
 		response.setContentType("application/json; charset=UTF-8");
-//		Gson gson = new Gson();
-//		gson.toJson(apvList, response.getWriter());
+
 		PrintWriter out = response.getWriter(); 
 		out.println(result);
 		out.flush();
 		out.close();
-
 	}
 
 	/**

@@ -98,8 +98,8 @@ public class ThumbnailInsertServlet extends HttpServlet {
 			Date fromdate = null;
 
 			Date toDate = null ;
-					
-			HClass h = new HClass(0, title, null, toDate, null, "N", null, time, 0, 0, content, 0, 1, categoryname, fromdate);
+			
+			HClass h = new HClass(0, title, null, toDate, null, "N", null, time, 0, 0, content, 0, 1, fromdate, categoryname);
 			
 			
 			ArrayList<HClassFiles> fileList = new ArrayList<HClassFiles>();
