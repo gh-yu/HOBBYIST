@@ -9,6 +9,7 @@ import static common.JDBCTemplate.commit;
 import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -129,6 +130,13 @@ public class MemberService{
 		}
 		
 		return result;
+	public ArrayList<Member> MemberCount() {
+		Connection conn = getConnection();
+		
+		ArrayList<Member> mList = mDAO.countMember(conn);
+				
+		close(conn);
+		return mList;
 	}
 
 }

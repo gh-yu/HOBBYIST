@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.ArrayList, hobbyistClass.model.vo.*" %>
 <% 
-	ArrayList<HClass> apvList = (ArrayList)request.getAttribute("apvList");
+	ArrayList<Member> mList = (ArrayList)request.getAttribute("mList");
 	ApvPageInfo pi = (ApvPageInfo)request.getAttribute("pi");
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>admin - 클래스 승인</title>
+<title>admin - 회원 조회</title>
 <style>
 	#outer {
 		width: 1500px;
@@ -45,27 +45,6 @@
 	
 	table .div-sub {
 		display : none;
-	}
-	
-	#detailClass {
-		width : 150px;
-		height : 25px;
-		background : lightgray;
-		border : lightgray;
-		cursor : pointer;
-	}
-	
-	.APV, .REJECT {
-		width : 50px;
-		height : 25px;
-		background : #9ED4C2;
-		border : #9ED4C2;
-		cursor : pointer;
-	}
-	
-	.REJECT {
-		background : lightgray;
-		border : lightgray;
 	}
 	
 	button:hover {
@@ -173,64 +152,71 @@
 			<!-- 본문 영역 -->
  			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
 				<div id="outer">
-					<h1> 클래스 승인 리스트 </h1>
+					<h1> 회원 관리 </h1>
+					<h2> TUTEE 목록</h2>
 						<div class="tableArea">
 							<form method="post"> <!-- action="confirmClass.cl" --> 
 								<table id="listArea">
 									<tr>
-										<th width = 120px> 신청일 </th>
-										<th width = 120px> 클래스 번호 </th>
-										<th width = 120px> 튜터 번호  </th>
-										<th width = 120px> 카테고리  </th>
-										<th width = 400px> 클래스명 </th>
-										<th width = 160px> 클래스 신청 내용 </th>
-										<th width = 120px> 승인/반려 </th>
-										<th width = 80px> 승인여부<br>(Y/N) </th>
+										<th width = 200px> 이메일 </th>
+										<th width = 80px> 이름 </th>
+										<th width = 80px> 닉네임  </th>
+										<th width = 100px> 전화번호  </th>
+										<th width = 100px> 비밀번호 </th>
+										<th width = 200px> 카카오 </th>
+										<th width = 80px> 가입경로 </th>
+										<th width = 80px> 가입날짜 </th>
+										<th width = 80px> 활동상태 </th>
 									</tr>
-			 						<% if(apvList.isEmpty()) { %>
+			 						<% if(mList.isEmpty()) { %>
 										<tr>
-											<td colspan = "8"> 조회된 리스트가 없습니다. </td>
+											<td colspan = "9"> 조회된 리스트가 없습니다. </td>
 										</tr>
 									<% } else { %>
-										<%	for(int i = 0; i < apvList.size(); i++){ %>
+										<%	for(int i = 0; i < mList.size(); i++){ %>
 											<tr> 
 												<td>
-													<%= apvList.get(i).getClassEnrollDate() %>
-													<input type="hidden" id="classEnrollDate" name="classEnrollDate" value="<%= apvList.get(i).getClassEnrollDate() %>">
+													<%= mList.get(i).getMemberEmail() %>
+													<input type="hidden" id="tuteeEmail" name="tuteeEmail" value="<%= mList.get(i).getMemberEmail() %>">
 												</td>
 												<td>
-													<%= apvList.get(i).getClassNo() %>
-													<input type="hidden" id="classNo" name="classNo" value="<%= apvList.get(i).getClassNo() %>">
+													<%= mList.get(i).getMemberName() %>
+													<input type="hidden" id="memberName" name="memberName" value="<%= mList.get(i).getMemberName() %>">
 												</td>
 												<td>
-													<%= apvList.get(i).getTutorNo() %>
-													<input type="hidden" id="tutorNo" name="tutorNo" value="<%= apvList.get(i).getTutorNo() %>">	
+													<%= mList.get(i).getMemberNickName() %>
+													<input type="hidden" id="tuteeNickName" name="tuteeNickName" value="<%= mList.get(i).getMemberNickName() %>">	
 												</td>
 												<td>
-													<%= apvList.get(i).getcategoryName() %>
-													<input type="hidden" id="categoryName" name="categoryName" value="<%= apvList.get(i).getcategoryName() %>">
+													<%= mList.get(i).getMemberPhone() %>
+													<input type="hidden" id="tuteePwd" name="tuteePwd" value="<%= mList.get(i).getMemberPhone() %>">
 												</td>
 												<td>
-													<%= apvList.get(i).getClassName() %>
-													<input type="hidden" id="className" name="className" value="<%= apvList.get(i).getClassName() %>">
-												</td>
-												<td><button id="detailClass" onclick="<%= request.getContextPath() %>/classopendetail.me">클래스 신청서 확인</button></td>
-												<td>
-													<input type="button" class= "APV" value="승인">
-													<input type="button" class= "REJECT" value="반려">
-	<!-- 											<button id="APV" onclick="confirmClass();">승인</button> -->
-	<!-- 											<button id="REJECT">반려</button> -->
+													<%= mList.get(i).getMemberPwd() %>
+													<input type="hidden" id="tuteePwd" name="tuteePwd" value="<%= mList.get(i).getMemberPwd() %>">
 												</td>
 												<td>
-													<span><%= apvList.get(i).getClassApvYn() %></span>
-													<input type="hidden" id="classApvYn" name="classApvYn" value="<%= apvList.get(i).getClassName() %>">
+													<%= mList.get(i).getKakaoNo() %>
+													<input type="hidden" id="tuteeKakao" name="tuteeKakao" value="<%= mList.get(i).getKakaoNo() %>">
+												</td>
+												<td>
+													<%= mList.get(i).getMemberEnrollType() %>
+													<input type="hidden" id="tuteeEnrollType" name="tuteeEnrollType" value="<%= mList.get(i).getMemberEnrollType() %>">
+												</td>
+												<td>
+													<%= mList.get(i).getMemberEnrollDate() %>
+													<input type="hidden" id="tuteeEnrollDate" name="tuteeEnrollDate" value="<%= mList.get(i).getMemberEnrollDate() %>">
+												</td>
+												<td>
+													<%= mList.get(i).getMemberStatus() %>
+													<input type="hidden" id="tuteeStatus" name="tuteeStatus" value="<%= mList.get(i).getMemberStatus() %>">
 												</td>
 											</tr> 
 										<%  } %>
 									<% } %> 
 								</table>
 							</form>
-							<div class="pagingArea" align="center">
+<%-- 							<div class="pagingArea" align="center">
 			
 								<!-- 처음으로 -->
 								<button id="toFirstBtn" onclick="location.href='<%= request.getContextPath() %>/apvList.cl?currentPage=1'">&lt;&lt; 첫 페이지로</button>
@@ -263,7 +249,7 @@
 								<!-- 맨 끝으로 -->
 								<button id="toLastBtn" onclick="location.href='<%= request.getContextPath() %>/apvList.cl?currentPage=<%= pi.getMaxPage() %>'">마지막으로  &gt;&gt;</button>
 							
-							</div>
+							</div> --%>
 							
 						</div>
 					
@@ -282,67 +268,6 @@
 				
 			</script>
 				
-			
-			<script>
-				
-				$('.APV').on('click', function(){
-					if(confirm('클래스를 승인하시겠습니까?')){
-						
-						//변수는 $.ajax밖에서 선언하기!!! ajax안에서 선언하면 ajax자체가 선택됨
-						$btn = $(this);
-						console.log($btn);
-						console.log($btn.value);
-						
-						$.ajax({
-							url: 'confirmClass.cl',
-							data : {classNo:$(this).parent().parent().find('input[name=classNo]').val()},
-							success : function(data){
-								console.log(data);
-								
-								$btn.parent().parent().find('span').text('Y');															
-// 	참고용) 실행안됨					$(this).parent().parent().find('span').text('Y'); 
-
-							},
-							error: function(data){
-								console.log(data);
-							}
-						});
-					}
-				});
-			
-			</script>
-			
-			<script>
-				
-				$('.REJECT').on('click', function(){
-												
-					if(confirm('클래스를 반려하시겠습니까?')){
-	
-						$btn = $(this);
-	
-						$.ajax({
-							url: 'rejectClass.cl',
-							data : {classNo:$btn.parent().parent().find('input[name=classNo]').val()},
-							success : function(data){
-								
-// 								if($btn.parent().parent().find('input[name=classApnYn]').val() =='N'){
-// 									console.log($btn.parent().parent().find('input[name=classApnYn]').val());
-									console.log('반려성공');
-									console.log(data);
-									$btn.parent().parent().find('span').text('C');
-								
-// 								} else {
-// 									alert('이미 승인하거나 반려한 클래스는 다시 반려할 수 없습니다.');
-// 								}
-							},
-							error: function(data){
-								console.log('반려실패');
-							}
-						});
-					}		
-				});
-			
-			</script>
 			
 			
 			<!-- FOOTER -->

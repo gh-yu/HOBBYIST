@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 import static common.JDBCTemplate.getConnection;
@@ -273,6 +275,35 @@ public class MemberDAO {
 		}
 		
 		return result;
+		
+	}
+	
+	public ArrayList<Member> countMember(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		ArrayList<Member> mList = null;
+		
+		String query = prop.getProperty("memberCount");
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			mList = new ArrayList<Member>();
+			while(rset.next()) {
+				mList.add(new Member(rset.getString("memberEmail"), rset.getString("memberName"), rset.getString("memberNickName"),
+									rset.getString("memberPhone"), rset.getString("memberPwd"), rset.getInt("kakaoNo"),
+									rset.getString("memberEnrollType"), rset.getDate("memberEnrollDate"), rset.getInt("memberStatus"),
+									rset.getString("memberGrade")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+				
+		return mList;
 	}
 
 	

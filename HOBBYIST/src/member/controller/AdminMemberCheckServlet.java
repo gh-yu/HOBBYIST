@@ -1,7 +1,6 @@
-package hobbyistClass.controller;
+package member.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -10,23 +9,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import hobbyistClass.model.service.HClassService;
+import hobbyistClass.model.vo.ApvPageInfo;
 import hobbyistClass.model.vo.HClass;
-
+import member.model.service.MemberService;
+import member.model.vo.Member;
 
 /**
- * Servlet implementation class ClassApvServlet
+ * Servlet implementation class AdminMemberCheckServlet
  */
-@WebServlet("/confirmClass.cl")
-public class ClassConfrimServlet extends HttpServlet {
+@WebServlet("/memberCheck.admin")
+public class AdminMemberCheckServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ClassConfrimServlet() {
+    public AdminMemberCheckServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,18 +34,19 @@ public class ClassConfrimServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ArrayList<Member> mList = new MemberService().MemberCount();
 		
-		int classNo = Integer.parseInt(request.getParameter("classNo"));
-//		ArrayList<HClass> apvList = new HClassService().confirmClass(classNo);
-		int result = new HClassService().confirmClass(classNo);
+		String page = null;
 		
-		response.setContentType("application/json; charset=UTF-8");
-//		Gson gson = new Gson();
-//		gson.toJson(apvList, response.getWriter());
-		PrintWriter out = response.getWriter(); 
-		out.println(result);
-		out.flush();
-		out.close();
+		if(mList != null) {
+			request.setAttribute("mList", mList);
+			page = "WEB-INF/views/admin/MemberCheckList.jsp";
+		} else {
+			request.setAttribute("msg", "멤버 목록 내역 조회 실패");
+			page = "WEB-INF/views/common/errorPage.jsp";
+		}
+
+		request.getRequestDispatcher(page).forward(request, response);
 
 	}
 

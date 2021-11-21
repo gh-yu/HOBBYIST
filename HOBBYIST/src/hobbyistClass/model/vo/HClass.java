@@ -42,6 +42,26 @@ public class HClass {
         this.categoryName = categoryName;
     }
 	
+			String classApvYn, String classStatus, double classTime, int classTuteeMin, int classTuteeMax,
+			String classContent, int classFee, int tutorNo, Date classStartDate, String categoryName) {
+		super();
+		this.classNo = classNo;
+		this.className = className;
+		this.classEnrollDate = classEnrollDate;
+		this.classEndDate = classEndDate;
+		this.classApvDate = classApvDate;
+		this.classApvYn = classApvYn;
+		this.classStatus = classStatus;
+		this.classTime = classTime;
+		this.classTuteeMin = classTuteeMin;
+		this.classTuteeMax = classTuteeMax;
+		this.classContent = classContent;
+		this.classFee = classFee;
+		this.tutorNo = tutorNo;
+		this.classStartDate = classStartDate;
+		this.categoryName = categoryName;
+	}
+
 
 	public HClass(Date classEnrollDate, int classNo, int tutorNo, String categoryName, String className, 
 				String classApvYn, Date classApvDate) {
