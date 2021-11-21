@@ -8,7 +8,7 @@ public class HClassFile {
 	private Date uploadDate;
 	private String originName;
 	private String changeName;
-	private String fileThumbYn; // 0이면 썸네일, 1이면 일반사진
+	private String fileThumbYn;
 	private String fileTableName; 
 	private int boardNo; // 파일이 속한 게시글 번호
 	private int status; // 삭제를 했냐 안했냐의 여부
@@ -23,12 +23,12 @@ public class HClassFile {
 		this.uploadDate = uploadDate;
 		this.originName = originName;
 		this.changeName = changeName;
-//		this.fileSize = fileSize;
 		this.fileThumbYn = fileThumbYn;
 		this.fileTableName = fileTableName;
 		this.boardNo = boardNo;
 		this.status = status;
 	}
+
 
 	public int getFileNo() {
 		return fileNo;
@@ -70,14 +70,6 @@ public class HClassFile {
 		this.changeName = changeName;
 	}
 
-//	public long getFileSize() {
-//		return fileSize;
-//	}
-//
-//	public void setFileSize(long fileSize) {
-//		this.fileSize = fileSize;
-//	}
-
 	public String getFileThumbYn() {
 		return fileThumbYn;
 	}
@@ -113,8 +105,8 @@ public class HClassFile {
 	@Override
 	public String toString() {
 		return "HClassFile [fileNo=" + fileNo + ", filePath=" + filePath + ", uploadDate=" + uploadDate
-				+ ", originName=" + originName + ", changeName=" + changeName + ", fileThumbYn=" + fileThumbYn + ", fileTableName=" + fileTableName + ", boardNo=" + boardNo
-				+ ", status=" + status + "]";
+				+ ", originName=" + originName + ", changeName=" + changeName + ", fileThumbYn=" + fileThumbYn
+				+ ", fileTableName=" + fileTableName + ", boardNo=" + boardNo + ", status=" + status + "]";
 	}
 
 }

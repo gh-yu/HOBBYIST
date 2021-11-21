@@ -45,10 +45,15 @@ public class TutorService {
 		close(conn);
 		return result;
 	}
-
+	
 	public Tutor selectTutor(String memberEmail) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = getConnection();
+
+		Tutor tutor = tDAO.selectTutor(conn, memberEmail);
+
+		close(conn);
+
+		return tutor;
 	}
 
 }
