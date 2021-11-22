@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import hobbyistClass.model.dao.HClassDAO;
 import hobbyistClass.model.vo.ApvPageInfo;
 import hobbyistClass.model.vo.HClass;
-import hobbyistClass.model.vo.HClassFiles;
+import hobbyistClass.model.vo.HClassFile;
 
 public class HClassService {
 
@@ -123,7 +123,7 @@ public class HClassService {
         return list;
     }
 	
-	public int insertThumbnail(HClass h, ArrayList<HClassFiles> fileList) {
+	public int insertThumbnail(HClass h, ArrayList<HClassFile> fileList) {
         Connection conn = getConnection();
 
         int result1 = hDAO.insertClass(conn, h);
