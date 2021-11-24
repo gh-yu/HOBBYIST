@@ -18,6 +18,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+.container-fluid div{background: white;}
+</style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <%@ include file="../common/css.jsp"%>
