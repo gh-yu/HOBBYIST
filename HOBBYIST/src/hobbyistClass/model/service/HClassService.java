@@ -244,7 +244,7 @@ public class HClassService {
 		return list;
 	}
 
-public ArrayList<HClass> selectBList() {
+	public ArrayList<HClass> selectBList() {
 		Connection conn = getConnection();
 
 		ArrayList<HClass> list = hDAO.selectBList(conn);
@@ -254,7 +254,7 @@ public ArrayList<HClass> selectBList() {
 		return list;
 	}
 
- public HClass selectClassOpen(int bId) {
+	public HClass selectClassOpen(int bId) {
 		Connection conn = getConnection();
 		
 		HClass c = hDAO.selectClassOpen(conn, bId);

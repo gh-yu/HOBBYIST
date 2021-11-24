@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="member.model.vo.Member, hobbyistClass.model.vo.*, 
-    hobbyistClass.model.service.HClassService, java.util.ArrayList, java.text.DecimalFormat"%>
+    hobbyistClass.model.service.HClassService, java.util.ArrayList, java.text.DecimalFormat, hobbyistClass.model.vo.* "%>
 <%
 	HClassService hService = new HClassService();
 	ArrayList<HClass> classList = hService.selectClassList();
