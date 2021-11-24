@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- <script src="../../../js/jquery-3.6.0.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- 마이페이지 - 회원가입 -->
 
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -32,7 +34,7 @@
 
     <!--// BOOTSTRAP & Main //-->
 
-    <link href="./css/bootstrap2.min.css" rel="stylesheet">
+    <link href="./css/bootstrap.min2.css" rel="stylesheet">
     <link href="./css/main_join.css" rel="stylesheet">
     
 
@@ -52,7 +54,7 @@
 <!--                 <a class="app-dashboard-logo" href=#><img src="./vortex-master/assets/img/logo.png" -->
 <!--                     width="70px" height="55px"></a> -->
 <!--             </div> -->
-<!--             <div class="columns show-for-medium"> -->
+<!--             <div class="columns sRhow-for-medium"> -->
 <!--                 <div class="app-dashboard-search-bar-container"> -->
 <!--                 </div> -->
 <!--             </div> -->
@@ -138,7 +140,9 @@
                 <div class="col-md-5 col-md-offset-1">
                     <form class="signup-form" action="<%=request.getContextPath() %>/join.me" method="post" id="joinForm" name="joinForm">
                     <div class="form-group">
-                            <input type="text" class="form-control" placeholder="이메일을 입력하세요" name="memberEmail" required="required">
+                    		<label id="memberE">EMAIL</label>
+                            <input type="email" id="email" class="form-control" name="memberEmail" required="required"><br>
+                            <input type="button" id="emailCheck" class="form-control" value="이메일 인증">&nbsp;
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="이름을 입력하세요" name="memberName" required="required">
@@ -150,12 +154,12 @@
                             <input type="text" class="form-control" placeholder="전화번호를 입력하세요" name="memberPhone" required="required">
                   </div>
                         
-                            <input type="button" id="EmailCheck" class="econfirm" value="이메일 중복확인">&nbsp;
+                            
 <!--                             <input type="button" class="econfirm" value="인증 번호 받기" onclick="emailAuthentication()">&nbsp; -->
 <!--                            <input type="button" class="econfirm" value="인증 번호 확인" onclick="authCodeCheck()">  -->
 <!--                             <br><br> -->
 <!--                            <input type="password" class="form-control" placeholder="인증번호를 입력하세요" name="authenticNo" required="required"> -->
-                          <br><br>
+                          <br>
                         <div class="form-group">
                             <input type="password" class="form-control" placeholder="비밀번호를 입력하세요" name="memberPwd" required="required">
                         </div>
@@ -242,6 +246,33 @@
             </div>
         </div>
     </div>
+    
+    <script>
+    	// 이메일 인증
+    	$('#emailCheck').on('click', function(){
+    		$.ajax({
+    			url: 'confirmMail.me',
+    			data: {email:$('#email').val()},
+    			success: function(data){
+    				console.log(data)
+    				if(data == null || data == ""){
+    				alert("다시 입력해주세요");
+    				} else {
+    					alert("이메일이 성공적으로 발송되었습니다.");
+    				}
+    			},
+    			error: function(data){
+    				console.log(data);
+    				alert("인증 메일 발송 실패");
+    			}
+    		});
+    	});
+
+	
+    </script>
+    
+    
+    
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 

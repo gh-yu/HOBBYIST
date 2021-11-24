@@ -27,17 +27,17 @@ public class ClassOpenDeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
-		int bId = Integer.parseInt(request.getParameter("bId"));
-		
-		int result = new HClassService().deleteOpenClass(bId);
-		
-		if (result > 0) {
-			response.sendRedirect("tutorMyPage.tt");
-		} else {
-			request.setAttribute("msg", "게시글 삭제 실패");
-			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
-		}
+//		
+//		int bId = Integer.parseInt(request.getParameter("bId"));
+//		
+//		int result = new HClassService().deleteOpenClass(bId);
+//		
+//		if (result > 0) {
+//			response.sendRedirect("tutorMyPage.tt");
+//		} else {
+//			request.setAttribute("msg", "게시글 삭제 실패");
+//			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
+//		}
 	}
 
 	/**

@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
+
+import member.model.vo.Member;
 import tutor.model.vo.Files;
 import tutor.model.vo.Tutor;
 
@@ -33,7 +35,7 @@ public class TutorDAO {
 	
 	
 	// 튜터 정보 넘기기
-	public int insertTutor(Connection conn, Tutor tutor, String memberEmail) {
+	public int insertTutor(Connection conn, Tutor t, String memberEmail) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -41,9 +43,13 @@ public class TutorDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, tutor.getTutorReport());
-			pstmt.setString(2, tutor.getTutorSns());
-			pstmt.setString(3, memberEmail);
+			pstmt.setString(1, t.getTutorReport());
+			pstmt.setString(2, t.getTutorSns());
+			pstmt.setString(3, t.getTutorImgPath());
+			pstmt.setString(4, memberEmail);
+			pstmt.setString(5, t.getTutorImgOriginName());
+			pstmt.setString(6, t.getTutorImgChangeName());
+			
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -56,30 +62,6 @@ public class TutorDAO {
 	}
 
 
-	public int insertFiles(Connection conn, ArrayList<Files> fileList) {
-		PreparedStatement pstmt = null;
-		int result = 0;
-		
-		String query = prop.getProperty("insertFiles");
-		
-		try {
-			for(int i=0; i<fileList.size(); i++) {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, fileList.get(i).getOriginName());
-			pstmt.setString(2, fileList.get(i).getChangeName());
-			pstmt.setString(3, fileList.get(i).getFilePath());
-			
-			result += pstmt.executeUpdate();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-		
-		return result;
-	}
-	
 	public Tutor selectTutor(Connection conn, String memberEmail) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -110,5 +92,53 @@ public class TutorDAO {
 
 		return t;
 	}
-	
+
+	// 튜터 신청시 등급 변경
+	public int updateGrade(Connection conn, String memberEmail) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateGrade");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberEmail);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	// 튜터 정보 수정
+	public int updateTutor(Connection conn, Tutor tt, String memberEmail) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateTutor");
+//		UPDATE TUTOR SET TUTOR_REPORT = ? , TUTOR_SNS = ?,
+//				TUTOR_IMG_PATH = ?, TUTOR_IMG_ORIGIN_NAME = ?, TUTOR_IMG_CHANGE_NAME = ?  WHERE MEMBER_EMAIL = ?
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, tt.getTutorReport());
+			pstmt.setString(2, tt.getTutorSns());
+			pstmt.setString(3, tt.getTutorImgPath());
+			pstmt.setString(4, tt.getTutorImgOriginName());
+			pstmt.setString(5, tt.getTutorImgChangeName());
+			pstmt.setString(6, memberEmail);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		System.out.println("dao결과:"+result);
+		return result;
+	}
+
 }
