@@ -37,7 +37,7 @@
 			if(result == -1) {
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
-				script.println("alert('DB 오류.')");
+				script.println("alert('가입 이력이 있는 이메일입니다.')");
 				script.println("history.back()");
 				script.println("</script>");
 			} else {

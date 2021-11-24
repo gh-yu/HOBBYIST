@@ -17,6 +17,7 @@ import static common.JDBCTemplate.commit;
 import static common.JDBCTemplate.rollback;
 
 import member.model.vo.Member;
+import member.model.vo.MemberInfo;
 
 public class MemberDAO {
 	private Properties prop = null;
@@ -129,8 +130,34 @@ public class MemberDAO {
 			} finally {
 				close(pstmt);
 			}
-			return -1;	// 데이터베이스 오류
+			return -2;	// 데이터베이스 오류
 		}
+		
+	public int checkEmail(Connection conn, Member member) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int checkEmail = 1;
+		
+		String query = prop.getProperty("checkEmail");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, member.getMemberEmail());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				return checkEmail;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return -1;
+	}	
 
 	public int updateMember(Connection conn, Member newInfo) {
 		PreparedStatement pstmt = null;
@@ -272,39 +299,108 @@ public class MemberDAO {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(pstmt);
 		}
 		
 		return result;
 		
 	}
 	
-	public ArrayList<Member> countMember(Connection conn) {
+	public int getMemberCount(Connection conn) {
 		Statement stmt = null;
 		ResultSet rset = null;
-		ArrayList<Member> mList = null;
+		int memberCount = 0;
 		
-		String query = prop.getProperty("memberCount");
+		String query = prop.getProperty("countMember");
 		
 		try {
 			stmt = conn.createStatement();
 			rset = stmt.executeQuery(query);
 			
-			mList = new ArrayList<Member>();
-			while(rset.next()) {
-				mList.add(new Member(rset.getString("memberEmail"), rset.getString("memberName"), rset.getString("memberNickName"),
-									rset.getString("memberPhone"), rset.getString("memberPwd"), rset.getInt("kakaoNo"),
-									rset.getString("memberEnrollType"), rset.getDate("memberEnrollDate"), rset.getInt("memberStatus"),
-									rset.getString("memberGrade")));
+			if(rset.next()) {
+				memberCount = rset.getInt("COUNT(*)");
 			}
+				
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(rset);
 			close(stmt);
 		}
-				
-		return mList;
+		return memberCount;
 	}
+
+	public ArrayList<Member> selectTuteeList(Connection conn, MemberInfo pi) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Member> tuteeList = null;
+		
+		String query = prop.getProperty("tuteeList");
+		
+		int startRow = (pi.getCurrentPage() -1) * pi.getMemberLimit() + 1;
+		int endRow = startRow + pi.getMemberLimit() -1;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			tuteeList = new ArrayList<Member>();
+			
+			while(rset.next()) {
+				tuteeList.add(new Member(rset.getString("MEMBER_EMAIL"),rset.getString("MEMBER_NAME"), rset.getString("MEMBER_NICKNAME"),
+									rset.getString("MEMBER_PHONE"), rset.getString("MEMBER_PWD"), rset.getInt("KAKAO_NO"),
+									rset.getString("MEMBER_ENROLL_TYPE"), rset.getDate("MEMBER_ENROLL_DATE"), rset.getInt("MEMBER_STATUS"),
+									rset.getString("MEMBER_GRADE")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return tuteeList;
+	}
+
+	public ArrayList<Member> selectTutorList(Connection conn, MemberInfo pi) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Member> tutorList = null;
+		
+		String query = prop.getProperty("tutorList");
+		
+		int startRow = (pi.getCurrentPage() -1) * pi.getMemberLimit() + 1;
+		int endRow = startRow + pi.getMemberLimit() -1;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			tutorList = new ArrayList<Member>();
+			
+			while(rset.next()) {
+				tutorList.add(new Member(rset.getString("MEMBER_EMAIL"),rset.getString("MEMBER_NAME"), rset.getString("MEMBER_NICKNAME"),
+									rset.getString("MEMBER_PHONE"), rset.getString("MEMBER_PWD"), rset.getInt("KAKAO_NO"),
+									rset.getString("MEMBER_ENROLL_TYPE"), rset.getDate("MEMBER_ENROLL_DATE"), rset.getInt("MEMBER_STATUS"),
+									rset.getString("MEMBER_GRADE")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return tutorList;
+	}
+
+	
+
 
 	
 }

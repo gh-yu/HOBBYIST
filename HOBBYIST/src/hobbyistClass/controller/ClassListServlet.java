@@ -41,7 +41,7 @@ public class ClassListServlet extends HttpServlet {
 			page = "WEB-INF/views/notice/noticeList.jsp";
 		} else { // errorPage.jsp (list가 null이라는건 DAO에서 list객체 생성할때 문제가 있었다는 것)
 			request.setAttribute("msg", "공지사항 조회 실패");
-			page = "WEB-INF/views/common/errorPate.jsp";
+			page = "WEB-INF/views/common/errorPage.jsp";
 		}
 		request.getRequestDispatcher(page).forward(request, response);
 	}

@@ -47,8 +47,8 @@
 			}
 		});
 	});
-	// 1000 단위마다 , 찍어주는 js
-	function inputNumberFormat(obj) {
+ 	// 1000 단위마다 , 찍어주는 js
+/*	function inputNumberFormat(obj) {
 		obj.value = comma(uncomma(obj.value));
 	}
 
@@ -61,7 +61,7 @@
 		str = String(str);
 		return str.replace(/[^\d]+/g, '');
 	}
-
+ */
 	// 체크박스 하나만 선택되는 js
 	function oneCheckbox(a) {
 
@@ -127,6 +127,24 @@ img.ui-datepicker-trigger {
 	vertical-align: middle;
 	cursor: pointer;
 }
+
+/* 스케줄 추가 btn css */
+.schBtn{
+	font-weight: bold;
+	width : 90px;
+	height: 30px;
+	background-color : #9ED4C2;
+	border : solid #9ED4C2 1px;
+	resize: none;
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+#cancelSchedule{
+	background-color : lightgray;
+	border : solid lightgray 1px;
+	margin-right: 5px;
+}
+
 </style>
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
@@ -153,7 +171,7 @@ img.ui-datepicker-trigger {
 			buttonText : "날짜선택", // 버튼의 대체 텍스트
 			dateFormat : "yy-mm-dd", // 날짜의 형식
 			changeMonth : true, // 월을 이동하기 위한 선택상자 표시여부
-			//minDate: 0,                       // 선택할수있는 최소날짜, ( 0 : 오늘 이전 날짜 선택 불가)
+			minDate: 0,                       // 선택할수있는 최소날짜, ( 0 : 오늘 이전 날짜 선택 불가)
 			onClose : function(selectedDate) {
 				// 시작일(fromDate) datepicker가 닫힐때
 				// 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
@@ -302,7 +320,6 @@ img.ui-datepicker-trigger {
 						<br>
 						<br>
 
-						<%-- <% if(tutor == null) { %> 로그인할때 tutor정보도 세션에 저장하고 상단에서 객체 생성하기 --%>
 						<%
 							if (loginUser != null && loginUser.getMemberGrade().equals("B")) {
 						%>
@@ -340,7 +357,7 @@ img.ui-datepicker-trigger {
 			<!-- 본문 내용 시작 -->
 			<div class="app-dashboard-body-content off-canvas-content"
 				data-off-canvas-content>
-				<form action="<%= request.getContextPath() %>/classopen.th" method="post" encType="multipart/form-data">
+				<form action="<%= request.getContextPath() %>/classopen.th" method="post" encType="multipart/form-data" onsubmit="return check();">
 					<div id="margin_check">
 						<!-- 수강중인 클래스 -->
 						<h3>클래스 신청</h3>
@@ -348,7 +365,6 @@ img.ui-datepicker-trigger {
 						<div id="enroll_tutor_form">
 							
 								<b>카테고리</b><br> <select id="category_class" name = "category">
-									<option>--------------</option>
 									<option value="1">라이브</option>
 									<option value="2">개발/코딩</option>
 									<option value="3">인테리어</option>
@@ -416,23 +432,85 @@ img.ui-datepicker-trigger {
 									<h3>클래스 신청</h3>
 										오늘 날짜 : <span id="today"></span> <br>
 										
-										시작일<input type="date" name="startdate" id ="fromDate"> ~
-										종료일<input type="date" name="enddate"  id ="toDate">
+										시작일<input type="text" name="startdate" id ="fromDate"> ~
+										종료일<input type="text" name="enddate"  id ="toDate">
 										
+										<br><br>
 										
+										<fieldset style="width: 680px;">
+											<legend><b>스케줄 등록</b></legend>
+											<div id="classSchedule" style="width: 400px"> 
+												요일 : 
+												<input type="checkbox" name="day" value="일">일
+												<input type="checkbox" name="day" value="월">월
+												<input type="checkbox" name="day" value="화">화
+												<input type="checkbox" name="day" value="수">수
+												<input type="checkbox" name="day" value="목">목
+												<input type="checkbox" name="day" value="금">금
+												<input type="checkbox" name="day" value="토">토
+												<br>
+												시간 :
+												<input type="time" id="time" name="time">
+												<br>
+												<input type="button" class="schBtn" id="addSchedule" value="스케줄 추가" style="float: right">
+												<input type="button" class="schBtn" id="cancelSchedule" value="스케줄 취소" style="float: right"><br>
+												<textarea id="schedule" name="schedule" rows="10" cols="55" style="resize: none;" readonly></textarea>
+											</div>
+										</fieldset>
+								<script>
+									$('#addSchedule').off().on('click', function(){
+										
+										var day = document.getElementsByName('day');
+										var time = document.getElementById('time');
+										var scheduleArea = document.getElementById('schedule');
+										
+										var inputSchedule = {};
+										var checked = false;
+										for (var i in day){
+											if(day[i].checked) {
+												inputSchedule[day[i].value] = time.value;
+												checked = true;
+											}
+										}
+
+										if(!checked || time.value == ''){
+											alert('요일과 시간을 둘 다 선택해주세요.');
+										} else {
+											var schedule = scheduleArea.value;
+											var text = '';
+											
+											for (var key in inputSchedule) {
+												text = key + "-" + inputSchedule[key] + " / ";
+												if (!schedule.includes(text)) {
+													schedule += text;
+												} else {
+													alert('이미 선택된 스케줄입니다.')
+												}
+											}
+											scheduleArea.value = schedule;
+											$('input[name=day]').attr('checked', false);
+											time.value = '';
+										}
+									});
+									
+									$('#cancelSchedule').off().on('click', function(){
+										if(confirm('담아놓은 스케줄을 취소하시겠습니까?')) {
+											document.getElementById('schedule').value = '';
+										}
+									});
+								</script>
 								<br>
 								<h3>강의 시간</h3>
-								<input type="number" id="tentacles" name="classtime" min="1" max="8" step = "0.5">시간
+								<input type="number" id="tentacles" name="classtime" min="1" max="8" step = "0.5" required>시간
 							
 								<h3>수강료</h3>
-									<input type="text" name ="fee" style="text-align: right;" pattern="[0-9]+" id="price"
-										onkeyup="inputNumberFormat(this)" />원
+									<input type="text" name ="fee" style="text-align: right;" pattern="[0-9]+" id="price" required/>원
 								<br>
 								<div>
 									<h3>클래스 모집 인원</h3>
 									최소 인원<input type="number" id="tentacles" name="minpeople"
-										min="1" max="100"> ~ 최대 인원 <input type="number"
-										id="tentacles" name="maxpeople" min="10" max="100">
+										min="1" max="100" required> ~ 최대 인원 <input type="number"
+										id="tentacles" name="maxpeople" min="10" max="100" required>
 								</div>
 
 								<br>
@@ -448,12 +526,24 @@ img.ui-datepicker-trigger {
 						</div>
 					</div>
 					</form>
+					<script>
+ 						function check() {
+							if($('#thumbnailImg1').val() == '') {
+								alert('썸네일 이미지 첨부는 필수 사항입니다.');
+								return false;
+							} else if($('#schedule').val() == '') {
+								alert('스케줄 등록은 필수 사항입니다.');
+								return false;
+							}
+							return true;
+						} 
+					</script>
 			</div>
 
 		</div>
 		<footer class="container"
 			style="text-align: center; background: #F5F5F5;">
-
+			
 			<p class="float-end">
 				<a href="#">Back to top</a>
 			</p>

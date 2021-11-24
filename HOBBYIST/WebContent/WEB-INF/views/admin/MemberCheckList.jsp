@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList, hobbyistClass.model.vo.*" %>
+    pageEncoding="UTF-8" import="java.util.ArrayList, member.model.vo.*" %>
 <% 
-	ArrayList<Member> mList = (ArrayList)request.getAttribute("mList");
-	ApvPageInfo pi = (ApvPageInfo)request.getAttribute("pi");
+	ArrayList<Member> tuteeList = (ArrayList)request.getAttribute("tuteeList");
+	ArrayList<Member> tutorList = (ArrayList)request.getAttribute("tutorList");
+	MemberInfo pi = (MemberInfo)request.getAttribute("pi");
 %>
 <!DOCTYPE html>
 <html>
@@ -12,7 +13,7 @@
 <style>
 	#outer {
 		width: 1500px;
-		height : 600px;
+		height : 1400px;
 		margin-left: 10px;
 	}
 	.tableArea {
@@ -20,7 +21,8 @@
 		height : 500px;
 		margin-left: 0;
  	}
-	#listArea {
+
+	#listArea1, #listArea2 {
 		text-align: center;
 		margin-bottom: 50px;
 	}
@@ -115,10 +117,10 @@
 				<!-- 사이드바 -->
 				<div class="app-dashboard-sidebar-inner">
 						<ul class="menu vertical">
-							<li><a href="#">
+							<li><a href="<%= request.getContextPath() %>/apvList.cl">
 								<span class="app-dashboard-sidebar-text"><h3>클래스 관리</h3></span>
 							</a></li>
-							<li><a href="<%= request.getContextPath() %>/classList.cl">
+							<li><a href="#">
 								<span class="app-dashboard-sidebar-text">클래스 승인</span>
 							</a></li>
 							<li><a href="#"> 
@@ -135,13 +137,13 @@
 								<span class="app-dashboard-sidebar-text">자주 묻는 질문(FAQ)</h3></span>
 							</a></li>
 							<br><br>
-							<li><a href="#"> 
+							<li><a href="<%= request.getContextPath() %>/memberCheck.admin"> 
 								<span class="app-dashboard-sidebar-text"><h3>회원 관리</h3></span>
 							</a></li>
-							<li><a href="#"> 
+							<li><a href="#listArea_tutee"> 
 								<span class="app-dashboard-sidebar-text">튜티(Tutee)목록</span>
 							</a></li>
-							<li><a href="#"> 
+							<li><a href="#listArea_tutor"> 
 								<span class="app-dashboard-sidebar-text">튜터(Tutor)목록</span>
 							</a></li>
 										
@@ -153,76 +155,76 @@
  			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
 				<div id="outer">
 					<h1> 회원 관리 </h1>
-					<h2> TUTEE 목록</h2>
+					<h2 id="listArea_tutee"> 1. TUTEE 목록</h2>
 						<div class="tableArea">
 							<form method="post"> <!-- action="confirmClass.cl" --> 
-								<table id="listArea">
+								<table id="listArea1">
 									<tr>
 										<th width = 200px> 이메일 </th>
-										<th width = 80px> 이름 </th>
-										<th width = 80px> 닉네임  </th>
-										<th width = 100px> 전화번호  </th>
-										<th width = 100px> 비밀번호 </th>
+										<th width = 100px> 이름 </th>
+										<th width = 100px> 닉네임  </th>
+										<th width = 150px> 전화번호  </th>
+										<th width = 120px> 비밀번호 </th>
 										<th width = 200px> 카카오 </th>
-										<th width = 80px> 가입경로 </th>
-										<th width = 80px> 가입날짜 </th>
-										<th width = 80px> 활동상태 </th>
+										<th width = 100px> 가입경로 </th>
+										<th width = 120px> 가입날짜 </th>
+										<th width = 100px> 활동상태 </th>
 									</tr>
-			 						<% if(mList.isEmpty()) { %>
+			 						<% if(tuteeList.isEmpty()) { %>
 										<tr>
 											<td colspan = "9"> 조회된 리스트가 없습니다. </td>
 										</tr>
 									<% } else { %>
-										<%	for(int i = 0; i < mList.size(); i++){ %>
+										<%	for(int i = 0; i < tuteeList.size(); i++){ %>
 											<tr> 
 												<td>
-													<%= mList.get(i).getMemberEmail() %>
-													<input type="hidden" id="tuteeEmail" name="tuteeEmail" value="<%= mList.get(i).getMemberEmail() %>">
+													<%= tuteeList.get(i).getMemberEmail() %>
+													<input type="hidden" id="tuteeEmail" name="tuteeEmail" value="<%= tuteeList.get(i).getMemberEmail() %>">
 												</td>
 												<td>
-													<%= mList.get(i).getMemberName() %>
-													<input type="hidden" id="memberName" name="memberName" value="<%= mList.get(i).getMemberName() %>">
+													<%= tuteeList.get(i).getMemberName() %>
+													<input type="hidden" id="tuteeName" name="tuteeName" value="<%= tuteeList.get(i).getMemberName() %>">
 												</td>
 												<td>
-													<%= mList.get(i).getMemberNickName() %>
-													<input type="hidden" id="tuteeNickName" name="tuteeNickName" value="<%= mList.get(i).getMemberNickName() %>">	
+													<%= tuteeList.get(i).getMemberNickName() %>
+													<input type="hidden" id="tuteeNickName" name="tuteeNickName" value="<%= tuteeList.get(i).getMemberNickName() %>">	
 												</td>
 												<td>
-													<%= mList.get(i).getMemberPhone() %>
-													<input type="hidden" id="tuteePwd" name="tuteePwd" value="<%= mList.get(i).getMemberPhone() %>">
+													<%= tuteeList.get(i).getMemberPhone() %>
+													<input type="hidden" id="tuteePwd" name="tuteePwd" value="<%= tuteeList.get(i).getMemberPhone() %>">
 												</td>
 												<td>
-													<%= mList.get(i).getMemberPwd() %>
-													<input type="hidden" id="tuteePwd" name="tuteePwd" value="<%= mList.get(i).getMemberPwd() %>">
+													<%= tuteeList.get(i).getMemberPwd() %>
+													<input type="hidden" id="tuteePwd" name="tuteePwd" value="<%= tuteeList.get(i).getMemberPwd() %>">
 												</td>
 												<td>
-													<%= mList.get(i).getKakaoNo() %>
-													<input type="hidden" id="tuteeKakao" name="tuteeKakao" value="<%= mList.get(i).getKakaoNo() %>">
+													<%= tuteeList.get(i).getKakaoNo() %>
+													<input type="hidden" id="tuteeKakao" name="tuteeKakao" value="<%= tuteeList.get(i).getKakaoNo() %>">
 												</td>
 												<td>
-													<%= mList.get(i).getMemberEnrollType() %>
-													<input type="hidden" id="tuteeEnrollType" name="tuteeEnrollType" value="<%= mList.get(i).getMemberEnrollType() %>">
+													<%= tuteeList.get(i).getMemberEnrollType() %>
+													<input type="hidden" id="tuteeEnrollType" name="tuteeEnrollType" value="<%= tuteeList.get(i).getMemberEnrollType() %>">
 												</td>
 												<td>
-													<%= mList.get(i).getMemberEnrollDate() %>
-													<input type="hidden" id="tuteeEnrollDate" name="tuteeEnrollDate" value="<%= mList.get(i).getMemberEnrollDate() %>">
+													<%= tuteeList.get(i).getMemberEnrollDate() %>
+													<input type="hidden" id="tuteeEnrollDate" name="tuteeEnrollDate" value="<%= tuteeList.get(i).getMemberEnrollDate() %>">
 												</td>
 												<td>
-													<%= mList.get(i).getMemberStatus() %>
-													<input type="hidden" id="tuteeStatus" name="tuteeStatus" value="<%= mList.get(i).getMemberStatus() %>">
+													<%= tuteeList.get(i).getMemberStatus() %>
+													<input type="hidden" id="tuteeStatus" name="tuteeStatus" value="<%= tuteeList.get(i).getMemberStatus() %>">
 												</td>
 											</tr> 
 										<%  } %>
 									<% } %> 
 								</table>
 							</form>
-<%-- 							<div class="pagingArea" align="center">
+ 							<div class="pagingArea" align="center">
 			
 								<!-- 처음으로 -->
-								<button id="toFirstBtn" onclick="location.href='<%= request.getContextPath() %>/apvList.cl?currentPage=1'">&lt;&lt; 첫 페이지로</button>
+								<button id="toFirstBtn" onclick="location.href='<%= request.getContextPath() %>/memberCheck.admin?currentPage=1'">&lt;&lt; 첫 페이지로</button>
 								
 								<!-- 이전페이지로 -->
-								<button id="beforeBtn" onclick="location.href='<%= request.getContextPath() %>/apvList.cl?currentPage=<%= pi.getCurrentPage() -1 %>'">&lt; 이전</button>
+								<button id="beforeBtn" onclick="location.href='<%= request.getContextPath() %>/memberCheck.admin?currentPage=<%= pi.getCurrentPage() -1 %>'">&lt; 이전</button>
 								<script>
 									if(<%= pi.getCurrentPage() %> <= 1){
 										$('#beforeBtn').prop('disabled', true);
@@ -234,12 +236,12 @@
 								<% 		if(p == pi.getCurrentPage()) { %>
 									<button id="choosen" disabled><%= p %></button> <!-- 현재 페이지는 선택 못하게 -->
 								<%      } else { %>
-									<button id="numBtn" onclick="location.href='<%= request.getContextPath() %>/apvList.cl?currentPage=<%= p %>'"><%= p %></button>
+									<button id="numBtn" onclick="location.href='<%= request.getContextPath() %>/memberCheck.admin?currentPage=<%= p %>'"><%= p %></button>
 								<%		 } %>
 								<%	} %>
 								
 								<!-- 다음페이지로 -->
-								<button id="afterBtn" onclick="location.href='<%= request.getContextPath() %>/apvList.cl?currentPage=<%= pi.getCurrentPage() + 1 %>'">다음 &gt;</button>
+								<button id="afterBtn" onclick="location.href='<%= request.getContextPath() %>/memberCheck.admin?currentPage=<%= pi.getCurrentPage() + 1 %>'">다음 &gt;</button>
 									<script>
 										if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>){
 											$('#afterBtn').prop('disabled', true);
@@ -247,11 +249,114 @@
 									</script>
 								
 								<!-- 맨 끝으로 -->
-								<button id="toLastBtn" onclick="location.href='<%= request.getContextPath() %>/apvList.cl?currentPage=<%= pi.getMaxPage() %>'">마지막으로  &gt;&gt;</button>
+								<button id="toLastBtn" onclick="location.href='<%= request.getContextPath() %>/memberCheck.admin?currentPage=<%= pi.getMaxPage() %>'">마지막으로  &gt;&gt;</button>
 							
-							</div> --%>
+							</div>
 							
 						</div>
+						
+						
+						
+						<h2 id="listArea_tutor"> 2. TUTOR 목록</h2>
+						<div class="tableArea">
+							<form method="post"> <!-- action="confirmClass.cl" --> 
+								<table id="listArea2">
+									<tr>
+										<th width = 200px> 이메일 </th>
+										<th width = 100px> 이름 </th>
+										<th width = 100px> 닉네임  </th>
+										<th width = 150px> 전화번호  </th>
+										<th width = 120px> 비밀번호 </th>
+										<th width = 200px> 카카오 </th>
+										<th width = 100px> 가입경로 </th>
+										<th width = 120px> 가입날짜 </th>
+										<th width = 100px> 활동상태 </th>
+									</tr>
+			 						<% if(tutorList.isEmpty()) { %>
+										<tr>
+											<td colspan = "9"> 조회된 리스트가 없습니다. </td>
+										</tr>
+									<% } else { %>
+										<%	for(int i = 0; i < tutorList.size(); i++){ %>
+											<tr> 
+												<td>
+													<%= tutorList.get(i).getMemberEmail() %>
+													<input type="hidden" id="tutorEmail" name="tutorEmail" value="<%= tutorList.get(i).getMemberEmail() %>">
+												</td>
+												<td>
+													<%= tutorList.get(i).getMemberName() %>
+													<input type="hidden" id="tutorName" name="tutorName" value="<%= tutorList.get(i).getMemberName() %>">
+												</td>
+												<td>
+													<%= tutorList.get(i).getMemberNickName() %>
+													<input type="hidden" id="tutorNickName" name="tutorNickName" value="<%= tutorList.get(i).getMemberNickName() %>">	
+												</td>
+												<td>
+													<%= tutorList.get(i).getMemberPhone() %>
+													<input type="hidden" id="tutorPwd" name="tutorPwd" value="<%= tutorList.get(i).getMemberPhone() %>">
+												</td>
+												<td>
+													<%= tutorList.get(i).getMemberPwd() %>
+													<input type="hidden" id="tutorPwd" name="tutorPwd" value="<%= tutorList.get(i).getMemberPwd() %>">
+												</td>
+												<td>
+													<%= tutorList.get(i).getKakaoNo() %>
+													<input type="hidden" id="tutorKakao" name="tutorKakao" value="<%= tutorList.get(i).getKakaoNo() %>">
+												</td>
+												<td>
+													<%= tutorList.get(i).getMemberEnrollType() %>
+													<input type="hidden" id="tutorEnrollType" name="tutorEnrollType" value="<%= tutorList.get(i).getMemberEnrollType() %>">
+												</td>
+												<td>
+													<%= tutorList.get(i).getMemberEnrollDate() %>
+													<input type="hidden" id="tutorEnrollDate" name="tutorEnrollDate" value="<%= tutorList.get(i).getMemberEnrollDate() %>">
+												</td>
+												<td>
+													<%= tutorList.get(i).getMemberStatus() %>
+													<input type="hidden" id="tutorStatus" name="tutorStatus" value="<%= tutorList.get(i).getMemberStatus() %>">
+												</td>
+											</tr> 
+										<%  } %>
+									<% } %> 
+								</table>
+							</form>
+ 							<div class="pagingArea" align="center">
+			
+								<!-- 처음으로 -->
+								<button id="toFirstBtn" onclick="location.href='<%= request.getContextPath() %>/memberCheck.admin?currentPage=1'">&lt;&lt; 첫 페이지로</button>
+								
+								<!-- 이전페이지로 -->
+								<button id="beforeBtn" onclick="location.href='<%= request.getContextPath() %>/memberCheck.admin?currentPage=<%= pi.getCurrentPage() -1 %>'">&lt; 이전</button>
+								<script>
+									if(<%= pi.getCurrentPage() %> <= 1){
+										$('#beforeBtn').prop('disabled', true);
+									}
+								</script>
+								
+								<!-- 숫자버튼 -->
+								<% for (int p = pi.getStartPage(); p <= pi.getEndPage(); p++) { %>
+								<% 		if(p == pi.getCurrentPage()) { %>
+									<button id="choosen" disabled><%= p %></button> <!-- 현재 페이지는 선택 못하게 -->
+								<%      } else { %>
+									<button id="numBtn" onclick="location.href='<%= request.getContextPath() %>/memberCheck.admin?currentPage=<%= p %>'"><%= p %></button>
+								<%		 } %>
+								<%	} %>
+								
+								<!-- 다음페이지로 -->
+								<button id="afterBtn" onclick="location.href='<%= request.getContextPath() %>/memberCheck.admin?currentPage=<%= pi.getCurrentPage() + 1 %>'">다음 &gt;</button>
+									<script>
+										if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>){
+											$('#afterBtn').prop('disabled', true);
+										}
+									</script>
+								
+								<!-- 맨 끝으로 -->
+								<button id="toLastBtn" onclick="location.href='<%= request.getContextPath() %>/memberCheck.admin?currentPage=<%= pi.getMaxPage() %>'">마지막으로  &gt;&gt;</button>
+							
+							</div>
+							
+						</div>
+						
 					
 					</div>
 				</div> 
@@ -260,7 +365,13 @@
 			
 			
 			<script>
-				$('#listArea td').mouseenter(function(){
+				$('#listArea1 td').mouseenter(function(){
+					$(this).parent().css({'background':'#9ED4C2', 'font-weight' :'bold', 'color' : 'white'});
+				}).mouseout(function(){
+					$(this).parent().css({'background':'none', 'font-weight' :'normal', 'color' : 'black'});
+				});
+				
+				$('#listArea2 td').mouseenter(function(){
 					$(this).parent().css({'background':'#9ED4C2', 'font-weight' :'bold', 'color' : 'white'});
 				}).mouseout(function(){
 					$(this).parent().css({'background':'none', 'font-weight' :'normal', 'color' : 'black'});

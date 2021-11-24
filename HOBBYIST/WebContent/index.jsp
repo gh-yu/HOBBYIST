@@ -7,6 +7,6 @@
 <title>mainPage</title>
 </head>
 <body>
-	<%@ include file="WEB-INF/views/main/mainPage.jsp" %> 
+    <%@ include file="WEB-INF/views/main/mainPage.jsp" %> 
 </body>
 </html>

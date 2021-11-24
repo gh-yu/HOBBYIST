@@ -37,6 +37,7 @@ public class ClassConfrimServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int classNo = Integer.parseInt(request.getParameter("classNo"));
+		System.out.println(classNo);
 //		ArrayList<HClass> apvList = new HClassService().confirmClass(classNo);
 		int result = new HClassService().confirmClass(classNo);
 		
