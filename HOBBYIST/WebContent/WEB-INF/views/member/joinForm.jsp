@@ -32,7 +32,7 @@
 
     <!--// BOOTSTRAP & Main //-->
 
-    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap.min2.css" rel="stylesheet">
     <link href="./css/main_join.css" rel="stylesheet">
     
 

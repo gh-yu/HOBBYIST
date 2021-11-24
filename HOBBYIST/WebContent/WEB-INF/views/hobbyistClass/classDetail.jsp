@@ -1,300 +1,374 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="member.model.vo.Member"%>
+	pageEncoding="UTF-8" import="hobbyistClass.model.vo.*, member.model.vo.Member, tutor.model.vo.Tutor, java.util.ArrayList"%>
 <%
-	// 클래스에 대한 정보(ArryaList에 담아서 request에 저장한거) 가져오기
+	Member loginUser = (Member)session.getAttribute("loginUser");
+
+	HClass c = (HClass)request.getAttribute("c");
+	ArrayList<HClassFile> f = (ArrayList)request.getAttribute("fileList");
+	Tutor t = (Tutor)request.getAttribute("tutor");
+	ArrayList<HClassSchedule> s = (ArrayList)request.getAttribute("sList");
+	
+	// 달력의 요일과 DB에서 가져온 요일데이터를 비교하는 조건식 생성 -> script에서 배열에 저장하여 활용
+	String dayPick = "";
+	for (int i=0; i < s.size(); i++) {
+		if(s.size() == 1) {
+			dayPick += "(day == " + s.get(i).getSchduleDay() + ")"; 
+		} else {
+			if (i == 0) {
+				dayPick += "(day == " + s.get(i).getSchduleDay() + " || "; 
+			} else if (i != s.size() - 1){
+				dayPick += "day == "  + s.get(i).getSchduleDay() + " || "; 
+			} else {
+				dayPick += "day == " + s.get(i).getSchduleDay() + ")"; 
+			}
+		}
+	}	
+
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>class detail page</title>
-<link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
-<link rel="stylesheet" href="css/classDetail.css">
-<script src="js/jquery-3.6.0.min.js"></script>
-<!-- datePicker -->
+<title>HOBBYIST</title>
+<%@ include file="../common/css.jsp" %>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
-<style>
-	.app-dashboard-top-nav-bar{
-		position: relative;
-	}
-	
-/* 	 .top-bar-right {
-	  	position: absolute;
-	 	right: 1%;
-	 } */
-	
-	.app-dashboard-top-nav-bar .menu-icon {
-		vertical-align: text-bottom;
-		position: relative; /* 버튼 왼쪽에 붙이기 위해 추가 */ */
-		text-align: right; /* 상단바의 메뉴 아이콘 오른쪽으로 정렬 */
-	}
-	
- 	.app-dashboard-logo {
-		color: #fefefe;
-		text-transform: uppercase;
-		font-weight: bold;
-		margin-bottom: 15px; /* 메인페이지의 상단바의 로고 위치와 맞춤 */
-		margin-top: 9px;
-	}
-	
-/* 	#logo{
-		position: absolute;
-		margin-left: 100px;
-		margin-top: 217px;
-		width: 300px;
-		height: 300px;
-	}
-	
-	#logo-a img{
-		height: 55px;
-	} */
-	
-/* 	#menuDiv {
-		width: 283px;
-	} */
 
-	/* CDN에 설정되어 있는 columns 스타일 해제 위해 columns 클래스명 옆에 임의 클래스명을 띄어쓰기 해서 주고, 설정 바꿈, f12에서 해당 태그의 설정 확인 가능*/
-	.topbar:last-child{
-	    float: left;
+<style>
+	.likeBtnArea{display: inline-block;} 
+	#btnSub {
+		background: lightgray;
+		font-weight: bold;
+		cursor: pointer;
+		color: white;
+		box-shadow: 2px 2px 2px lightgray;
+		font-size: large;
+		border: none;
+		height: 50px;
+		width: 100px;
+		
 	}
-	
-	.topbar{
-	   width: 290px;
+	#btnSub:hover {
+		background: #9ED4C2;
 	}
-	
+
 </style>
 </head>
 <body>
-	<div class="app-dashboard shrink-medium">
-	
-		<%@ include file="../common/topbar.jsp" %>
-		
-		<div class="app-dashboard-body off-canvas-wrapper">
-
-			<!-- 본문 내용 -->
-			<div class="row" style="margin-top: 50px;">
-				<div class="large-8 columns"
-					style="border-right: 1px solid #E3E5E8;">
-
-					<article>
-
-						<div id="classTitle" class="column">
-							<p>
-								<img src="images/drawing.png" id="classThumbnail"
-									alt="image for article" alt="article preview image">
-							</p>
-							
-							<button class="button button-like">
-								<i class="fa fa-heart">❤</i>
-								<!-- i : 아이콘 태그 -->
-								<span>Like</span>
-							</button>
-							<span style="font-size: xx-large; font-weight: bold;">[Live]</span>
-							&nbsp;&nbsp; 
-							<span style="font-size: xx-large; font-weight: bold;">아이패드로 그리는 꽃그림</span>
-
-							<script>
-								// like-button
-								$(function() {
-									$('.button-like').bind('click',
-											function(event) {
-												$(this).toggleClass("liked");
-											});
-								});
-							</script>
+	<!-- 상단 메뉴 -->
+	<div class="banner_bg_main">
+		<!-- header top section start -->
+		<div class="container">
+			<div class="header_section_top">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="custom_menu">
+							<ul>
+								<li><a href="#">MAIN</a></li>
+							<% if(loginUser == null) { %>
+								<li></li>
+								<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">LIKED-CLASS</a></li>
+							<% } else if(loginUser.getMemberGrade().equals("A")){ %>
+							<!-- 관리자면 LIKED-CLASS버튼 비활성화 -->
+							<% } else { %>
+								<li></li>
+								<li><a href="<%= request.getContextPath() %>/myClass.te">LIKED-CLASS</a></li>
+							<% } %>
+								<li></li>
+							<% if(loginUser == null) { %>
+								<li><a href="<%= request.getContextPath() %>/loginForm.me">LOG-IN</a></li> <!-- 로그인 -->
+							<% } else { %>
+								<li><a href="<%= request.getContextPath() %>/logout.me">LOG-OUT</a></li> <!-- 로그아웃 -->
+							<% } %>
+								<li></li>
+							<% if(loginUser == null) { %>
+								<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">MY INFO</a></li>
+							<% } else { %>
+								<li><a href="<%= request.getContextPath() %>/myInfo.me">MY INFO</a></li>
+							<% } %>
+								<li></li>
+								<li><a href="<%= request.getContextPath() %>/FAQ.bo">FAQ</a></li>
+							</ul>
 						</div>
-
-						<hr>
-
-						<div  id="classContent" class="column">
-
-							<h5 style="font-weight: bold;">클래스 소개</h5>
-							<p>samplesample samplesamplesamplesample
-								samplesamplesamplesamplesample samplesamplesamplesamplesample
-								samplesamplesamplesamplesample
-								samplesasamplesamplesamplesamplesample
-								samplesamplesamplesamplesamplesamsamplesample</p>
-						</div>
-
-
-						<hr>
-
-						<div id="classImg" class="column">
-							<h5 style="font-weight: bold;">소개 사진</h5>
-<!-- 							<p>
-								<img src="../../images/pastel.png" alt="image for article"
-									alt="article preview image">
-							</p> -->
-
-							<div id="wrapper">
-								<div id="slider-wrap">
-									<ul id="slider">
-										<li>
-											<img src="images/pastel.png">
-										</li>
-
-										<li>
-											<img src="https://fakeimg.pl/350x200/D27328/000?text=22222">
-										</li>
-
-										<li>
-											<img src="https://fakeimg.pl/350x200/FF607F/000?text=33333">
-										</li>
-
-										<li>
-											<img src="https://fakeimg.pl/350x200/0A6E0A/000?text=44444">
-										</li>
-
-										<li>
-											<img src="https://fakeimg.pl/350x200/0064CD/000?text=55555">
-										</li>
-
-
-									</ul>
-
-									<!--controls-->
-									<div class="btns" id="next">
-										<i class="fa fa-arrow-right"></i>
-									</div>
-									<div class="btns" id="previous">
-										<i class="fa fa-arrow-left"></i>
-									</div>
-									<div id="counter"></div>
-
-									<div id="pagination-wrap">
-										<ul>
-										</ul>
-									</div>
-									<!--controls-->
-
-								</div>
-
-							</div>
-
-						</div>
-		
-						<hr>
-
-						<div id="classReview" class="column">
-							<h5 style="font-weight: bold;">후기</h5> <!--4개 정도만 보여주고 더보기 클릭하면 후기 페이지로 이동 -> 해당 후기 페이지에서 페이징 처리 -->
-							<div>
-								<div class="review-section">
-									<h5>첫 수강 후기입니다</h5>
-									<img class="review" src="images/drawing.png">
-
-									<div class="news-card-date">Sunday, 16th April</div>
-									<p class="news-card-description">Lorem ipsum dolor sit
-										amet, consectetur adipisicing elit. Recusandae facere, ipsam
-										quae sit, eaque perferendis commodi!...</p>
-								</div>
-
-								<div class="review-section">
-									<h5>두 번째 후기입니다</h5>
-									<img class="review" src="images/drawing.png">
-
-									<div class="news-card-date">Sunday, 16th April</div>
-									<p class="news-card-description">Lorem ipsum dolor sit
-										amet, consectetur adipisicing elit. Recusandae facere, ipsam
-										quae sit, eaque perferendis commodi!...</p>
-								</div>
-
-								<div class="review-section">
-									<h5>세 번째 후기입니다</h5>
-									<img class="review" src="images/drawing.png">
-
-									<div class="news-card-date">Sunday, 16th April</div>
-									<p class="news-card-description">Lorem ipsum dolor sit
-										amet, consectetur adipisicing elit. Recusandae facere, ipsam
-										quae sit, eaque perferendis commodi!...</p>
-								</div>
-							</div>
-
-
-							<!-- 
-					<ul class="pagination" role="navigation" aria-label="Pagination">
-						<li class="disabled">Previous <span class="show-for-sr">page</span></li>
-						<li class="current"><span class="show-for-sr">You're
-								on page</span> 1</li>
-						<li><a href="#" aria-label="Page 2">2</a></li>
-						<li><a href="#" aria-label="Page 3">3</a></li>
-						<li><a href="#" aria-label="Page 4">4</a></li>
-						<li><a href="#" aria-label="Next page">Next <span
-								class="show-for-sr">page</span></a></li>
-					</ul> -->
-						</div>
-					</article>
-
-				</div>
-
-
-				<!-- 왼쪽 영역  -->
-				<div class="large-4 columns">
-
-					<aside>
-
-
-						<div class="tutor-profile">
-							<img src="images/tutor_profile.jpg" id="profile-img">
-							<br>
-							안녕하세요
-							<p><span>그림공방(sample)</span>입니다</p>
-							<p>
-								sample튜터가 자기소개sample
-								samplesamplesamplesam plesamplesampledfasdfdfa
-								samplesamplesample
-							</p>
-							<hr style="background: white; height: 1px;">
-							<div id="class-info">
-								<p> 소요시간 : <span>2(sample)</span>시간<br></p>
-								<p><span>1(sample)</span>~<span>8(sample)</span>명(최소인원 <span>1(sample)</span>명)</p>
-							</div>
-						</div>
-				
-
-						<br>
-
-						<div class="apply-class">
-							<b>클래스 신청</b><br><br>
-							<form action="">
-								<p>수강을 원하시는 날짜를 선택해주세요(최대 1개 선택)</p>
-								<p>수강날짜 선택 <input type="text" id="datepicker" name="date"></p>
-								<br>
-								<p>시간 선택
-									<select>
-										<option>18:00(sample)</option>
-									</select>
-								</p>
-								<br>
-								<div id="price">
-									<span>50,000(sample)</span>원
-									<br><br><br>
-									<input type="submit" id="btnSub" value="신청하기">
-								</div>
-								<br>
-								
-							</form>
-
-						</div>
-					</aside>
+					</div>
 
 				</div>
 			</div>
-
-			<footer> </footer>
-
-			<!-- 	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-			<script
-				src="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
-			<script>
-				$(document).foundation();
-			</script>
- -->
-		
 		</div>
 	</div>
+	
+	
+	<!-- 메인 화면 -->
+	<div class="row justify-content-md-center">
+		<div class="col-md-10">
+			<div class="content">
+				<div class="container-fluid">
+					<h4 class="page-title"></h4>
+					<h4 class="page-title">CLASS DETAIL</h4>
+					<hr>
+					<div id="carouselExampleSlidesOnly" class="carousel slide"
+						data-bs-ride="carousel">
+						<div class="row">
+							<div class="col-md-8">
+								<!-- 클래스 이미지 영역 -->
+								<div class="carousel-inner" style="height: 550px">
+									<div class="carousel-item active">
+										<% if (f.isEmpty()) { %>
+											<img src="images/simone-hutsch-FNs_ylOm21g-unsplash.jpg" class="classThumbnail" alt="image for article" alt="thumbnail">
+										<% } else { %>
+											<img src="<%= request.getContextPath() %>/uploadFiles/<%= f.get(0).getChangeName() %>" id="thumbnail" 
+												class="classThumbnail d-block w-100" style="object-fit: cover" alt="thumbnail">
+										<% } %>
+									</div>
+									<% if (!f.isEmpty()) { %>
+									<% 		for (int i = 1; i < f.size(); i++) { %>
+									<div class="carousel-item">
+										<img src="<%= request.getContextPath() %>/uploadFiles/<%= f.get(i).getChangeName() %>"class="d-block w-100 classImage"
+											style="object-fit: cover">
+									</div>
+									<% 		} %>
+									<% } %>
+								</div>
+								<br>
+								<!-- 화면 영역 -->
+								
+								<!-- 좋아요 버튼 기능 -->
+								<div class="likeBtnArea">
+									<input type="hidden" class="cNo" name="cNo" value="<%= c.getClassNo() %>"> 
+									<button class="button button-like">
+										<i class="fa fa-heart"></i><span>Like</span>
+									</button>
+								</div>		
+								<!-- 클래스 소개 -->
+								<span style="font-size: x-large; color: gray;"> &nbsp;[<%= c.getcategoryName() %>]</span>
+								<span style="font-size: x-large;"> &nbsp;<%= c.getClassName() %></span>
+								
+								<hr>
+								<div style="border: 1px solid #d9d9d9; padding: 10px">
+									<textarea style="min-width: 750px; min-height: 400px; resize: none; border: none;" readonly><%= c.getClassContent() %></textarea>
+								</div>
+							</div>
+							
+							
+							<!-- 사이드 / 클래스 소개 -->
+							<div class="col-md-4">
+								<div class="card">
+									<div class="card-header">
+										<div class="card-title">[LIVE]</div>
+									</div>
+									<div class="card-body">
+										<h6 class="card-subtitle mb-2 text-muted"><%= t.getMemberNickName() %>의 클래스</h6>
+										<p class="card-text">
+											<p><%= t.getTutorReport() %></p>
+										</p>
+
+										<div class="notif-icon notif-danger">
+											<i class="la la-instagram"></i> <a href="<%= t.getTutorSns() %>" class="card-link">SNS</a>
+										</div>
+										<hr>
+									</div>
+								
+									<div class="card-body">
+										<h6 class="card-subtitle mb-2 text-muted">
+											강의 소요시간: <span><%= c.getClassTime() %></span>시간
+										</h6>
+										<h6 class="card-subtitle mb-2 text-muted">
+											수강 인원: <span><%= c.getClassTuteeMin() %></span>~<span><%= c.getClassTuteeMax() %></span>명 (최소인원 <span><%= c.getClassTuteeMin() %></span>명)
+											<!-- 수강생 현황: <span style="color: red">3</span>/<span>10</span>(명) -->
+										</h6>
+										<br>
+
+									</div>
+								</div>
+								<!-- 사이드 / 클래스 신청 -->
+								<div class="card">
+									<div class="card-header">
+										<div class="card-title">클래스 신청하기</div>
+									</div>
+									<div class="form-group">
+										<div class="apply-class">
+											<form action="<%= request.getContextPath() %>/applyClass.te" method="post"  onsubmit="return check();">
+												<label for="exampleFormControlSelect1">클래스 일정 &nbsp;</label> 
+												<input type="text" id="datepicker" name="date" required readonly style="background: white;">
+												<small id="imageHelp" class="form-text text-muted">수강을 원하시는 날짜를 선택해주세요(최대 1개)</small> <br> 
+												
+												<label for="exampleFormControlSelect1">강의 시간 선택 &nbsp;</label> 
+												<select id="time" name="time" style="width: 100px;">
+												<% for (int i = 0; i < s.size(); i++) { %>
+												<% 		if (s.size() > 1 && i != 0 && s.get(i-1).getSchduleTime().equals(s.get(i).getSchduleTime())) { %>
+																								
+												<% 		} else { %>
+															<option class="timeOption" value="<%= s.get(i).getSchduleTime() %>"><%= s.get(i).getSchduleTime() %></option>
+												<% 		} %>
+												<% } %>
+												</select>
+												<small id="imageHelp" class="form-text text-muted">수강을 원하시는 시간을 선택해주세요(최대 1개)</small> <br>
+												
+												<input type="hidden" name="cNo" value="<%= c.getClassNo() %>">
+												<div id="price">
+													<label for="exampleFormControlSelect1">수강료 &nbsp;</label> 
+													<input placeholder="<%= c.getClassFee() %>원" disabled>
+													<small id="imageHelp" class="form-text text-muted">수강료는 이미 책정된 내역으로 변경할 수 없습니다.</small> 
+												
+													<br><br><br>
+												</div>	
+												<div align="center">
+													<input type="submit" id="btnSub" value="신청">
+												</div>
+												<br>
+											</form>
+										</div>
+									</div>
+									
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<!-- 클래스 리뷰 영역 -->
+	<div class="row justify-content-center">
+		<div class="col-md-10">
+			<div class="card">
+				<div class="card-header">
+					<div class="card-title">CLASS REVIEW</div>
+				</div>
+				<div class="card-body">
+					<div class="swiper-container">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide"
+								style="background-image: url(assets/images/baking.jpg)"></div>
+							<div class="swiper-slide"
+								style="background-image: url(ssets/images/baking2.jpg)"></div>
+							<div class="swiper-slide"
+								style="background-image: url(ssets/images/camera.jpg)"></div>
+							<div class="swiper-slide"
+								style="background-image: url(assets/images/camera3.jpg)"></div>
+							<div class="swiper-slide"
+								style="background-image: url(assets/images/camera4.jpg)"></div>
+							<div class="swiper-slide"
+								style="background-image: url(assets/images/florist.jpg)"></div>
+							<div class="swiper-slide"
+								style="background-image: url(assets/images/florist2.jpg)"></div>
+							<div class="swiper-slide"
+								style="background-image: url(assets/images/florist3.jpg)"></div>
+							<div class="swiper-slide"
+								style="background-image: url(assets/images/florist4.jpg)"></div>
+							<div class="swiper-slide"
+								style="background-image: url(assets/images/painting.jpg)"></div>
+						</div>
+						<!-- Add Pagination -->
+						<div class="swiper-pagination"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<%@ include file="../common/js.jsp" %>
+<script src="assets/js/swiper.js"></script>
 <script>
+
+	var swiper = new Swiper('.swiper-container', {
+	    effect: 'coverflow',
+	    grabCursor: true,
+	    centeredSlides: true,
+	    slidesPerView: 'auto',
+	    coverflowEffect: {
+	      rotate: 50,
+	      stretch: 0,
+	      depth: 100,
+	      modifier: 1,
+	      slideShadows : true,
+	    },
+	    pagination: {
+	      el: '.swiper-pagination',
+	    },
+   });
+
+	// like-button js, ajax
+	$(function() {
+		// 화면 로드될때 실행되는 함수, window.onload = function(){}과 같음
+		// 로그인이 되어 있고, 클래스리스트가 존재하면 실행
+		<% if(loginUser != null) { %>
+			// memberEmail이 일치하는 likeClassList를 select해와서  
+			// classNo와 likeClassList의 classNo랑 일치하면  $(this).toggleClass("liked");
+			var memberEmail = '<%= loginUser.getMemberEmail() %>';
+			var cNo = $('.cNo');
+			
+			$.ajax({
+				url: 'likeList.te',
+				data: {memberEmail:memberEmail},
+				type: 'POST',
+				success: function(data){
+					console.log(data);
+					for (var i in cNo) {
+						for(var j in data) {
+							var likedCNo = data[j].classNo;
+							$('.likeBtnArea').find('input[value=' + likedCNo + ']').next().toggleClass("liked");
+						}	
+					}
+				},
+				error: function(data){
+					console.log(data);
+				}
+			});
+		<% } %>
+	});
+	
+	$('.button-like').bind('click', function(event) {
+		if ('<%= loginUser %>' == 'null') {
+			alert('로그인이 필요한 서비스입니다.');
+		} else {	
+			<% if(loginUser != null) { %>
+				$likeBtn = $(this);
+				var likeStatus = $(this).attr('class'); // class속성의 값을 저장
+				var memberEmail = '<%= loginUser.getMemberEmail() %>';
+				var cNo = $(this).prev().val();
+				
+			   	if (likeStatus.includes('liked')) { // includes() : 해당 string이 포함되어 있으면 true, 아니면 false반환
+					// 누른 클래스의 class속성에 'liked'라는 문자열이 포함되어 있으면 true -> 좋아요인 상태일때
+					// delete ajax
+					$.ajax({
+						url: 'deletelike.te',
+						data: {memberEmail:memberEmail, likedCNo:cNo},
+						type: 'POST',
+						success: function(data){
+							console.log(data);
+							if (data.trim() == '1') {
+								$likeBtn.toggleClass("liked");
+							}
+						},
+						error: function(data){
+							console.log(data);
+						}
+					});	
+					//$(this).toggleClass("liked"); // ajax실행 success 안쪽에서 toggleClass()실행 
+				} else {
+					// 좋아요가 아닌 상태일때
+					// insert ajax
+					$.ajax({
+						url: 'insertlike.te',
+						data: {memberEmail:memberEmail, cNo:cNo},
+						type: 'POST',
+						success: function(data){
+							console.log(data);
+							if (data.trim() == '1') {
+								$likeBtn.toggleClass("liked");
+							}
+						},
+						error: function(data){
+							console.log(data);
+						}
+					});											
+				}
+		   	<% } %>
+		}
+	});
+
  	/* datepicker 관련 css */
 	$.datepicker.setDefaults({
 		dateFormat : 'yy-mm-dd',
@@ -314,144 +388,89 @@
 		changeYear : true,
 
 		minDate : '0', // 0 넣으면 오늘날짜부터 선택할 수 있음
-		maxDate : new Date('2021-12-1'), // 특정날짜 이후는 선택 못하게/ 기간 선택 범위 제한/ 클래스 종료일자 date를 불러와서 변수에다 값 담아 여기다 넣기
+		maxDate : new Date('<%= c.getClassEndDate() %>'), // 특정날짜 이후는 선택 못하게/ 기간 선택 범위 제한/ 클래스 종료일자 이후는 선택 불가
 		showButtonPanel : true,
 		currentText : '오늘 날짜',
 		closeText : '닫기',
 		showAnim : "slide",
 
-		beforeShowDay : onlyMonday, // 요일 선택 제한, 값으로 함수를 넣었음
+		beforeShowDay : onlyClassday, // 요일 선택 제한, 값으로 함수를 넣었음
 		regional : "ko", // 지역
 
 	});
 
-	function onlyMonday(date) { // 리턴한 요일만 선택되게 하는 함수
+	function onlyClassday(date) { // 리턴한 요일만 선택되게 하는 함수
 		var day = date.getDay();
-		// return [(day == 1), '']; // day == 1 월요일만 
+		// return [(day == 1), '']; // day == 1 월요일만 선택
 		// return [(day != 0 && day != 1 && day != 3)]; // 특정 요일 제한 -> 일,월,수만 선택 안하기
-		return [ (day == 0 || day == 1 || day == 3) ]; // 여러 요일 선택 -> 일, 월, 수 만
-
-		// DB에서 클래스별 가능한 요일 불러오고, 그 요일 전부  return[(day == 가능요일1 || day == 가능요일2];에 넣기 
-		// 요일 DB에 저장될때 switch로 월은 1 화는 2 .. 일은 0 이런 식으로 클래스 별 요일 테이블에 저장되게 하기
+		// var classDay = [ (day == 0 || day == 1 || day == 3) ];
+		// return classDay;
+		
+		var classDay = new Array();
+		
+		classDay.push(<%= dayPick %>); 
+		// DB에서 클래스 스케줄의 강의요일을 가져와 조건식으로 저장 -> 배열에 넣어 반환하기
+		// -> 날짜선택 클릭시 달력의 요일과 리턴한 배열의 데이터 안의 요일데이터와 비교 -> 조건식 결과 boolean값이 false면 해당 요일은 선택 불가능 처리
+		
+		return classDay;
 	};
 
 	$(function() {
-
-		$("#datepicker").datepicker();
+		$("#datepicker").datepicker({
+			buttonImage : "images/calendar.gif",
+		});
 
 	});
 
 	$(document).ready(function() {
-
-		var dt = new Date()
-
+		var dt = new Date();
 	});
-</script>
-<script>
-	/* img slide */
-	//current position
-	var pos = 0;
-	//number of slides
-	var totalSlides = $('#slider-wrap ul li').length;
-	//get the slide width
-	var sliderWidth = $('#slider-wrap').width();
 	
+	// 날짜 선택시 스케줄표에서 그 요일의 시간과 일치하는 것은 selected, 아닌 것은 disabled로 변경 
+	$("#datepicker").off().on('change', function(){
+		var inputDate = $(this).val();
+		var inputDay = new Date(inputDate).getDay();
+		var timeOption = $('.timeOption');
+		
+		var flagArr = new Array();
+		<% for(HClassSchedule hs : s) { %>
+				if (inputDay == <%= hs.getSchduleDay() %>) {
+					for (var i in timeOption) {
+						if (timeOption[i].value == '<%= hs.getSchduleTime() %>') {
+							flagArr.push(i); 
+							// 해당 요일의 강의시간과 select옵션태그의 value값인 강의시간이 일치하면
+							// selected속성 넣을 option태그의 index값을  배열에 넣음
+						}
+					}
+				}
+		<% } %>
+		
+		for (var i in timeOption) {
+			timeOption[i].disabled = true;
+			$time.css('text-decoration', 'line-through')
+			for (var j in flagArr) { 
+				if (i == flagArr[j]) { // 해당 요일의 강의시간과 일치했던 option은 disabled 해제
+					timeOption[flagArr[j]].selected = "selected";
+					timeOption[flagArr[j]].disabled = false;
+				}
+			}
+		}
+	});
 	
-	$(document).ready(function(){
-	  
-	  
-	  /*****************
-	   BUILD THE SLIDER
-	  *****************/
-	  //set width to be 'x' times the number of slides
-	  $('#slider-wrap ul#slider').width(sliderWidth*totalSlides);
-	  
-	    //next slide  
-	  $('#next').click(function(){
-	    slideRight();
-	  });
-	  
-	  //previous slide
-	  $('#previous').click(function(){
-	    slideLeft();
-	  });
-	  
-	  
-	  
-	  /*************************
-	   //*> OPTIONAL SETTINGS
-	  ************************/
-	  //automatic slider
-	  // var autoSlider = setInterval(slideRight, 3000); // 자동으로 안 넘어가게
-	  
-	  //for each slide 
-	  $.each($('#slider-wrap ul li'), function() { 
-	
-	     //create a pagination
-	     var li = document.createElement('li');
-	     $('#pagination-wrap ul').append(li);    
-	  });
-	  
-	  //counter
-	  countSlides();
-	  
-	  //pagination
-	  pagination();
-	  
-	  //hide/show controls/btns when hover
-	  //pause automatic slide when hover
-	  $('#slider-wrap').hover(
-	    function(){ $(this).addClass('active'); clearInterval(autoSlider); }, 
-	    function(){ $(this).removeClass('active'); /* autoSlider = setInterval(slideRight, 3000); */ }
-	  );
-	  
-	  
-	
-	});//DOCUMENT READY
-	  
-	
-	
-	/***********
-	 SLIDE LEFT
-	************/
-	function slideLeft(){
-	  pos--;
-	  if(pos==-1){ pos = totalSlides-1; }
-	  $('#slider-wrap ul#slider').css('left', -(sliderWidth*pos));  
-	  
-	  //*> optional
-	  countSlides();
-	  pagination();
+	// 신청 form제출시 로그인 여부 check
+	function check() {
+		if ('<%= loginUser %>' == 'null') {
+			alert('로그인이 필요한 서비스입니다.');
+			return false;
+		} else {
+			if (confirm($("#datepicker").val() + "일, " + $('#time').val() +"분을 선택하신 것이 맞습니까?")){
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
 	
-	
-	/************
-	 SLIDE RIGHT
-	*************/
-	function slideRight(){
-	  pos++;
-	  if(pos==totalSlides){ pos = 0; }
-	  $('#slider-wrap ul#slider').css('left', -(sliderWidth*pos)); 
-	  
-	  //*> optional 
-	  countSlides();
-	  pagination();
-	}
-	
-	
-	
-	  
-	/************************
-	 //*> OPTIONAL SETTINGS
-	************************/
-	function countSlides(){
-	  $('#counter').html(pos+1 + ' / ' + totalSlides);
-	}
-	
-	function pagination(){
-	  $('#pagination-wrap ul li').removeClass('active');
-	  $('#pagination-wrap ul li:eq('+pos+')').addClass('active');
-	}
 </script>
 </body>
 </html>

@@ -1,337 +1,281 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="member.model.vo.Member"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member, hobbyistClass.model.vo.*, tutee.model.vo.TuteeClass, java.util.ArrayList"%>
 <%
-	/* Member loginUser = (Member)session.getAttribute("loginUser"); */
-	/* Tutor tutor = (Tutor)session.getAttribute("tutor"); */
+	Member loginUser = (Member)session.getAttribute("loginUser");
+	ArrayList<HClass> tcBeforeList = (ArrayList)request.getAttribute("tcBeforeList");
+	ArrayList<HClass> tcAfterList = (ArrayList)request.getAttribute("tcAfterList");
+	ArrayList<HClassFile> fileList = (ArrayList)request.getAttribute("fileList");
+
+	ArrayList<TuteeClass> tcScheduleBefore = (ArrayList)request.getAttribute("tcScheduleBefore");
+	ArrayList<TuteeClass> tcScheduleAfter = (ArrayList)request.getAttribute("tcScheduleAfter");
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>My Classroom</title>
-<script src="js/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/menubar.css">
-<link rel="stylesheet" type="text/css" href="css/tuteeMyClass.css">
+<%@ include file="../common/css.jsp" %>
 <style>
-	#logBtn{
-		/* 임시로 상단바의 로그인버튼 폰트 적용 */
-		font-family: monospace;
-		font-weight: bold;
-	}
+.class p{color: black;}
+.card {
+  border-radius: 0px;
+  background-color: $white-color;
+  margin-bottom: 30px;
+  -webkit-box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.08);
+  -moz-box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.08);
+  box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.08);
+  border: 1px solid #eee;
+  min-width:  100%;
+  min-height: 100%;
+ }
+ .class-card{height: 320px;}
+ .col-md-4{min-width: 350px;}
 </style>
 </head>
 <body>
-	<div class="app-dashboard shrink-medium">
-	
-		<!-- 상단바 -->
-		<%@ include file="../common/topbar.jsp" %>
 
-		<!-- 바디 영역(사이드바, 본문) -->
-		<div class="app-dashboard-body off-canvas-wrapper">
-		
-			<!-- 사이드바 영역 -->
-			<div id="app-dashboard-sidebar"
-				class="app-dashboard-sidebar position-left off-canvas off-canvas-absolute reveal-for-medium"
-				data-off-canvas>
-				<div class="app-dashboard-sidebar-title-area">
-					<div class="app-dashboard-close-sidebar">
-						<!-- Close button -->
-						<button id="close-sidebar" data-app-dashboard-toggle-shrink
-							class="app-dashboard-sidebar-close-button show-for-medium"
-							aria-label="Close menu" type="button">
-							<span aria-hidden="true"><a href="#"><i class="large fa fa-angle-double-left"><img src="images/three-dots-vertical.svg"></i></a></span> 
-						</button>
-					</div>
-					<!-- open button -->
-					<div class="app-dashboard-open-sidebar">
-						<button id="open-sidebar" data-app-dashboard-toggle-shrink
-							class="app-dashboard-open-sidebar-button show-for-medium"
-							aria-label="open menu" type="button">
-							<span aria-hidden="true"><a href="#">
-							<i class="large fa fa-angle-double-right"><img src="images/three-dots-vertical.svg"></i></a></span> 
-						</button>
-					</div>
-				</div>
-				<!-- 사이드바 -->
-				<div class="app-dashboard-sidebar-inner">
-					<ul class="menu vertical">
-						<li><a href="<%= request.getContextPath() %>/myClass.te">
-							<span class="app-dashboard-sidebar-text"><h3>나의 클래스룸</h3></span> <!-- 누르면 나의 클래스룸 -> 수강중/수강완료/찜한클래스/후기 전체 볼 수 있는 페이지 -->
-						</a></li>
-						<li><a href="#">
-							<span class="app-dashboard-sidebar-text">수강중인 클래스</span> <!-- 누르면 수강중인 클래스 페이지로 이동(페이지 따로 만들기) -->
-						</a></li>
-						<li><a href="#"> 
-							<span class="app-dashboard-sidebar-text">수강완료 클래스</span> <!-- 누르면 수강완료 클래스 페이지로 이동 -->
-						</a></li>
-						<li><a href="#"> 
-							<span class="app-dashboard-sidebar-text">찜한 클래스</span> <!-- 누르면 찜한 클래스 페이지로 이동 -->
-						</a></li>
-						<li><a href="#"> 
-							<span class="app-dashboard-sidebar-text">내가 쓴 후기</span> <!-- 누르면 내가 쓴 후기 페이지로 이동 -->
-						</a></li>
-						<br>
-						<li><a href=""> 
-							<span class="app-dashboard-sidebar-text"><h3>내 정보</h3></span> <!-- 내 정보 조회 페이지  -->
-						</a></li>
-						<li><a href=""> 
-							<span class="app-dashboard-sidebar-text">내 정보 수정</span> <!--  내 정보 수정 페이지-->
-						</a></li>
-						<li><a href=""> 
-							<span class="app-dashboard-sidebar-text">결제정보</span>  
-						</a></li>
-						<li><a href=""> 
-							<span class="app-dashboard-sidebar-text">튜티 탈퇴</span>
-						</a></li>
-						<br><br><br>
-						
-						<%-- <% if(tutor == null) { %> 로그인할때 tutor정보도 세션에 저장하고 상단에서 객체 생성하기 --%>
-						<% if(loginUser != null && loginUser.getMemberGrade().equals("B")) { %>  <%-- 로그인한 유저의 그레이드가 'B'즉 튜터가 아니면 튜터 신청 버튼 활성화 --%>
-						<li>
-							<span class="app-dashboard-sidebar-text"><h3>튜터</h3></span> 
-						</li>
-						<li ><a href=""> 
-							<span class="app-dashboard-sidebar-text">내 클래스</span>  <%-- 누르고 서블릿 이동하면 tutor정보도 세션에 저장하기? --%>
-						</a></li>
-						<li style="color: #9ED4C2"><a href=""> 
-							<span class="app-dashboard-sidebar-text">튜터 정보</span>
-						</a></li>
-						<li style="color: #9ED4C2"><a href=""> 
-							<span class="app-dashboard-sidebar-text">정산하기</span>
-						</a></li>		
-						
-						<% } else { %>
-						<li>
-							<span class="app-dashboard-sidebar-text"><button id="apply-tutor-btn">튜터 신청하기</button></span>
-						</li> <%-- span class="app-dashboard-sidebar-text"가 있어야 사이드바 닫힐때 안 보임  --%>	
-					
-						<% }  %>
-						<br><br><br>
-					</ul>
-					
-					
-				</div>
-			</div>
-
-			<!-- 본문 내용 -->
-			<div class="app-dashboard-body-content off-canvas-content"
-				data-off-canvas-content>
-			
-				<!-- 수강중인 클래스 -->
-				<h3 id="content1" class="text-center">수강중인 클래스</h3>
-				<div id="class-room">
-					<%-- <% for (int i = 0; i < list.size(); i++) { %> --%>
-					<div class="card news-card">
-						<img src="images/drawing.png">
-						<div class="card-section">
-							<div class="news-card-author">
-								<div class="news-card-author-name">
-									<div class="hidden-class-no" style="display: none;">글번호</div>
-									<a href="">오일파스텔로 그리는 꽃그림</a>
-								</div>
-							</div>
+<div class="banner_bg_main">
+		<div class="container">
+			<div class="header_section_top">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="custom_menu">
+							<ul>
+								<li><a href="index.jsp">MAIN</a></li>
+								<li></li>
+							<% if(loginUser == null) { %>
+								<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">LIKED-CLASS</a></li>
+							<% } else { %>
+								<li><a href="<%= request.getContextPath() %>/myClass.te">LIKED-CLASS</a></li>
+							<% } %>
+								<li></li>
+							<% if(loginUser == null) { %>
+								<li><a href="<%= request.getContextPath() %>/loginForm.me">LOG-IN</a></li> <!-- 로그인 -->
+							<% } else { %>
+								<li><a href="<%= request.getContextPath() %>/logout.me">LOG-OUT</a></li> <!-- 로그아웃 -->
+							<% } %>
+								<li></li>
+							<% if(loginUser == null) { %>
+								<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">MY INFO</a></li>
+							<% } else { %>
+								<li><a href="<%= request.getContextPath() %>/myInfo.me">MY INFO</a></li>
+							<% } %>
+								<li></li>
+								<li><a href="<%= request.getContextPath() %>/FAQ.bo">FAQ</a></li>
+							</ul>
 						</div>
 					</div>
-				  <%-- <% } %> --%>
-					<div class="card news-card">
-						<img src="images/drawing.png">
-						<div class="card-section">
-							<div class="news-card-author">
-								<div class="news-card-author-name">
-									<a href="#">오일파스텔로 그리는 꽃그림</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="card news-card">
-						<img src="images/drawing.png">
-						<div class="card-section">
-							<div class="news-card-author">
-								<div class="news-card-author-name">
-									<a href="#">오일파스텔로 그리는 꽃그림</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</div>
-
-				<br>
-
-				<h3 id="content2">수강완료 클래스</h3>
-				<div id="class-end">
-					<div class="card news-card">
-						<img src="../../images/drawing.png">
-						<div class="card-section">
-							<div class="news-card-author">
-								<div class="news-card-author-name">
-									<a href="#">Harry Manchanda</a>
-								</div>
-							</div>
-						</div>	
-						<a href=""><button class="review-button write">후기 작성하기</button></a>
-					</div>
-
-					<div class="card news-card">
-						<img src="../../images/drawing.png">
-						<div class="card-section">
-							<div class="news-card-author">
-								<div class="news-card-author-name">
-									<a id="1" href="#">Harry Manchanda</a>
-								</div>
-							</div>
-						</div>
-						<a href=""><button class="review-button write">후기 작성하기</button></a>
-					</div>
-
-				</div>
-				<br>
-
-				<!-- 찜한 클래스 -->
-				<h3 id="content3">찜한 클래스</h3>
-				<div id="class-liked">
-				
-					<div class="card news-card">
-						<img src="images/drawing.png">
-						<div class="card-section">
-							<div class="news-card-author">
-								<div class="news-card-author-name">
-									<a href="<%= request.getContextPath() %>/classDetail.cl">꽃그림 클래스</a>
-								</div>
-							</div>
-						</div>
-						<!-- like버튼 -->
-						<button class="button button-like liked">
-							<i class="fa fa-heart">❤</i> <!-- 아이콘 태그  -->
-							<span>Like 취소</span>
-						</button>
-					</div>
-					
-					<div class="card news-card">
-						<img src="../../images/drawing.png">
-						<div class="card-section">
-							<div class="news-card-author">
-								<div class="news-card-author-name">
-									<a href="#">오일파스텔 클래스</a>
-								</div>
-							</div>
-						</div>
-						<!-- like버튼 -->
-						<button class="button button-like liked">
-							<i class="fa fa-heart">❤</i> <!-- 아이콘 태그  -->
-							<span>Like 취소</span>
-						</button>
-
-					</div>
-				</div>
-				<br>
-
-				<!-- 내가 쓴 후기 -->
-				<h3 id="content4">내가 쓴 후기</h3>
-				<div id="review">
-					<div class="card news-card review">
-						<h4>첫 수강 후기입니다</h4>
-						<img src="../../images/drawing.png">
-						<div class="card-section">
-							<div class="news-card-date">Sunday, 16th April</div>
-							<p class="news-card-description">Lorem ipsum dolor sit amet,
-								consectetur adipisicing elit. Recusandae facere, ipsam quae sit,
-								eaque perferendis commodi!...</p>
-							<a href="review_modify.html"><button class="review-button modify">수정</button></a>
-							<button class="review-button remove">삭제</button>
-						</div>
-					</div>
-					<div class="card news-card review">
-						<h4>첫 수강 후기입니다</h4>
-						<img src="../../images/drawing.png">
-						<div class="card-section">
-							<div class="news-card-date">Sunday, 16th April</div>
-							<p class="news-card-description">Lorem ipsum dolor sit amet,
-								consectetur adipisicing elit. Recusandae facere, ipsam quae sit,
-								eaque perferendis commodi!...</p>
-							<a href="review_modify.html"><button class="review-button modify">수정</button></a>
-							<button class="review-button remove">삭제</button>
-						</div>
-					</div>
-					<div class="card news-card review">
-						<h4>첫 수강 후기입니다</h4>
-						<img src="../../images/drawing.png">
-						<div class="card-section">
-							<div class="news-card-date">Sunday, 16th April</div>
-							<p class="news-card-description">Lorem ipsum dolor sit amet,
-								consectetur adipisicing elit. Recusandae facere, ipsam quae sit,
-								eaque perferendis commodi!...</p>
-							<a href="review_modify.html"><button class="review-button modify">수정</button></a>
-							<button class="review-button remove">삭제</button>
-						</div>
-					</div>
-					<div class="card news-card review">
-						<h4>첫 수강 후기입니다</h4>
-						<img src="../../images/drawing.png">
-						<div class="card-section">
-							<div class="news-card-date">Sunday, 16th April</div>
-							<p class="news-card-description">Lorem ipsum dolor sit amet,
-								consectetur adipisicing elit. Recusandae facere, ipsam quae sit,
-								eaque perferendis commodi!...</p>
-							<a href="review_modify.html"><button class="review-button modify">수정</button></a>
-							<button class="review-button remove">삭제</button>
-						</div>
-					</div>
-					<div class="card news-card review">
-						<h4>첫 수강 후기입니다</h4>
-						<img src="../../images/drawing.png">
-						<div class="card-section">
-							<div class="news-card-date">Sunday, 16th April</div>
-							<p class="news-card-description">Lorem ipsum dolor sit amet,
-								consectetur adipisicing elit. Recusandae facere, ipsam quae sit,
-								eaque perferendis commodi!...</p>
-							<a href="review_modify.html"><button class="review-button modify">수정</button></a>
-							<button class="review-button remove">삭제</button>
-						</div>
-					</div>
-					
 				</div>
 			</div>
 		</div>
-		
-			<!-- FOOTER -->
-			<footer class="container" style="text-align: center; background: #F5F5F5;">
-			
-				<p class="float-end">
-					<a href="#">Back to top</a>
-				</p>
-				<p>
-					&copy; 2021 HOBBYIST, Inc. &middot; <a href="<%= request.getContextPath() %>/contact.co">Contact</a>
-					<!-- &middot; <a href="#">Terms</a> -->
-				</p>
-			</footer> 
 	</div>
-	<script>
-		$(function() {
-			// 사이드바 토글 기능
-			$('[data-app-dashboard-toggle-shrink]').on('click',function(e) {
-				e.preventDefault();
-				$(this).parents('.app-dashboard').toggleClass('shrink-medium').toggleClass('shrink-large');
-			});
+	<div class="sidebar">
+				<div class="scrollbar-inner sidebar-wrapper">
+					<div class="user">
+						<div class="photo">
+							<img src="assets/images/iu2.jpg">
+						</div>
+						<div class="info">
+							<a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+								<span>
+									<!-- loginUser의 NickName 불러오기 -->
+									<b><%= loginUser.getMemberNickName() %></b>
+									<!-- loginUser의 grade 불러오기 -->
+								<% if(loginUser.getMemberGrade().equals("A")) { %>
+									<span class="user-level">관리자(admin)</span>
+								<% } else if(loginUser.getMemberGrade().equals("B")) { %>
+									<span class="user-level">튜터(Tutor)</span>
+								<% } else { %>
+									<span class="user-level">튜티(Tutee)</span>
+								<% }  %>
+									<span class="caret"></span>
+								</span>
+							</a>
+							<div class="clearfix"></div>
+
+							<div class="collapse in" id="collapseExample" aria-expanded="true" style="">
+								<ul class="nav">
+									<li>
+										<a href="<%= request.getContextPath() %>/myInfo.me">
+											<span class="link-collapse">내 정보 보기</span>
+										</a>
+									</li>
+									<li>
+										<a href="<%= request.getContextPath() %>/updateForm.me">
+											<span class="link-collapse">내 정보 수정</span>
+										</a>
+									</li>
+									<li>
+										<a href="<%= request.getContextPath() %>/deleteConfirm.me">
+											<span class="link-collapse">튜티 탈퇴</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<ul class="nav">
+					<li class="nav-item active"><a
+						href="<%=request.getContextPath()%>/myClass.te"> <i
+							class="la la-toggle-on"></i>
+							<p>MY CLASS</p>
+							<% if (tcBeforeList.isEmpty()) { %>
+								<span class="badge badge-primary">0</span>
+							<% } else { %>
+								<span class="badge badge-primary"><%= tcBeforeList.size() %></span>
+							<% } %>
+					</a></li>
+					<li class="nav-item"><a
+						href="<%=request.getContextPath()%>/likedClass.cl"> <i
+							class="la la-gittip"></i>
+							<p>LIKED CLASS</p>
+					</a></li>
+					<li class="nav-item"><a
+						href="<%=request.getContextPath()%>/review.re"> <i
+							class="la la-camera-retro"></i>
+							<p>MY REVIEW</p>
+					</a></li>
+					<hr>
+					
+					<li class="nav-item"><a
+						href="<%=request.getContextPath()%>/notification.no"> <i
+							class="la la-bell"></i>
+							<p>NOTIFICATIONS</p>
+					</a></li>
+					<% if(loginUser != null && loginUser.getMemberGrade().equals("B")) { %>
+					<hr>
+					<li class="nav-item"><a
+						href="<%=request.getContextPath()%>/tutorSignUp.no"> <i
+							class="la la-pencil"></i>
+							<p>APPLICATION</p>
+					</a></li>
+					<li class="nav-item"><a
+						href="<%=request.getContextPath()%>/tutorClass.no"> <i
+							class="la la-calendar-o"></i>
+							<p>TUTOR ON CLASS</p>
+					</a></li>
+					<% } else { %>
+					
+					<li class="nav-item update-pro">
+							<button onclick="reservation()">
+								<i class="la la-hand-pointer-o"></i>
+								<p>튜터 신청하기</p>
+							</button>
+					</li>
+					<% } %>
+				</ul>
+				</div>
+			</div>
+			<!-- 사이드바 영역 -->
 			
-			// like취소-button클릭시 찜한 클래스 삭제 기능
-	 		$('.button-like').bind('click', function(event) {
-				if (confirm('취소하시겠습니까?')) { // 확인 누를시에만 삭제
-					// $(this).toggleClass("liked"); //여기선 없어도 됨
-					/* $(this).parent().remove(); */
-					// 삭제하는 서블릿으로 이동  location.href="" -> 삭제하고 다시 이 페이지로 돌아오기
-				}
-			}); 
-	
-			// 후기 삭제 버튼 누를시
-	 		$('.remove').click(function() {
-				if (confirm('삭제하시겠습니까?')) { // 확인 누를시에만 삭제
-					/* $(this).parent().parent().remove(); */
-					// 삭제하는 서블릿으로 이동  location.href="" -> 삭제하고 다시 이 페이지로 돌아오기
-				}
-			});
-		});
-	</script>
+			<!-- 메인 영역 -->
+			<div class="main-panel">
+				<div class="content class_content">
+		 			<div class="container-fluid"> 
+						<h4 class="page-title">수강전 클래스</h4>
+						<div class="row class beforClass">
+					<% if (!tcBeforeList.isEmpty()) { %>
+							<% 	for (HClass c : tcBeforeList) { %>
+							<div class="col-md-4">
+							<div class="card card-stats card-primary active">
+									<div class="card-body">
+										<div class="row class-card">
+<!-- 											<div class="col-5"> 
+											
+											</div> -->
+									<% if (!fileList.isEmpty()) { %>
+									<%		for(HClassFile f : fileList) { %>
+									<%			if(c.getClassNo() == f.getBoardNo()) { %>
+											<div class="thumbnailArea" style="height: 225px; width: 100%;">
+												<img style="min-width:100%; height: 100%;" src="<%= request.getContextPath() %>/uploadFiles/<%= f.getChangeName() %>"
+													class="thumbnail" alt="Thumbnail">
+											</div>
+									<%			} %>
+									<% 		} %>
+									<% } %>
+	 										<div class="icon-big text-center">
+	 											<h5><%= c.getClassName() %></h5>
+												<!-- <i class="la la-calendar-plus-o"></i> -->
+									<% if (!tcScheduleBefore.isEmpty()) { %>
+									<%		for(TuteeClass tcB : tcScheduleBefore ) { %>	
+									<%			if(c.getClassNo() == tcB.getClassNo()) { %>
+												<p>다가오는 수강일자는 <b><%= tcB.getTueeClassRevDate() %></b>일입니다.</p>
+									<%			} %>
+									<% 		} %>
+									<% } %>									
+											</div>
+											<br><br><br>
+											<div class="btn_main">
+												<div class="buy_bt">
+													<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">Cancel</a> 
+												</div>
+												<div class="seemore_bt">
+													<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">See More</a> 
+												</div>
+											</div>											
+										</div>
+									</div>
+								</div>
+							</div> 
+					<% 		}  %>
+					<% }  %>	
+						</div>			
+					</div> 
+					<br><br>
+					<div class="container-fluid">
+						<h4 class="page-title">수강완료 클래스</h4>
+						<div class="row class afterClass">
+					<% if (!tcAfterList.isEmpty()) { %>
+							<% 	for (HClass c : tcAfterList) { %>
+							<div class="col-md-4">
+							<div class="card card-stats card-primary active">
+									<div class="card-body">
+										<div class="row class-card">
+<!-- 											<div class="col-5"> 
+											
+											</div> -->
+									<% if (!fileList.isEmpty()) { %>
+									<%		for(HClassFile f : fileList) { %>
+									<%			if(c.getClassNo() == f.getBoardNo()) { %>
+											<div class="thumbnailArea" style="height: 225px; width: 100%;">
+												<img style="min-width:100%; height: 100%;" src="<%= request.getContextPath() %>/uploadFiles/<%= f.getChangeName() %>"
+													class="thumbnail" alt="Thumbnail">
+											</div>
+									<%			} %>
+									<% 		} %>
+									<% } %>
+	 										<div class="icon-big text-center">
+	 											<h5><%= c.getClassName() %></h5>
+												<!-- <i class="la la-calendar-plus-o"></i> -->
+									<% if (!tcScheduleAfter.isEmpty()) { %>
+									<%		for(TuteeClass tcA : tcScheduleAfter) { %>	
+									<%			if(c.getClassNo() == tcA.getClassNo()) { %>
+												<p>최근 수강완료일자는 <b><%= tcA.getTuteeClassFinishDate() %></b>일입니다.</p>
+									<%			} %>
+									<% 		} %>
+									<% } %>															
+											</div>
+											<br><br><br>
+											<div class="btn_main">
+												<div class="buy_bt">
+													<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">Write Review</a> 
+												</div>
+												<div class="seemore_bt">
+													<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">See More</a> 
+												</div>
+											</div>
+										</div>
+										
+									</div>
+								</div>
+							</div> 
+					<% 		}  %>
+					<% }  %>
+						</div>					
+					</div>					
+				</div>
+			</div>
+
+<%@ include file="../common/js.jsp" %>
 </body>
 </html>
