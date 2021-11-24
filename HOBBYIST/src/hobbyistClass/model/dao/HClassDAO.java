@@ -817,10 +817,4 @@ public class HClassDAO {
 		return result;
 	}	
 
-	
-
- 
-	
-	
-
 }
