@@ -34,6 +34,8 @@ public class ClassDetailServilet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int cNo = Integer.parseInt(request.getParameter("cNo"));
 		
+		System.out.println("cNo : " + cNo);
+		
 		HClassService hService = new HClassService();
 		
 		HClass c = hService.selectClass(cNo);

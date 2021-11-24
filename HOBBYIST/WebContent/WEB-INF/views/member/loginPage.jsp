@@ -54,7 +54,7 @@
 	</div>	
 	
 	<script>
-	window.onload = function() { 
+		window.onload = function() { 
 		if ('<%= msg %>' != 'null') {
 			alert('<%= msg %>'); // alert메시지 출력 <- 로그인 실패시
 		}

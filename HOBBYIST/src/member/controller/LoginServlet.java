@@ -40,8 +40,6 @@ public class LoginServlet extends HttpServlet {
 	
 		int result = new MemberService().login(memberEmail, memberPwd);
 		Member loginUser = new MemberService().loginMember(memberEmail, memberPwd);
-		
-		System.out.println(loginUser);
 				
 		response.setContentType("text/html; charset=UTF-8");
 		if(result ==1) {

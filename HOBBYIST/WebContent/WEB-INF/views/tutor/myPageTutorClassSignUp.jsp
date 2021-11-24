@@ -9,10 +9,73 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>My Classroom</title>
+<script src="js/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/menubar.css">
+<!-- <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css"> -->
+<link rel="stylesheet" type="text/css" href="css/classSignUp.css">
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
+<!-- 달력 -->
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
-<%@ include file="../common/css.jsp" %>
+<script>
+	$(function() {
+		// 사이드바 토글 기능
+		$('[data-app-dashboard-toggle-shrink]').on(
+				'click',
+				function(e) {
+					e.preventDefault();
+					$(this).parents('.app-dashboard').toggleClass(
+							'shrink-medium').toggleClass('shrink-large');
+				});
+
+		// like취소-button클릭시 찜한 클래스 삭제 기능
+		$('.button-like').bind('click', function(event) {
+			if (confirm('취소하시겠습니까?')) { // 확인 누를시에만 삭제
+				// $(this).toggleClass("liked"); //여기선 없어도 됨
+				/* $(this).parent().remove(); */
+				// 삭제하는 서블릿으로 이동  location.href="" -> 삭제하고 다시 이 페이지로 돌아오기
+			}
+		});
+
+		// 후기 삭제 버튼 누를시
+		$('.remove').click(function() {
+			if (confirm('삭제하시겠습니까?')) { // 확인 누를시에만 삭제
+				/* $(this).parent().parent().remove(); */
+				// 삭제하는 서블릿으로 이동  location.href="" -> 삭제하고 다시 이 페이지로 돌아오기
+			}
+		});
+	});
+ 	// 1000 단위마다 , 찍어주는 js
+/*	function inputNumberFormat(obj) {
+		obj.value = comma(uncomma(obj.value));
+	}
+
+	function comma(str) {
+		str = String(str);
+		return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+	}
+
+	function uncomma(str) {
+		str = String(str);
+		return str.replace(/[^\d]+/g, '');
+	}
+ */
+	// 체크박스 하나만 선택되는 js
+	function oneCheckbox(a) {
+
+		var obj = document.getElementsByName("checkbox1");
+
+		for (var i = 0; i < obj.length; i++) {
+
+			if (obj[i] != a) {
+
+				obj[i].checked = false;
+			}
+		}
+	}
+</script>
 <script>
 					// 내용 작성 부분의 공간을 클릭할 때 파일 첨부 창이 뜨도록 설정하는 함수
 					$(function(){
@@ -85,14 +148,8 @@ img.ui-datepicker-trigger {
 </style>
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-<script	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/datepicker-ko.js"></script>
-<style>
-#logBtn {
-	/* 임시로 상단바의 로그인버튼 폰트 적용 */
-	font-family: monospace;
-	font-weight: bold;
-}
-</style>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/datepicker-ko.js"></script>
 <script>
 	$(function() {
 
@@ -139,172 +196,194 @@ img.ui-datepicker-trigger {
 		});
 	});
 </script>
+<style>
+#logBtn {
+	/* 임시로 상단바의 로그인버튼 폰트 적용 */
+	font-family: monospace;
+	font-weight: bold;
+}
+</style>
 </head>
 <body>
-<div class="banner_bg_main">
-		<div class="container">
-			<div class="header_section_top">
-				<div class="row">
-					<div class="col-sm-12">
-						<div class="custom_menu">
-							<ul>
-								<li><a href="mainPage.jsp">MAIN</a></li>
-								<li></li>
-								<li><a href="../tutee/likedClass.jsp">LIKED CLASS</a></li>
-								<li></li>
-								<li><a href="../member/loginPage.jsp">LOG-IN</a></li>
-								<li></li>
-								<li><a href="../member/myInfo.jsp">MY INFO</a></li>
-								<li></li>
-								<li><a href="../admin/faq.jsp">FAQ</a></li>
-							</ul>
-						</div>
-					</div>
+
+	<div class="app-dashboard shrink-medium">
+
+		<!-- 상단바 -->
+		<div class="row expanded app-dashboard-top-nav-bar">
+			<div class="columns medium-2">
+				<a class="app-dashboard-logo" href="<%=request.getContextPath()%>"><img
+					src="images/logo.png" width="70px" height="55px"></a>
+			</div>
+			<div class="columns shrink app-dashboard-top-bar-actions">
+				<div class="nav-item">
+					<a class="nav-link" href="<%=request.getContextPath()%>/myInfo.me"><img
+						src="images/myPage.png"></a>
 				</div>
+				<!-- 마이페이지아이콘 -->
+				<div class="nav-item">
+					<a class="nav-link" href="<%=request.getContextPath()%>/contact.co"><img
+						src="images/contact.png"></a>
+				</div>
+				<!-- 콘택트아이콘 -->
+				<div class="nav-item">
+					<a class="nav-link" href="<%=request.getContextPath()%>/myClass.me"><img
+						src="images/like.png"></a>
+				</div>
+				<!-- 찜아이콘  -->
+
+				<%
+					if (loginUser == null) {
+				%>
+				<div class="nav-item">
+					<a class="nav-link"
+						href="<%=request.getContextPath()%>/loginForm.me"><button
+							id="logBtn">Login</button></a>
+				</div>
+				<!-- 로그인 -->
+				<%
+					} else {
+				%>
+				<div class="nav-item">
+					<a class="nav-link" href="<%=request.getContextPath()%>/logout.me"><button
+							id="logBtn">LogOut</button></a>
+				</div>
+				<!-- 로그아웃 -->
+				<%
+					}
+				%>
+
+
+
+				<!-- <button href="#" class="button hollow">Logout</button> 로그아웃 버튼 -->
+				<!-- <a href="#" height="30" width="30" alt=""><i class="fa fa-info-circle"></i></a> -->
 			</div>
 		</div>
-	</div>
-	<div class="sidebar">
-			<div class="scrollbar-inner sidebar-wrapper">
-				<div class="user">
-					<div class="photo">
-						<img src="../assets/images/iu3.jpg">
-					</div>
-					<div class="info">
-						<a class="" data-toggle="collapse" href="#collapseExample"
-							aria-expanded="true"> <span> <b>김튜터</b> <!-- loginUser의 NickName 불러오기 -->
-								<span class="user-level">튜터(Tutor)</span> <!-- loginUser의 grade 불러오기 -->
-								<span class="caret"></span>
-						</span>
-						</a>
-						<div class="clearfix"></div>
 
-						<div class="collapse in" id="collapseExample" aria-expanded="true"
-							style="">
-							<ul class="nav">
-								<li><a href="<%=request.getContextPath()%>/myInfo.me">
-										<span class="link-collapse">내 정보 보기</span>
-								</a></li>
-								<li><a href="<%=request.getContextPath()%>/updateForm.me">
-										<span class="link-collapse">내 정보 수정</span>
-								</a></li>
-								<li><a
-									href="<%=request.getContextPath()%>/deleteConfirm.me"> <span
-										class="link-collapse">튜티 탈퇴</span>
-								</a></li>
-							</ul>
-						</div>
+
+		<div class="app-dashboard-body off-canvas-wrapper">
+			<div id="app-dashboard-sidebar"
+				class="app-dashboard-sidebar position-left off-canvas off-canvas-absolute reveal-for-medium"
+				data-off-canvas>
+				<div class="app-dashboard-sidebar-title-area">
+					<div class="app-dashboard-close-sidebar">
+						<!-- Close button -->
+						<button id="close-sidebar" data-app-dashboard-toggle-shrink
+							class="app-dashboard-sidebar-close-button show-for-medium"
+							aria-label="Close menu" type="button">
+							<span aria-hidden="true"><a href="#"><i
+									class="large fa fa-angle-double-left"><img
+										src="images/three-dots-vertical.svg"></i></a></span>
+						</button>
+					</div>
+					<!-- open button -->
+					<div class="app-dashboard-open-sidebar">
+						<button id="open-sidebar" data-app-dashboard-toggle-shrink
+							class="app-dashboard-open-sidebar-button show-for-medium"
+							aria-label="open menu" type="button">
+							<span aria-hidden="true"><a href="#"><i
+									class="large fa fa-angle-double-right"><img
+										src="images/three-dots-vertical.svg"></i></a></span>
+						</button>
 					</div>
 				</div>
-				<ul class="nav">
-					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/myClass.te"> <i
-							class="la la-toggle-on"></i>
-							<p>MY CLASS</p>
-					</a></li>
-					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/likedClass.cl"> <i
-							class="la la-gittip"></i>
-							<p>LIKED CLASS</p>
-					</a></li>
-					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/review.re"> <i
-							class="la la-camera-retro"></i>
-							<p>MY REVIEW</p>
-					</a></li>
-					<hr>
-					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/paymend.pa"> <i
-							class="la la-money"></i>
-							<p>MY PAYMENT</p>
-					</a></li>
-					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/notification.no"> <i
-							class="la la-bell"></i>
-							<p>NOTIFICATIONS</p>
-					</a></li>
-					<hr>
-					<li class="nav-item active"><a
-						href="<%=request.getContextPath()%>/notification.no"> <i
-							class="la la-pencil"></i>
-							<p>APPLICATION</p> <span class="badge badge-primary">3</span>
-					</a></li>
-					<!-- DAO가 없기 때문에 빨간줄이 떠서 주석처리 / model단 받아오시면 주석풀면 됩니다. -->
-					<%-- <%
+				<!-- 사이드바 -->
+				<div class="app-dashboard-sidebar-inner">
+					<ul class="menu vertical">
+						<li><a href="#"> <span class="app-dashboard-sidebar-text"><h3>나의
+										클래스룸</h3></span> <!-- 누르면 나의 클래스룸 -> 수강중/수강완료/찜한클래스/후기 전체 볼 수 있는 페이지 -->
+						</a></li>
+						<li><a href="#"> <span class="app-dashboard-sidebar-text">수강중인
+									클래스</span> <!-- 누르면 수강중인 클래스 페이지로 이동(페이지 따로 만들기) -->
+						</a></li>
+						<li><a href="#"> <span class="app-dashboard-sidebar-text">수강완료
+									클래스</span> <!-- 누르면 수강완료 클래스 페이지로 이동 -->
+						</a></li>
+						<li><a href="#"> <span class="app-dashboard-sidebar-text">찜한
+									클래스</span> <!-- 누르면 찜한 클래스 페이지로 이동 -->
+						</a></li>
+						<li><a href="#"> <span class="app-dashboard-sidebar-text">내가
+									쓴 후기</span> <!-- 누르면 내가 쓴 후기 페이지로 이동 -->
+						</a></li>
+						<br>
+						<li><a href="#"> <span class="app-dashboard-sidebar-text"><h3>내
+										정보</h3></span> <!-- 내 정보 조회 페이지  -->
+						</a></li>
+						<li><a href="#"> <span class="app-dashboard-sidebar-text">내
+									정보 수정</span> <!--  내 정보 수정 페이지-->
+						</a></li>
+						<li><a href="#"> <span class="app-dashboard-sidebar-text">결제정보</span>
+						</a></li>
+						<li><a href="#"> <span class="app-dashboard-sidebar-text">튜티
+									탈퇴</span>
+						</a></li>
+						<br>
+						<br>
+						<br>
+
+						<%
 							if (loginUser != null && loginUser.getMemberGrade().equals("B")) {
-					%> --%>
-					<hr>
-					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/tutorSignUp.no"> <i
-							class="la la-pencil"></i>
-							<p>APPLICATION</p>
-					</a></li>
-					<li class="nav-item active"><a
-						href="<%=request.getContextPath()%>/tutorClass.no"> <i
-							class="la la-calendar-o"></i>
-							<p>TUTOR ON CLASS</p><span class="badge badge-primary">5</span>
-					</a></li>
-					<!-- DAO가 없기 때문에 빨간줄이 떠서 주석처리 / model단 받아오시면 주석풀면 됩니다. -->
-					<%-- <%
+						%>
+						<%-- 로그인한 유저의 그레이드가 'B'즉 튜터가 아니면 튜터 신청 버튼 활성화 --%>
+						<li><span class="app-dashboard-sidebar-text"><h3>튜터</h3></span>
+						</li>
+						<li><a href="#"> <span class="app-dashboard-sidebar-text">내
+									클래스</span> <%-- 누르고 서블릿 이동하면 tutor정보도 세션에 저장하기? --%>
+						</a></li>
+						<li style="color: #9ED4C2"><a href="#"> <span
+								class="app-dashboard-sidebar-text">튜터 정보</span>
+						</a></li>
+						<li style="color: #9ED4C2"><a href="#"> <span
+								class="app-dashboard-sidebar-text">정산하기</span>
+						</a></li>
+
+						<%
 							} else {
-					%> --%>
-					<li class="nav-item update-pro">
-							<button onclick="reservation()">
-								<i class="la la-hand-pointer-o"></i>
-								<p>튜터 신청하기</p>
-							</button>
-					</li>
-				</ul>
+						%>
+						<li><span class="app-dashboard-sidebar-text"><button
+									id="apply-tutor-btn">튜터 신청하기</button></span></li>
+						<%-- span class="app-dashboard-sidebar-text"가 있어야 사이드바 닫힐때 안 보임  --%>
+
+						<%
+							}
+						%>
+						<br>
+
+					</ul>
+
+
+				</div>
 			</div>
-		</div>
-		<!-- 사이드바 영역 -->
 
-		<!-- 메인 영역 -->
-		<div class="main-panel">
-			<form action="<%= request.getContextPath() %>/classopen.th" method="post" encType="multipart/form-data" onsubmit="return check();">
-			<div class="content">
-				<div class="container-fluid">
-					<h4 class="page-title">APPLICATION</h4>
-					<hr>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="card">
-								<div class="card-header">
-									<div class="card-title">클래스 신청</div>
-								</div>
-								<div class="card-body">
-									<div class="form-group">
-										<label for="exampleFormControlSelect1">카테고리</label> <span
-											class="badge badge-danger">필수</span> <select
-											class="form-control" id="category_class" name = "category">
-												<option value="1">라이브</option>
-												<option value="2">개발/코딩</option>
-												<option value="3">인테리어</option>
-												<option value="4">요리</option>
-												<option value="5">악기</option>
-												<option value="6">건강/헬스</option>
-												<option value="7">글쓰기</option>
-												<option value="8">사진</option>
-												<option value="9">디지털 드로잉</option>
-												<option value="10">드로잉</option>
-												<option value="11">영상 편집</option>
-												<option value="12">주식</option>
-												<option value="13">사주/타로</option>
-										</select> <small id="selectHelp" class="form-text text-muted">클래스
-											카테고리를 지정해주세요</small>
-									</div>
+			<!-- 본문 내용 시작 -->
+			<div class="app-dashboard-body-content off-canvas-content"
+				data-off-canvas-content>
+				<form action="<%= request.getContextPath() %>/classopen.th" method="post" encType="multipart/form-data" onsubmit="return check();">
+					<div id="margin_check">
+						<!-- 수강중인 클래스 -->
+						<h3>클래스 신청</h3>
+						<hr>
+						<div id="enroll_tutor_form">
+							
+								<b>카테고리</b><br> <select id="category_class" name = "category">
+									<option value="1">라이브</option>
+									<option value="2">개발/코딩</option>
+									<option value="3">인테리어</option>
+									<option value="4">요리</option>
+									<option value="5">악기</option>
+									<option value="6">건강/헬스</option>
+									<option value="7">글쓰기</option>
+									<option value="8">사진</option>
+									<option value="9">디지털 드로잉</option>
+									<option value="10">드로잉</option>
+									<option value="11">영상 편집</option>
+									<option value="12">주식</option>
+									<option value="13">사주/타로</option>
 
-									<div class="form-group">
-										<label for="className">클래스 이름</label> <span
-											class="badge badge-danger">필수</span>
-										<div class="form-floating mb-3">
-											<input type="email" class="form-control" id="floatingInput"
-												placeholder="name@example.com" name = "title" required> 
-											<label for="floatingInput">컨셉이 잘 드러나는 클래스의 이름을 정해주세요</label>
-										</div>
-									</div>
-									<!-- 이미지 div 영역 안에 넣는 것 추가해야함 (div container 안에 담기지 않음) -->
-									<table id="insertThumbTable">
+								</select> <br> <br> <b>클래스 제목</b><input type="text"
+									placeholder="컨셉이 잘 드러나는 클래스의 제목을 정해주세요" id="tutor_nickname" name = "title" required><br>
+									<br><br>
+
+								<table id="insertThumbTable">
 									<tr>
 										<th>썸네일 사진</th>
 										<td colspan="3">
@@ -345,75 +424,40 @@ img.ui-datepicker-trigger {
 										type="file" id="thumbnailImg4" multiple="multiple"
 										name="thumbnailImg4" onchange="LoadImg(this,4)">
 								</div>
-									<div class="form-group">
-										<label for="comment">클래스 소개글</label> <span
-											class="badge badge-danger">필수</span>
-										<div class="form-floating">
-											<textarea class="form-control" name ="content"
-												placeholder="Leave a comment here" id="floatingTextarea"
-												style="resize: none; height: 150px"></textarea>
-											<label for="floatingTextarea">재치넘치는 클래스 소개글을 적어주세요</label>
-										</div>
-										<small id="contextHelp" class="form-text text-muted">
-											[예시] 코딩의 'ㅋ'자도 모르는 <b>초보자</b>도 쉽게 따라할 수 있는 <b>PYTHON 클래스!</b>
-										</small>
-									</div>
-
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="card">
-								<div class="card-header">
-									<div class="card-title">CLASS FORM</div>
-								</div>
-								<div class="card-body">
-									<div class="form-group">
-										<label for="exampleFormControlSelect1">클래스 일정 &nbsp;</label><span
-											class="badge badge-danger">필수</span> <br>
-										<label for="fromDate">FROM : </label> <input type="text"
-											name="startdate" id="fromDate"> ~ <label for="toDate">TO
-											: </label> <input type="text" name="enddate" id="toDate"> <small
-											id="dateHelp" class="form-text text-muted"> TODAY : <span
-											id="today"></span></small>
-									</div>
-									<fieldset style="width: 680px;">
-									<div class="form-group">
-										<label for="exampleFormControlSelect1">클래스 요일 선택</label>
-										<p class="demo">
-											<label class="form-check-label"> <input
-												class="form-check-input" id="dayOfWeek0" type="checkbox" name="day"
-												value="일"> <span class="form-check-sign">SUN</span>
-											</label> <label class="form-check-label"> <input
-												class="form-check-input" id="dayOfWeek1" type="checkbox" name="day"
-												value="월"> <span class="form-check-sign">MON</span>
-											</label> <label class="form-check-label"> <input
-												class="form-check-input" id="dayOfWeek2" type="checkbox" name="day"
-												value="화"> <span class="form-check-sign">TUE</span>
-											</label> <label class="form-check-label"> <input
-												class="form-check-input" id="dayOfWeek3" type="checkbox" name="day"
-												value="수"> <span class="form-check-sign">WED</span>
-											</label> <label class="form-check-label"> <input
-												class="form-check-input" id="dayOfWeek4" type="checkbox" name="day"
-												value="목"> <span class="form-check-sign">THU</span>
-											</label> <label class="form-check-label"> <input
-												class="form-check-input" id="dayOfWeek5" type="checkbox" name="day"
-												value="금"> <span class="form-check-sign">FRI</span>
-											</label> <label class="form-check-label"> <input
-												class="form-check-input" id="dayOfWeek6" type="checkbox" name="day"
-												value="토"> <span class="form-check-sign">SAT</span>
-											</label>
-											<br>
+								<br> <br> <br> <b>클래스 소개</b><br>
+								<textarea id="tutor_introduction"
+									placeholder="클래스 소개글을 부탁드립니다 ^^" name ="content" required></textarea>
+								<br>
+								
+									<h3>클래스 신청</h3>
+										오늘 날짜 : <span id="today"></span> <br>
+										
+										시작일<input type="text" name="startdate" id ="fromDate"> ~
+										종료일<input type="text" name="enddate"  id ="toDate">
+										
+										<br><br>
+										
+										<fieldset style="width: 680px;">
+											<legend><b>스케줄 등록</b></legend>
+											<div id="classSchedule" style="width: 400px"> 
+												요일 : 
+												<input type="checkbox" name="day" value="일">일
+												<input type="checkbox" name="day" value="월">월
+												<input type="checkbox" name="day" value="화">화
+												<input type="checkbox" name="day" value="수">수
+												<input type="checkbox" name="day" value="목">목
+												<input type="checkbox" name="day" value="금">금
+												<input type="checkbox" name="day" value="토">토
+												<br>
 												시간 :
 												<input type="time" id="time" name="time">
 												<br>
 												<input type="button" class="schBtn" id="addSchedule" value="스케줄 추가" style="float: right">
 												<input type="button" class="schBtn" id="cancelSchedule" value="스케줄 취소" style="float: right"><br>
 												<textarea id="schedule" name="schedule" rows="10" cols="55" style="resize: none;" readonly></textarea>
-										</p>
-									</div>
-									</fieldset>
-									<script>
+											</div>
+										</fieldset>
+								<script>
 									$('#addSchedule').off().on('click', function(){
 										
 										var day = document.getElementsByName('day');
@@ -455,52 +499,34 @@ img.ui-datepicker-trigger {
 										}
 									});
 								</script>
-									<div class="form-group">
-										<label for="exampleFormControlSelect1">강의 시간 선택</label>
-										<div class="input-group mb-3">
-											<input type="number" class="form-control" name="classtime"
-												aria-label="Sizing example input"
-												aria-describedby="inputGroup-sizing-default" min="0"
-												max="12" step="0.5" required>
-												<span
-												class="input-group-text">시간</span>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="exampleFormControlSelect1">클래스 수강료</label>
-										<div class="input-group mb-3">
-											<span class="input-group-text" id="inputGroup-sizing-default">예상
-												수강료</span> <input type="number" class="form-control"
-												aria-label="Sizing example input" name ="fee"
-												aria-describedby="inputGroup-sizing-default" min="0"
-												max="1000000" step="1000"> <span
-												class="input-group-text">원</span>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="exampleFormControlSelect1">클래스 모집인원</label>
-										<div class="input-group mb-3">
-											<span class="input-group-text" id="inputGroup-sizing-default">최소</span>
-											<input type="number" class="form-control"
-												aria-label="Sizing example input" name="minpeople"
-												aria-describedby="inputGroup-sizing-default" min="0"
-												max="100" step="1"> <span class="input-group-text">명</span><span
-												class="input-group-text">~</span><span
-												class="input-group-text">최대</span> <input type="number"
-												class="form-control" aria-label="Sizing example input" name="maxpeople"
-												aria-describedby="inputGroup-sizing-default" min="0"
-												max="100" step="1"> <span class="input-group-text">명</span>
-										</div>
-									</div>
-									<div class="row justify-content-center">
-										<div class="col-2">
-											<button class="btn btn-success" value="클래스 신청">Submit</button>
-										</div>
-										<div class="col-2">
-											<button class="btn btn-danger" onclick="location.href='javascript:history.go(-1);'" value ="취소">Cancel</button>
-										</div>
-									</div>
-									<script>
+								<br>
+								<h3>강의 시간</h3>
+								<input type="number" id="tentacles" name="classtime" min="1" max="8" step = "0.5" required>시간
+							
+								<h3>수강료</h3>
+									<input type="text" name ="fee" style="text-align: right;" pattern="[0-9]+" id="price" required/>원
+								<br>
+								<div>
+									<h3>클래스 모집 인원</h3>
+									최소 인원<input type="number" id="tentacles" name="minpeople"
+										min="1" max="100" required> ~ 최대 인원 <input type="number"
+										id="tentacles" name="maxpeople" min="10" max="100" required>
+								</div>
+
+								<br>
+								<br>
+
+								<input type="button" id="tutor_enroll_cancel"onclick="location.href='javascript:history.go(-1);'" value ="취소">
+
+								<input type="submit" id="tutor_enroll_complete" value="클래스 신청">
+
+
+								<br>
+							
+						</div>
+					</div>
+					</form>
+					<script>
  						function check() {
 							if($('#thumbnailImg1').val() == '') {
 								alert('썸네일 이미지 첨부는 필수 사항입니다.');
@@ -512,20 +538,21 @@ img.ui-datepicker-trigger {
 							return true;
 						} 
 					</script>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
 			</div>
-			
-			</form>
+
 		</div>
-	
-	
-
-
-<%@ include file="../common/js.jsp" %>
+		<footer class="container"
+			style="text-align: center; background: #F5F5F5;">
+			
+			<p class="float-end">
+				<a href="#">Back to top</a>
+			</p>
+			<p>
+				&copy; 2021 HOBBYIST, Inc. &middot; <a
+					href="<%= request.getContextPath() %>/contact.co">Contact</a>
+				<!-- &middot; <a href="#">Terms</a> -->
+			</p>
+		</footer>
+	</div>
 </body>
 </html>

@@ -1,4 +1,3 @@
-
 package hobbyistClass.model.vo;
 
 public class HClassSchedule {

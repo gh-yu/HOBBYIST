@@ -8,10 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.Session;
 
 import hobbyistClass.model.service.HClassService;
 import hobbyistClass.model.vo.ApvPageInfo;
 import hobbyistClass.model.vo.HClass;
+import member.model.vo.Member;
 
 /**
  * Servlet implementation class ClassApvServlet
@@ -72,9 +74,17 @@ public class ClassApvListServlet extends HttpServlet {
 			
 		ArrayList<HClass> apvList = new HClassService().selectApvList(pi);
 		
+		//로그인 유저 정보 보내서 INFO에 띄우기 위함
+		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+		
+		//클래스 중 승인 전 클래스 개수 가져옴(승인/반려도 안된 개수) -> 클래스 승인 페이지에서 숫자로 표현
+		ArrayList<HClass> beforeApvClass = hService.beforeApvClass();
+		
 		String page = null;
 		if(apvList != null) {
+			request.setAttribute("beforeApvClass", beforeApvClass);
 			request.setAttribute("apvList", apvList);
+			request.setAttribute("loginUser", loginUser);
 			request.setAttribute("pi", pi);
 			page = "WEB-INF/views/admin/classApvList.jsp";
 		} else {

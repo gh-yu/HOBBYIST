@@ -2,6 +2,7 @@ package member.model.service;
 
 import member.model.dao.MemberDAO;
 import member.model.vo.Member;
+import member.model.vo.MemberInfo;
 
 import static common.JDBCTemplate.getConnection;
 import static common.JDBCTemplate.close;
@@ -39,13 +40,20 @@ public class MemberService{
 	
 	public int join(Member member) {
 		Connection conn = getConnection();
-		
-		int result = mDAO.join(conn, member);
-		
-		if (result > 0) {
-			commit(conn);
+	
+		int checkEmail = mDAO.checkEmail(conn, member);
+	
+		int result = 0 ;
+				
+		if (checkEmail > 0) { // db에 데이터 존재 -> 가입 안됨
+			return -1;
 		} else {
-			rollback(conn);
+			result = mDAO.join(conn, member);
+			if(result > 0) {
+				commit(conn);
+			} else {
+				rollback(conn);
+			}
 		}
 		close(conn);
 		
@@ -132,13 +140,37 @@ public class MemberService{
 		return result;
 	}
 	
-	public ArrayList<Member> MemberCount() {
+	public int getMemberCount() {
 		Connection conn = getConnection();
 		
-		ArrayList<Member> mList = mDAO.countMember(conn);
-				
+		int memberCount = mDAO.getMemberCount(conn);
+		
 		close(conn);
-		return mList;
+		
+		return memberCount;
 	}
+
+	public ArrayList<Member> selectTuteeList(MemberInfo pi) {
+		Connection conn = getConnection();
+		
+		ArrayList<Member> tuteeList = mDAO.selectTuteeList(conn, pi);
+		
+		close(conn);
+		
+		return tuteeList;
+	}
+
+	public ArrayList<Member> selectTutorList(MemberInfo pi) {
+		Connection conn = getConnection();
+		
+		ArrayList<Member> tutorList = mDAO.selectTutorList(conn, pi);
+		
+		close(conn);
+		
+		return tutorList;
+	}
+	
+
+
 
 }

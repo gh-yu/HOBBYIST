@@ -56,15 +56,22 @@ public class JoinServlet extends HttpServlet {
 			script.println("</script>");
 		} else {
 			int result = new MemberService().join(member);
-		
-			if(result == -1) {
+			
+			if(result > 0) {
+				response.sendRedirect(request.getContextPath());
+				;
+			} else if(result == -1) {
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('가입 이력이 있는 이메일입니다.')");
+				script.println("history.back()");
+				script.println("</script>");
+			} else {
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('DB 오류.')");
 				script.println("history.back()");
 				script.println("</script>");
-			} else {
-				response.sendRedirect(request.getContextPath());
 			}
 		};
 		
