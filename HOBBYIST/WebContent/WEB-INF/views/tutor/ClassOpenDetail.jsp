@@ -1,7 +1,7 @@
 <%@ page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
-	import="java.util.ArrayList, hobbyistClass.model.vo.*, member.model.vo.Member"%>
+	import="java.util.ArrayList, hobbyistClass.model.vo.*, member.model.vo.Member, hobbyistClass.model.vo.*"%>
 <%
 	HClass hc = (HClass)request.getAttribute("hc");
 	ArrayList<HClassFile> f = (ArrayList)request.getAttribute("fileList");
