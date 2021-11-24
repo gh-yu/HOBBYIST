@@ -1,13 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
 	import="java.util.ArrayList, classNotice.model.vo.*, member.model.vo.Member"%>
+<%@ page
+	import="hobbyistClass.model.vo.*, hobbyistClass.model.service.*"%>
+
 <%
 	Member loginUser = (Member) session.getAttribute("loginUser");
 	ArrayList<ClassNotice> list = (ArrayList) request.getAttribute("list");
 	ArrayList<Member> member = (ArrayList) request.getAttribute("member");
 	PageInfo pi = (PageInfo) request.getAttribute("pi");
-
-
+	
+	HClassService hService = new HClassService();
+	ArrayList<HClass> hc =  (ArrayList)request.getAttribute("HClass");
+	ArrayList<HClass> classList = hService.selectClassList();
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -209,7 +215,7 @@
 									src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
 									alt="..." />
 								<div class="card-body">
-									<h2 class="card-title">[Live] 오일 파스텔로 그리는 꽃그림</h2>
+									<h2 class="card-title"><%=  %></h2>
 									<h3>클래스 소개</h3>
 									<div>안녕하세요. 오일파스텔로 그리는 꽃그림 클래스 입니다.</div>
 									<button>내용 수정</button>

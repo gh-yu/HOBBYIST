@@ -8,7 +8,7 @@ public class HClassFile {
 	private Date uploadDate;
 	private String originName;
 	private String changeName;
-	private String fileThumbYn;
+	private String fileThumbYn; // 0이면 썸네일, 1이면 일반사진
 	private String fileTableName; 
 	private int boardNo; // 파일이 속한 게시글 번호
 	private int status; // 삭제를 했냐 안했냐의 여부

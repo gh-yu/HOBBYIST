@@ -16,8 +16,8 @@ public class HClass {
 	private String classContent;
 	private int classFee;
 	private int tutorNo;
-	private Date classStartDate;
 	private String categoryName;
+	private Date classStartDate;
 	
 	public HClass() {}
 

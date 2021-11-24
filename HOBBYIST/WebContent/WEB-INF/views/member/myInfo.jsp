@@ -129,7 +129,7 @@
 								<li>
 									<span class="app-dashboard-sidebar-text"><h3>튜터</h3></span> 
 								</li>
-								<li ><a href="<%= request.getContextPath() %>/tutorMyClass.if"> 
+								<li ><a href="<%= request.getContextPath() %>/tutorMyPage.tt"> 
 									<span class="app-dashboard-sidebar-text">내 클래스</span> 
 								</a></li>
 								<li style="color: #9ED4C2"><a href="<%= request.getContextPath() %>/tutorInform.me"> 

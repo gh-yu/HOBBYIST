@@ -96,7 +96,6 @@ public class TutorDAO {
 			if (rset.next()) {
 				t = new Tutor(rset.getInt("TUTOR_NO"),
 							  rset.getDate("TUTOR_ENROLL_DATE"),
-							  rset.getString("TUTOR_BANK_ACCOUNT"),
 						      rset.getString("TUTOR_REPORT"), 
 							  rset.getString("TUTOR_SNS"), 
 							  rset.getString("TUTOR_IMG_PATH"), 
@@ -111,5 +110,6 @@ public class TutorDAO {
 
 		return t;
 	}
+	
 
 }
