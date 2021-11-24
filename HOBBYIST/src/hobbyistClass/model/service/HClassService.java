@@ -88,7 +88,7 @@ public class HClassService {
 
 	}
 
-public ArrayList<HClass> searchClass(String searchWord) {
+	public ArrayList<HClass> searchClass(String searchWord) {
 		Connection conn = getConnection();
 		
 		ArrayList<HClass> searchList = hDAO.searchClass(conn, searchWord);
@@ -99,7 +99,7 @@ public ArrayList<HClass> searchClass(String searchWord) {
 	}
 
 
-public ArrayList<HClass> beforeApvClass() {
+	public ArrayList<HClass> beforeApvClass() {
 		Connection conn = getConnection();
 		
 		ArrayList<HClass> beforeApvClass = hDAO.beforeApvClass(conn);
@@ -244,7 +244,7 @@ public ArrayList<HClass> beforeApvClass() {
 		return list;
 	}
 
-	public ArrayList<HClass> selectBList() {
+public ArrayList<HClass> selectBList() {
 		Connection conn = getConnection();
 
 		ArrayList<HClass> list = hDAO.selectBList(conn);
@@ -253,8 +253,8 @@ public ArrayList<HClass> beforeApvClass() {
 
 		return list;
 	}
-	
-	public HClass selectClassOpen(int bId) {
+
+ public HClass selectClassOpen(int bId) {
 		Connection conn = getConnection();
 		
 		HClass c = hDAO.selectClassOpen(conn, bId);
