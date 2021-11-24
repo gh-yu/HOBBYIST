@@ -167,7 +167,7 @@ public class ThumbnailInsertServlet extends HttpServlet {
 			int result = new HClassService().insertThumbnail(h, fileList, scheduleList); // 스케줄리스트도 보냄
 		
 			if (result >= 1+fileList.size()+scheduleList.size()) { // 게시판
-				response.sendRedirect("tutorMyPage.tt");
+				request.getRequestDispatcher("WEB-INF/views/tutor/myPageTutorMyClass.jsp").forward(request, response);
 			} else {
 				request.setAttribute("msg", "클래스 신청 저장 실패");
 				request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);

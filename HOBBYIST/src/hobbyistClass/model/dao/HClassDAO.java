@@ -203,6 +203,7 @@ public class HClassDAO {
 		ResultSet rset = null;
 		ArrayList<HClass> searchList = null;
 		
+		System.out.println("DAO searchWord : " + searchWord); //OK
 		String query = prop.getProperty("searchClass");
 		
 		try {
@@ -227,8 +228,8 @@ public class HClassDAO {
 		}
 		
 		return searchList;
-	}	
-
+	}
+	
 	public ArrayList<HClass> beforeApvClass(Connection conn) {
 		Statement stmt = null;
 		ResultSet rset = null;
@@ -261,11 +262,11 @@ public class HClassDAO {
 	}
 
 	public int insertClass(Connection conn, HClass hclass) {
-	PreparedStatement pstmt = null;
-	int result = 0;
-
-	String query = prop.getProperty("insertClass");
-	try {
+		PreparedStatement pstmt = null;
+		int result = 0;
+	
+		String query = prop.getProperty("insertClass");
+		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, hclass.getClassName());
 			pstmt.setDate(2, hclass.getClassEndDate());
@@ -521,7 +522,7 @@ public class HClassDAO {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				t = new Tutor(rset.getInt("TUTOR_NO"), rset.getDate("TUTOR_ENROLL_DATE"),
+				t = new Tutor(rset.getInt("TUTOR_NO"), rset.getDate("TUTOR_ENROLL_DATE"), 
 							  rset.getString("TUTOR_REPORT"),  rset.getString("TUTOR_SNS"),  rset.getString("TUTOR_IMG_PATH"), 
 							  rset.getDate("TUTOR_IMG_UPDATE"), rset.getString("TUTOR_IMG_ORIGIN_NAME"), rset.getString("TUTOR_IMG_CHANGE_NAME"),
 							  rset.getString("MEMBER_NICKNAME"), rset.getString("MEMBER_PHONE"), rset.getInt("MEMBER_STATUS"));
@@ -592,7 +593,7 @@ public class HClassDAO {
 		
 		return list;
 	}
-
+	
 	public ArrayList selecBList(Connection conn) {
 		Statement stmt = null;
 		ResultSet rset = null;
@@ -657,7 +658,6 @@ public class HClassDAO {
 
 		return list;
 	}
-	
 	public ArrayList<HClass> selectClearList(Connection conn) {
 		Statement stmt = null;
 		ResultSet rset = null;
@@ -688,7 +688,7 @@ public class HClassDAO {
 
 		return list;
 	}
-
+	
 	public ArrayList<HClass> selectBList(Connection conn) {
 		Statement stmt = null;
 		ResultSet rset = null;
@@ -814,5 +814,6 @@ public class HClassDAO {
 		
 		
 		return result;
-	}
+	}	
+
 }

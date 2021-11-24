@@ -97,6 +97,16 @@ public class HClassService {
 		
 		return searchList;
 	}
+	
+	public ArrayList<HClass> beforeApvClass() {
+		Connection conn = getConnection();
+		
+		ArrayList<HClass> beforeApvClass = hDAO.beforeApvClass(conn);
+		
+		close(conn);
+		
+		return beforeApvClass;
+	}
 
 	public int insertThumbnail(HClass h, ArrayList<HClassFile> fileList, ArrayList<HClassSchedule> scheduleList) {
 		Connection conn = getConnection();
@@ -225,20 +235,51 @@ public class HClassService {
 	public ArrayList<HClass> selectClearList() {
 		Connection conn = getConnection();
 
-		ArrayList<HClass> list = hDAO.selectClassList(conn);
+		ArrayList<HClass> list = hDAO.selectClearList(conn);
 
 		close(conn);
 
 		return list;
 	}
 
-	public ArrayList<HClass> beforeApvClass() {
+	public ArrayList<HClass> selectBList() {
+		Connection conn = getConnection();
+
+		ArrayList<HClass> list = hDAO.selectBList(conn);
+
+		close(conn);
+
+		return list;
+	}
+ 	public HClass selectClassOpen(int bId) {
 		Connection conn = getConnection();
 		
-		ArrayList<HClass> beforeApvClass = hDAO.beforeApvClass(conn);
+		HClass c = hDAO.selectClassOpen(conn, bId);
 		
 		close(conn);
 		
-		return beforeApvClass;
+		return c;
+	}
+	
+	
+	public ArrayList<HClassFile> selectOpenClassFileList(int bId) {
+		Connection conn = getConnection();
+		ArrayList<HClassFile> list = hDAO.selectOpenClassFileList(bId, conn);
+		close(conn);
+		return list;
+	}
+	
+	public int deleteOpenClass(int bId) {
+		Connection conn = getConnection();
+		
+		int result = hDAO.deleteOpenClass(conn, bId);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
 	}
 }

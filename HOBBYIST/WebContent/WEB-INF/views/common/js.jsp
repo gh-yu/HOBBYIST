@@ -7,9 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<script src="assets/js/jquery.3.0.0.min.js"></script>
-	<script src="assets/js/jquery.3.2.1.min.js"></script>
-	<script src="assets/js/jquery.3.6.0.min.js"></script>
+ 	<script src="assets/js/jquery.3.0.0.min.js"></script> 
+ 	<script src="assets/js/jquery.3.2.1.min.js"></script>
+ 	<script src="assets/js/jquery.3.6.0.min.js"></script>
 	<script src="assets/js/jquery-ui.min.js"></script>
 	<script src="assets/js/jquery-ui.js"></script>
 	<script src="assets/js/popper.min.js"></script>
@@ -24,7 +24,7 @@
 	<script src="assets/js/jquery.scrollbar.min.js"></script>
 	<script src="assets/js/ready.min.js"></script>
 	<!-- <script src="assets/js/demo.js"></script> -->
-	<script src="assets/js/self.js"></script>
+	<!-- <script src="assets/js/self.js"></script> -->
 	<script src="assets/js/slider-setting.js"></script>
 	<script src="assets/js/swiper.js"></script>
 	<!-- <script src="assets/js/custom.js"></script> -->
