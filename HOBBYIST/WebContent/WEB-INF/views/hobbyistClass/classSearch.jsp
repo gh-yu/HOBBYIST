@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="member.model.vo.Member, java.util.ArrayList, hobbyistClass.model.vo.*, java.text.DecimalFormat" %>
+    pageEncoding="UTF-8" import="member.model.vo.Member, java.util.ArrayList, hobbyistClass.model.vo.*, java.text.DecimalFormat , hobbyistClass.model.vo.*"" %>
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
 	ArrayList<HClass> searchList = (ArrayList)request.getAttribute("searchList");
