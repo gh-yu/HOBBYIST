@@ -15,6 +15,7 @@
 <meta charset="UTF-8">
 <title>My Classroom</title>
 <%@ include file="../common/css.jsp" %>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <style>
 .class p{color: black;}
 .card {
@@ -207,10 +208,10 @@
 											<br><br><br>
 											<div class="btn_main">
 												<div class="buy_bt">
-													<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">Cancel</a> 
+													<a href="<%= request.getContextPath() %>/detail.te?cNo=<%= c.getClassNo() %>">Cancel</a> 
 												</div>
 												<div class="seemore_bt">
-													<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">See More</a> 
+													<a href="<%= request.getContextPath() %>/detail.te?cNo=<%= c.getClassNo() %>">See More</a> 
 												</div>
 											</div>											
 										</div>
@@ -250,7 +251,7 @@
 									<% if (!tcScheduleAfter.isEmpty()) { %>
 									<%		for(TuteeClass tcA : tcScheduleAfter) { %>	
 									<%			if(c.getClassNo() == tcA.getClassNo()) { %>
-												<p>최근 수강완료일자는 <b><%= tcA.getTuteeClassFinishDate() %></b>일입니다.</p>
+												<p>최근 수강완료일자는 <b><%= tcA.getTueeClassRevDate() %></b>일입니다.</p>
 									<%			} %>
 									<% 		} %>
 									<% } %>															
@@ -258,10 +259,10 @@
 											<br><br><br>
 											<div class="btn_main">
 												<div class="buy_bt">
-													<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">Write Review</a> 
+													<a href="<%= request.getContextPath() %>/detail.te?cNo=<%= c.getClassNo() %>">Write Review</a> 
 												</div>
 												<div class="seemore_bt">
-													<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">See More</a> 
+													<a href="<%= request.getContextPath() %>/detail.te?cNo=<%= c.getClassNo() %>">See More</a> 
 												</div>
 											</div>
 										</div>

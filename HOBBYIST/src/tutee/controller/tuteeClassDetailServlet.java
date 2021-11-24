@@ -1,4 +1,4 @@
-package hobbyistClass.controller;
+package tutee.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,20 +12,22 @@ import javax.servlet.http.HttpServletResponse;
 import hobbyistClass.model.service.HClassService;
 import hobbyistClass.model.vo.HClass;
 import hobbyistClass.model.vo.HClassFile;
-import hobbyistClass.model.vo.HClassSchedule;
+import member.model.vo.Member;
+import tutee.model.servuce.TuteeService;
+import tutee.model.vo.TuteeClass;
 import tutor.model.vo.Tutor;
 
 /**
- * Servlet implementation class ClassDetailServilet
+ * Servlet implementation class tuteeClassDetailServlet
  */
-@WebServlet("/detail.hcl")
-public class ClassDetailServilet extends HttpServlet {
+@WebServlet("/detail.te")
+public class tuteeClassDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ClassDetailServilet() {
+    public tuteeClassDetailServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,21 +44,22 @@ public class ClassDetailServilet extends HttpServlet {
 		
 		ArrayList<HClassFile> fileList = hService.selectDetailFileList(cNo);
 		
-		ArrayList<HClassSchedule> sList = hService.selectScheduleList(cNo); 
-		
 		Tutor tutor = hService.selectClassTutor(c.getTutorNo());
 		
+		String memberEmail = ((Member)request.getSession().getAttribute("loginUser")).getMemberEmail();	
+		ArrayList<TuteeClass> tuteeSchedule = new TuteeService().selectTuteeSchedule(cNo, memberEmail);
+
 		String page = null;
-		if (c != null && fileList != null && sList != null && tutor != null) {
+		if (c != null && fileList != null && tutor != null && tuteeSchedule != null) {
 			
-			page = "WEB-INF/views/hobbyistClass/classDetail.jsp";
+			page = "WEB-INF/views/tutee/tuteeClassDetail.jsp";
 			request.setAttribute("c", c);
 			request.setAttribute("fileList", fileList);
 			request.setAttribute("tutor", tutor);
-			request.setAttribute("sList", sList);
+			request.setAttribute("tuteeSchedule", tuteeSchedule);
 			 
 		} else {
-			request.setAttribute("msg", "클래스 상세보기 실패");
+			request.setAttribute("msg", "튜티의 클래스 상세보기 실패");
 			page = "WEB-INF/views/common/errorPage.jsp";
 		}
 		

@@ -96,4 +96,14 @@ public class TuteeService {
 		
 		return list;
 	}
+
+	public ArrayList<TuteeClass> selectTuteeSchedule(int cNo, String memberEmail) {
+		Connection conn = getConnection();
+		
+		ArrayList<TuteeClass> list = tDAO.selectTuteeSchedule(conn, cNo, memberEmail);
+	
+		close(conn);		
+		
+		return list;
+	}
 }	

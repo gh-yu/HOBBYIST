@@ -220,16 +220,47 @@ public class TuteeDAO {
 			list = new ArrayList<TuteeClass>();
 			while(rset.next()) {
 				TuteeClass tc = new TuteeClass();
-				if (i == 0) {
-					tc.setClassNo(rset.getInt("CLASS_NO"));
-					tc.setTueeClassRevDate(rset.getDate("REV_DATE"));
-				} else {
-					tc.setClassNo(rset.getInt("CLASS_NO"));
-					tc.setTuteeClassFinishDate(rset.getDate("FINISH_DATE"));
-				}
-				
+				tc.setClassNo(rset.getInt("CLASS_NO"));
+				tc.setTueeClassRevDate(rset.getDate("REV_DATE"));
 				list.add(tc);
 			}			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+
+	public ArrayList<TuteeClass> selectTuteeSchedule(Connection conn, int cNo, String memberEmail) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<TuteeClass> list = null;
+		
+		String qurey = prop.getProperty("selectTuteeSchedule");
+		
+		try {
+			pstmt = conn.prepareStatement(qurey);
+			pstmt.setInt(1, cNo);
+			pstmt.setString(2, memberEmail);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<TuteeClass>();
+			while(rset.next()) {
+				list.add(new TuteeClass(rset.getInt("TUTEE_CLASS_NO"), 
+										rset.getDate("TUTEE_CLASS_REV_DATE"), 
+										rset.getString("TUTEE_CLASS_REV_TIME"),
+										rset.getString("TUTEE_CLASS_STATUS"),
+										rset.getDate("TUTEE_CLASS_ENROLL_DATE"),
+										rset.getDate("TUTEE_CLASS_FINISH_DATE"),
+										rset.getInt("CLASS_NO"), 
+										rset.getString("MEMBER_EMAIL")));
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

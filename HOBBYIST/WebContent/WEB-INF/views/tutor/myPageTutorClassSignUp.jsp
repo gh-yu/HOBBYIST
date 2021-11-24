@@ -13,6 +13,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 <%@ include file="../common/css.jsp" %>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script>
 					// 내용 작성 부분의 공간을 클릭할 때 파일 첨부 창이 뜨도록 설정하는 함수
 					$(function(){
@@ -244,16 +245,6 @@ img.ui-datepicker-trigger {
 							class="la la-calendar-o"></i>
 							<p>TUTOR ON CLASS</p><span class="badge badge-primary">5</span>
 					</a></li>
-					<!-- DAO가 없기 때문에 빨간줄이 떠서 주석처리 / model단 받아오시면 주석풀면 됩니다. -->
-					<%-- <%
-							} else {
-					%> --%>
-					<li class="nav-item update-pro">
-							<button onclick="reservation()">
-								<i class="la la-hand-pointer-o"></i>
-								<p>튜터 신청하기</p>
-							</button>
-					</li>
 				</ul>
 			</div>
 		</div>
@@ -298,8 +289,8 @@ img.ui-datepicker-trigger {
 										<label for="className">클래스 이름</label> <span
 											class="badge badge-danger">필수</span>
 										<div class="form-floating mb-3">
-											<input type="email" class="form-control" id="floatingInput"
-												placeholder="name@example.com" name = "title" required> 
+											<input type="text" class="form-control" id="floatingInput"
+												placeholder="" name = "title" required> 
 											<label for="floatingInput">컨셉이 잘 드러나는 클래스의 이름을 정해주세요</label>
 										</div>
 									</div>
