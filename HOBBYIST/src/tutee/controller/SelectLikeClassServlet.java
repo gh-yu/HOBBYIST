@@ -1,7 +1,6 @@
 package tutee.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -9,9 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -42,9 +38,12 @@ public class SelectLikeClassServlet extends HttpServlet {
 		
 		ArrayList<LikeClass> list = new TuteeService().selectLikeClass(memberEmail);
 		
-		response.setContentType("application/json; charset=UTF-8");
-		Gson gson = new Gson();
-		gson.toJson(list, response.getWriter());
+		response.setContentType("application/json; charset=UTF-8"); 
+		GsonBuilder gb = new GsonBuilder();
+		GsonBuilder gb2 = gb.setDateFormat("yyyy-MM-dd");  // 원하는 날짜 형식으로 포맷하기 위한 과정
+		Gson gson = gb2.create();
+		gson.toJson(list, response.getWriter()); // GSON방식으로 list 보냄
+		
 	}
 
 	/**

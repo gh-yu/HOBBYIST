@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class TutorInformServlet
+ * Servlet implementation class TutorMyPageClass
  */
-@WebServlet("/tutorInform.me")
-public class TutorInformServlet extends HttpServlet {
+@WebServlet("/tutorMyClass.if")
+public class TutorMyPageClass extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TutorInformServlet() {
+    public TutorMyPageClass() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,7 +26,7 @@ public class TutorInformServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("WEB-INF/views/tutor/tutorInform.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/views/tutor/myPageTutorMyClass.jsp").forward(request, response);
 	}
 
 	/**
