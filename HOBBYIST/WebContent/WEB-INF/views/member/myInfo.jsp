@@ -1,202 +1,284 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="member.model.vo.Member" %>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<%@ include file="../common/css.jsp"%>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <title>Insert title here</title>
-<script src="js/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/menubar.css">
-<link rel="stylesheet" type="text/css" href="css/myInfo.css">
-<script src="js/menubar.js"></script>
-<style>
-	#updatePwdBtn {
-		background: #778899;
-		font-weight: bold;
-		cursor: pointer;
-		color: white;
-		box-shadow: 2px 2px 2px lightgray;
-		font-size: large;
-	}
-</style>
 </head>
 <body>
-	<div class="app-dashboard shrink-medium">
-		
-		<!-- 상단바 -->
-		<%@ include file="../common/topbar.jsp" %>
-	
-		<!-- 바디 영역(사이드바, 본문) -->
-		<div class="app-dashboard-body off-canvas-wrapper">
-		
-			<!-- 사이드바 영역 -->
-			<div id="app-dashboard-sidebar" class="app-dashboard-sidebar position-left off-canvas off-canvas-absolute reveal-for-medium" data-off-canvas>
-				
-				<!-- 사이드바 close, open -->
-				<div class="app-dashboard-sidebar-title-area">
-					<div class="app-dashboard-close-sidebar">
-						<!-- Close button -->
-						<button id="close-sidebar" data-app-dashboard-toggle-shrink
-							class="app-dashboard-sidebar-close-button show-for-medium"
-							aria-label="Close menu" type="button">
-							<span aria-hidden="true"><a href="#"><i
-									class="large fa fa-angle-double-left"><img
-								src="images/three-dots-vertical.svg"></i></a></span> 
-						</button>
-					</div>
-					<!-- open button -->
-					<div class="app-dashboard-open-sidebar">
-						<button id="open-sidebar" data-app-dashboard-toggle-shrink
-							class="app-dashboard-open-sidebar-button show-for-medium"
-							aria-label="open menu" type="button">
-							<span aria-hidden="true"><a href="#"><i
-									class="large fa fa-angle-double-right"><img
-								src="images/three-dots-vertical.svg"></i></a></span> 
-						</button>
+	<div class="banner_bg_main">
+		<div class="container">
+			<div class="header_section_top">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="custom_menu">
+							<ul>
+								<li><a href="mainPage.jsp">MAIN</a></li>
+								<li></li>
+								<li><a href="../tutee/likedClass.jsp">LIKED CLASS</a></li>
+								<li></li>
+								<li><a href="../member/loginPage.jsp">LOG-IN</a></li>
+								<li></li>
+								<li><a href="../member/myInfo.jsp">MY INFO</a></li>
+								<li></li>
+								<li><a href="../admin/faq.jsp">FAQ</a></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-				
-				<!-- 사이드바 -->
-				<% if(loginUser != null && loginUser.getMemberGrade().equals("A")) { %>
-					<div class="app-dashboard-sidebar-inner">
-						<ul class="menu vertical">
-							<li><a href="#">
-								<span class="app-dashboard-sidebar-text"><h3>클래스 관리</h3></span>
-							</a></li>
-							<li><a href="<%= request.getContextPath() %>/apvList.cl">
-								<span class="app-dashboard-sidebar-text">클래스 승인</span>
-							</a></li>
-							<li><a href="#"> 
-								<span class="app-dashboard-sidebar-text">클래스 후기 관리</span>
-							</a></li>
-							<br><br>
-							<li><a href="#"> 
-								<span class="app-dashboard-sidebar-text"><h3>고객 요청 관리</h3></span>
-							</a></li>
-							<li><a href="<%= request.getContextPath() %>/list.cs"> 
-								<span class="app-dashboard-sidebar-text">1:1 문의</span>
-							</a></li>
-							<li><a href="<%= request.getContextPath() %>/FAQ.bo"> 
-								<span class="app-dashboard-sidebar-text">자주 묻는 질문(FAQ)</h3></span>
-							</a></li>
-							<br><br>
-							<li><a href="<%= request.getContextPath() %>/memberCheck.admin"> 
-								<span class="app-dashboard-sidebar-text"><h3>회원 관리</h3></span>
-							</a></li>
-							<li><a href="#"> 
-								<span class="app-dashboard-sidebar-text">튜티(Tutee)목록</span>
-							</a></li>
-							<li><a href="#"> 
-								<span class="app-dashboard-sidebar-text">튜터(Tutor)목록</span>
-							</a></li>
-										
-						</ul>
-					</div>
-				<% } else { %>
-					<div class="app-dashboard-sidebar-inner">
-						<ul class="menu vertical">
-							<li><a href="<%= request.getContextPath() %>/myClass.te">
-								<span class="app-dashboard-sidebar-text"><h3>나의 클래스룸</h3></span>
-							</a></li>
-							<li><a href="#">
-								<span class="app-dashboard-sidebar-text">수강중인 클래스</span>
-							</a></li>
-							<li><a href="#"> 
-								<span class="app-dashboard-sidebar-text">수강완료 클래스</span>
-							</a></li>
-							<li><a href="#"> 
-								<span class="app-dashboard-sidebar-text">찜한 클래스</span>
-							</a></li>
-							<li><a href="#"> 
-								<span class="app-dashboard-sidebar-text">내가 쓴 후기</span>
-							</a></li>
-							<br>
-							<li><a href="<%= request.getContextPath() %>/myInfo.me"> 
-								<span class="app-dashboard-sidebar-text"><h3>내 정보</h3></span>
-							</a></li>
-							<li><a href="<%= request.getContextPath() %>/updateForm.me"> 
-								<span class="app-dashboard-sidebar-text">내 정보 수정</span>
-							</a></li>
-							<li><a href=""> 
-								<span class="app-dashboard-sidebar-text">결제정보</span>
-							</a></li>
-							<li><a href="<%= request.getContextPath() %>/delete.me"> 
-								<span class="app-dashboard-sidebar-text">튜티 탈퇴</span>
-							</a></li>
-							<br>
-							
-							<% if(loginUser != null && loginUser.getMemberGrade().equals("B")) { %>  
-								<li>
-									<span class="app-dashboard-sidebar-text"><h3>튜터</h3></span> 
-								</li>
-								<li ><a href="<%= request.getContextPath() %>/tutorMyPage.tt"> 
-									<span class="app-dashboard-sidebar-text">내 클래스</span> 
-								</a></li>
-								<li style="color: #9ED4C2"><a href="<%= request.getContextPath() %>/tutorInform.me"> 
-									<span class="app-dashboard-sidebar-text">튜터 정보</span>
-								</a></li>
-								<li style="color: #9ED4C2"><a href=""> 
-									<span class="app-dashboard-sidebar-text">정산하기</span>
-								</a></li>		
-							
-							<% } else { %>  <%-- 로그인한 유저의 그레이드가 'B'즉 튜터가 아니면 튜터 신청 버튼 활성화 --%>
-							<li>
-								<a href="<%= request.getContextPath() %>/tuteeEnroll.me">
-								<span class="app-dashboard-sidebar-text"><button id="apply-tutor-btn">튜터 신청하기</button></span></a>
-							</li> <%-- span class="app-dashboard-sidebar-text"가 있어야 사이드바 닫힐때 안 보임  --%>	
-							<% }  %>
-							<br><br><br>
-						</ul>
-					</div>
-				<% } %>
 			</div>
-				
-
-			<!-- 본문 영역 -->
-			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
-			
-			<div class="modify-information">
-				<form action="<%= request.getContextPath() %>/updateForm.me" method="post">
-					<div class="image-upload info">					    
-						<br><br>
-						<b>이메일</b><br>
-						<%= loginUser.getMemberEmail() %>
-						<input type="hidden" id="email" name="email" value="<%= loginUser.getMemberEmail() %>"><br><br>
-						
-						<b>이름</b><br>
-						<%= loginUser.getMemberName() %>
-						<input type="hidden" id="name" name="name" value="<%= loginUser.getMemberName() %>"><br><br>
-					
-						<b>닉네임</b><br>
-						<%= loginUser.getMemberNickName() %>
-						<input type="hidden" id="nickName" name="nickName" value="<%= loginUser.getMemberNickName() %>"><br><br>
-						
-						<b>휴대폰 번호</b><br>
-						<%= loginUser.getMemberPhone() ==  null ? "-" : loginUser.getMemberPhone()  %>
-						<input type="hidden" id="phone" name="phone" value="<%= loginUser.getMemberPhone() %>"><br><br>
-
-						<input type="submit" id="btnSub" value="수정하기"><br>
-						<input type="button" id="updatePwdBtn" value="비밀번호 변경하기" onclick="location.href='<%= request.getContextPath() %>/updatePwdForm.me'">
-						
-					</div>
-				</form>
-			</div>
-		</div>	
-					
 		</div>
-		
-			<!-- FOOTER -->
-			<footer class="container" style="text-align: center; background: #F5F5F5;">
-			
-				<p class="float-end">
-					<a href="#">Back to top</a>
-				</p>
-				<p>
-					&copy; 2021 HOBBYIST, Inc. &middot; <a href="<%= request.getContextPath() %>/contact.co">Contact</a>
-					<!-- &middot; <a href="#">Terms</a> -->
-				</p>
-			</footer> 
 	</div>
+	<div class="sidebar">
+		<div class="scrollbar-inner sidebar-wrapper">
+			<div class="user">
+				<div class="photo">
+					<img src="../assets/images/iu2.jpg">
+				</div>
+				<div class="info">
+					<a class="" data-toggle="collapse" href="#collapseExample"
+						aria-expanded="true"> <span> <b>김샘플</b> <!-- loginUser의 NickName 불러오기 -->
+							<span class="user-level">튜티(Tutee)</span> <!-- loginUser의 grade 불러오기 -->
+							<span class="caret"></span>
+					</span>
+					</a>
+					<div class="clearfix"></div>
+
+					<div class="collapse in" id="collapseExample" aria-expanded="true"
+						style="">
+						<ul class="nav">
+							<li><a href="<%=request.getContextPath()%>/myInfo.me">
+									<span class="link-collapse">내 정보 보기</span>
+							</a></li>
+							<li><a href="<%=request.getContextPath()%>/updateForm.me">
+									<span class="link-collapse">내 정보 수정</span>
+							</a></li>
+							<li><a
+								href="<%=request.getContextPath()%>/deleteConfirm.me"> <span
+									class="link-collapse">튜티 탈퇴</span>
+							</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<ul class="nav">
+				<li class="nav-item"><a
+					href="<%=request.getContextPath()%>/myClass.te"> <i
+						class="la la-toggle-on"></i>
+						<p>MY CLASS</p> <span class="badge badge-primary">5</span>
+				</a></li>
+				<li class="nav-item"><a
+					href="<%=request.getContextPath()%>/likedClass.cl"> <i
+						class="la la-gittip"></i>
+						<p>LIKED CLASS</p>
+				</a></li>
+				<li class="nav-item"><a
+					href="<%=request.getContextPath()%>/review.re"> <i
+						class="la la-camera-retro"></i>
+						<p>MY REVIEW</p>
+				</a></li>
+				<hr>
+				<li class="nav-item"><a
+					href="<%=request.getContextPath()%>/paymend.pa"> <i
+						class="la la-money"></i>
+						<p>MY PAYMENT</p>
+				</a></li>
+				<li class="nav-item"><a
+					href="<%=request.getContextPath()%>/notification.no"> <i
+						class="la la-bell"></i>
+						<p>NOTIFICATIONS</p>
+				</a></li>
+				<!-- DAO가 없기 때문에 빨간줄이 떠서 주석처리 / model단 받아오시면 주석풀면 됩니다. -->
+				<%-- <%
+							if (loginUser != null && loginUser.getMemberGrade().equals("B")) {
+					%> --%>
+				<hr>
+				<li class="nav-item"><a
+					href="<%=request.getContextPath()%>/tutorSignUp.no"> <i
+						class="la la-pencil"></i>
+						<p>APPLICATION</p>
+				</a></li>
+				<li class="nav-item"><a
+					href="<%=request.getContextPath()%>/tutorClass.no"> <i
+						class="la la-calendar-o"></i>
+						<p>TUTOR ON CLASS</p>
+				</a></li>
+				<!-- DAO가 없기 때문에 빨간줄이 떠서 주석처리 / model단 받아오시면 주석풀면 됩니다. -->
+				<%-- <%
+							} else {
+					%> --%>
+				<li class="nav-item update-pro">
+					<button onclick="reservation()">
+						<i class="la la-hand-pointer-o"></i>
+						<p>튜터 신청하기</p>
+					</button>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="main-panel">
+		<div class="content">
+			<div class="container-fluid">
+				<h4 class="page-title">MY INFORMARION</h4>
+				<div class="row justify-content-center">
+					<div class="col-md-4">
+						<div class="card">
+							<div class="card-header">
+								<div class="card-body">
+									<form action="<%=request.getContextPath()%>/insertTutee.me"
+										method="post" encType="multipart/form-data">
+										<div class="box">
+											<div class="tutorPro">
+												<div class="row justify-content-center">
+
+													<div id="fileArea" class="col-md-7">
+														<input type="file" class="form-control" id="profiledImg"
+															multiple="multiple" name="profileImg"
+															onchange="LoadImg(this, 1)">
+													</div>
+													<div class="col-md-7 justify-content-center">
+														<img class="userImg" id="target_img" name="target_img"
+															src="assets/images/iu2.jpg" alt="profile-image" />
+
+
+														<div class="page-content" style="margin: 20px;">
+															김튜티
+															<%-- <%= 세션아이디 %> --%>
+														</div>
+														</div>
+										<div class="col-md-6">
+										<div class="justify-content-center">
+															
+											<i class="la la-facebook"></i> <a href="#" class="card-link">Facebook</a>&nbsp;<br>
+											<i class="la la-twitter"></i> <a href="#" class="card-link">Twitter</a>&nbsp;<br>
+											<i class="la la-instagram"></i> <a href="#" class="card-link">Instagram</a>&nbsp;<br>
+											<i class="la la-youtube"></i> <a href="#" class="card-link">Youtube</a>&nbsp;<br>
+									
+										</div>
+										</div>
+
+													
+													
+												</div>
+											</div>
+										</div>
+									</form>
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-8">
+						<div class="card">
+							<div class="card-header">
+								<div class="card-body">
+								<form action="#" method="POST" encType="multipart/form-data">
+									<div class="form-group">
+										<label for="exampleFormControlSelect1">이메일</label> <span
+											class="badge badge-danger">필수 </span> 
+											<div class="form-floating mb-3">
+											tutee@hobbyist.com<%-- <%= 이메일%> --%>
+											<input type="hidden" name="mail" class="form-control" id="floatingInput" value="tutee@hobbyist.com<%-- <%= 이메일%> --%>"> 
+											<!-- <label for="floatingInput">Which name is the most suitable one for your class?</label> -->
+											<small id="selectHelp" class="form-text text-muted">가입하신 이메일은 변경하실 수 없습니다</small>
+										</div> 
+									</div>
+									<!-- 이메일 폼그룹 -->
+									
+									<div class="form-group">
+										<label for="exampleFormControlSelect1">닉네임</label> <span
+											class="badge badge-danger">필수 </span>
+										<div class="input-group mb-3">
+											<span class="input-group-text" id="basic-addon1">@</span> 
+											<input type="text" name="nickName" class="form-control" placeholder="튜티는돈이안돼" aria-label="Username" aria-describedby="basic-addon1" disabled>
+										</div>
+										<small id="selectHelp" class="form-text text-muted">닉네임 변경은 중복확인이 필요합니다</small>
+									</div>
+									<!-- 닉네임 폼그룹 -->
+
+
+
+									<div class="form-group">
+										<label for="exampleFormControlSelect1">비밀번호</label> <span class="badge badge-danger">필수 </span> 
+											<div><button type="button" class="btn btn-outline-primary" onclick="updatePwd();">비밀번호 변경</button></div>
+											<input type="hidden" id="password" name="password" value="">
+											<small id="selectHelp" class="form-text text-muted">비밀번호 변경은 중복확인이 필요합니다</small>
+										</div> 
+										<!-- 비밀번호 폼그룹 -->
+										
+									<div class="form-group">
+										<label for="exampleFormControlSelect1">연락처</label> <span class="badge badge-danger">필수</span> 
+										<div class="input-group mb-3">
+											<span class="input-group-text" id="basic-addon1">#</span> 
+											<input type="text" name="phone" class="form-control" placeholder="010-1234-5678" aria-label="phoneNumber" aria-describedby="basic-addon1" disabled>
+										</div>
+											<input type="hidden" class="form-control" id="floatingInput" value="<%-- <%=연락처%> --%>"> 
+											<!-- <label for="floatingInput">Which name is the most suitable one for your class?</label> -->
+											<small id="selectHelp" class="form-text text-muted">연락처 변경은 인증이 필요합니다</small>
+										</div> 
+										<!-- 연락처 폼그룹 -->
+										<div class="row justify-content-center">
+										<div class="col-2">
+											<button class="btn btn-outline-secondary">취소하기</button>
+										</div>
+										<div class="col-2">
+											<button class="btn btn-outline-primary">수정하기</button>
+										</div>
+									</div>
+										</form>
+									</div>
+									
+									
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	<%@ include file="../common/js.jsp"%>
+	<script>
+		
+		
+	/* 파일선택이 안가려져요 ㅠㅠ 그래서 일단 이미지로 넣어두었어요.... */
+		
+	
+		$(document).ready(function() {
+			$('#fileArea').hide();
+			$('#target_img').click(function() {
+				$('#profileImg').click();
+			});
+		
+
+		function LoadImg(value, num) {
+			if (value.files && value.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					if (num == 1) {
+						$("#target_img").attr("src", e.target.result);
+					} else if (num == 2) {
+						$("#target_img2").attr("src", e.target.result);
+					}
+				}
+
+				reader.readAsDataURL(value.files[0]);
+			}
+		}
+		});
+
+				
+	function updatePwd() {
+		
+		location.href="<%= request.getContextPath()%>/updatePwd.me";
+	}
+	</script>
+
+
+
 
 </body>
 </html>
