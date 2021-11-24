@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="tutor.model.vo.Tutor"%>
+    pageEncoding="UTF-8" import="tutor.model.vo.Tutor, member.model.vo.Member,hobbyistClass.model.vo.HClass"%>
 <%
-	Tutor t = (Tutor)session.getAttribute("loginUser");
+// 	Member m = (Member)request.getAttribute("loginUser");	
+	Tutor tt = (Tutor)request.getSession().getAttribute("tutor");
+	String myReport = tt.getTutorReport();
+	String mySns = tt.getTutorSns();
+	Member m = (Member)session.getAttribute("loginUser");
 %>
 <!DOCTYPE html>
 <html>
@@ -471,24 +475,30 @@ label[for="fabk"], [for="twit"], [for="insta"], [for="pinter"], [for="youtu"] {
 			<!-- 본문 영역 -->
 		
 			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
-			<p id="classtitle"> [오전] 아이패드 드로잉 (3개월 과정)</p>
-			<form action="<%= request.getContextPath() %>/updateTutor.me" encType="multipart/form-data">
+			<p id="classtitle"> </p>
+			<form action="<%= request.getContextPath() %>/updateTutor.me" method="post" encType="multipart/form-data">
 <%-- 			<form action="<%= request.getContextPath() %>" encType="multipart/form-data"> --%>
  			<div class="box1"> 
 			<div class="card-profile-stats">
-		  <div class="card-profile-stats-intro">
-		    <img id="target_img" class="card-profile-stats-intro-pic" src="./images/gosim.png" alt="profile-image"/>
+		  <div class="card-profile-stats-intro"><!-- 프로필 사진 들어갈 div -->
+<!-- 		    <img id="target_img" class="card-profile-stats-intro-pic" src="./images/gosim.png" alt="profile-image"/> -->
+		    <img id="target_img" class="card-profile-stats-intro-pic" src="<%= request.getContextPath() %>/uploadFiles/<%= tt.getTutorImgChangeName() %>" alt="profile-image"/>
+		     </div> <!-- /.card-profile-stats-intro -->
+		     <!-- 파일 업로드 하는 부분 -->
+		     <div id="fileArea">
+			<input type="file" id="profileImg" multiple="multiple" name="profileImg" onchange="LoadImg(this,1)">
+			</div>
 		    <div class="card-profile-stats-intro-content">
-		      <h1>김튜터</h1>
+		      <h1><%= m.getMemberNickName() %></h1>
 		      <p>START</p> <p>2021.11.16</p>
 		    </div> <!-- /.card-profile-stats-intro-content -->
-		  </div> <!-- /.card-profile-stats-intro -->
+		 
 		
 		  <hr />
 		
 		  <div class="card-profile-stats-container">
 		    <div class="card-profile-stats-statistic">
-		      <span class="stat">아이패드 그림 기초</span>
+		      <span class="stat"></span>
 		      <p style="font-weight:bold">수강명</p>
 		    </div> <!-- /.card-profile-stats-statistic -->
 		    <div class="card-profile-stats-statistic">
@@ -505,43 +515,31 @@ label[for="fabk"], [for="twit"], [for="insta"], [for="pinter"], [for="youtu"] {
 		    <p class="card-profile-stats-more-link"><a href="#"><i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
 		    <div class="card-profile-stats-more-content">	<!-- 클릭하면 접히는 화살표 -->
 		    	<div>
-		    	  <%= tutor.getTutorReport() %>
-				  <input type="hidden" id="email" name="email" value="<%= tutor.getTutorReport() %>"><br><br>
+		    	  <label>Phone : <%= m.getMemberPhone() %></label><br><br>
+		    	  <label>Email : <%= m.getMemberEmail() %></label><br><br>
+		    	  <label>Report : <%= tt.getTutorReport() %></label>
+				  <input type="hidden" id="myReport" name="myReport" value="<%= tt.getTutorReport() %>">
 			      <br><br>
-			      <div class="rounded-social-buttons">
-				  <a class="social-button facebook" href="#"></a>
-				  <input type="text" name="fbk">
-				  <br><br>
-				  <a class="social-button twitter" href="#"></a>
-				  <input type="text" name="twit">
-				  <br><br>
-				  <a class="social-button youtube" href="#"></a>
-				  <input type="text" name="yout">
-				  <br><br>
-				  <a class="social-button instagram" href="#"></a>
-				 <input type="text" name="insta">
-				  <br><br>
-				
-			</div>
+<!-- 			      <div class="rounded-social-buttons"> -->
+<!-- 				  <a class="social-button facebook" href="#"></a> -->
+<!-- 				  <a class="social-button twitter" href="#"></a> -->
+<!-- 				  <a class="social-button youtube" href="#"></a> -->
+<!-- 				  <a class="social-button instagram" href="#"></a> -->
+<!-- 				 </div> -->
+				 <label>SNS : <%= tt.getTutorSns() %> </label>
+				  <input type="hidden" id="mySns" name="mySns" value="<%= tt.getTutorSns() %>">
+			
 		      	</div>
+		      	<br>
 		      	<!-- use a tag for links to other locations -->
-		      	<input type="submit" class="button button-rounded-hover" value="자기소개 수정" onclick="href='<%= request.getContextPath() %>updateProfileForm.me'"><br>
-			<input type="submit" class="button button-rounded-hover" value="자기소개 수정"><br>
+		      	<input type="submit" class="button button-rounded-hover" value="자기소개 수정"><br>
 		    </div> <!-- /.card-profile-stats-more-content -->
 		  </div> <!-- /.card-profile-stats-more -->
 		</div> <!-- /.card-profile-stats -->
-			<!-- 파일 업로드 하는 부분 -->
-		<div id="fileArea">
-			<input type="file" id="profileImg" multiple="multiple" name="thumbnailImg1" onchange="LoadImg(this,1)">
-		</div>
-		</div>
-			</form>
-			
-						
-			
-			
 			
 		
+		</div>
+			</form>
 			
 		<!-- 사이드바, 본문 끝 -->
 		

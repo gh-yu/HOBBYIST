@@ -3,6 +3,7 @@ package common;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -96,6 +97,16 @@ public class JDBCTemplate {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	} 
+	}
+	
+	public static void close(CallableStatement cstmt) {
+		try {
+			if (cstmt != null && !cstmt.isClosed()) {
+				cstmt.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}	
 	
 }

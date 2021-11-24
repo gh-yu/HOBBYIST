@@ -17,7 +17,7 @@
 			<div class="row expanded app-dashboard-top-nav-bar">
 				<div class="topbar columns medium-2">
 					<a class="app-dashboard-logo" href="<%= request.getContextPath() %>"><img
-						src="images/logo.png" width="70px" height="55px"></a>
+						src="assets/images/hlogo.png" width="70px" height="55px"></a>
 				</div>
 				<div class="topbar columns shrink app-dashboard-top-bar-actions">
 				

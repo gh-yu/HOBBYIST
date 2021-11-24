@@ -13,18 +13,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.plaf.multi.MultiOptionPaneUI;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.oreilly.servlet.MultipartRequest;
 
-
 import common.MyFileRenamePolicy;
 import hobbyistClass.model.service.HClassService;
 import hobbyistClass.model.vo.HClass;
 import hobbyistClass.model.vo.HClassFile;
+import hobbyistClass.model.vo.HClassSchedule;
 import member.model.vo.Member;
+import tutor.model.vo.Tutor;
 
 
 @WebServlet("/classopen.th")
@@ -117,8 +117,9 @@ public class ThumbnailInsertServlet extends HttpServlet {
 				toDate = new Date(new GregorianCalendar(year, month, day).getTimeInMillis());
 			}
 			
-			HClass h = new HClass(0, title, null, toDate, null, "N", "A", time, min, max, content, fee, 1, fromdate,  categoryname);
+			int tutorNo = ((Tutor)request.getSession().getAttribute("tutor")).getTutorNo();
 			
+			HClass h = new HClass(0, title, null, toDate, null, "N", "A", time, min, max, content, fee, tutorNo, fromdate,  categoryname);
 			
 			ArrayList<HClassFile> fileList = new ArrayList<HClassFile>();
 			for(int i = originFiles.size() - 1; i >= 0; i--) { // 역순으로 파일 저장되어 있기 때문에 거기서 또 역순으로 저장하기
@@ -133,14 +134,37 @@ public class ThumbnailInsertServlet extends HttpServlet {
 					fi.setFileThumbYn("N");
 				}
 				
-				
 				fileList.add(fi);
 			}
 			
-			int result = new HClassService().insertThumbnail(h, fileList); 
+			// 스케줄 등록 추가
+			String schedule = multiRequest.getParameter("schedule");
+			
+			String[] split1 = schedule.split(" / ");
+			
+			ArrayList<HClassSchedule> scheduleList = new ArrayList<HClassSchedule>();
+			for (String s : split1) {
+				
+				String[] split2 = s.split("-");
+				int day = 0;
+				switch (split2[0]) {
+					case "일" : day = 0; break;
+					case "월" : day = 1; break;
+					case "화" : day = 2; break;
+					case "수" : day = 3; break;
+					case "목" : day = 4; break;
+					case "금" : day = 5; break;
+					case "토" : day = 6; break;
+				}
+				HClassSchedule cs = new HClassSchedule(0, day, split2[1], 0);
+				scheduleList.add(cs);
+			}
+			
+			
+			int result = new HClassService().insertThumbnail(h, fileList, scheduleList); // 스케줄리스트도 보냄
 		
-			if (result >= 1+fileList.size()) { // 게시판
-				response.sendRedirect("classopenlist.th");
+			if (result >= 1+fileList.size()+scheduleList.size()) { // 게시판
+				response.sendRedirect("tutorMyPage.tt");
 			} else {
 				request.setAttribute("msg", "클래스 신청 저장 실패");
 				request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);

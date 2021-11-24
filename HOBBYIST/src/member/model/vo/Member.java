@@ -40,6 +40,12 @@ public class Member {
 		this.memberPhone = memberPhone;
 	}
 
+	public Member(String memberNickName, String memberPhone, int memberStatus) { // Member의 자식인 Tutor에서 부모 클래스인 Member의 생성자 호출
+		this.memberNickName = memberNickName;
+		this.memberPhone = memberPhone;
+		this.memberStatus = memberStatus;
+	}
+
 	public String getMemberEmail() {
 		return memberEmail;
 	}

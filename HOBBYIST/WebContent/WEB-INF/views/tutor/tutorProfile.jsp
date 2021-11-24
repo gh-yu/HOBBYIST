@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="tutor.model.vo.Tutor, member.model.vo.Member"%>
+<%
+// 	Member m = (Member)request.getAttribute("loginUser");	// 상단바 연결했기 때문에 가져올 필요X
+	Tutor tt = (Tutor)session.getAttribute("tutor");
+	String myReport = tt.getTutorReport();
+	String mySns = tt.getTutorSns();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -469,18 +475,18 @@ label[for="fabk"], [for="twit"], [for="insta"], [for="pinter"], [for="youtu"] {
 		
 			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
 			<p id="classtitle"> [오전] 아이패드 드로잉 (3개월 과정)</p>
-			<form action="<%= request.getContextPath() %>/updateTutor.me" encType="multipart/form-data">
+			<form action="<%= request.getContextPath() %>/updateComplete.me" method="post" id="writeForm" encType="multipart/form-data">
 <%-- 			<form action="<%= request.getContextPath() %>" encType="multipart/form-data"> --%>
  			<div class="box1"> 
 			<div class="card-profile-stats">
 		  <div class="card-profile-stats-intro">
-		    <img id="target_img" class="card-profile-stats-intro-pic" src="./images/gosim.png" alt="profile-image"/>
+<%-- 		    <img src="<%= request.getContextPath() %>/uploadFiles/<%= tt.getTutorImgChangeName() %>" id="target_img" name="target_img" class="card-profile-stats-intro-pic" alt="profile-image"/> --%>
+		    <img src="<%= request.getContextPath() %>/uploadFiles/<%= tt.getTutorImgChangeName() %>" id="target_img2" name="target_img2" class="card-profile-stats-intro-pic" alt="profile-image"/>
+		    </div> <!-- /.card-profile-stats-intro -->
 		    <div class="card-profile-stats-intro-content">
 		      <h1>김튜터</h1>
 		      <p>START</p> <p>2021.11.16</p>
 		    </div> <!-- /.card-profile-stats-intro-content -->
-		  </div> <!-- /.card-profile-stats-intro -->
-		
 		  <hr />
 		
 		  <div class="card-profile-stats-container">
@@ -502,42 +508,30 @@ label[for="fabk"], [for="twit"], [for="insta"], [for="pinter"], [for="youtu"] {
 		    <p class="card-profile-stats-more-link"><a href="#"><i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
 		    <div class="card-profile-stats-more-content">	<!-- 클릭하면 접히는 화살표 -->
 		    	<div>
-			     	자기소개 자기소개 자기소개
+		    	  <label>Phone : <%= loginUser.getMemberPhone() %></label><br><br>
+		    	  <label>Email : <%= loginUser.getMemberEmail() %></label><br><br>
+		    	  <label>Report : </label>
+				  <input type="text" id="myReport" name="myReport" placeholder="자기소개를 입력하세요" required>
 			      <br><br>
-			      <div class="rounded-social-buttons">
-				  <a class="social-button facebook" href="#"></a>
-				  <input type="text" name="fbk">
-				  <br><br>
-				  <a class="social-button twitter" href="#"></a>
-				  <input type="text" name="twit">
-				  <br><br>
-				  <a class="social-button youtube" href="#"></a>
-				  <input type="text" name="yout">
-				  <br><br>
-				  <a class="social-button instagram" href="#"></a>
-				 <input type="text" name="insta">
-				  <br><br>
+				 <label>SNS :  </label>
+				  <input type="text" id="mySns" name="mySns" placeholder="sns계정을 입력하세요" required>
+		      	</div>
+		      	<br>
+		      	
+		      	<!-- 파일 업로드 하는 부분 -->
+			<div id="fileArea">
+				<input type="file" id="profileImg1" multiple="multiple" name="profileImg1" onchange="LoadImg(this,1)">
+				<input type="file" id="profileImg2" multiple="multiple" name="profileImg2" onchange="LoadImg(this,2)">
 				
 			</div>
-		      	</div>
+			</div>
 		      	<!-- use a tag for links to other locations -->
-			<input type="submit" class="button button-rounded-hover" value="자기소개 수정"><br>
+			<input type="submit" class="button button-rounded-hover" value="자기소개 수정 완료"><br>
 		    </div> <!-- /.card-profile-stats-more-content -->
 		  </div> <!-- /.card-profile-stats-more -->
 		</div> <!-- /.card-profile-stats -->
-			<!-- 파일 업로드 하는 부분 -->
-		<div id="fileArea">
-			<input type="file" id="profileImg" multiple="multiple" name="thumbnailImg1" onchange="LoadImg(this,1)">
-		</div>
-		</div>
-			</form>
-			
-						
-			
-			
-			
 		
-			
+			</form>
 		<!-- 사이드바, 본문 끝 -->
 		
 		
@@ -572,32 +566,41 @@ label[for="fabk"], [for="twit"], [for="insta"], [for="pinter"], [for="youtu"] {
 	$(function(){
 		$('#fileArea').hide();
 		
-		$('#target_img').click(function(){
-			$('#profileImg').click();
+// 		$('#target_img').click(function(){
+// 			$('#profileImg1').click();
+// 		});
+		
+		$('#target_img2').click(function(){
+			$('#profileImg2').click();
 		});
 	});
 	
+
+	
+	// 각각의 영역에 파일을 첨부 했을 경우 미리 보기가 가능하도록 하는 함수
 	function LoadImg(value, num){
 		if(value.files && value.files[0]){
 				var reader = new FileReader();
-						
 					reader.onload = function(e){								
-						if(num){
+						if(num==1){
 							$("#target_img").attr("src", e.target.result);
-						} else{
-						
+						} else if(num==2){
+							$("#target_img2").attr("src", e.target.result);
 						}
 						}
+// 					switch(num){
+// 					case 1:
+// 						$("#target_img").attr("src", e.target.result);
+// 						break;
+// 					case 2:
+// 						$("#target_img2").attr("src", e.target.result);
+// 						break;
+// 					}
 					
 						reader.readAsDataURL(value.files[0]);
 					}
 				}
-	
-	// 자기소개 수정
-	
-     
-	
-	
+
 </script>
 
 
