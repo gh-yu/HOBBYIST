@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
-	import="java.util.ArrayList, classNotice.model.vo.*, member.model.vo.Member"%>
+	import="java.util.ArrayList, classNotice.model.vo.*, member.model.vo.Member, hobbyistClass.model.vo.*"%>
 <%@ page
 	import="hobbyistClass.model.vo.*, hobbyistClass.model.service.*"%>
 <%
