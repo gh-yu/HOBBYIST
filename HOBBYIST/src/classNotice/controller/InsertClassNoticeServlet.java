@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import member.model.vo.Member;
 import classNotice.model.service.ClassNoticeService;
 import classNotice.model.vo.ClassNotice;
-import hobbyistClass.model.vo.*;
 
 @WebServlet("/classNoticeInsert.no")
 public class InsertClassNoticeServlet extends HttpServlet {
@@ -30,7 +29,7 @@ public class InsertClassNoticeServlet extends HttpServlet {
 		String classBoardName = request.getParameter("title");
 		String classBoardContent = request.getParameter("content"); 
 		String classNoticeWriter = ((Member)request.getSession().getAttribute("loginUser")).getMemberNickName();
-		int classNo = ((HClass)request.getSession().getAttribute("classno")).getClassNo();
+		
 		
 		String date = request.getParameter("date"); // date String값으로 넘어오는데 년도-월-일 이렇게 '-'로 구분돼서 넘어옴
 		 
@@ -46,7 +45,7 @@ public class InsertClassNoticeServlet extends HttpServlet {
 			classBoardDate = new Date(new GregorianCalendar(year, month, day).getTimeInMillis());
 		}
 		
-		ClassNotice n = new ClassNotice(0, classBoardName, classBoardContent, 0, classBoardDate, 1, classNo, classNoticeWriter);
+		ClassNotice n = new ClassNotice(0, classBoardName, classBoardContent, 0, classBoardDate, 1, 0, classNoticeWriter);
 		System.out.println(n);
 		
 		int result = new ClassNoticeService().insertClassNotice(n);

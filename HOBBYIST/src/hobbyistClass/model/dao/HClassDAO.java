@@ -198,7 +198,7 @@ public class HClassDAO {
 		return result;
 	}
 
-public ArrayList<HClass> searchClass(Connection conn, String searchWord) {
+	public ArrayList<HClass> searchClass(Connection conn, String searchWord) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<HClass> searchList = null;
@@ -229,7 +229,7 @@ public ArrayList<HClass> searchClass(Connection conn, String searchWord) {
 		return searchList;
 	}	
 
-public ArrayList<HClass> beforeApvClass(Connection conn) {
+	public ArrayList<HClass> beforeApvClass(Connection conn) {
 		Statement stmt = null;
 		ResultSet rset = null;
 		ArrayList<HClass> beforeApvClass = null;
@@ -593,7 +593,7 @@ public ArrayList<HClass> beforeApvClass(Connection conn) {
 		return list;
 	}
 
-public ArrayList selecBList(Connection conn) {
+	public ArrayList selecBList(Connection conn) {
 		Statement stmt = null;
 		ResultSet rset = null;
 		ArrayList<HClass> list = null;
@@ -657,6 +657,7 @@ public ArrayList selecBList(Connection conn) {
 
 		return list;
 	}
+	
 	public ArrayList<HClass> selectClearList(Connection conn) {
 		Statement stmt = null;
 		ResultSet rset = null;
@@ -719,7 +720,7 @@ public ArrayList selecBList(Connection conn) {
 		return list;
 	}
 
- public HClass selectClassOpen(Connection conn, int bId) {
+	public HClass selectClassOpen(Connection conn, int bId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		HClass c = null;
@@ -792,7 +793,8 @@ public ArrayList selecBList(Connection conn) {
 		
 		return list;
 	}
-public int deleteOpenClass(Connection conn, int bId) {
+	
+	public int deleteOpenClass(Connection conn, int bId) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		

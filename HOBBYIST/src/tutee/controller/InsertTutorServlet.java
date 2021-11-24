@@ -1,8 +1,6 @@
 package tutee.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,11 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
-
-import com.oreilly.servlet.MultipartRequest;
-
-import common.MyFileRenamePolicy;
 import member.model.service.MemberService;
 import member.model.vo.Member;
 import tutor.model.service.TutorService;
@@ -42,58 +35,17 @@ public class InsertTutorServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 튜터 신청페이지에서 받아온 값 넘기기
 		request.setCharacterEncoding("UTF-8");
-		
-		if(ServletFileUpload.isMultipartContent(request)) {
-		
-		int maxSize = 1024 * 1024 * 10;
-		String root = request.getSession().getServletContext().getRealPath("/");
-		String savePath = root + "uploadFiles/";
-		System.out.println("r"+root);
-		File f = new File(savePath);
-		if(!f.exists()) {
-			f.mkdirs();
-		}
-		
-		System.out.println("경로:"+savePath);
-		
-		MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
-		
-		String saveFiles = null; // 파일의 바뀐 이름 저장
-		String originFiles = null;	// 파일의 원래 이름 저장
-		
-		Enumeration<String> files = multiRequest.getFileNames();
-		while(files.hasMoreElements()) {
-			String name = files.nextElement();
-			System.out.println("name:"+name);
-//			System.out.println("files.nextElement():"+files.nextElement());	// 안 지우면 hastmap 에러 뜸
-			
-			if(multiRequest.getFilesystemName(name)!=null) {	// name=null이면 사진이 없는 것
-				saveFiles = multiRequest.getFilesystemName(name);	
-				originFiles = multiRequest.getOriginalFileName(name);
-				
-				System.out.println("name:"+name);
-			}
-		}
-		
-		System.out.println("saveFiles:"+saveFiles);
-		System.out.println("originFiles:"+originFiles);
-		
-		String myReport = multiRequest.getParameter("myReport");
-		String mySns = multiRequest.getParameter("mySns");
+		String tutorSns = request.getParameter("mySns");
+		String tutorReport = request.getParameter("myReport");
 		String memberEmail = ((Member)request.getSession().getAttribute("loginUser")).getMemberEmail();
 		
-		System.out.println("sns"+mySns);
-		System.out.println("report"+myReport);
+		Tutor tutor = new Tutor(null, null, tutorReport, tutorSns, null, null, 0, null, null);
+		int result = new TutorService().insertTutor(tutor, memberEmail);
 		
-		Tutor t = new Tutor(0, null, myReport, mySns, savePath, null, originFiles, saveFiles);
-		int result = new TutorService().insertTutor(t, memberEmail);
+//		System.out.println(result);
 		
-		System.out.println("결과"+result);
-		
-		if(result > 1) {
+		if(result > 0) {
 			// 성공시 등급 B로 변경되어야
-			Tutor tutor = new TutorService().selectTutor(memberEmail);
-			request.getSession().setAttribute("tutor", tutor);
 			Member loginUser = new MemberService().selectMember(memberEmail);
 			request.getSession().setAttribute("loginUser", loginUser);
 			
@@ -106,7 +58,7 @@ public class InsertTutorServlet extends HttpServlet {
 		
 	}
 		
-	}
+		
 		
 		
 //		HttpSession session = request.getSession();
