@@ -7,19 +7,16 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.plaf.multi.MultiOptionPaneUI;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.oreilly.servlet.MultipartRequest;
-
 
 import common.MyFileRenamePolicy;
 import hobbyistClass.model.service.HClassService;
@@ -167,7 +164,7 @@ public class ThumbnailInsertServlet extends HttpServlet {
 			int result = new HClassService().insertThumbnail(h, fileList, scheduleList); // 스케줄리스트도 보냄
 		
 			if (result >= 1+fileList.size()+scheduleList.size()) { // 게시판
-				request.getRequestDispatcher("WEB-INF/views/tutor/myPageTutorMyClass.jsp").forward(request, response);
+				response.sendRedirect("tutorMyPage.tt");
 			} else {
 				request.setAttribute("msg", "클래스 신청 저장 실패");
 				request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);

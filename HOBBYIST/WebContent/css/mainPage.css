@@ -4,7 +4,7 @@
 	.bd-placeholder-img {
 		font-size: 1.125rem;
 		text-anchor: middle;
-		-webkit-user-select: auto;
+		-webkit-user-select: none;
 		-moz-user-select: none;
 		user-select: none;
 	}
@@ -214,11 +214,3 @@
 	background: linear-gradient(#9ED4C2, WHITE); 
 	  border-radius: 5px;
 	}
-
-
-/* .me-2 {
-	width: 500px;
-	margin-right: auto;
-	margin-left: auto;
-} */
-	

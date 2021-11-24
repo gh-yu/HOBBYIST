@@ -12,7 +12,9 @@
 	ArrayList<HClassFile> fileList = (ArrayList)request.getAttribute("cfList");
 	ArrayList<HClass> classAList = (ArrayList)request.getAttribute("aList");
 	ArrayList<HClass> classCList = (ArrayList)request.getAttribute("cList");
-
+	
+	System.out.println("cLIST :" + classList);
+	System.out.println("cfLIST :" + fileList);
 /* Tutor tutor = (Tutor)session.getAttribute("tutor"); */
 %>
 <!DOCTYPE html>
@@ -143,14 +145,11 @@
 		<div class="content">
 			<div class="container-fluid">
 				<h4 class="page-title">MY CLASS</h4>
-				<button type="button"
-					onclick="location.href = '<%=request.getContextPath()%>/move.co'"
-					class="button hollow">+ 클래스 신청하기</button><br><br>
 				<div class="row">
 
 					<div class="col-md-4">
 						<div class="card card-stats card-primary active">
-							<div class="card-body" >
+							<div class="card-body" id="beforeClass">
 								<div class="row justify-content-center">
 									<h2>수강 중인 클래스</h2>
 									<% if (classList.isEmpty() || fileList.isEmpty()) { %>
@@ -198,7 +197,7 @@
 					<!-- 수강 중인 클래스 -->
 					<div class="col-md-4">
 						<div class="card card-stats card-success">
-							<div class="card-body">
+							<div class="card-body" id="onClass">
 								<div class="row justify-content-center">
 									<h2>수강 신청한 클래스</h2>
 									<% if (classAList.isEmpty() || fileList.isEmpty()) { %>
@@ -228,7 +227,7 @@
 												class="cNo" name="cNo"
 												value="<%=classAList.get(i).getClassNo()%>">
 												<button
-													onclick="location.href = '<%=request.getContextPath()%>/classOpenDetail.tt?bId=<%=classAList.get(i).getClassNo()%>'"
+													onclick="location.href = '<%=request.getContextPath()%>/classManagement.tt'"
 													type="button">
 													<span>클래스신청 수정하기</span>
 												</button>
@@ -247,7 +246,7 @@
 
 						<div class="col-md-4">
 							<div class="card card-stats card-danger">
-								<div class="card-body">
+								<div class="card-body" id="closeClass">
 									<div class="row justify-content-center">
 										<h2>완료 된 클래스</h2>
 										<% if (classCList.isEmpty() || fileList.isEmpty()) { %>
@@ -283,6 +282,7 @@
 									</div>
 								</div>
 							</div>
+							<!-- 수강완료 클래스 -->
 							
 						</div>
 					</div>

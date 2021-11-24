@@ -233,11 +233,11 @@ body{
 			<!-- 본문 영역 -->
 			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
 				<div class="box1">
-				<form action="<%=request.getContextPath()%>/insertTutee.me" encType="multipart/form-data">
-					<div class="box">	<!-- sign in 박스 시작 -->
+				<form action="<%=request.getContextPath()%>/insertTutee.me" method="post" encType="multipart/form-data">
+						<div class="box">	<!-- sign in 박스 시작 -->
 							<span class="text-center">TUTOR SIGN-IN</span>
 							<div class="tutorPro">
-							<img id="target_img" class="card-profile-stats-intro-pic" src="./images/gosim2.jpg" alt="profile-image" />
+							<img id="target_img" name="target_img" class="card-profile-stats-intro-pic" src="./images/empty_profile.png" alt="profile-image" />
 							</div><br>
 						<div class="input-container">
 							<%=m.getMemberNickName() %>
@@ -250,11 +250,11 @@ body{
 							<label>Phone</label>
 						</div>
 						<div class="input-container">		
-							<input type="text" name="mySns" required=""/>
+							<input type="text" name="mySns" required>
 							<label>SNS</label>
 						</div>
 						<div class="input-container">		
-							<input type="text" name="myReport" required=""/>
+							<input type="text" name="myReport" required/>
 							<label>Introduce</label>
 						</div>
 						
@@ -262,7 +262,7 @@ body{
 					
 					<!-- 파일 업로드 하는 부분 -->
 							<div id="fileArea">
-								<input type="file" id="profileImg" multiple="multiple" name="thumbnailImg1" onchange="LoadImg(this,1)">
+								<input type="file" id="profileImg" multiple="multiple" name="profileImg" onchange="LoadImg(this,1)">
 							</div>
 					</div>	<!-- sign in 박스 끝 -->
 				</form>
@@ -301,21 +301,45 @@ body{
 			});
 		});
 	
+	
 	function LoadImg(value, num){
-			if(value.files && value.files[0]){
-					var reader = new FileReader();
-							
-						reader.onload = function(e){								
-							if(num){
-								$("#target_img").attr("src", e.target.result);
-							} else{
-							
-							}
-							}
-							
-							reader.readAsDataURL(value.files[0]);
+		if(value.files && value.files[0]){
+				var reader = new FileReader();
+					reader.onload = function(e){								
+						if(num==1){
+							$("#target_img").attr("src", e.target.result);
+						} else if(num==2){
+							$("#target_img2").attr("src", e.target.result);
 						}
+						}
+// 					switch(num){
+// 					case 1:
+// 						$("#target_img").attr("src", e.target.result);
+// 						break;
+// 					case 2:
+// 						$("#target_img2").attr("src", e.target.result);
+// 						break;
+// 					}
+					
+						reader.readAsDataURL(value.files[0]);
 					}
+				}
+	
+// 	function LoadImg(value, num){
+// 			if(value.files && value.files[0]){
+// 					var reader = new FileReader();
+							
+// 						reader.onload = function(e){								
+// 							if(num){
+// 								$("#target_img").attr("src", e.target.result);
+// 							} else{
+							
+// 							}
+// 							}
+							
+// 							reader.readAsDataURL(value.files[0]);
+// 						}
+// 					}
 	
 	
 </script>	
