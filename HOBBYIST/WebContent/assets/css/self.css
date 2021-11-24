@@ -70,3 +70,20 @@
 i{
 	font-style: normal; /* win . 으로 추가한 window기본 이모티콘의 하트가 기울여지게 보여서 설정  */
 }
+
+.userImg {
+ 
+ width: 250px;
+ height: 250px;
+ border-radius: 70%;
+ box-shadow: 3px 10px 10px rgba(0, 0, 0, 0.4);
+ 
+ }
+ 
+ .page-content {
+ 
+ font-size: 40px;
+ font-weight: bolder;
+ color: #999;
+ text-align: center;
+ }
