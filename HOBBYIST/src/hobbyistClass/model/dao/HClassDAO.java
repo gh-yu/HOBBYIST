@@ -198,11 +198,12 @@ public class HClassDAO {
 		return result;
 	}
 
-public ArrayList<HClass> searchClass(Connection conn, String searchWord) {
+	public ArrayList<HClass> searchClass(Connection conn, String searchWord) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<HClass> searchList = null;
 		
+		System.out.println("DAO searchWord : " + searchWord); //OK
 		String query = prop.getProperty("searchClass");
 		
 		try {
@@ -227,14 +228,45 @@ public ArrayList<HClass> searchClass(Connection conn, String searchWord) {
 		}
 		
 		return searchList;
-	}	
+	}
+	
+	public ArrayList<HClass> beforeApvClass(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		ArrayList<HClass> beforeApvClass = null;
+		
+		String query = prop.getProperty("beforeApvClass");
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+				beforeApvClass = new ArrayList<HClass>();
+				while(rset.next()) {
+					beforeApvClass.add(new HClass(rset.getInt("CLASS_NO"), rset.getString("CLASS_NAME"),
+						rset.getDate("CLASS_ENROLL_DATE"), rset.getDate("CLASS_END_DATE"),
+						rset.getDate("CLASS_APV_DATE"), rset.getString("CLASS_APV_YN"), rset.getString("CLASS_STATUS"),
+						rset.getDouble("CLASS_TIME"), rset.getInt("CLASS_TUTEE_MIN"), rset.getInt("CLASS_TUTEE_MAX"),
+						rset.getString("CLASS_CONTENT"), rset.getInt("CLASS_FEE"), rset.getInt("TUTOR_NO"),
+						rset.getDate("CLASS_START_DATE"), rset.getString("CATEGORY_NAME")));
+				}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return beforeApvClass;
+	}
 
 	public int insertClass(Connection conn, HClass hclass) {
-	PreparedStatement pstmt = null;
-	int result = 0;
-
-	String query = prop.getProperty("insertClass");
-	try {
+		PreparedStatement pstmt = null;
+		int result = 0;
+	
+		String query = prop.getProperty("insertClass");
+		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, hclass.getClassName());
 			pstmt.setDate(2, hclass.getClassEndDate());
@@ -367,11 +399,7 @@ public ArrayList<HClass> searchClass(Connection conn, String searchWord) {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				cstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			close(cstmt);
 		}
 		
 		return result;
@@ -494,7 +522,7 @@ public ArrayList<HClass> searchClass(Connection conn, String searchWord) {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				t = new Tutor(rset.getInt("TUTOR_NO"), rset.getDate("TUTOR_ENROLL_DATE"),
+				t = new Tutor(rset.getInt("TUTOR_NO"), rset.getDate("TUTOR_ENROLL_DATE"), 
 							  rset.getString("TUTOR_REPORT"),  rset.getString("TUTOR_SNS"),  rset.getString("TUTOR_IMG_PATH"), 
 							  rset.getDate("TUTOR_IMG_UPDATE"), rset.getString("TUTOR_IMG_ORIGIN_NAME"), rset.getString("TUTOR_IMG_CHANGE_NAME"),
 							  rset.getString("MEMBER_NICKNAME"), rset.getString("MEMBER_PHONE"), rset.getInt("MEMBER_STATUS"));
@@ -565,8 +593,8 @@ public ArrayList<HClass> searchClass(Connection conn, String searchWord) {
 		
 		return list;
 	}
-
-public ArrayList selecBList(Connection conn) {
+	
+	public ArrayList selecBList(Connection conn) {
 		Statement stmt = null;
 		ResultSet rset = null;
 		ArrayList<HClass> list = null;
@@ -660,5 +688,132 @@ public ArrayList selecBList(Connection conn) {
 
 		return list;
 	}
+	
+	public ArrayList<HClass> selectBList(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		ArrayList<HClass> list = null;
+
+		String query = prop.getProperty("selectBList");
+
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+
+			list = new ArrayList<HClass>();
+			while (rset.next()) {
+				list.add(new HClass(rset.getInt("CLASS_NO"), rset.getString("CLASS_NAME"),
+						rset.getDate("CLASS_ENROLL_DATE"), rset.getDate("CLASS_END_DATE"),
+						rset.getDate("CLASS_APV_DATE"), rset.getString("CLASS_APV_YN"), rset.getString("CLASS_STATUS"),
+						rset.getDouble("CLASS_TIME"), rset.getInt("CLASS_TUTEE_MIN"), rset.getInt("CLASS_TUTEE_MAX"),
+						rset.getString("CLASS_CONTENT"), rset.getInt("CLASS_FEE"), rset.getInt("TUTOR_NO"),
+						rset.getDate("CLASS_START_DATE"), rset.getString("CATEGORY_NAME")));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+
+		return list;
+	}
+
+	public HClass selectClassOpen(Connection conn, int bId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HClass c = null;
+		
+		String query = prop.getProperty("selectClassOpenFile");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bId);
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				c = new HClass(rset.getInt("CLASS_NO"), 
+						  rset.getString("CLASS_NAME"),
+						  rset.getDate("CLASS_ENROLL_DATE"),
+						  rset.getDate("CLASS_END_DATE"),
+						  rset.getDate("CLASS_APV_DATE"),
+						  rset.getString("CLASS_APV_YN"),
+						  rset.getString("CLASS_STATUS"),
+						  rset.getDouble("CLASS_TIME"),
+						  rset.getInt("CLASS_TUTEE_MIN"),
+						  rset.getInt("CLASS_TUTEE_MAX"),
+						  rset.getString("CLASS_CONTENT"),
+						  rset.getInt("CLASS_FEE"),
+						  rset.getInt("TUTOR_NO"),
+						  rset.getDate("CLASS_START_DATE"),
+						  rset.getString("CATEGORY_NAME"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return c;
+	}
+	
+	
+	public ArrayList<HClassFile> selectOpenClassFileList(int bId, Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<HClassFile> list = null;
+		
+		String query = prop.getProperty("selectDetailFileList");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bId);
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<HClassFile>();
+			while(rset.next()) {
+				HClassFile f = new HClassFile();
+				f.setFileNo(rset.getInt("FILE_NO"));
+				f.setOriginName(rset.getString("ORIGIN_NAME"));
+				f.setChangeName(rset.getString("CHANGE_NAME"));
+				f.setFilePath(rset.getString("FILE_PATH"));
+				f.setUploadDate(rset.getDate("FILE_UPLOAD"));
+				f.setFileThumbYn(rset.getString("FILE_THUMB_YN"));
+				list.add(f);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	public int deleteOpenClass(Connection conn, int bId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteOpenClass");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
+	}	
 
 }
