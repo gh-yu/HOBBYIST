@@ -815,6 +815,78 @@ public class HClassDAO {
 		
 		
 		return result;
+	}
+
+
+	public ArrayList<HClass> selectClassListByCate(Connection conn, String cateName) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<HClass> list = null;
+		
+		String query = prop.getProperty("selectClassListByCate");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, cateName);
+			rset  = pstmt.executeQuery();
+			System.out.println(cateName);
+			list = new ArrayList<HClass>();
+			while(rset.next()) {
+				HClass c = new HClass(rset.getInt("CLASS_NO"), 
+									  rset.getString("CLASS_NAME"),
+									  rset.getDate("CLASS_ENROLL_DATE"),
+									  rset.getDate("CLASS_END_DATE"),
+									  rset.getDate("CLASS_APV_DATE"),
+									  rset.getString("CLASS_APV_YN"),
+									  rset.getString("CLASS_STATUS"),
+									  rset.getDouble("CLASS_TIME"),
+									  rset.getInt("CLASS_TUTEE_MIN"),
+									  rset.getInt("CLASS_TUTEE_MAX"),
+									  rset.getString("CLASS_CONTENT"),
+									  rset.getInt("CLASS_FEE"),
+									  rset.getInt("TUTOR_NO"),
+									  rset.getDate("CLASS_START_DATE"),
+									  rset.getString("CATEGORY_NAME"));
+				list.add(c);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		System.out.println(list);
+		return list;
 	}	
+	
+	public HClassSchedule selectSchedule(Connection conn, int cNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HClassSchedule s1 = null;
+		
+		String query = prop.getProperty("selectClassDetail");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, cNo);
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				s1 = new HClassSchedule(rset.getInt("CLASS_SCHEDULE_NO"), 
+						rset.getInt("CLASS_SCHEDULE_DAY"), 
+						rset.getString("CLASS_SCHEDULE_TIME"),
+						rset.getInt("CLASS_NO"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return s1;
+	}
 
 }

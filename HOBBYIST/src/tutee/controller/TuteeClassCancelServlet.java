@@ -1,26 +1,27 @@
-package tutor.controller;
+package tutee.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import tutor.model.service.SnsService;
-import tutor.model.vo.Sns;
+import tutee.model.servuce.TuteeService;
 
 /**
- * Servlet implementation class InsertSnsServlet
+ * Servlet implementation class TuteeClassCancelServlet
  */
-@WebServlet("/insertSns.me")
-public class InsertSnsServlet extends HttpServlet {
+@WebServlet("/cancelTClass.te")
+public class TuteeClassCancelServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertSnsServlet() {
+    public TuteeClassCancelServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,21 +30,15 @@ public class InsertSnsServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		String facebook = request.getParameter("fbk");
-		String twitter = request.getParameter("twit");
-		String youtube = request.getParameter("yout");
-		String instagram = request.getParameter("insta");
+		int tcNo = Integer.parseInt(request.getParameter("tuteeClassNo"));
 		
-		Sns sns = new Sns(facebook, twitter, youtube, instagram);
-		int result = new SnsService().insertSns(sns);
+		int result = new TuteeService().cancelTuteeClass(tcNo);
 		
-		if(result > 0) {
-			response.sendRedirect("tutorInform.me");
-		} else {
-			request.setAttribute("msg", "sns등록 실패");
-			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
-		}
+		System.out.println(result);
+		PrintWriter out = response.getWriter();
+		out.print(result);
+		out.flush();
+		out.close();
 	}
 
 	/**
