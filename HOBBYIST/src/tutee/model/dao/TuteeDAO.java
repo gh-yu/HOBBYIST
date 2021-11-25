@@ -54,6 +54,7 @@ public class TuteeDAO {
 			list = new ArrayList<LikeClass>();
 			while(rset.next()) {
 				list.add(new LikeClass(rset.getInt("CLASS_NO"),
+									   rset.getString("CLASS_NAME"),
 									   rset.getString("MEMBER_EMAIL"),
 									   rset.getDate("CLIP_DATE")));
 			}
@@ -207,9 +208,9 @@ public class TuteeDAO {
 		String query = null; 
 				
 		if (i == 0) {
-			query = prop.getProperty("selectTcBeforeList");
+			query = prop.getProperty("selectTClassBeforeList");
 		} else {
-			query = prop.getProperty("selectTcAfterList");
+			query = prop.getProperty("selectTClassAfterList");
 		}
 		
 		try {
@@ -269,6 +270,57 @@ public class TuteeDAO {
 		}
 		
 		return list;
+	}
+
+
+	public int cancelTuteeClasS(Connection conn, int tcNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("cancelTuteeClass");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, tcNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	public int countEnrollTuteeNum(Connection conn, TuteeClass tc) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int count = 0;	
+		
+		String query = prop.getProperty("countEnrollTuteeNum");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setDate(1, tc.getTueeClassRevDate());
+			pstmt.setInt(2, tc.getClassNo());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt("COUNT(*)");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return count;
 	}
 
 }

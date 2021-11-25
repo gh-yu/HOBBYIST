@@ -21,13 +21,13 @@ import tutor.model.vo.Tutor;
  * Servlet implementation class tuteeClassDetailServlet
  */
 @WebServlet("/detail.te")
-public class tuteeClassDetailServlet extends HttpServlet {
+public class TuteeClassDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public tuteeClassDetailServlet() {
+    public TuteeClassDetailServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

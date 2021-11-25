@@ -106,4 +106,29 @@ public class TuteeService {
 		
 		return list;
 	}
+
+	public int cancelTuteeClass(int tcNo) {
+		Connection conn = getConnection();
+		
+		int result = tDAO.cancelTuteeClasS(conn, tcNo);
+		
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+
+	public int countEnrollTuteeNum(TuteeClass tc) {
+		Connection conn = getConnection();
+		
+		int count = tDAO.countEnrollTuteeNum(conn, tc);
+		
+		close(conn);
+		
+		return count;
+	}
 }	
