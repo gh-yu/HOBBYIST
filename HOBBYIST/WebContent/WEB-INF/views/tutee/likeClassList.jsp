@@ -1,13 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="member.model.vo.Member, hobbyistClass.model.vo.*, tutee.model.vo.TuteeClass, java.util.ArrayList"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member, hobbyistClass.model.vo.*, tutee.model.vo.*, java.util.ArrayList"%>
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
-	ArrayList<HClass> tcBeforeList = (ArrayList)request.getAttribute("tcBeforeList");
-	ArrayList<HClass> tcAfterList = (ArrayList)request.getAttribute("tcAfterList");
+	ArrayList<LikeClass> lcList = (ArrayList)request.getAttribute("lcList");
 	ArrayList<HClassFile> fileList = (ArrayList)request.getAttribute("fileList");
-
-	ArrayList<TuteeClass> tcScheduleBefore = (ArrayList)request.getAttribute("tcScheduleBefore");
-	ArrayList<TuteeClass> tcScheduleAfter = (ArrayList)request.getAttribute("tcScheduleAfter");
 %>
 <!DOCTYPE html>
 <html>
@@ -35,7 +31,7 @@
 </head>
 <body>
 
-	<div class="banner_bg_main">
+<div class="banner_bg_main">
 		<div class="container">
 			<div class="header_section_top">
 				<div class="row">
@@ -116,17 +112,12 @@
 						</div>
 					</div>
 					<ul class="nav">
-					<li class="nav-item active"><a
+					<li class="nav-item"><a
 						href="<%=request.getContextPath()%>/myClass.te"> <i
 							class="la la-toggle-on"></i>
 							<p>MY CLASS</p>
-							<% if (tcBeforeList.isEmpty()) { %>
-								<span class="badge badge-primary">0</span>
-							<% } else { %>
-								<span class="badge badge-primary"><%= tcBeforeList.size() %></span>
-							<% } %>
 					</a></li>
-					<li class="nav-item"><a
+					<li class="nav-item  active"><a
 						href="<%=request.getContextPath()%>/likedClass.te"> <i
 							class="la la-gittip"></i>
 							<p>LIKED CLASS</p>
@@ -173,10 +164,10 @@
 			<div class="main-panel">
 				<div class="content class_content">
 		 			<div class="container-fluid"> 
-						<h4 class="page-title">수강전 클래스</h4>
-						<div class="row class beforClass">
-					<% if (!tcBeforeList.isEmpty()) { %>
-							<% 	for (HClass c : tcBeforeList) { %>
+						<h4 class="page-title">찜한 클래스</h4>
+						<div class="row class likeClass">
+					<% if (!lcList.isEmpty()) { %>
+							<% 	for (LikeClass c : lcList) { %>
 							<div class="col-md-4">
 							<div class="card card-stats card-primary active">
 									<div class="card-body">
@@ -195,23 +186,15 @@
 									<% 		} %>
 									<% } %>
 	 										<div class="icon-big text-center">
-	 											<h5><%= c.getClassName() %></h5>
-												<!-- <i class="la la-calendar-plus-o"></i> -->
-									<% if (!tcScheduleBefore.isEmpty()) { %>
-									<%		for(TuteeClass tcB : tcScheduleBefore ) { %>	
-									<%			if(c.getClassNo() == tcB.getClassNo()) { %>
-												<p>다가오는 수강일자는 <b><%= tcB.getTueeClassRevDate() %></b>일입니다.</p>
-									<%			} %>
-									<% 		} %>
-									<% } %>									
+	 											<h5><%= c.getClassName() %></h5>				
 											</div>
 											<br><br><br>
 											<div class="btn_main">
 												<div class="buy_bt">
-													<a href="<%= request.getContextPath() %>/detail.te?cNo=<%= c.getClassNo() %>">Cancel</a> 
+													<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">Buy Now</a> 
 												</div>
 												<div class="seemore_bt">
-													<a href="<%= request.getContextPath() %>/detail.te?cNo=<%= c.getClassNo() %>">See More</a> 
+													<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">See More</a> 
 												</div>
 											</div>											
 										</div>
@@ -221,59 +204,7 @@
 					<% 		}  %>
 					<% }  %>	
 						</div>			
-					</div> 
-					<br><br>
-					<div class="container-fluid">
-						<h4 class="page-title">수강완료 클래스</h4>
-						<div class="row class afterClass">
-					<% if (!tcAfterList.isEmpty()) { %>
-							<% 	for (HClass c : tcAfterList) { %>
-							<div class="col-md-4">
-							<div class="card card-stats card-primary active">
-									<div class="card-body">
-										<div class="row class-card">
-<!-- 											<div class="col-5"> 
-											
-											</div> -->
-									<% if (!fileList.isEmpty()) { %>
-									<%		for(HClassFile f : fileList) { %>
-									<%			if(c.getClassNo() == f.getBoardNo()) { %>
-											<div class="thumbnailArea" style="height: 225px; width: 100%;">
-												<img style="min-width:100%; height: 100%;" src="<%= request.getContextPath() %>/uploadFiles/<%= f.getChangeName() %>"
-													class="thumbnail" alt="Thumbnail">
-											</div>
-									<%			} %>
-									<% 		} %>
-									<% } %>
-	 										<div class="icon-big text-center">
-	 											<h5><%= c.getClassName() %></h5>
-												<!-- <i class="la la-calendar-plus-o"></i> -->
-									<% if (!tcScheduleAfter.isEmpty()) { %>
-									<%		for(TuteeClass tcA : tcScheduleAfter) { %>	
-									<%			if(c.getClassNo() == tcA.getClassNo()) { %>
-												<p>최근 수강완료일자는 <b><%= tcA.getTueeClassRevDate() %></b>일입니다.</p>
-									<%			} %>
-									<% 		} %>
-									<% } %>															
-											</div>
-											<br><br><br>
-											<div class="btn_main">
-												<div class="buy_bt">
-													<a href="<%= request.getContextPath() %>/detail.te?cNo=<%= c.getClassNo() %>">Write Review</a> 
-												</div>
-												<div class="seemore_bt">
-													<a href="<%= request.getContextPath() %>/detail.te?cNo=<%= c.getClassNo() %>">See More</a> 
-												</div>
-											</div>
-										</div>
-										
-									</div>
-								</div>
-							</div> 
-					<% 		}  %>
-					<% }  %>
-						</div>					
-					</div>					
+					</div>				
 				</div>
 			</div>
 

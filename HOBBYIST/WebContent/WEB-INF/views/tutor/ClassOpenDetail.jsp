@@ -3,8 +3,10 @@
 	pageEncoding="UTF-8"
 	import="java.util.ArrayList, hobbyistClass.model.vo.*, member.model.vo.Member, hobbyistClass.model.vo.*"%>
 <%
+	Member loginUser = (Member) session.getAttribute("loginUser");
 	HClass hc = (HClass)request.getAttribute("hc");
 	ArrayList<HClassFile> f = (ArrayList)request.getAttribute("fileList");
+	ArrayList<HClassSchedule> s = (ArrayList)request.getAttribute("sList");
 	HClassSchedule hs = (HClassSchedule)request.getAttribute("hSchedule");
 %>
 <!DOCTYPE html>
@@ -15,6 +17,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 <%@ include file="../common/css.jsp"%>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script>
 	// 내용 작성 부분의 공간을 클릭할 때 파일 첨부 창이 뜨도록 설정하는 함수
 	$(function() {
@@ -34,7 +37,6 @@
 		});
 	});
 
-	// 각각의 영역에 파일을 첨부 했을 경우 미리 보기가 가능하도록 하는 함수
 	function LoadImg(value, num) {
 		if (value.files && value.files[0]) {
 			var reader = new FileReader();
@@ -99,16 +101,10 @@ img.ui-datepicker-trigger {
 <script>
 	$(function() {
 
-		//오늘 날짜를 출력
 		$("#today").text(new Date().toLocaleDateString());
-
-		//datepicker 한국어로 사용하기 위한 언어설정
+	
 		$.datepicker.setDefaults($.datepicker.regional['ko']);
 
-		// 시작일(fromDate)은 종료일(toDate) 이후 날짜 선택 불가
-		// 종료일(toDate)은 시작일(fromDate) 이전 날짜 선택 불가
-
-		//시작일.
 		$('#fromDate').datepicker({
 			showOn : "both", // 달력을 표시할 타이밍 (both: focus or button)
 			buttonImage : "images/calendar.gif", // 버튼 이미지
@@ -175,10 +171,20 @@ img.ui-datepicker-trigger {
 				</div>
 				<div class="info">
 					<a class="" data-toggle="collapse" href="#collapseExample"
-						aria-expanded="true"> <span> <b>김튜터</b> <!-- loginUser의 NickName 불러오기 -->
-							<span class="user-level">튜터(Tutor)</span> <!-- loginUser의 grade 불러오기 -->
-							<span class="caret"></span>
-					</span>
+						aria-expanded="true"> <span>
+									<!-- loginUser의 NickName 불러오기 -->
+									<b><%= loginUser.getMemberNickName() %></b>
+									<!-- loginUser의 grade 불러오기 -->
+								<% if(loginUser.getMemberGrade().equals("A")) { %>
+									<span class="user-level">관리자(admin)</span>
+								<% } else if(loginUser.getMemberGrade().equals("B")) { %>
+									<span class="user-level">튜터(Tutor)</span>
+								<% } else { %>
+									<span class="user-level">튜티(Tutee)</span>
+								<% }  %>
+									<span class="caret"></span>
+								</span>
+					<
 					</a>
 					<div class="clearfix"></div>
 
@@ -246,16 +252,6 @@ img.ui-datepicker-trigger {
 						class="la la-calendar-o"></i>
 						<p>TUTOR ON CLASS</p> <span class="badge badge-primary">5</span>
 				</a></li>
-				<!-- DAO가 없기 때문에 빨간줄이 떠서 주석처리 / model단 받아오시면 주석풀면 됩니다. -->
-				<%-- <%
-							} else {
-					%> --%>
-				<li class="nav-item update-pro">
-					<button onclick="reservation()">
-						<i class="la la-hand-pointer-o"></i>
-						<p>튜터 신청하기</p>
-					</button>
-				</li>
 			</ul>
 		</div>
 	</div>
@@ -263,7 +259,7 @@ img.ui-datepicker-trigger {
 
 	<!-- 메인 영역 -->
 	<div class="main-panel">
-		<form action="<%=request.getContextPath()%>/update.tc" method="post" id="detailForm"
+		<form action="<%=request.getContextPath()%>/classupdate.hc" method="post" id="detailForm"
 			encType="multipart/form-data" onsubmit="return check();">
 			<div class="content">
 				<div class="container-fluid">
@@ -279,21 +275,21 @@ img.ui-datepicker-trigger {
 									<div class="form-group">
 										<label for="exampleFormControlSelect1">카테고리</label> <span
 											class="badge badge-danger">필수</span> <input type="hidden"
-											name="bid" value="<%=hc.getClassNo()%>"> <select
-											class="form-control" id="category_class" name="category" value = "<%=hc.getcategoryName()%>">
-											<option value="1">라이브</option>
-											<option value="2">개발/코딩</option>
-											<option value="3">인테리어</option>
-											<option value="4">요리</option>
-											<option value="5">악기</option>
-											<option value="6">건강/헬스</option>
-											<option value="7">글쓰기</option>
-											<option value="8">사진</option>
-											<option value="9">디지털 드로잉</option>
-											<option value="10">드로잉</option>
-											<option value="11">영상 편집</option>
-											<option value="12">주식</option>
-											<option value="13">사주/타로</option>
+											name="bid" value="<%=hc.getClassNo()%>"> 
+											<select class="form-control" id="category_class" name="category">
+											<option class="cate"value="1">라이브</option>
+											<option class="cate"value="2">개발/코딩</option>
+											<option class="cate"value="3">인테리어</option>
+											<option class="cate"value="4">요리</option>
+											<option class="cate"value="5">악기</option>
+											<option class="cate"value="6">건강/헬스</option>
+											<option class="cate"value="7">글쓰기</option>
+											<option class="cate"value="8">사진</option>
+											<option class="cate"value="9">디지털 드로잉</option>
+											<option class="cate"value="10">드로잉</option>
+											<option class="cate"value="11">영상 편집</option>
+											<option class="cate"value="12">주식</option>
+											<option class="cate"value="13">사주/타로</option>
 										</select> <small id="selectHelp" class="form-text text-muted">클래스
 											카테고리를 지정해주세요</small>
 									</div>
@@ -302,10 +298,9 @@ img.ui-datepicker-trigger {
 										<label for="className">클래스 이름</label> <span
 											class="badge badge-danger">필수</span>
 										<div class="form-floating mb-3">
-											<input type="email" class="form-control" id="floatingInput"
-												placeholder="name@example.com" name="title"
-												value="<%=hc.getClassName()%>" required> <label
-												for="floatingInput">컨셉이 잘 드러나는 클래스의 이름을 정해주세요</label>
+											<input type="text" class="form-control" id="floatingInput"
+												name="title" value="<%=hc.getClassName()%>" required> 
+												<label for="floatingInput">컨셉이 잘 드러나는 클래스의 이름을 정해주세요</label>
 										</div>
 									</div>
 									<!-- 이미지 div 영역 안에 넣는 것 추가해야함 (div container 안에 담기지 않음) -->
@@ -323,7 +318,7 @@ img.ui-datepicker-trigger {
 													<%
 														if (f.get(i).getFileThumbYn().equals("Y")) { // fileLevel이 0이면 썸네일임
 													%>
-													<img id="titleImg"
+													<img id="titleImg" width = "400px"
 														src="<%=request.getContextPath()%>/uploadFiles/<%=f.get(i).getChangeName()%>">
 													<%
 														}
@@ -355,7 +350,7 @@ img.ui-datepicker-trigger {
 											%>
 											<td>
 												<div class="detailImgArea">
-													<img class="detailImg" id="detailImg<%=i%>"	src="<%=request.getContextPath()%>/uploadFiles/<%=f.get(i).getChangeName()%>">
+													<img class="detailImg" width = "250px" id="detailImg<%=i%>"	src="<%=request.getContextPath()%>/uploadFiles/<%=f.get(i).getChangeName()%>">
 												</div>
 											</td>
 											<%
@@ -420,40 +415,17 @@ img.ui-datepicker-trigger {
 											id="dateHelp" class="form-text text-muted"> TODAY : <span
 											id="today"></span></small>
 									</div>
-<!-- 									<fieldset style="width: 680px;"> -->
-<!-- 										<div class="form-group"> -->
-<!-- 											<label for="exampleFormControlSelect1">클래스 요일 선택</label> -->
-<!-- 											<p class="demo"> -->
-<!-- 												<label class="form-check-label"> <input -->
-<!-- 													class="form-check-input" id="dayOfWeek0" type="checkbox" -->
-<!-- 													name="day" value="일"> <span class="form-check-sign">SUN</span> -->
-<!-- 												</label> <label class="form-check-label"> <input -->
-<!-- 													class="form-check-input" id="dayOfWeek1" type="checkbox" -->
-<!-- 													name="day" value="월"> <span class="form-check-sign">MON</span> -->
-<!-- 												</label> <label class="form-check-label"> <input -->
-<!-- 													class="form-check-input" id="dayOfWeek2" type="checkbox" -->
-<!-- 													name="day" value="화"> <span class="form-check-sign">TUE</span> -->
-<!-- 												</label> <label class="form-check-label"> <input -->
-<!-- 													class="form-check-input" id="dayOfWeek3" type="checkbox" -->
-<!-- 													name="day" value="수"> <span class="form-check-sign">WED</span> -->
-<!-- 												</label> <label class="form-check-label"> <input -->
-<!-- 													class="form-check-input" id="dayOfWeek4" type="checkbox" -->
-<!-- 													name="day" value="목"> <span class="form-check-sign">THU</span> -->
-<!-- 												</label> <label class="form-check-label"> <input -->
-<!-- 													class="form-check-input" id="dayOfWeek5" type="checkbox" -->
-<!-- 													name="day" value="금"> <span class="form-check-sign">FRI</span> -->
-<!-- 												</label> <label class="form-check-label"> <input -->
-<!-- 													class="form-check-input" id="dayOfWeek6" type="checkbox" -->
-<!-- 													name="day" value="토"> <span class="form-check-sign">SAT</span> -->
-<!-- 												</label> <br> 시간 : <input type="time" id="time" name="time"> -->
-<!-- 												<br> <input type="button" class="schBtn" -->
-<!-- 													id="addSchedule" value="스케줄 추가" style="float: right"> -->
-<!-- 												<input type="button" class="schBtn" id="cancelSchedule" -->
-<!-- 													value="스케줄 취소" style="float: right"><br> -->
-<!-- 												<textarea id="schedule" name="schedule" rows="10" cols="55" -->
-<%-- 													style="resize: none;" readonly><%=hs.getSchduleDay()%><%=hs.getSchduleTime()%> </textarea> --%>
-<!-- 											</p> -->
-<!-- 										</div> -->
+<!--  									<fieldset style="width: 680px;"> --> 
+<!-- 										<label for="exampleFormControlSelect1">강의 시간 선택 &nbsp;</label>  -->
+<!-- 												<select id="time" name="time" style="width: 100px;"> -->
+<%-- 												<% for (int i = 0; i < s.size(); i++) { %> --%>
+<%-- 												<% 		if (s.size() > 1 && i != 0 && s.get(i-1).getSchduleTime().equals(s.get(i).getSchduleTime())) { %> --%>
+																								
+<%-- 												<% 		} else { %> --%>
+<%-- 															<option class="timeOption" value="<%= s.get(i).getSchduleTime() %>"><%= s.get(i).getSchduleTime() %></option> --%>
+<%-- 												<% 		} %> --%>
+<%-- 												<% } %> --%>
+<!-- 												</select> -->
 <!-- 									</fieldset> -->
 									<script>
 										$('#addSchedule')
@@ -580,7 +552,7 @@ img.ui-datepicker-trigger {
 	<script>
  		function deleteOpenClass(){
 			if(confirm('정말로 삭제하시겠습니까?')) {
-				location.href='<%= request.getContextPath() %>/deleteClassOpen.hc?bId=<%= hc.getClassNo() %>';
+				location.href='<%= request.getContextPath() %>/deleteClassOpen.hc?classno=<%= hc.getClassNo() %>';
 			}
 		} 
 		
@@ -590,6 +562,18 @@ img.ui-datepicker-trigger {
 // 				$('#detailForm').submit(); // form에 대한 submit() -> 제출 
 // 			}
 // 		} 
+
+
+		window.onload = function() {
+   			var inputCate = document.getElementsByClassName('cate');
+    		var category = '<%=hc.getcategoryName()%>';
+
+			for ( var i in inputCate) {
+				if (inputCate[i].innerText == category) {
+					inputCate[i].selected = 'selected';
+				}
+			}
+		}
 	</script>
 
 

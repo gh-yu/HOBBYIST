@@ -18,6 +18,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+#endImage {
+    opacity: 0.2;
+    filter: alpha(opacity=50); /* msie */
+}
+</style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <%@ include file="../common/css.jsp"%>
@@ -56,9 +62,19 @@
 				</div>
 				<div class="info">
 					<a class="" data-toggle="collapse" href="#collapseExample"
-						aria-expanded="true"> <span> <b>김샘플</b> <!-- loginUser의 NickName 불러오기 -->
-							<span class="user-level">튜티(Tutee)</span> <!-- loginUser의 grade 불러오기 -->
-							<span class="caret"></span>
+						aria-expanded="true"> <span>
+									<!-- loginUser의 NickName 불러오기 -->
+									<b><%= loginUser.getMemberNickName() %></b>
+									<!-- loginUser의 grade 불러오기 -->
+								<% if(loginUser.getMemberGrade().equals("A")) { %>
+									<span class="user-level">관리자(admin)</span>
+								<% } else if(loginUser.getMemberGrade().equals("B")) { %>
+									<span class="user-level">튜터(Tutor)</span>
+								<% } else { %>
+									<span class="user-level">튜티(Tutee)</span>
+								<% }  %>
+									<span class="caret"></span>
+								</span>
 					</span>
 					</a>
 					<div class="clearfix"></div>
@@ -152,7 +168,7 @@
 					<div class="col-md-4">
 						<div class="card card-stats card-primary active">
 							<div class="card-body" >
-								<div class="row justify-content-center">
+								<div class="row class-card">
 									<h2>수강 중인 클래스</h2>
 									<% if (classList.isEmpty() || fileList.isEmpty()) { %>
 									<h1>등록된 강의가 없습니다.</h1>
@@ -164,8 +180,8 @@
 											<% for (int j = 0; j < fileList.size(); j++) { %>
 											<% HClassFile f = fileList.get(j);%>
 											<% if (hc.getClassNo() == f.getBoardNo()) { %>
-											<div class="thumbnailArea">
-												<img width="40%" height="225"
+											<div class="thumbnailArea" style="height: 350px; width: 100%;">
+												<img style="min-width:100%; height: 100%;"
 													src="<%=request.getContextPath()%>/uploadFiles/<%=fileList.get(j).getChangeName() %>"
 													class="thumbnail" alt="Thumbnail">
 											</div>
@@ -181,7 +197,7 @@
 												class="cNo" name="cNo"
 												value="<%=classList.get(i).getClassNo()%>">
 												<button
-													onclick="location.href = '<%=request.getContextPath()%>/classManagement.tt'"
+													onclick="location.href = '<%=request.getContextPath()%>/classManagement.tt?cNo=<%=classList.get(i).getClassNo()%>'"
 													type="button">
 													<span>클래스 관리하기</span>
 												</button>
@@ -200,7 +216,7 @@
 					<div class="col-md-4">
 						<div class="card card-stats card-success">
 							<div class="card-body">
-								<div class="row justify-content-center">
+								<div class="row class-card">
 									<h2>수강 신청한 클래스</h2>
 									<% if (classAList.isEmpty() || fileList.isEmpty()) { %>
 									등록된 강의가 없습니다.
@@ -212,8 +228,8 @@
 											<% for (int j = 0; j < fileList.size(); j++) { %>
 											<% HClassFile f = fileList.get(j);%>
 											<% if (hca.getClassNo() == f.getBoardNo()) { %>
-											<div class="thumbnailArea">
-												<img width="40%" height="225"
+											<div class="thumbnailArea" style="height: 350px; width: 100%;">
+												<img style="min-width:100%; height: 100%;"
 													src="<%=request.getContextPath()%>/uploadFiles/<%=fileList.get(j).getChangeName() %>"
 													class="thumbnail" alt="Thumbnail">
 											</div>
@@ -249,7 +265,7 @@
 						<div class="col-md-4">
 							<div class="card card-stats card-danger">
 								<div class="card-body">
-									<div class="row justify-content-center">
+									<div class="row class-card">
 										<h2>완료 된 클래스</h2>
 										<% if (classCList.isEmpty() || fileList.isEmpty()) { %>
 										완료된 강의가 없습니다.
@@ -261,8 +277,8 @@
 												<% for (int j = 0; j < fileList.size(); j++) { %>
 												<% HClassFile f = fileList.get(j);%>
 												<% if (hcc.getClassNo() == f.getBoardNo()) { %>
-												<div class="thumbnailArea">
-													<img width="40%" height="225"
+												<div class="thumbnailArea" style="height: 350px; width: 100%;">
+													<img style="min-width:100%; height: 100%;" id = "endImage"
 														src="<%=request.getContextPath()%>/uploadFiles/<%=fileList.get(j).getChangeName() %>"
 														class="thumbnail" alt="Thumbnail">
 												</div>

@@ -1,3 +1,4 @@
+<%@page import="org.apache.catalina.tribes.util.TcclThreadFactory"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="hobbyistClass.model.vo.*, member.model.vo.Member, 
 								tutor.model.vo.Tutor, java.util.ArrayList, tutee.model.vo.TuteeClass"%>
@@ -25,7 +26,7 @@
 	}
 	
 	.cancelBtn{
-		background: #6495ED;
+		background: #CD5C5C /* #6495ED */;
 		font-weight: bold;
 		cursor: pointer;
 		color: white;
@@ -33,6 +34,7 @@
 		border: none;
 		border-radius: 5px;
 	}
+	
 
 </style>
 </head>
@@ -46,7 +48,7 @@
 					<div class="col-sm-12">
 						<div class="custom_menu">
 							<ul>
-								<li><a href="#">MAIN</a></li>
+								<li><a href="<%= request.getContextPath() %>">MAIN</a></li>
 							<% if(loginUser == null) { %>
 								<li></li>
 								<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">LIKED-CLASS</a></li>
@@ -178,7 +180,7 @@
 													<th width="100px">예약시간</th>
 													<th width="150px">수강상태</th>
 													<th width="150px">등록일</th>
-													<th width="80px">수강취소</th>
+													<th width="120px">수강취소</th>
 												</tr>
 										 	</thead>
 										 	<tbody>
@@ -191,8 +193,10 @@
 												<td><%= s.get(i).getTuteeClassStatus().equals("A") ? "수강 전" : s.get(i).getTuteeClassStatus().equals("B") ? "수강 완료" : "수강 취소"%></td>
 												<td><%= s.get(i).getTuteeClassEnrollDate() %></td>
 												<% if (s.get(i).getTuteeClassStatus().equals("A")) { %>
-												<td><input type="button" class="cancelBtn" name="cancel" value="취소"></td>
-												<td hidden="hidden"><%= s.get(i).getTuteeClassNo() %></td>
+												<td>
+													<input type="button" class="cancelBtn" name="cancel" value="취소">
+													<input type="hidden" value="<%= s.get(i).getTuteeClassNo() %>">
+												</td>
 												<% } %>
 											</tr>	
 											<% 		} %>
@@ -204,45 +208,14 @@
 										 			<th colspan="6">수강료: <%= c.getClassFee() %>원</th>
 										 		</tr>
 										 		<tr><th colspan="6"><br></th></tr>
+										 		<tr>
+										 			<td colspan="6"><a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">
+										 			<span style="color: #9ED4C2; font-weight: bolder;">클래스 신청 페이지로 이동</span></a></td>
+										 		</tr>
+										 		<tr><th colspan="6"><br></th></tr>
 										 	</tfoot>
 										</table>
 									</div>
-<%-- 									<div class="form-group">
-										<div class="apply-class">
-											<form action="<%= request.getContextPath() %>/applyClass.te" method="post"  onsubmit="return check();">
-												<label for="exampleFormControlSelect1">클래스 일정 &nbsp;</label> 
-												<input type="text" id="datepicker" name="date" required readonly style="background: white;">
-												<small id="imageHelp" class="form-text text-muted">수강을 원하시는 날짜를 선택해주세요(최대 1개)</small> <br> 
-												
-												<label for="exampleFormControlSelect1">강의 시간 선택 &nbsp;</label> 
-												<select id="time" name="time" style="width: 100px;">
-												<% for (int i = 0; i < s.size(); i++) { %>
-												<% 		if (s.size() > 1 && i != 0 && s.get(i-1).getSchduleTime().equals(s.get(i).getSchduleTime())) { %>
-																								
-												<% 		} else { %>
-															<option class="timeOption" value="<%= s.get(i).getSchduleTime() %>"><%= s.get(i).getSchduleTime() %></option>
-												<% 		} %>
-												<% } %>
-												</select>
-												<small id="imageHelp" class="form-text text-muted">수강을 원하시는 시간을 선택해주세요(최대 1개)</small> <br>
-												
-												<input type="hidden" name="cNo" value="<%= c.getClassNo() %>">
-												<div id="price">
-													<label for="exampleFormControlSelect1">수강료 &nbsp;</label> 
-													<input placeholder="<%= c.getClassFee() %>원" disabled>
-													<small id="imageHelp" class="form-text text-muted">수강료는 이미 책정된 내역으로 변경할 수 없습니다.</small> 
-												
-													<br><br><br>
-												</div>	
-												<div align="center">
-													<input type="submit" id="btnSub" value="신청">
-												</div>
-												<br>
-											</form>
-										</div> --%>
-									</div>
-									
-									
 								</div>
 							</div>
 						</div>
@@ -315,10 +288,47 @@
 	    },
    });
 
+	$('.cancelBtn').off().on('click', function(){
+		$cancelBtn = $(this);
+		var tuteeClassNo = $(this).next().val();
+		
+		if (confirm('정말 취소하시겠습니까?')){
+			$.ajax({
+				url: 'cancelTClass.te',
+				data: {tuteeClassNo: tuteeClassNo},
+				type: 'POST',
+				success: function(data) {
+					console.log(data);
+					
+					if (data.trim() == '1') {
+						$cancelBtn.parent().parent().children().eq(3).html('수강 취소');
+						$cancelBtn.remove();
+					}
+				},
+				error: function(data) {
+					console.log(data);
+				}
+				
+			});
+		}
+		
+		
+		
+	});
+	
+	
 	// like-button js, ajax
 	$(function() {
 		// 화면 로드될때 실행되는 함수, window.onload = function(){}과 같음
 		// 로그인이 되어 있고, 클래스리스트가 존재하면 실행
+		console.log(<%= t.getMemberStatus() %>);
+		if (<%= t.getMemberStatus() %> == 0) {
+			console.log(<%= t.getMemberStatus() %>);
+			alert('탈퇴한 튜터의 클래스입니다.');
+		} else if ('<%= c.getClassStatus().trim() %>' == "C") { 
+			alert('튜터의 사정으로 종료된 클래스입니다.');
+		}
+		
 		<% if(loginUser != null) { %>
 			// memberEmail이 일치하는 likeClassList를 select해와서  
 			// classNo와 likeClassList의 classNo랑 일치하면  $(this).toggleClass("liked");

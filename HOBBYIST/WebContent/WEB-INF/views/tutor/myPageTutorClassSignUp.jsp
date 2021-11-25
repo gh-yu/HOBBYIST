@@ -14,6 +14,7 @@
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 <%@ include file="../common/css.jsp" %>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
 <script>
 					// 내용 작성 부분의 공간을 클릭할 때 파일 첨부 창이 뜨도록 설정하는 함수
 					$(function(){
@@ -173,9 +174,19 @@ img.ui-datepicker-trigger {
 					</div>
 					<div class="info">
 						<a class="" data-toggle="collapse" href="#collapseExample"
-							aria-expanded="true"> <span> <b>김튜터</b> <!-- loginUser의 NickName 불러오기 -->
-								<span class="user-level">튜터(Tutor)</span> <!-- loginUser의 grade 불러오기 -->
-								<span class="caret"></span>
+							aria-expanded="true"> <span>
+									<!-- loginUser의 NickName 불러오기 -->
+									<b><%= loginUser.getMemberNickName() %></b>
+									<!-- loginUser의 grade 불러오기 -->
+								<% if(loginUser.getMemberGrade().equals("A")) { %>
+									<span class="user-level">관리자(admin)</span>
+								<% } else if(loginUser.getMemberGrade().equals("B")) { %>
+									<span class="user-level">튜터(Tutor)</span>
+								<% } else { %>
+									<span class="user-level">튜티(Tutee)</span>
+								<% }  %>
+									<span class="caret"></span>
+								</span>
 						</span>
 						</a>
 						<div class="clearfix"></div>
@@ -245,6 +256,8 @@ img.ui-datepicker-trigger {
 							class="la la-calendar-o"></i>
 							<p>TUTOR ON CLASS</p><span class="badge badge-primary">5</span>
 					</a></li>
+				
+					
 				</ul>
 			</div>
 		</div>
@@ -290,7 +303,7 @@ img.ui-datepicker-trigger {
 											class="badge badge-danger">필수</span>
 										<div class="form-floating mb-3">
 											<input type="text" class="form-control" id="floatingInput"
-												placeholder="" name = "title" required> 
+												name = "title" required> 
 											<label for="floatingInput">컨셉이 잘 드러나는 클래스의 이름을 정해주세요</label>
 										</div>
 									</div>

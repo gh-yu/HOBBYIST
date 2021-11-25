@@ -2,6 +2,7 @@
     pageEncoding="UTF-8" import="classNotice.model.vo.ClassNotice , member.model.vo.Member" %>
 <%
 	ClassNotice notice = (ClassNotice)request.getAttribute("classNotice");
+
 %>
 <!DOCTYPE html>
 <html>
@@ -38,7 +39,7 @@
 						<th>작성자</th>
 						<td>
 							<%= notice.getClassBoardWriter() %>
-							<input type="hidden" name="nickName" value="<%= notice.getClassBoardWriter() %>"> 
+							<input type="hidden" name="writer" value="<%= notice.getClassBoardWriter() %>"> 
 						</td>
 						<th>작성일</th>			
 						<td>
