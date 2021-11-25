@@ -19,7 +19,7 @@ import tutor.model.vo.Tutor;
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet("/login.me")
+@WebServlet(name = "LoginServlet", urlPatterns = "/login.me")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -86,6 +86,8 @@ public class LoginServlet extends HttpServlet {
 ////			request.getRequestDispatcher("WEB-INF/views/member/loginAction.jsp").forward(request, response);
 //			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
 //		}
+		
+		System.out.println(memberPwd);
 	}
 	
 
