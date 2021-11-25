@@ -196,6 +196,16 @@ public class CSBoardService {
 		
 		return result;	
 	}
+
+	public int selectListPrev() {
+		Connection conn = getConnection();
+		
+		int result  = cDAO.selectListPrev(conn);
+		
+		close(conn);
+		
+		return result;
+	}
 	
 
 }
