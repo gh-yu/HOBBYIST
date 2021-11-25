@@ -1,6 +1,7 @@
 package member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -41,13 +42,30 @@ public class ConfirmMailServlet extends HttpServlet {
 		String receiver = request.getParameter("email");
 		String title = "[HOBBYIST] 유효 메일 확인";
 		String content = "하비스트에서 보낸 이메일 인증 확인용 메일입니다.";
-		String host = "smtp.naver.com";
-		String sender = "secondwind713@naver.com";
-		String senderPwd = "hbst";
+		String host = "smtp.gmail.com";
+		String sender = "hobbyist1125@gmail.com";
+		String senderPwd = "hobbyist!hobby122";
+		
+        String[] str = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
+                "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+        String newCode = new String();
+
+        for (int x = 0; x < 8; x++) {
+            int random = (int) (Math.random() * str.length);
+            newCode += str[random];
+        }
+        
+        content += "<br>코드 : " + newCode.trim();
 		
 		Properties prop = new Properties();
-		prop.setProperty("mail.smtp.host", host);
-		prop.setProperty("mail.smtp.auth", "true");
+//		prop.setProperty("mail.smtp.host", host);
+//		prop.setProperty("mail.smtp.auth", "true");
+		prop.put("mail.smtp.host", host);
+		prop.put("mail.smtp.port", 465); // gmail은 포트번호 465
+		prop.put("mail.smtp.auth", "true");
+		prop.put("mail.smtp.ssl.enable", "true"); 
+		prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+		
 		
 		Session session = Session.getDefaultInstance(prop, new Authenticator() {
 			@Override
@@ -65,7 +83,8 @@ public class ConfirmMailServlet extends HttpServlet {
 			
 			Transport.send(message);
 			
-			response.getWriter().println("sucess");
+			response.getWriter().println(newCode);
+			
 		} catch (AddressException e) {
 			e.printStackTrace();
 			response.getWriter().println("fail");

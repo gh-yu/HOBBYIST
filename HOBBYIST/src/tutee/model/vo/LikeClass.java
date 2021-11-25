@@ -4,14 +4,16 @@ import java.sql.Date;
 
 public class LikeClass {
 	private int classNo;
-	private String memberEmail;
+	private String ClassName;
+ 	private String memberEmail;
 	private Date clipDate;
 	
 	public LikeClass() {}
 
-	public LikeClass(int classNo, String memberEmail, Date clipDate) {
+	public LikeClass(int classNo, String className, String memberEmail, Date clipDate) {
 		super();
 		this.classNo = classNo;
+		ClassName = className;
 		this.memberEmail = memberEmail;
 		this.clipDate = clipDate;
 	}
@@ -22,6 +24,14 @@ public class LikeClass {
 
 	public void setClassNo(int classNo) {
 		this.classNo = classNo;
+	}
+
+	public String getClassName() {
+		return ClassName;
+	}
+
+	public void setClassName(String className) {
+		ClassName = className;
 	}
 
 	public String getMemberEmail() {
@@ -42,6 +52,8 @@ public class LikeClass {
 
 	@Override
 	public String toString() {
-		return "LikeClass [classNo=" + classNo + ", memberEmail=" + memberEmail + ", clipDate=" + clipDate + "]";
+		return "LikeClass [classNo=" + classNo + ", ClassName=" + ClassName + ", memberEmail=" + memberEmail
+				+ ", clipDate=" + clipDate + "]";
 	}
+
 }

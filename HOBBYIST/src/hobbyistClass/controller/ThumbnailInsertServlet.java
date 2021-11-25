@@ -26,7 +26,6 @@ import hobbyistClass.model.service.HClassService;
 import hobbyistClass.model.vo.HClass;
 import hobbyistClass.model.vo.HClassFile;
 import hobbyistClass.model.vo.HClassSchedule;
-import member.model.vo.Member;
 import tutor.model.vo.Tutor;
 
 
@@ -76,7 +75,6 @@ public class ThumbnailInsertServlet extends HttpServlet {
 			
 			String title = multiRequest.getParameter("title");
 			String content = multiRequest.getParameter("content");
-			String writer = ((Member)request.getSession().getAttribute("loginUser")).getMemberEmail();
 			String categoryname = multiRequest.getParameter("category");
 			int min = Integer.parseInt(multiRequest.getParameter("minpeople"));
 			int max = Integer.parseInt(multiRequest.getParameter("maxpeople"));

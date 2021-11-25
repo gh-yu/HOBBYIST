@@ -285,4 +285,24 @@ public class HClassService {
 		
 		return result;
 	}
+
+	public ArrayList<HClass> selectClassListByCate(String cateName) {
+		Connection conn = getConnection();
+		
+		ArrayList<HClass> list = hDAO.selectClassListByCate(conn, cateName);
+	
+		close(conn);
+		
+		return list;
+	}
+	
+	public HClassSchedule selectSchedule(int cNo) {
+		Connection conn = getConnection();
+		
+		HClassSchedule s1 = hDAO.selectSchedule(conn, cNo);
+		
+		close(conn);
+		
+		return s1;
+	}
 }
