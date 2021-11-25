@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import classNotice.model.service.ClassNoticeService;
 import classNotice.model.vo.ClassNotice;
+import hobbyistClass.model.vo.HClass;
 
 /**
  * Servlet implementation class NoticeDetailServlet
@@ -28,10 +29,11 @@ public class ClassNoticeDetailServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int noticeNo = Integer.parseInt(request.getParameter("no"));
+		int noticeNo = Integer.parseInt(request.getParameter("cNo"));
 		
 		ClassNotice notice = new ClassNoticeService().selectClassNotice(noticeNo); 
 		
+		System.out.println("notice11 : "+ notice);
 		String page = null;
 		if (notice != null) {
 			request.setAttribute("classnotice", notice);
