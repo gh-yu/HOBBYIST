@@ -59,7 +59,7 @@ public class JoinServlet extends HttpServlet {
 			
 			if(result > 0) {
 				response.sendRedirect(request.getContextPath());
-				;
+				
 			} else if(result == -1) {
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
@@ -69,7 +69,7 @@ public class JoinServlet extends HttpServlet {
 			} else {
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
-				script.println("alert('DB 오류.')");
+				script.println("alert('중복된 이메일입니다. 이메일을 확인해 주세요')");
 				script.println("history.back()");
 				script.println("</script>");
 			}

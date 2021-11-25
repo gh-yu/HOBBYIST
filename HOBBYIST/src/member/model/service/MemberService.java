@@ -170,7 +170,16 @@ public class MemberService{
 		return tutorList;
 	}
 	
+	// 아이디 찾기
+	public String findIdByPhone(String phone) {
+		Connection conn = getConnection();
+			
+		String email = mDAO.findIdByPhone(conn, phone);
+			
+		close(conn);
 
+		return email;
+	}
 
 
 }
