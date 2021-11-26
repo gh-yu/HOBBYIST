@@ -98,13 +98,13 @@
                 <div class="col-md-5 col-md-offset-1">
                     <form class="signup-form" action="<%=request.getContextPath() %>/join.me" method="post" id="joinForm" name="joinForm" onsubmit="return checkForm();">
                     <div class="form-group">
-                    	<label id="memberE"><b>EMAIL<b></b></label>
+                    	<label id="memberE"><b>EMAIL</b></label>
                         <input type="email" id="email" class="form-control" name="memberEmail" placeholder="사용하실 이메일을 입력하세요" required="required"><br>
                         <input type="button" id="emailCheck" class="form-control" value="이메일 인증">&nbsp;
                         <input type="text" id="code" class="form-control" required="required" placeholder="인증 코드를 입력하세요.">
                     </div>
                     <div class="form-group">
-                       	<label id="memberE"><b>INFORMATION<b></b></label>
+                       	<label id="memberE"><b>INFORMATION</b></label>
                         <input type="text" class="form-control" placeholder="이름을 입력하세요" name="memberName" required="required"><br>
                         <input type="text" id="memberNickName" class="form-control" placeholder="닉네임을 입력하세요" name="memberNickName" required="required">
                         <div><span id="NickNameCheckResult"></span></div><br>
@@ -112,7 +112,7 @@
                         <div><span id="phoneResult"></span></div>
                     </div>
                     <div class="form-group">
-                      	<label id="memberE"><b>PASSWORD<b></b></label>
+                      	<label id="memberE"><b>PASSWORD</b><br>(영어로 시작하는 8-12글자로 영어, 숫자, !*$만 가능합니다)</label>
                         <input type="password" id="joinPwd" class="form-control" placeholder="비밀번호를 입력하세요" name="memberPwd" required="required">
                         <div><span id="pwd1Result"></span></div><br>
                         <input type="password" id="checkPwd"class="form-control" placeholder="비밀번호를 확인해주세요" name="memberPwd" required="required">
@@ -273,7 +273,7 @@
 		
 		if(pwd1Reg.test(pwd1Val) === true){
 			if(pwd1Val.length < 8 || pwd1Val.length > 12 || pwd1Val.length == '') {
-				pwd1Result.css('color', 'red').text('8~12자리까지 입력해주세요.')
+				pwd1Result.css('color', 'red').text('8-12자리로 입력해주세요.')
 				check = false;
 			} else {
 				pwd1Result.css('color', 'green').text('사용할 수 있는 비밀번호 입니다')
@@ -354,7 +354,6 @@
 			url: 'confirmMail.me',
 			data: {email:$('#email').val()},
 			success: function(data){
-				console.log(data);
 				code = data.trim();
 				$('#code').focus();
 			},
