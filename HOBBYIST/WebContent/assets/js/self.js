@@ -45,7 +45,7 @@ function reservation() {
 						
 						$.ajax({
 							url: 'confirmClass.cl',
-							data : {classNo:$(this).parent().parent().find('input[name=classNo]').val()},
+							data : {classNo:$(this).parent().parent().parent().find('input[name=classNo]').val()},
 							success : function(data){
 								console.log(data);
 								
@@ -69,7 +69,7 @@ function reservation() {
 	
 						$.ajax({
 							url: 'rejectClass.cl',
-							data : {classNo:$btn.parent().parent().find('input[name=classNo]').val()},
+							data : {classNo:$btn.parent().parent().parent().find('input[name=classNo]').val()},
 							success : function(data){
 								
 // 								if($btn.parent().parent().find('input[name=classApnYn]').val() =='N'){

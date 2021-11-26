@@ -2,7 +2,6 @@ package tutee.model.vo;
 
 import java.sql.Date;
 
-import hobbyistClass.model.vo.HClass;
 
 public class TuteeClass {
 	
@@ -101,6 +100,5 @@ public class TuteeClass {
 				+ ", tuteeClassEnrollDate=" + tuteeClassEnrollDate + ", tuteeClassFinishDate=" + tuteeClassFinishDate
 				+ ", classNo=" + classNo + ", memberEmail=" + memberEmail + "]";
 	}
-
 
 }

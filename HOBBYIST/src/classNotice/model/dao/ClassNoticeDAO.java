@@ -70,7 +70,10 @@ public class ClassNoticeDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, n.getClassBoardName());
 			pstmt.setString(2, n.getClassBoardContent());
-			pstmt.setString(3, n.getClassBoardWriter());	
+			pstmt.setDate(3, n.getClassBoardDate());
+			pstmt.setInt(4, n.getClassNo());
+			pstmt.setString(5, n.getClassBoardWriter());
+						
 			result = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -204,6 +207,49 @@ public class ClassNoticeDAO {
 		}
 
 		return listCount;
+	}
+	
+	public int noticeclassnum(Connection conn, ClassNotice n) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		String query = prop.getProperty("updateClassNotice");
+
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, n.getClassNo());
+
+
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+	public int selectcNo(Connection conn, int cNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		String query = prop.getProperty("selectcNo");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, cNo);
+
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
 	}
 	
 

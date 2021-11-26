@@ -80,11 +80,13 @@ public class CSBoardListServlet extends HttpServlet {
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, boardLimit, maxPage, startPage, endPage);		
 		
 		ArrayList<RequestBoard> list =  cService.selectList(pi);
-	
+		int countPrev =  cService.selectListPrev();
+		
 		String page = null;
 		if (list != null) {
 			page = "WEB-INF/views/csboard/csBoardList.jsp";
 			request.setAttribute("list", list);
+			request.setAttribute("countPrev", countPrev);
 			request.setAttribute("pi", pi);
 		} else {
 			page = "WEB-INF/views/common/errorPage.jsp";

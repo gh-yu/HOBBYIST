@@ -498,7 +498,7 @@ label[for="fabk"], [for="twit"], [for="insta"], [for="pinter"], [for="youtu"] {
 		
 		  <div class="card-profile-stats-container">
 		    <div class="card-profile-stats-statistic">
-		      <span class="stat"></span>
+		      <span class="stat">아이패드 그림 기초</span>
 		      <p style="font-weight:bold">수강명</p>
 		    </div> <!-- /.card-profile-stats-statistic -->
 		    <div class="card-profile-stats-statistic">

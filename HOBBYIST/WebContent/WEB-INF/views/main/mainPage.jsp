@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="member.model.vo.Member, hobbyistClass.model.vo.*, 
-    hobbyistClass.model.service.HClassService, java.util.ArrayList, java.text.DecimalFormat, hobbyistClass.model.vo.* "%>
+    hobbyistClass.model.service.HClassService, java.util.ArrayList, java.text.DecimalFormat"%>
 <%
 	HClassService hService = new HClassService();
 	ArrayList<HClass> classList = hService.selectClassList();
@@ -35,7 +35,7 @@
 							<!-- 관리자면 LIKED-CLASS버튼 비활성화 -->
 							<% } else { %>
 								<li></li>
-								<li><a href="<%= request.getContextPath() %>/myClass.te">LIKED-CLASS</a></li>
+								<li><a href="<%= request.getContextPath() %>/likedClass.te">LIKED-CLASS</a></li>
 							<% } %>
 								<li></li>
 							<% if(loginUser == null) { %>
@@ -72,18 +72,34 @@
 		<div class="header_section">
 			<div class="container">
 				<div class="containt_main">
-					<div id="mySidenav" class="sidenav">
-						<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+ 					<div id="mySidenav" class="sidenav">
+<!-- 						<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 						<a href="index.jsp">Coding</a> <a href="login.jsp">Decoration</a>
 						<a href="csBoard.jsp">Cooking</a> <a href="jewellery.html">Music</a>
 						<a href="jewellery.html">Health</a> <a href="jewellery.html">Writing</a>
 						<a href="jewellery.html">Picture</a> <a href="jewellery.html">Drawing</a>
 						<a href="jewellery.html">Making Video</a> <a href="jewellery.html">Stock</a>
-						<a href="jewellery.html">Tarot</a>
+						<a href="jewellery.html">Tarot</a> -->
+						<a href="" class="closebtn" onclick="">&times;</a>
+						<a class="category" id="개발/코딩" href="">Coding</a> <a class="category" id="인테리어" href="">Decoration</a>
+						<a class="category" id="요리" href="">Cooking</a> <a class="category" id="악기" href="">Music</a>
+						<a class="category" id="건강/헬스" href="">Health</a> <a class="category" id="글쓰기" href="">Writing</a>
+						<a class="category" id="사진" href="">Picture</a> <a class="category" id="드로잉" href="">Drawing</a>
+						<a class="category" id="영상편집" href="">Making Video</a> <a class="category" id="주식" href="">Stock</a>
+						<a class="category" id="사주/타로" href="">Tarot</a>
 					</div>
 					<span class="toggle_icon" onclick="openNav()"><img
 						src="assets/images/toggle-icon.png"></span>
-					<div class="dropdown">
+					<script>
+						$('.category').on('click', function(){
+							console.log($(this).attr('id'));
+							var cateName = $(this).attr('id');
+							var queryStr = "<%= request.getContextPath() %>/classListByCate?cate=" + cateName;
+							$(this).attr('href',  queryStr);
+						});
+					
+					</script>	
+ <!-- 					<div class="dropdown">
 						<button class="btn btn-secondary dropdown-toggle" type="button"
 							id="dropdownMenuButton" data-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="false">카테고리</button>
@@ -92,7 +108,7 @@
 								class="dropdown-item" href="#">클래스별</a> <a class="dropdown-item"
 								href="#">후기별</a>
 						</div>
-					</div>
+					</div>  -->
 					<div class="main">
 					<!-- Another variation with a button -->
 					<!-- 검색어 입력 시 넘어가는 form 태그 -->
@@ -115,12 +131,28 @@
 			<div class="container">
 				<div id="my_slider" class="carousel slide" data-ride="carousel">
 					<div class="carousel-inner">
-						<div class="carousel-item active">
+					<div class="carousel-item active">
 							<div class="row">
 								<div class="col-sm-12">
 									<h1 class="banner_taital">
-										HOBBYIST SPECIALIZES<br>
-										IN LIVE CLASSES
+										WELCOME & ENJOY<br> 
+										"HOBBYIST"<br>
+										
+									</h1>
+									<div class="buynow_bt">
+										<a href="#class-content">둘러 보기</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="carousel-item">
+							<div class="row">
+								<div class="col-sm-12">
+									<h1 class="banner_taital">
+										SPECIALIZED PLATFORM<br> 
+										FOR LIVE CLASSES<br>
+										
 									</h1>
 									<div class="buynow_bt">
 										<a href="#class-content">둘러 보기</a>
@@ -187,7 +219,7 @@
 									<div class="box_main">
 										<h4 class="shirt_text"><%= classList.get(i).getClassName() %></h4>
 										<p class="price_text">
-											Price <span style="color: #ff0000;"><%= dc.format(classList.get(i).getClassFee()) %></span>
+											<span style= "color: #9ED4C2">PRICE_ </span><span style="color: #ff0000;"><%= dc.format(classList.get(i).getClassFee()) %> 🛒</span>
 											<!-- 좋아요 버튼 -->
 											&nbsp;
 											<span class="likeBtnArea">
@@ -247,7 +279,7 @@
 									<div class="box_main">
 										<h4 class="shirt_text"><%= classList.get(i).getClassName() %></h4>
 										<p class="price_text">
-											Price <span style="color: #ff0000;"><%= dc.format(classList.get(i).getClassFee()) %></span>
+										<span style= "color: #9ED4C2">PRICE_ </span><span style="color: #ff0000;"><%= dc.format(classList.get(i).getClassFee()) %> 🛒</span>
 											<!-- 좋아요 버튼 -->
 											&nbsp;
 											<span class="likeBtnArea">
@@ -307,7 +339,7 @@
 									<div class="box_main">
 										<h4 class="shirt_text"><%= classList.get(i).getClassName() %></h4>
 										<p class="price_text">
-											Price <span style="color: #ff0000;"><%= dc.format(classList.get(i).getClassFee()) %></span>
+											<span style= "color: #9ED4C2">PRICE_ </span><span style="color: #ff0000;"><%= dc.format(classList.get(i).getClassFee()) %> 🛒</span>
 											<!-- 좋아요 버튼 -->
 											&nbsp;
 											<span class="likeBtnArea">
@@ -438,7 +470,7 @@
 					});
 				}
 			<% } %>
-		}
+			}
 		});
 
 		// 카테고리 선택시 카테고리 별로 보이게 ajax로 select

@@ -10,28 +10,17 @@
 		background: #9ED4C2; 
 	}
 	
-	#cancelBtn{
-		width: 80px;
-		height: 40px;
-		background: lightgrey;	
-		margin-right: 20px;
-		border : 1px solid black;
-	}
 	
-	#confirmBtn{
-		width: 80px;
-		height: 40px;
-		background: #778899;
-		border : 1px solid black;	
-	}
 </style>
+<%@ include file="../common/css.jsp"%>
 </head>
 <body>
 		<br><br>
 		<h1 align="center">정말 탈퇴하시겠습니까?😢</h1>
+		<br>
 		<div align="center">
-			<button id="cancelBtn" onclick="history.back();"><b>취소</b></button> <%-- <%= request.getContextPath() %> --%>
-			<button id="confirmBtn" onclick="location.href='<%= request.getContextPath() %>/deleteConfirm.me'"><b>확인</b></button>
+			<button class="btn btn-default" onclick="history.back();"><b>취소</b></button> <%-- <%= request.getContextPath() %> --%>
+			<button class="btn btn-warning" onclick="location.href='<%= request.getContextPath() %>/deleteConfirm.me'"><b>확인</b></button>
 		</div>
 
 </body>

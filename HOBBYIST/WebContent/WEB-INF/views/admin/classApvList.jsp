@@ -11,6 +11,8 @@
 <head>
 <meta charset="UTF-8">
 <%@ include file="../common/css.jsp"%>
+<%@ include file="../common/js.jsp"%>
+<!-- <script src="asset/js/jquery-3.6.0.min.js"></script> -->
 <title>Insert title here</title>
 </head>
 <style>
@@ -101,7 +103,7 @@
 					class="la la-user"></i>
 					<p>MEMBER LIST</p>
 				</a></li>
-				<li class="nav-item active"><a
+				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/apvList.cl"> <i
 						class="la la-check-circle"></i>
 						<p>CLASS APV LIST</p>
@@ -124,24 +126,6 @@
 						class="la la-question-circle"></i>
 						<p>1:1 REQUEST</p>
 				</a></li>
-<!-- 				<li class="nav-item"><a --> <!-- 공지사항 활용X 필요시 주석해제 -->
-<%-- 					href="<%=request.getContextPath()%>/notification.no"> <i --%>
-<!-- 						class="la la-bell"></i> -->
-<!-- 						<p>NOTIFICATIONS</p> -->
-<!-- 				</a></li> -->
-				<!-- <hr> -->
-					
-
-
-				<!-- <li class="nav-item update-pro">
-					<button onclick="reservation()">
-						<i class="la la-hand-pointer-o"></i>
-						<p>튜터 신청하기</p>
-					</button>
-				</li> 
-				이 영역은 운영자이기 때문에 주석처리
-				-->
-
 			</ul>
 		</div>
 	</div>
@@ -206,7 +190,6 @@
 												</td>
 												<td>
 													<input type="button" class="btn btn-outline-primary" id="detailClass" value="클래스 신청서 확인" onclick="location.href='<%= request.getContextPath() %>/detail.hcl?cNo=<%= apvList.get(i).getClassNo() %>'">
-<%-- 												<button type="button" class="btn btn-outline-primary" id="detailClass" onclick="<%= request.getContextPath() %>/classopendetail.me">클래스 신청서 확인</button> --%>
 												</td>
 												<td>
 													<div class="btn-group" role="group" aria-label="Basic mixed styles outlined example">
@@ -216,13 +199,10 @@
 														<% } else if(apvList.get(i).getClassApvYn().equals("C")) { %>
 															<input type="button" class= "btn btn-outline-success APV" value="승인">
 															<input type="button" class= "btn btn-outline-danger REJECT active" value="반려">	
-															<% } else { %>
+														<% } else { %>
 															<input type="button" class= "btn btn-outline-success APV" value="승인">
 															<input type="button" class= "btn btn-outline-danger REJECT" value="반려">
-															<% } %>
-<!-- 														<input type="button" class= "btn btn-outline-danger" value="반려"> -->
-<!-- 														<input type="button" id="APV" class="btn btn-outline-success" value="Y" onclick="confirmClass();"> -->
-<!-- 														<input type="button" id="REJECT" class="btn btn-outline-danger" value="N"> -->
+														<% } %>
 													</div>
 												</td>
 												 <td>
@@ -251,12 +231,7 @@
 								<button class="page-link" id="beforeBtn" href="<%= request.getContextPath() %>/apvList.cl?currentPage=<%= pi.getCurrentPage() -1 %>'" aria-label="Previous">&laquo;</button>
 							</li>
 							
-							<script>
-								if(<%= pi.getCurrentPage() %> <= 1){
-									$('#beforeBtn').prop('disabled', true);
-								}
-							</script>
-							
+														
 						<!-- 페이지넘버 -->
 							<% for (int p = pi.getStartPage(); p <= pi.getEndPage(); p++) { %>
 								<% 		if(p == pi.getCurrentPage()) { %>
@@ -276,20 +251,73 @@
 									aria-label="Next"> &raquo; </button>
 							</li>
 						</ul>
-					
-						<script>
-							if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>){
-									$('#afterBtn').prop('disabled', true);
-							} 
-						</script>
 					</nav>
 				</div>
 			</div>
 
 		</div>
 	</div>
+	
+	<script>
+		if(<%= pi.getCurrentPage() %> <= 1){
+			$('#beforeBtn').prop('disabled', true);
+		}
+	
+		if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>){
+			$('#afterBtn').prop('disabled', true);
+		} 
+	</script>
+	
+	<script>
+				
+	$('.APV').on('click', function(){
+		//변수는 $.ajax밖에서 선언하기!!! ajax안에서 선언하면 ajax자체가 선택됨
+		$btn = $(this);
+		
+		if(confirm('클래스를 승인하시겠습니까?')){
+						
+			$.ajax({
+				url: 'confirmClass.cl',
+				data : {classNo:$btn.parent().parent().parent().find('input[name=classNo]').val()},
+				success : function(data){
+						console.log(data);
+							
+				$btn.parent().parent().parent().find('span').text('Y');															
+// 	참고용) 실행안됨		$(this).parent().parent().find('span').text('Y'); 
 
+				},
+				error: function(data){
+						console.log(data);
+				}
+				});
+				}
+			});
+			
+				
+	$('.REJECT').on('click', function(){
+		$btn = $(this);		
+			
+		if(confirm('클래스를 반려하시겠습니까?')){
+					
+		$.ajax({
+				url: 'rejectClass.cl',
+				data : {classNo:$btn.parent().parent().parent().find('input[name=classNo]').val()},
+				success : function(data){
+						console.log('반려성공');
+								
+			
+					$btn.parent().parent().parent().find('span').text('C');
+								
+				},
+				error: function(data){
+						console.log('반려실패');
+	
+				}
+			});
+		}		
+	});
 
-	<%@ include file="../common/js.jsp"%>
+	</script>
+
 </body>
 </html>

@@ -23,7 +23,7 @@ public class EncryptWrapper extends HttpServletRequestWrapper { // wrapper는 fi
 		// if (name.contains("Pwd")) { // 간단하게 한다면 이렇게
 		
 		String value = null;
-		if (name != null && (name.equals("userPwd") || name.equals("joinUserPwd") || name.equals("newPwd"))) {
+		if (name != null && (name.equals("memberPwd") || name.equals("newPwd1"))) {
 			try {
 				MessageDigest md = MessageDigest.getInstance("SHA-512"); // java.security.MessageDigest -> 암호화를 위해 필요한 객체 생성
 				// SHA-512 라는 암호화 방식(로직)을 사용하겠다

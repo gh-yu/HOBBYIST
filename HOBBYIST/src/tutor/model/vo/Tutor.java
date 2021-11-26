@@ -12,8 +12,31 @@ public class Tutor extends Member {
 	private String tutorImgPath;
 	private Date tutorImgUpdate;
 	private String tutorImgOriginName;
+	private String memberEmail;
 	private String tutorImgChangeName;
 	
+	public String getMemberEmail() {
+		return memberEmail;
+	}
+
+	public void setMemberEmail(String memberEmail) {
+		this.memberEmail = memberEmail;
+	}
+
+	public Tutor(int tutorNo, Date tutorEnrollDate, String tutorReport, String tutorSns, String tutorImgPath,
+			Date tutorImgUpdate, String tutorImgOriginName, String memberEmail, String tutorImgChangeName) {
+		super();
+		this.tutorNo = tutorNo;
+		this.tutorEnrollDate = tutorEnrollDate;
+		this.tutorReport = tutorReport;
+		this.tutorSns = tutorSns;
+		this.tutorImgPath = tutorImgPath;
+		this.tutorImgUpdate = tutorImgUpdate;
+		this.tutorImgOriginName = tutorImgOriginName;
+		this.memberEmail = memberEmail;
+		this.tutorImgChangeName = tutorImgChangeName;
+	}
+
 	public Tutor() {}
 
 	public Tutor(int tutorNo, Date tutorEnrollDate, String tutorReport, String tutorSns,

@@ -73,7 +73,7 @@ public class UpdateTutorServlet extends HttpServlet {
 				System.out.println("name:"+name);
 			}
 		}
-		
+		System.out.println("파일즈:"+files);
 		System.out.println("saveFiles:"+saveFiles);
 		System.out.println("originFiles:"+originFiles);
 		

@@ -32,11 +32,13 @@ public class ClassNoticeUpdateFormServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		
 		int no = Integer.parseInt(request.getParameter("no"));
 		String title = request.getParameter("title");
 		String nickName = request.getParameter("nickName");
 		String content = request.getParameter("content");
-		String userEmail = ((Member)request.getSession().getAttribute("loginUser")).getMemberEmail();
+		String userEmail = ((Member)request.getSession().getAttribute("loginUser")).getMemberNickName();
+		int classno = Integer.parseInt(request.getParameter("cNo"));	
 		
 		String date = request.getParameter("date");
 		
@@ -51,7 +53,8 @@ public class ClassNoticeUpdateFormServlet extends HttpServlet {
 			noticeDate = new Date(new GregorianCalendar(year, month, day).getTimeInMillis());
 		}
 		
-		ClassNotice notice = new ClassNotice(no, title, content, 0, noticeDate, 1, 0, userEmail);
+		ClassNotice notice = new ClassNotice(no, title, content, 0, noticeDate, 1, classno, userEmail);
+		System.out.println("notice수정폼 : "+notice);
 		request.setAttribute("classNotice", notice);
 		request.getRequestDispatcher("WEB-INF/views/tutor/noticeUpdateForm.jsp").forward(request, response);
 

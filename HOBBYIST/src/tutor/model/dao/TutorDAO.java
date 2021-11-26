@@ -36,30 +36,32 @@ public class TutorDAO {
 	
 	// 튜터 정보 넘기기
 	public int insertTutor(Connection conn, Tutor t, String memberEmail) {
-		PreparedStatement pstmt = null;
-		int result = 0;
-		
-		String query = prop.getProperty("insertTutor");
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, t.getTutorReport());
-			pstmt.setString(2, t.getTutorSns());
-			pstmt.setString(3, t.getTutorImgPath());
-			pstmt.setString(4, memberEmail);
-			pstmt.setString(5, t.getTutorImgOriginName());
-			pstmt.setString(6, t.getTutorImgChangeName());
-			
-			
-			result = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-		
-		return result;
-	}
+        PreparedStatement pstmt = null;
+        int result = 0;
+
+        String query = prop.getProperty("insertTutor");
+        // INSERT INTO TUTOR VALUES(SEQ_TUTOR.NEXTVAL, SYSDATE, ?, ?, ?, DEFAULT, ?, ?, ?)
+        //TUTOR_NO, TUTOR_ENROLL_DATE, TUTOR_REPORT, TUTOR_SNS, TUTOR_IMG_PATH, TUTOR_IMG_UPDATE, TUTOR_IMG_ORIGIN_NAME, MEMBER_EMAIL, TUTOR_IMG_CHANGE_NAME
+        // INSERT INTO TUTOR VALUES(SEQ_TUTOR.NEXTVAL, SYSDATE, ?, ?, ?, SYSDATE, ?, ?, ?)
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, t.getTutorReport());
+            pstmt.setString(2, t.getTutorSns());
+            pstmt.setString(3, t.getTutorImgPath());
+            //pstmt.setString(4, memberEmail);
+            pstmt.setString(4, t.getTutorImgOriginName());
+            pstmt.setString(5, memberEmail);
+            pstmt.setString(6, t.getTutorImgChangeName());
+
+            result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(pstmt);
+        }
+
+        return result;
+    }
 
 
 	public Tutor selectTutor(Connection conn, String memberEmail) {

@@ -224,30 +224,30 @@ public class HClassService {
 		return list;
 	}
 
-	public ArrayList<HClass> selectAPVNList() {
+	public ArrayList<HClass> selectAPVNList(int tutorNo) {
 		Connection conn = getConnection();
 
-		ArrayList<HClass> list = hDAO.selectAPVNList(conn);
+		ArrayList<HClass> list = hDAO.selectAPVNList(conn, tutorNo);
 
 		close(conn);
 
 		return list;
 	}
 	
-	public ArrayList<HClass> selectClearList() {
+	public ArrayList<HClass> selectClearList(int tutorNo) {
 		Connection conn = getConnection();
 
-		ArrayList<HClass> list = hDAO.selectClearList(conn);
+		ArrayList<HClass> list = hDAO.selectClearList(conn, tutorNo);
 
 		close(conn);
 
 		return list;
 	}
 
-	public ArrayList<HClass> selectBList() {
+	public ArrayList<HClass> selectBList(int tutorNo) {
 		Connection conn = getConnection();
 
-		ArrayList<HClass> list = hDAO.selectBList(conn);
+		ArrayList<HClass> list = hDAO.selectBList(conn, tutorNo);
 
 		close(conn);
 
@@ -272,17 +272,40 @@ public class HClassService {
 		return list;
 	}
 
-	public int deleteOpenClass(int bId) {
+	public int deleteOpenClass(int classNo) {
 		Connection conn = getConnection();
 		
-		int result = hDAO.deleteOpenClass(conn, bId);
+		int result = hDAO.deleteOpenClass(conn, classNo);
+		
 		if(result > 0) {
 			commit(conn);
 		} else {
 			rollback(conn);
 		}
 		close(conn);
-		
+
 		return result;
 	}
+	public ArrayList<HClass> selectClassListByCate(String cateName) {
+		Connection conn = getConnection();
+		
+		ArrayList<HClass> list = hDAO.selectClassListByCate(conn, cateName);
+	
+		close(conn);
+		
+		return list;
+	}
+	
+	public HClassSchedule selectSchedule(int cNo) {
+		Connection conn = getConnection();
+		
+		HClassSchedule s1 = hDAO.selectSchedule(conn, cNo);
+		
+		close(conn);
+		
+		return s1;
+	}
+	
+	
+	
 }
