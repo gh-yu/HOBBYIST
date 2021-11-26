@@ -2,6 +2,7 @@
     pageEncoding="UTF-8" import="java.util.ArrayList, classNotice.model.vo.ClassNotice, member.model.vo.Member"%>
 <% 
 	ArrayList<ClassNotice> list = (ArrayList)request.getAttribute("list");
+	Member loginUser = (Member)session.getAttribute("loginUser");
 %>
 <!DOCTYPE html>
 <html>
@@ -20,7 +21,7 @@
 </style>
 </head>
 <body>
-	<%@ include file="../common/topbar.jsp" %>
+<%-- 	<%@ include file="../common/topbar.jsp" %> --%>
 	<div class="outer">
 		<br>
 		<h2 align="center">공지사항</h2>
@@ -33,6 +34,8 @@
 					<th>조회수</th>
 					<th width="100px">작성일</th>
 				</tr>
+				
+				
 				<% if (list.isEmpty()) { %>
 				<tr>
 					<td colspan="4">존재하는 공지사항이 없습니다.</td>
@@ -57,18 +60,20 @@
 		</div>
 		
 	</div>
+	
 	<script>
-		$('#listArea td').mouseenter(function(){
-			$(this).parent().css({'background':'lightgray', 'cursor':'pointer'});
-		}).mouseout(function(){
-			$(this).parent().css({'background':'none'});
-		}).click(function(){
-			var num = $(this).parent().children().eq(0).text(); // 글번호 가져오기
-			location.href = '<%= request.getContextPath() %>/datail.no?no=' + num; 
-			// url 뒤쪽 쿼리스트링 직접 만들어주기 
-			// 글번호 21인 게시글 클릭시 url -> http://localhost:9380/3_JSPServlet/datail.no?no=21 으로 뜸
-		});
-	</script>	
+	
+    $('#listArea td').mouseenter(function(){
+       $(this).parent().css({'background':'darkgray', 'cursor':'pointer'});
+    }).mouseout(function(){
+       $(this).parent().css({'background':'none'});
+    }).click(function(){
+       var num = $(this).parent().children().eq(0).text(); // 글번호 가져오기
+    if ($(this).text() != '존재하는 공지사항이 없습니다.') {
+       location.href = '<%=request.getContextPath()%>/classNoticedetail.no?cNo='+ num;
+    	 }
+     });
+    </script>
 	
 	
 	

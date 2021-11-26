@@ -11,8 +11,11 @@
 <%@ include file="../common/css.jsp"%>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <style>
-#tdReply {
-	height: 250px;
+#memberTd, #adminTd{
+	width: 300px;
+}
+#memberReplyArea, #adminReplyArea{
+	height: 200px;
 }
 </style>
 <title>자주 묻는 질문(FAQ)</title>
@@ -84,9 +87,9 @@
 											<table class="table table-striped"
 												style="text-align: center; border: 1px solid #dddddd">
 												<tbody>
-													<tr style="border-right: 1px solid black">
-														<th class="thReply" style="background color: #eeeeee; text-align: center;"> 번호</th>
-														<td class="tdReply"> 
+													<tr>
+														<th id="memberTd" class="thReply" style="background color: #eeeeee; text-align: center;"> 번호</th>
+														<td class="tdReply" > 
 															<%= faq.getFaqNo() %> 
 															<input type="hidden" id="no" name="no" value="<%= faq.getFaqNo() %>">
 														</td>											
@@ -106,10 +109,10 @@
 														</td>
 													</tr>
 													<tr>
-														<th class="thReply" style="background color: #eeeeee; text-align: center;"> 답변</th>
-														<td class="tdReply" id="tdReply">
+														<th id="memberReplyArea" class="thReply" style="background color: #eeeeee; text-align: center;"> 답변</th>
+														<td class="tdReply" >
 															<%= faq.getFaqReply() %>
-															<input type="hidden" id="reply" name="reply" value="<%= faq.getFaqReply() %>">
+															<input type="hidden" id="replyArea" name="reply" value="<%= faq.getFaqReply() %>">
 														</td>
 													</tr>												
 												</tbody>
@@ -213,7 +216,7 @@
 												style="text-align: center; border: 1px solid #dddddd">
 												<tbody>
 													<tr>
-														<th style="background color: #eeeeee; text-align: center;"> 번호</th>
+														<th id="adminTd" style="background color: #eeeeee; text-align: center;"> 번호</th>
 														<td id="td_content"> 
 															<%= faq.getFaqNo() %> 
 															<input type="hidden" id="no" name="no" value="<%= faq.getFaqNo() %>">
@@ -227,14 +230,14 @@
 														</td>
 													</tr>
 													<tr>
-														<th style="background color: #eeeeee; text-align: center;"> 제목</th>
+														<th  style="background color: #eeeeee; text-align: center;"> 제목</th>
 														<td id="td_content"> 
 															<%= faq.getFaqTitle() %> 
 															<input type="hidden" id="title" name="title" value="<%= faq.getFaqTitle() %>">
 														</td>
 													</tr>
 													<tr>
-														<th id="tdReply" style="background color: #eeeeee; text-align: center;"> 답변</th>
+														<th id="adminReplyArea" style="background color: #eeeeee; text-align: center;"> 답변</th>
 														<td id="td_content_reply">
 															<%= faq.getFaqReply() %>
 															<input type="hidden" id="reply" name="reply" value="<%= faq.getFaqReply() %>">

@@ -27,7 +27,7 @@
 										<!-- 관리자면 LIKED-CLASS버튼 비활성화 -->
 									<% } else { %>
 										<li></li>
-										<li><a href="<%= request.getContextPath() %>/myClass.te">LIKED-CLASS</a></li>
+										<li><a href="<%= request.getContextPath() %>/likedClass.te">LIKED-CLASS</a></li>
 									<% } %>
 										<li></li>
 									<% if(loginUser == null) { %>
@@ -56,7 +56,7 @@
 		<div class="scrollbar-inner sidebar-wrapper">
 			<div class="user">
 				<div class="photo">
-					<img src="../assets/images/iu3.jpg">
+					<img src="assets/images/hlogo_g.png">
 				</div>
 				<div class="info">
 					<a class="" data-toggle="collapse" href="#collapseExample"
@@ -91,9 +91,14 @@
 			</div>
 			<ul class="nav">
 				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/memberCheck.admin"> <i
+					href="<%=request.getContextPath()%>/tuteeList.admin"> <i
 					class="la la-user"></i>
-					<p>MEMBER LIST</p>
+					<p>TUTEE LIST</p>
+				</a></li>
+				<li class="nav-item"><a
+					href="<%=request.getContextPath()%>/tutorList.admin"> <i
+					class="la la-user"></i>
+					<p>TUTOR LIST</p>
 				</a></li>
 				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/apvList.cl"> <i
@@ -118,7 +123,7 @@
 		<div class="scrollbar-inner sidebar-wrapper">
 			<div class="user">
 				<div class="photo">
-					<img src="../assets/images/iu2.jpg">
+					<img src=assets/images/hlogo_g.png">
 				</div>
 				<div class="info">
 					<a class="" data-toggle="collapse" href="#collapseExample"
@@ -147,7 +152,7 @@
 									<span class="link-collapse">내 정보 수정</span>
 							</a></li>
 							<li><a
-								href="<%=request.getContextPath()%>/deleteConfirm.me"> <span
+								href="<%=request.getContextPath()%>/delete.me"> <span
 									class="link-collapse">튜티 탈퇴</span>
 							</a></li>
 						</ul>
@@ -155,47 +160,51 @@
 				</div>
 			</div>
 			<ul class="nav">
-				<li class="nav-item"><a
+				<li class="nav-item active"><a
 					href="<%=request.getContextPath()%>/myClass.te"> <i
 						class="la la-toggle-on"></i>
-						<p>MY CLASS</p> <span class="badge badge-primary">5</span>
+						<p>MY CLASS</p>
 				</a></li>
 				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/likedClass.cl"> <i
+					href="<%=request.getContextPath()%>/likedClass.te"> <i
 						class="la la-gittip"></i>
 						<p>LIKED CLASS</p>
 				</a></li>
+<!-- 				<li class="nav-item"><a -->
+<%-- 					href="<%=request.getContextPath()%>/review.re"> <i --%>
+<!-- 						class="la la-camera-retro"></i> -->
+<!-- 						<p>MY REVIEW</p> -->
+<!-- 				</a></li> -->
 				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/review.re"> <i
-						class="la la-camera-retro"></i>
-						<p>MY REVIEW</p>
+					href="<%=request.getContextPath()%>/list.cs"> <i
+						class="la la-question-circle"></i>
+						<p>1:1 REQUEST</p>
 				</a></li>
 				<hr>
-				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/notification.no"> <i
-						class="la la-bell"></i>
-						<p>NOTIFICATIONS</p>
-				</a></li>
 				<% if (loginUser != null && loginUser.getMemberGrade().equals("B")) { %>
-				<hr>
-				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/tutorSignUp.no"> <i
-						class="la la-pencil"></i>
-						<p>APPLICATION</p>
-				</a></li>
-				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/tutorClass.no"> <i
-						class="la la-calendar-o"></i>
-						<p>TUTOR ON CLASS</p>
-				</a></li>
-				<!-- DAO가 없기 때문에 빨간줄이 떠서 주석처리 / model단 받아오시면 주석풀면 됩니다. -->
+					<hr>
+					<li class="nav-item"><a
+						href="<%=request.getContextPath()%>/move.co"> <i
+							class="la la-pencil"></i>
+							<p>APPLY FOR CLASS</p>
+					</a></li>
+					<li class="nav-item"><a
+						href="<%=request.getContextPath()%>/tutorMyPage.tt"> <i
+							class="la la-calendar-o"></i>
+							<p>TUTOR ON CLASS</p>
+					</a></li>
+					<li class="nav-item"><a
+						href="<%=request.getContextPath()%>/tutorInform.me"> <i
+							class="la la-user"></i>
+							<p>TUTOR INFO</p>
+					</a></li>
 				<% } else { %>
-				<li class="nav-item update-pro">
-					<button onclick="reservation()">
-						<i class="la la-hand-pointer-o"></i>
-						<p>튜터 신청하기</p>
-					</button>
-				</li>
+					<li class="nav-item update-pro">
+						<button onclick="reservation()">
+							<i class="la la-hand-pointer-o"></i>
+							<p>튜터 신청하기</p>
+						</button>
+					</li>
 				<% } %>
 			</ul>
 		</div>
@@ -216,34 +225,34 @@
 										<div class="box">
 											<div class="tutorPro">
 												<div class="row justify-content-center">
-
-<!-- 													<div id="fileArea" class="col-md-7"> -->
-<!-- 														<input type="file" class="form-control" id="profiledImg" -->
-<!-- 															multiple="multiple" name="profileImg" -->
-<!-- 															onchange="LoadImg(this, 1)"> -->
-<!-- 													</div> -->
-													<div class="col-md-7 justify-content-center">
-														<img class="userImg" id="target_img" name="target_img"
-															src="images/gosim2.jpg" alt="profile-image" />
-
-
-														<div class="page-content" style="margin: 20px;">
-															<%= loginUser.getMemberNickName() %>
+													<%-- 튜터 프로필 사진 업데이트는 페이지 따로있음				<% if(loginUser.getMemberGrade().equals("B")) { %> --%>
+<!-- 여기서 변경 ㄴㄴ														<div id="fileArea" class="col-md-7"> -->
+<!-- 															<input type="file" class="form-control" id="profileImg" multiple="multiple" name="profileImg" onchange="LoadImg(this, 1)"> -->
+<!-- 														</div> -->
+<!-- 														<div class="col-md-7 justify-content-center"> -->
+<!-- 														<img class="userImg" id="target_img" name="target_img" src="assets/images/profileAdd.png" alt="profile-image" /> -->
+<!-- 															<div class="page-content" style="margin: 20px;"> -->
+<%-- 																<%= loginUser.getMemberNickName() %> --%>
+<!-- 															</div> -->
+<!-- 														</div> -->
+<%-- 													<% } else { %> --%>
+														<div class="col-md-7 justify-content-center">
+															<img class="userImg" id="target_img" name="target_img" src="assets/images/hlogo_g.png" alt="profile-image" />
+																<div class="page-content" style="margin: 20px;">
+																	<%= loginUser.getMemberNickName() %>
+																</div>
+															</div>
+<%-- 													<% } %> --%>
+													<div class="col-md-6">
+													<% if(loginUser.getMemberGrade().equals("B")) {%>
+														<div class="justify-content-center">												
+															<i class="la la-facebook"></i> <a href="#" class="card-link">Facebook</a>&nbsp;<br>
+															<i class="la la-twitter"></i> <a href="#" class="card-link">Twitter</a>&nbsp;<br>
+															<i class="la la-instagram"></i> <a href="#" class="card-link">Instagram</a>&nbsp;<br>
+															<i class="la la-youtube"></i> <a href="#" class="card-link">Youtube</a>&nbsp;<br>
 														</div>
-														</div>
-										<div class="col-md-6">
-										<div class="justify-content-center">
-															
-											<i class="la la-facebook"></i> <a href="#" class="card-link">Facebook</a>&nbsp;<br>
-											<i class="la la-twitter"></i> <a href="#" class="card-link">Twitter</a>&nbsp;<br>
-											<i class="la la-instagram"></i> <a href="#" class="card-link">Instagram</a>&nbsp;<br>
-											<i class="la la-youtube"></i> <a href="#" class="card-link">Youtube</a>&nbsp;<br>
-									
-										</div>
-										</div>
-
-													
-													
+													<% } %>
+													</div>	
 												</div>
 											</div>
 										</div>
@@ -271,7 +280,7 @@
 									<div class="form-group">
 										<label for="exampleFormControlSelect1"><b>이름</b></label> 
 										<div class="input-group mb-3">
-											<span class="input-group-text" id="basic-addon1">@</span> 
+											<span class="input-group-text" id="basic-addon1">👩</span> 
 											<input type="text" name="name" class="form-control" placeholder="<%= loginUser.getMemberName() %>" 
 													value="<%= loginUser.getMemberName() %>" aria-label="Username" aria-describedby="basic-addon1" disabled>
 										</div>
@@ -281,7 +290,7 @@
 									<div class="form-group">
 										<label for="exampleFormControlSelect1"><b>닉네임</b></label> 
 										<div class="input-group mb-3">
-											<span class="input-group-text" id="basic-addon1">@</span> 
+											<span class="input-group-text" id="basic-addon1">✨</span> 
 											<input type="text" name="nickName" class="form-control" placeholder="<%= loginUser.getMemberNickName() %>" 
 													value="<%= loginUser.getMemberNickName() %>" aria-label="Username" aria-describedby="basic-addon1" disabled>
 										</div>
@@ -291,7 +300,7 @@
 									<div class="form-group">
 										<label for="exampleFormControlSelect1"><b>연락처</b></label>
 											<div class="input-group mb-3">
-												<span class="input-group-text" id="basic-addon1">#</span> 
+												<span class="input-group-text" id="basic-addon1">📞</span> 
 												<input type="text" name="phone" class="form-control" placeholder="<%= loginUser.getMemberPhone() %>" 
 														value="<%= loginUser.getMemberPhone() %>" aria-label="phoneNumber" aria-describedby="basic-addon1" disabled>
 											</div>
@@ -301,12 +310,12 @@
 									<br>
 									<div class="row justify-content-center">
 										<div class="col-2">
-											<button type="button" class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>'">취소하기</button>
+											<button type="submit" class="btn btn-primary">기본 정보 수정하기</button>
 										</div>
 										<div class="col-2">
-											<button type="submit" class="btn btn-primary">수정하기</button>
+											<button type="button" class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/updatePwdForm.me'">비밀번호 변경하기</button>
 										</div>
-										</div>
+									</div>
 									</form>
 									</div>
 								</div>
@@ -319,16 +328,16 @@
 		</div>
 	<%@ include file="../common/js.jsp"%>
 
-	<!-- <script>
-		 	
-	/* 파일선택이 안가려져요 ㅠㅠ 그래서 일단 이미지로 넣어두었어요.... */
-		
+	<script>
 	
 		$(document).ready(function() {
 			$('#fileArea').hide();
-			$('#target_img').click(function() {
+			$('#target_img').mouseenter(function(){
+				$(this).css({'cursor':'pointer'})
+			}).click(function() {
 				$('#profileImg').click();
 			});
+		});
 		
 
 		function LoadImg(value, num) {
@@ -345,11 +354,13 @@
 				reader.readAsDataURL(value.files[0]);
 			}
 		}
-		});
+		
+		function reservation() {
+	        location.href = "<%= request.getContextPath() %>/tuteeEnroll.me";
+	    }
+		
 
-	</script> -->
-
-
+	</script>
 
 </body>
 </html>

@@ -11,11 +11,17 @@
 <head>
 <meta charset="UTF-8">
 <%@ include file="../common/css.jsp"%>
+<%@ include file="../common/js.jsp"%>
+<!-- <script src="asset/js/jquery-3.6.0.min.js"></script> -->
 <title>Insert title here</title>
 </head>
 <style>
 	#toFirstBtn, #beforeBtn, #afterBtn, #toLastBtn {
 		border-radius: 50%;
+	}
+	
+	th, td, thead{
+		text-align: center;
 	}
 </style>
 <body>
@@ -34,7 +40,7 @@
 										<!-- 관리자면 LIKED-CLASS버튼 비활성화 -->
 									<% } else { %>
 										<li></li>
-										<li><a href="<%= request.getContextPath() %>/myClass.te">LIKED-CLASS</a></li>
+										<li><a href="<%= request.getContextPath() %>/likedClass.te">LIKED-CLASS</a></li>
 									<% } %>
 										<li></li>
 									<% if(loginUser == null) { %>
@@ -62,7 +68,7 @@
 		<div class="scrollbar-inner sidebar-wrapper">
 			<div class="user">
 				<div class="photo">
-					<img src="../assets/images/iu3.jpg">
+					<img src="assets/images/hlogo_g.png">
 				</div>
 				<div class="info">
 					<a class="" data-toggle="collapse" href="#collapseExample"
@@ -97,23 +103,20 @@
 			</div>
 			<ul class="nav">
 				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/memberCheck.admin"> <i
+					href="<%=request.getContextPath()%>/tuteeList.admin"> <i
 					class="la la-user"></i>
-					<p>MEMBER LIST</p>
+					<p>TUTEE LIST</p>
 				</a></li>
 				<li class="nav-item"><a
+					href="<%=request.getContextPath()%>/tutorList.admin"> <i
+					class="la la-user"></i>
+					<p>TUTOR LIST</p>
+				</a></li>
+				<li class="nav-item active"><a
 					href="<%=request.getContextPath()%>/apvList.cl"> <i
 						class="la la-check-circle"></i>
-						<p>CLASS APV LIST</p>
-						<span class="badge badge-primary">
-						<% if(beforeApvClass.isEmpty()) { %>
-							0
-						<% } else { %>
-							<%= beforeApvClass.size() %>
-						<% } %>
-<!-- 							10 -->
-						</span> <!-- 승인/반려 전인 클래스 개수 count로 가져오기 -->
-				</a></li>
+						<p>CLASS APV LIST</p><span class="badge badge-primary"><%= beforeApvClass.size() %></span>
+					</a></li>
 				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/FAQ.bo"> <i
 						class="la la-question-circle"></i>
@@ -124,25 +127,7 @@
 						class="la la-question-circle"></i>
 						<p>1:1 REQUEST</p>
 				</a></li>
-<!-- 				<li class="nav-item"><a --> <!-- 공지사항 활용X 필요시 주석해제 -->
-<%-- 					href="<%=request.getContextPath()%>/notification.no"> <i --%>
-<!-- 						class="la la-bell"></i> -->
-<!-- 						<p>NOTIFICATIONS</p> -->
-<!-- 				</a></li> -->
-				<!-- <hr> -->
-					
-
-
-				<!-- <li class="nav-item update-pro">
-					<button onclick="reservation()">
-						<i class="la la-hand-pointer-o"></i>
-						<p>튜터 신청하기</p>
-					</button>
-				</li> 
-				이 영역은 운영자이기 때문에 주석처리
-				-->
-
-			</ul>
+			</ul>					
 		</div>
 	</div>
 	<!-- 사이드바 영역 -->
@@ -206,7 +191,6 @@
 												</td>
 												<td>
 													<input type="button" class="btn btn-outline-primary" id="detailClass" value="클래스 신청서 확인" onclick="location.href='<%= request.getContextPath() %>/detail.hcl?cNo=<%= apvList.get(i).getClassNo() %>'">
-<%-- 												<button type="button" class="btn btn-outline-primary" id="detailClass" onclick="<%= request.getContextPath() %>/classopendetail.me">클래스 신청서 확인</button> --%>
 												</td>
 												<td>
 													<div class="btn-group" role="group" aria-label="Basic mixed styles outlined example">
@@ -216,13 +200,10 @@
 														<% } else if(apvList.get(i).getClassApvYn().equals("C")) { %>
 															<input type="button" class= "btn btn-outline-success APV" value="승인">
 															<input type="button" class= "btn btn-outline-danger REJECT active" value="반려">	
-															<% } else { %>
+														<% } else { %>
 															<input type="button" class= "btn btn-outline-success APV" value="승인">
 															<input type="button" class= "btn btn-outline-danger REJECT" value="반려">
-															<% } %>
-<!-- 														<input type="button" class= "btn btn-outline-danger" value="반려"> -->
-<!-- 														<input type="button" id="APV" class="btn btn-outline-success" value="Y" onclick="confirmClass();"> -->
-<!-- 														<input type="button" id="REJECT" class="btn btn-outline-danger" value="N"> -->
+														<% } %>
 													</div>
 												</td>
 												 <td>
@@ -244,19 +225,14 @@
 					<nav aria-label="Page navigation example">
 						<ul class="pagination justify-content-center">
 							<li class="page-item">
-								<button class="page-link" id="toFirstBtn" href="location.href='<%= request.getContextPath() %>/apvList.cl?currentPage=1'">&laquo;</button>
+								<button id="toFirstBtn" class="page-link"  href="location.href='<%= request.getContextPath() %>/apvList.cl?currentPage=1'">&laquo;&laquo;</button>
 							</li>
 						<!-- prev -->
 							<li class="page-item">
-								<button class="page-link" id="beforeBtn" href="<%= request.getContextPath() %>/apvList.cl?currentPage=<%= pi.getCurrentPage() -1 %>'" aria-label="Previous">&laquo;</button>
+								<button id="beforeBtn" class="page-link"  href="<%= request.getContextPath() %>/apvList.cl?currentPage=<%= pi.getCurrentPage() -1 %>'" aria-label="Previous">&laquo;</button>
 							</li>
 							
-							<script>
-								if(<%= pi.getCurrentPage() %> <= 1){
-									$('#beforeBtn').prop('disabled', true);
-								}
-							</script>
-							
+														
 						<!-- 페이지넘버 -->
 							<% for (int p = pi.getStartPage(); p <= pi.getEndPage(); p++) { %>
 								<% 		if(p == pi.getCurrentPage()) { %>
@@ -273,23 +249,76 @@
 							</li>
 							<li class="page-item">
 								<button id="toLastBtn" class="page-link" href="location.href='<%= request.getContextPath() %>/apvList.cl?currentPage=<%= pi.getMaxPage() %>'" 
-									aria-label="Next"> &raquo; </button>
+									aria-label="Next"> &raquo;&raquo; </button>
 							</li>
 						</ul>
-					
-						<script>
-							if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>){
-									$('#afterBtn').prop('disabled', true);
-							} 
-						</script>
 					</nav>
 				</div>
 			</div>
 
 		</div>
 	</div>
+	
+	<script>
+		if(<%= pi.getCurrentPage() %> <= 1){
+			$('#beforeBtn').prop('disabled', true);
+		}
+	
+		if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>){
+			$('#afterBtn').prop('disabled', true);
+		} 
+	</script>
+	
+	<script>
+				
+	$('.APV').on('click', function(){
+		//변수는 $.ajax밖에서 선언하기!!! ajax안에서 선언하면 ajax자체가 선택됨
+		$btn = $(this);
+		
+		if(confirm('클래스를 승인하시겠습니까?')){
+						
+			$.ajax({
+				url: 'confirmClass.cl',
+				data : {classNo:$btn.parent().parent().parent().find('input[name=classNo]').val()},
+				success : function(data){
+						console.log(data);
+							
+				$btn.parent().parent().parent().find('span').text('Y');															
+// 	참고용) 실행안됨		$(this).parent().parent().find('span').text('Y'); 
 
+				},
+				error: function(data){
+						console.log(data);
+				}
+				});
+				}
+			});
+			
+				
+	$('.REJECT').on('click', function(){
+		$btn = $(this);		
+			
+		if(confirm('클래스를 반려하시겠습니까?')){
+					
+		$.ajax({
+				url: 'rejectClass.cl',
+				data : {classNo:$btn.parent().parent().parent().find('input[name=classNo]').val()},
+				success : function(data){
+						console.log('반려성공');
+								
+			
+					$btn.parent().parent().parent().find('span').text('C');
+								
+				},
+				error: function(data){
+						console.log('반려실패');
+	
+				}
+			});
+		}		
+	});
 
-	<%@ include file="../common/js.jsp"%>
+	</script>
+
 </body>
 </html>

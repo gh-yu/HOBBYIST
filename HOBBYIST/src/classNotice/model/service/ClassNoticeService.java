@@ -102,5 +102,19 @@ public class ClassNoticeService {
 		
 		return listCount;
 	}
+	
+	public int selectcNo(int cNo) {
+		Connection conn = getConnection();
+		
+		int result = nDAO.selectcNo(conn, cNo);
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
+	}
 
 }

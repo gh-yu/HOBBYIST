@@ -136,7 +136,7 @@ public class MemberDAO {
 	public int checkEmail(Connection conn, Member member) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		int checkEmail = 1;
+		int checkEmail = 0;
 		
 		String query = prop.getProperty("checkEmail");
 		
@@ -147,7 +147,7 @@ public class MemberDAO {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				return checkEmail;
+				checkEmail = rset.getInt("COUNT(*)");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -156,7 +156,7 @@ public class MemberDAO {
 			close(pstmt);
 		}
 		
-		return -1;
+		return checkEmail;
 	}	
 
 	public int updateMember(Connection conn, Member newInfo) {
@@ -399,8 +399,30 @@ public class MemberDAO {
 		return tutorList;
 	}
 
-	
+	// 아이디 찾기
+		public String findIdByPhone(Connection conn, String phone) {
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			String email = null;
+			String query = "SELECT MEMBER_EMAIL FROM MEMBER WHERE MEMBER_PHONE =?";
 
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, phone);
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					email = rset.getString("member_Email");
+				}
 
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+
+			return email;
+		}
 	
 }

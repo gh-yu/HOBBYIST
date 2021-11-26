@@ -35,19 +35,22 @@
 </head>
 <body>
 
-<div class="banner_bg_main">
+	<div class="banner_bg_main">
 		<div class="container">
 			<div class="header_section_top">
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="custom_menu">
 							<ul>
-								<li><a href="index.jsp">MAIN</a></li>
-								<li></li>
+								<li><a href="<%= request.getContextPath() %>">MAIN</a></li>
 							<% if(loginUser == null) { %>
-								<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">LIKED-CLASS</a></li>
+								<li></li>
+								<li><a href="#" onclick="alert('로그인이 필요한 서비스입니다.');">LIKED-CLASS</a></li>
+							<% } else if(loginUser.getMemberGrade().equals("A")){ %>
+							<!-- 관리자면 LIKED-CLASS버튼 비활성화 -->
 							<% } else { %>
-								<li><a href="<%= request.getContextPath() %>/myClass.te">LIKED-CLASS</a></li>
+								<li></li>
+								<li><a href="<%= request.getContextPath() %>/likedClass.te">LIKED-CLASS</a></li>
 							<% } %>
 								<li></li>
 							<% if(loginUser == null) { %>
@@ -57,7 +60,7 @@
 							<% } %>
 								<li></li>
 							<% if(loginUser == null) { %>
-								<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">MY INFO</a></li>
+								<li><a href="#" onclick="alert('로그인이 필요한 서비스입니다.');">MY INFO</a></li>
 							<% } else { %>
 								<li><a href="<%= request.getContextPath() %>/myInfo.me">MY INFO</a></li>
 							<% } %>
@@ -74,7 +77,7 @@
 				<div class="scrollbar-inner sidebar-wrapper">
 					<div class="user">
 						<div class="photo">
-							<img src="assets/images/iu2.jpg">
+							<img src="<%= request.getContextPath() %>/assets/images/hlogo_g.png">
 						</div>
 						<div class="info">
 							<a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -107,7 +110,7 @@
 										</a>
 									</li>
 									<li>
-										<a href="<%= request.getContextPath() %>/deleteConfirm.me">
+										<a href="<%= request.getContextPath() %>/delete.me">
 											<span class="link-collapse">튜티 탈퇴</span>
 										</a>
 									</li>
@@ -127,34 +130,39 @@
 							<% } %>
 					</a></li>
 					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/likedClass.cl"> <i
+						href="<%=request.getContextPath()%>/likedClass.te"> <i
 							class="la la-gittip"></i>
 							<p>LIKED CLASS</p>
 					</a></li>
-					<li class="nav-item"><a
+<%-- 					<li class="nav-item"><a
 						href="<%=request.getContextPath()%>/review.re"> <i
 							class="la la-camera-retro"></i>
 							<p>MY REVIEW</p>
-					</a></li>
-					<hr>
+					</a></li> --%>
 					
+					<hr>
 					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/notification.no"> <i
+						href="<%=request.getContextPath()%>/list.cs"> <i
 							class="la la-bell"></i>
-							<p>NOTIFICATIONS</p>
+							<p>1:1 REQUEST</p>
 					</a></li>
 					<% if(loginUser != null && loginUser.getMemberGrade().equals("B")) { %>
 					<hr>
 					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/tutorSignUp.no"> <i
+						href="<%=request.getContextPath()%>/move.co"> <i
 							class="la la-pencil"></i>
-							<p>APPLICATION</p>
+							<p>APPLY FOR CLASS</p>
 					</a></li>
 					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/tutorClass.no"> <i
+						href="<%=request.getContextPath()%>/tutorMyPage.tt"> <i
 							class="la la-calendar-o"></i>
 							<p>TUTOR ON CLASS</p>
 					</a></li>
+					<li class="nav-item"><a
+                        href="<%=request.getContextPath()%>/tutorInform.me"> <i
+                            class="la la-user"></i>
+                            <p>TUTOR INFO</p>
+                    </a></li>
 					<% } else { %>
 					
 					<li class="nav-item update-pro">
@@ -208,10 +216,10 @@
 											<br><br><br>
 											<div class="btn_main">
 												<div class="buy_bt">
-													<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">Cancel</a> 
+													<a href="<%= request.getContextPath() %>/detail.te?cNo=<%= c.getClassNo() %>">Cancel</a> 
 												</div>
 												<div class="seemore_bt">
-													<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">See More</a> 
+													<a href="<%= request.getContextPath() %>/detail.te?cNo=<%= c.getClassNo() %>">See More</a> 
 												</div>
 											</div>											
 										</div>
@@ -251,7 +259,7 @@
 									<% if (!tcScheduleAfter.isEmpty()) { %>
 									<%		for(TuteeClass tcA : tcScheduleAfter) { %>	
 									<%			if(c.getClassNo() == tcA.getClassNo()) { %>
-												<p>최근 수강완료일자는 <b><%= tcA.getTuteeClassFinishDate() %></b>일입니다.</p>
+												<p>최근 수강완료일자는 <b><%= tcA.getTueeClassRevDate() %></b>일입니다.</p>
 									<%			} %>
 									<% 		} %>
 									<% } %>															
@@ -259,10 +267,10 @@
 											<br><br><br>
 											<div class="btn_main">
 												<div class="buy_bt">
-													<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">Write Review</a> 
+													<a href="<%= request.getContextPath() %>/detail.te?cNo=<%= c.getClassNo() %>">Write Review</a> 
 												</div>
 												<div class="seemore_bt">
-													<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">See More</a> 
+													<a href="<%= request.getContextPath() %>/detail.te?cNo=<%= c.getClassNo() %>">See More</a> 
 												</div>
 											</div>
 										</div>
@@ -278,5 +286,11 @@
 			</div>
 
 <%@ include file="../common/js.jsp" %>
+<script>
+	function reservation() {
+    	location.href = "<%= request.getContextPath() %>/tuteeEnroll.me";
+	}
+
+</script>
 </body>
 </html>

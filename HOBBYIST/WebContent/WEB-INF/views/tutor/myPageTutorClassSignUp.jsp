@@ -13,6 +13,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 <%@ include file="../common/css.jsp" %>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
 <script>
 					// 내용 작성 부분의 공간을 클릭할 때 파일 첨부 창이 뜨도록 설정하는 함수
 					$(function(){
@@ -102,9 +104,6 @@ img.ui-datepicker-trigger {
 		//datepicker 한국어로 사용하기 위한 언어설정
 		$.datepicker.setDefaults($.datepicker.regional['ko']);
 
-		// 시작일(fromDate)은 종료일(toDate) 이후 날짜 선택 불가
-		// 종료일(toDate)은 시작일(fromDate) 이전 날짜 선택 불가
-
 		//시작일.
 		$('#fromDate').datepicker({
 			showOn : "both", // 달력을 표시할 타이밍 (both: focus or button)
@@ -132,8 +131,6 @@ img.ui-datepicker-trigger {
 			changeMonth : true,
 			//minDate: 0, // 오늘 이전 날짜 선택 불가
 			onClose : function(selectedDate) {
-				// 종료일(toDate) datepicker가 닫힐때
-				// 시작일(fromDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 종료일로 지정 
 				$("#fromDate").datepicker("option", "maxDate", selectedDate);
 			}
 		});
@@ -148,15 +145,19 @@ img.ui-datepicker-trigger {
 					<div class="col-sm-12">
 						<div class="custom_menu">
 							<ul>
-								<li><a href="mainPage.jsp">MAIN</a></li>
+								<li><a href="<%= request.getContextPath() %>">MAIN</a></li>
 								<li></li>
-								<li><a href="../tutee/likedClass.jsp">LIKED CLASS</a></li>
+								<li><a href="<%= request.getContextPath() %>/myClass.te">LIKED CLASS</a></li>
 								<li></li>
-								<li><a href="../member/loginPage.jsp">LOG-IN</a></li>
+								<% if(loginUser == null) { %>
+									<li><a href="<%= request.getContextPath() %>/loginForm.me">LOG-IN</a></li> <!-- login전이면 로그인버튼 -->
+								<% } else { %>
+									<li><a href="<%= request.getContextPath() %>/logout.me">LOG-OUT</a></li> <!-- login된 상태면 로그아웃버튼 -->
+								<% } %>
 								<li></li>
-								<li><a href="../member/myInfo.jsp">MY INFO</a></li>
+								<li><a href="<%= request.getContextPath() %>/myInfo.me">MY INFO</a></li>
 								<li></li>
-								<li><a href="../admin/faq.jsp">FAQ</a></li>
+								<li><a href="<%= request.getContextPath() %>/FAQ.bo">FAQ</a></li>
 							</ul>
 						</div>
 					</div>
@@ -168,13 +169,23 @@ img.ui-datepicker-trigger {
 			<div class="scrollbar-inner sidebar-wrapper">
 				<div class="user">
 					<div class="photo">
-						<img src="../assets/images/iu3.jpg">
+						<img src="assets/images/hlogo_g.png">
 					</div>
 					<div class="info">
 						<a class="" data-toggle="collapse" href="#collapseExample"
-							aria-expanded="true"> <span> <b>김튜터</b> <!-- loginUser의 NickName 불러오기 -->
-								<span class="user-level">튜터(Tutor)</span> <!-- loginUser의 grade 불러오기 -->
-								<span class="caret"></span>
+							aria-expanded="true"> <span>
+									<!-- loginUser의 NickName 불러오기 -->
+									<b><%= loginUser.getMemberNickName() %></b>
+									<!-- loginUser의 grade 불러오기 -->
+								<% if(loginUser.getMemberGrade().equals("A")) { %>
+									<span class="user-level">관리자(admin)</span>
+								<% } else if(loginUser.getMemberGrade().equals("B")) { %>
+									<span class="user-level">튜터(Tutor)</span>
+								<% } else { %>
+									<span class="user-level">튜티(Tutee)</span>
+								<% }  %>
+									<span class="caret"></span>
+								</span>
 						</span>
 						</a>
 						<div class="clearfix"></div>
@@ -207,53 +218,34 @@ img.ui-datepicker-trigger {
 							class="la la-gittip"></i>
 							<p>LIKED CLASS</p>
 					</a></li>
+<!-- 					<li class="nav-item"><a -->
+<%-- 						href="<%=request.getContextPath()%>/review.re"> <i --%>
+<!-- 							class="la la-camera-retro"></i> -->
+<!-- 							<p>MY REVIEW</p> -->
+<!-- 					</a></li> -->
 					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/review.re"> <i
-							class="la la-camera-retro"></i>
-							<p>MY REVIEW</p>
-					</a></li>
-					<hr>
-					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/paymend.pa"> <i
-							class="la la-money"></i>
-							<p>MY PAYMENT</p>
-					</a></li>
-					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/notification.no"> <i
-							class="la la-bell"></i>
-							<p>NOTIFICATIONS</p>
+					href="<%=request.getContextPath()%>/list.cs"> <i
+						class="la la-question-circle"></i>
+						<p>1:1 REQUEST</p>
 					</a></li>
 					<hr>
 					<li class="nav-item active"><a
-						href="<%=request.getContextPath()%>/notification.no"> <i
+						href="<%=request.getContextPath()%>/move.co"> <i
 							class="la la-pencil"></i>
-							<p>APPLICATION</p> <span class="badge badge-primary">3</span>
+							<p>APPLY FOR CLASS</p>
 					</a></li>
-					<!-- DAO가 없기 때문에 빨간줄이 떠서 주석처리 / model단 받아오시면 주석풀면 됩니다. -->
-					<%-- <%
-							if (loginUser != null && loginUser.getMemberGrade().equals("B")) {
-					%> --%>
-					<hr>
 					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/tutorSignUp.no"> <i
-							class="la la-pencil"></i>
-							<p>APPLICATION</p>
-					</a></li>
-					<li class="nav-item active"><a
-						href="<%=request.getContextPath()%>/tutorClass.no"> <i
+						href="<%=request.getContextPath()%>/tutorMyPage.tt"> <i
 							class="la la-calendar-o"></i>
-							<p>TUTOR ON CLASS</p><span class="badge badge-primary">5</span>
+							<p>TUTOR ON CLASS</p>
 					</a></li>
-					<!-- DAO가 없기 때문에 빨간줄이 떠서 주석처리 / model단 받아오시면 주석풀면 됩니다. -->
-					<%-- <%
-							} else {
-					%> --%>
-					<li class="nav-item update-pro">
-							<button onclick="reservation()">
-								<i class="la la-hand-pointer-o"></i>
-								<p>튜터 신청하기</p>
-							</button>
-					</li>
+					<li class="nav-item"><a
+						href="<%=request.getContextPath()%>/tutorInform.me"> <i
+							class="la la-user"></i>
+							<p>TUTOR INFO</p>
+					</a></li>
+				
+					
 				</ul>
 			</div>
 		</div>
@@ -264,7 +256,7 @@ img.ui-datepicker-trigger {
 			<form action="<%= request.getContextPath() %>/classopen.th" method="post" encType="multipart/form-data" onsubmit="return check();">
 			<div class="content">
 				<div class="container-fluid">
-					<h4 class="page-title">APPLICATION</h4>
+					<h4 class="page-title">APPLY FOR CLASS</h4>
 					<hr>
 					<div class="row">
 						<div class="col-md-6">
@@ -298,8 +290,8 @@ img.ui-datepicker-trigger {
 										<label for="className">클래스 이름</label> <span
 											class="badge badge-danger">필수</span>
 										<div class="form-floating mb-3">
-											<input type="email" class="form-control" id="floatingInput"
-												placeholder="name@example.com" name = "title" required> 
+											<input type="text" class="form-control" id="floatingInput"
+												name = "title" required> 
 											<label for="floatingInput">컨셉이 잘 드러나는 클래스의 이름을 정해주세요</label>
 										</div>
 									</div>
@@ -345,18 +337,17 @@ img.ui-datepicker-trigger {
 										type="file" id="thumbnailImg4" multiple="multiple"
 										name="thumbnailImg4" onchange="LoadImg(this,4)">
 								</div>
+								<small id="selectHelp" class="form-text text-muted">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;썸네일 사진은 필수 입니다.</small>
 									<div class="form-group">
 										<label for="comment">클래스 소개글</label> <span
 											class="badge badge-danger">필수</span>
 										<div class="form-floating">
 											<textarea class="form-control" name ="content"
-												placeholder="Leave a comment here" id="floatingTextarea"
+				 								placeholder="Leave a comment here" id="floatingTextarea"
 												style="resize: none; height: 150px"></textarea>
 											<label for="floatingTextarea">재치넘치는 클래스 소개글을 적어주세요</label>
 										</div>
-										<small id="contextHelp" class="form-text text-muted">
-											[예시] 코딩의 'ㅋ'자도 모르는 <b>초보자</b>도 쉽게 따라할 수 있는 <b>PYTHON 클래스!</b>
-										</small>
+										  
 									</div>
 
 								</div>
@@ -405,11 +396,13 @@ img.ui-datepicker-trigger {
 											</label>
 											<br>
 												시간 :
-												<input type="time" id="time" name="time">
-												<br>
-												<input type="button" class="schBtn" id="addSchedule" value="스케줄 추가" style="float: right">
-												<input type="button" class="schBtn" id="cancelSchedule" value="스케줄 취소" style="float: right"><br>
-												<textarea id="schedule" name="schedule" rows="10" cols="55" style="resize: none;" readonly></textarea>
+												<input type="time" id="time" name="time" >
+												<small id="dateHelp" class="form-text text-muted"></small>
+												<br><br>
+												<input type="button" class="schBtn" id="addSchedule" value="스케줄 추가">
+         										<input type="button" class="schBtn" id="cancelSchedule" value="스케줄 취소"><br>
+												<textarea id="schedule" name="schedule" rows="10" cols="55" style="resize: none;" readonly></textarea><br>
+												
 										</p>
 									</div>
 									</fieldset>
@@ -458,12 +451,13 @@ img.ui-datepicker-trigger {
 									<div class="form-group">
 										<label for="exampleFormControlSelect1">강의 시간 선택</label>
 										<div class="input-group mb-3">
+											<span class="input-group-text" >회당 </span>
 											<input type="number" class="form-control" name="classtime"
 												aria-label="Sizing example input"
 												aria-describedby="inputGroup-sizing-default" min="0"
-												max="12" step="0.5" required>
+												max="12" step="0.5" style = "text-align:right;" required>
 												<span
-												class="input-group-text">시간</span>
+												class="input-group-text" >시간</span>
 										</div>
 									</div>
 									<div class="form-group">
@@ -473,7 +467,7 @@ img.ui-datepicker-trigger {
 												수강료</span> <input type="number" class="form-control"
 												aria-label="Sizing example input" name ="fee"
 												aria-describedby="inputGroup-sizing-default" min="0"
-												max="1000000" step="1000"> <span
+												max="1000000" step="1000" style = "text-align:right;"> <span
 												class="input-group-text">원</span>
 										</div>
 									</div>

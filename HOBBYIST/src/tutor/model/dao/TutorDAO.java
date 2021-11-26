@@ -33,7 +33,6 @@ public class TutorDAO {
 			}
 		}
 	
-	
 	// 튜터 정보 넘기기
 	public int insertTutor(Connection conn, Tutor t, String memberEmail) {
 		PreparedStatement pstmt = null;

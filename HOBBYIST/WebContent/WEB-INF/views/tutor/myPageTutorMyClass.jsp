@@ -19,12 +19,15 @@
 <html>
 <head>
 <style>
-	.container-fluid div{background: white;}
-.container-fluid div{background: white;}
+#endImage {
+    opacity: 0.2;
+    filter: alpha(opacity=50); /* msie */
+}
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <%@ include file="../common/css.jsp"%>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
 
@@ -35,15 +38,19 @@
 					<div class="col-sm-12">
 						<div class="custom_menu">
 							<ul>
-								<li><a href="mainPage.jsp">MAIN</a></li>
+								<li><a href="<%= request.getContextPath() %>">MAIN</a></li>
 								<li></li>
-								<li><a href="../tutee/likedClass.jsp">LIKED CLASS</a></li>
+								<li><a href="<%= request.getContextPath() %>/myClass.te">LIKED CLASS</a></li>
 								<li></li>
-								<li><a href="../member/loginPage.jsp">LOG-IN</a></li>
+								<% if(loginUser == null) { %>
+									<li><a href="<%= request.getContextPath() %>/loginForm.me">LOG-IN</a></li> <!-- login전이면 로그인버튼 -->
+								<% } else { %>
+									<li><a href="<%= request.getContextPath() %>/logout.me">LOG-OUT</a></li> <!-- login된 상태면 로그아웃버튼 -->
+								<% } %>
 								<li></li>
-								<li><a href="../member/myInfo.jsp">MY INFO</a></li>
+								<li><a href="<%= request.getContextPath() %>/myInfo.me">MY INFO</a></li>
 								<li></li>
-								<li><a href="../admin/faq.jsp">FAQ</a></li>
+								<li><a href="<%= request.getContextPath() %>/FAQ.bo">FAQ</a></li>
 							</ul>
 						</div>
 					</div>
@@ -55,13 +62,23 @@
 		<div class="scrollbar-inner sidebar-wrapper">
 			<div class="user">
 				<div class="photo">
-					<img src="../assets/images/iu2.jpg">
+					<img src="assets/images/hlogo_g.png">
 				</div>
 				<div class="info">
 					<a class="" data-toggle="collapse" href="#collapseExample"
-						aria-expanded="true"> <span> <b>김샘플</b> <!-- loginUser의 NickName 불러오기 -->
-							<span class="user-level">튜티(Tutee)</span> <!-- loginUser의 grade 불러오기 -->
-							<span class="caret"></span>
+						aria-expanded="true"> <span>
+									<!-- loginUser의 NickName 불러오기 -->
+									<b><%= loginUser.getMemberNickName() %></b>
+									<!-- loginUser의 grade 불러오기 -->
+								<% if(loginUser.getMemberGrade().equals("A")) { %>
+									<span class="user-level">관리자(admin)</span>
+								<% } else if(loginUser.getMemberGrade().equals("B")) { %>
+									<span class="user-level">튜터(Tutor)</span>
+								<% } else { %>
+									<span class="user-level">튜티(Tutee)</span>
+								<% }  %>
+									<span class="caret"></span>
+								</span>
 					</span>
 					</a>
 					<div class="clearfix"></div>
@@ -84,7 +101,7 @@
 				</div>
 			</div>
 			<ul class="nav">
-				<li class="nav-item active"><a
+				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/myClass.te"> <i
 						class="la la-toggle-on"></i>
 						<p>MY CLASS</p> <span class="badge badge-primary">5</span>
@@ -94,36 +111,36 @@
 						class="la la-gittip"></i>
 						<p>LIKED CLASS</p>
 				</a></li>
+<!-- 				<li class="nav-item"><a -->
+<%-- 					href="<%=request.getContextPath()%>/review.re"> <i --%>
+<!-- 						class="la la-camera-retro"></i> -->
+<!-- 						<p>MY REVIEW</p> -->
+<!-- 				</a></li> -->
 				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/review.re"> <i
-						class="la la-camera-retro"></i>
-						<p>MY REVIEW</p>
+					href="<%=request.getContextPath()%>/list.cs"> <i
+						class="la la-question-circle"></i>
+						<p>1:1 REQUEST</p>
 				</a></li>
 				<hr>
-				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/paymend.pa"> <i
-						class="la la-money"></i>
-						<p>MY PAYMENT</p>
-				</a></li>
-				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/notification.no"> <i
-						class="la la-bell"></i>
-						<p>NOTIFICATIONS</p>
-				</a></li>
 				<%
 							if (loginUser != null && loginUser.getMemberGrade().equals("B")) {
-					%>
+				%>
 				<hr>
 				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/tutorSignUp.no"> <i
-						class="la la-pencil"></i>
-						<p>APPLICATION</p>
+						href="<%=request.getContextPath()%>/move.co"> <i
+							class="la la-pencil"></i>
+							<p>APPLY FOR CLASS</p>
 				</a></li>
-				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/tutorClass.no"> <i
+				<li class="nav-item active"><a
+					href="<%=request.getContextPath()%>/tutorMyPage.tt"> <i
 						class="la la-calendar-o"></i>
 						<p>TUTOR ON CLASS</p>
-				</a></li>
+					</a></li>
+					<li class="nav-item"><a
+						href="<%=request.getContextPath()%>/tutorInform.me"> <i
+							class="la la-user"></i>
+							<p>TUTOR INFO</p>
+					</a></li>
 				<%
 							} else {
 				%>
@@ -132,7 +149,6 @@
 						<i class="la la-hand-pointer-o"></i>
 						<p>튜터 신청하기</p>
 					</button>
-				
 						<%
 							}
 						%>
@@ -147,7 +163,7 @@
 		<div class="content">
 			<div class="container-fluid">
 				<h4 class="page-title">MY CLASS</h4>
-				<button type="button"
+				<button type="button" class="btn btn-primary pull-right"
 					onclick="location.href = '<%=request.getContextPath()%>/move.co'"
 					class="button hollow">+ 클래스 신청하기</button><br><br>
 				<div class="row">
@@ -155,8 +171,9 @@
 					<div class="col-md-4">
 						<div class="card card-stats card-primary active">
 							<div class="card-body" >
-								<div class="row justify-content-center">
-									<h2>수강 중인 클래스</h2>
+								<div class="row class-card">
+								<!-- 수업중 -->
+									<h2>강의중인 클래스</h2>
 									<% if (classList.isEmpty() || fileList.isEmpty()) { %>
 									<h1>등록된 강의가 없습니다.</h1>
 									<% } else { %>
@@ -167,8 +184,8 @@
 											<% for (int j = 0; j < fileList.size(); j++) { %>
 											<% HClassFile f = fileList.get(j);%>
 											<% if (hc.getClassNo() == f.getBoardNo()) { %>
-											<div class="thumbnailArea">
-												<img width="40%" height="225"
+											<div class="thumbnailArea" style="height: 350px; width: 100%;">
+												<img style="min-width:100%; height: 100%;" 
 													src="<%=request.getContextPath()%>/uploadFiles/<%=fileList.get(j).getChangeName() %>"
 													class="thumbnail" alt="Thumbnail">
 											</div>
@@ -183,8 +200,8 @@
 											&nbsp; <span class="likeBtnArea"> <input type="hidden"
 												class="cNo" name="cNo"
 												value="<%=classList.get(i).getClassNo()%>">
-												<button
-													onclick="location.href = '<%=request.getContextPath()%>/classManagement.tt'"
+												<button class="btn btn-default pull-right" "
+													onclick="location.href = '<%=request.getContextPath()%>/classManagement.tt?cNo=<%=classList.get(i).getClassNo()%>'"
 													type="button">
 													<span>클래스 관리하기</span>
 												</button>
@@ -203,8 +220,8 @@
 					<div class="col-md-4">
 						<div class="card card-stats card-success">
 							<div class="card-body">
-								<div class="row justify-content-center">
-									<h2>수강 신청한 클래스</h2>
+								<div class="row class-card">
+									<h2>신청한 클래스</h2>
 									<% if (classAList.isEmpty() || fileList.isEmpty()) { %>
 									등록된 강의가 없습니다.
 									<% } else { %>
@@ -215,8 +232,8 @@
 											<% for (int j = 0; j < fileList.size(); j++) { %>
 											<% HClassFile f = fileList.get(j);%>
 											<% if (hca.getClassNo() == f.getBoardNo()) { %>
-											<div class="thumbnailArea">
-												<img width="40%" height="225"
+											<div class="thumbnailArea" style="height: 350px; width: 100%;">
+												<img style="min-width:100%; height: 100%;"
 													src="<%=request.getContextPath()%>/uploadFiles/<%=fileList.get(j).getChangeName() %>"
 													class="thumbnail" alt="Thumbnail">
 											</div>
@@ -231,7 +248,7 @@
 											&nbsp; <span class="likeBtnArea"> <input type="hidden"
 												class="cNo" name="cNo"
 												value="<%=classAList.get(i).getClassNo()%>">
-												<button
+												<button class="btn btn-default pull-right" 
 													onclick="location.href = '<%=request.getContextPath()%>/classOpenDetail.tt?bId=<%=classAList.get(i).getClassNo()%>'"
 													type="button">
 													<span>클래스신청 수정하기</span>
@@ -247,12 +264,12 @@
 								</div>
 							</div>
 						</div>
-						<!-- 승인 전 클래스 -->
+						<!-- 수강완료 클래스 -->
 
 						<div class="col-md-4">
 							<div class="card card-stats card-danger">
 								<div class="card-body">
-									<div class="row justify-content-center">
+									<div class="row class-card">
 										<h2>완료 된 클래스</h2>
 										<% if (classCList.isEmpty() || fileList.isEmpty()) { %>
 										완료된 강의가 없습니다.
@@ -264,8 +281,8 @@
 												<% for (int j = 0; j < fileList.size(); j++) { %>
 												<% HClassFile f = fileList.get(j);%>
 												<% if (hcc.getClassNo() == f.getBoardNo()) { %>
-												<div class="thumbnailArea">
-													<img width="40%" height="225"
+												<div class="thumbnailArea" style="height: 350px; width: 100%;">
+													<img style="min-width:100%; height: 100%;" id = "endImage"
 														src="<%=request.getContextPath()%>/uploadFiles/<%=fileList.get(j).getChangeName() %>"
 														class="thumbnail" alt="Thumbnail">
 												</div>

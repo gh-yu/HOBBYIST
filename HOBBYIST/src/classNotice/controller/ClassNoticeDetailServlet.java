@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import classNotice.model.service.ClassNoticeService;
 import classNotice.model.vo.ClassNotice;
+import hobbyistClass.model.service.HClassService;
+import hobbyistClass.model.vo.HClass;
 
 /**
  * Servlet implementation class NoticeDetailServlet
@@ -28,18 +30,27 @@ public class ClassNoticeDetailServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int noticeNo = Integer.parseInt(request.getParameter("no"));
+		int noticeNo = Integer.parseInt(request.getParameter("cNo"));
 		
 		ClassNotice notice = new ClassNoticeService().selectClassNotice(noticeNo); 
-		
+				
 		String page = null;
 		if (notice != null) {
-			request.setAttribute("classnotice", notice);
-			page = "WEB-INF/views/tutor/noticeDetail.jsp";
+			HClass c = new HClassService().selectClass(notice.getClassNo());
+			
+			if (c != null) {
+				request.setAttribute("classnotice", notice);
+				request.setAttribute("c", c);
+				page = "WEB-INF/views/tutor/noticeDetail.jsp";
 			} else {
+				request.setAttribute("msg", "공지사항 상세조회 실패");
+				page = "WEB-INF/views/common/errorPage.jsp";
+			}
+		} else {
 			request.setAttribute("msg", "공지사항 상세조회 실패");
 			page = "WEB-INF/views/common/errorPage.jsp";
 		}
+		
 		request.getRequestDispatcher(page).forward(request, response);
 
 	}
