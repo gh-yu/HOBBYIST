@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import hobbyistClass.model.service.HClassService;
 import hobbyistClass.model.vo.HClass;
 import hobbyistClass.model.vo.HClassFile;
+import tutor.model.vo.*;
 
 /**
  * Servlet implementation class FileListServlet
@@ -35,17 +36,19 @@ public class FileListServlet extends HttpServlet {
 		
 		HClassService hService = new HClassService();
 		
+		int tutorNo = ((Tutor)request.getSession().getAttribute("tutor")).getTutorNo();
+		
 		// 게시판 리스트 가져오기 진행중인 클래스
-		ArrayList<HClass> bList = hService.selectBList();
+		ArrayList<HClass> bList = hService.selectBList(tutorNo);
 		System.out.println("bList :" +bList);			
 		// 파일 리스트 가져오기
 		ArrayList<HClassFile> cfList = hService.selectFileList();
 				
 		// 승인 전 클래스 AList
-		ArrayList<HClass> aList = hService.selectAPVNList();
+		ArrayList<HClass> aList = hService.selectAPVNList(tutorNo);
 		System.out.println("AList :" +aList);	
 		// 완료된 클래스 CList
-		ArrayList<HClass> cList = hService.selectClearList();
+		ArrayList<HClass> cList = hService.selectClearList(tutorNo);
 		System.out.println("CList :" +cList);	
 		String page = null;
 		

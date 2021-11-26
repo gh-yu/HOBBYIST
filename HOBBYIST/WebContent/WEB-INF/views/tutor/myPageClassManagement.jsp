@@ -221,9 +221,6 @@
 								<!-- 좋아요 버튼 기능 -->
 								<div class="likeBtnArea">
 									<input type="hidden" class="cNo" name="cNo" value="<%= c.getClassNo() %>"> 
-									<button class="button button-like">
-										<i class="fa fa-heart"></i><span>Like</span>
-									</button>
 								</div>		
 								<!-- 클래스 소개 -->
 								<span style="font-size: x-large; color: gray;"> &nbsp;[<%= c.getcategoryName() %>]</span>
@@ -288,25 +285,26 @@
 							if (loginUser != null && (loginUser.getMemberGrade().equals("B")/*||loginUser.getMemberGrade().equals("A")*/)) {
 						%>
 						<%-- 로그인을 했으면서,튜터 아이디인  경우만--%>
-						<input type="submit" id="writeNoBtn" value="글쓰기"
+						<br><input type="submit" id="writeNoBtn" value="글쓰기" 
 						onclick="location.href = '<%=request.getContextPath()%>/classNoticeWrite.no?cNo=<%=c.getClassNo()%>'">
 						<%
 							}
 						%>
 						
 					</div>
-	
 				</div>
 			</div>
 <script>
-		$('#listArea td').mouseenter(function(){
-			$(this).parent().css({'background':'darkgray', 'cursor':'pointer'});
-		}).mouseout(function(){
-			$(this).parent().css({'background':'none'});
-		}).click(function(){
-				var num = $(this).parent().children().eq(0).text(); // 글번호 가져오기
-			location.href = '<%=request.getContextPath()%>/classNoticedetail.no?cNo='+ num;
-		});
+     $('#listArea td').mouseenter(function(){
+          $(this).parent().css({'background':'darkgray', 'cursor':'pointer'});
+         }).mouseout(function(){
+       $(this).parent().css({'background':'none'});
+      }).click(function(){
+       var num = $(this).parent().children().eq(0).text(); // 글번호 가져오기
+      if ($(this).text() != '존재하는 공지사항이 없습니다.') {
+             location.href = '<%=request.getContextPath()%>/classNoticedetail.no?cNo='+ num;
+       }
+    });
 </script>	
 							
 							<!-- 사이드 / 클래스 소개 -->
@@ -328,29 +326,34 @@
 									</div>
 								
 									<div class="card-body">
+										<h6 class="card-subtitle mb-2 text-muted" >
+											클래스 시작일  : <span><%= c.getClassStartDate() %></span> ~ 종료일 : <span><%= c.getClassEndDate() %></span>
+										</h6>
 										<h6 class="card-subtitle mb-2 text-muted">
 											강의 소요시간: <span><%= c.getClassTime() %></span>시간
 										</h6>
 										<h6 class="card-subtitle mb-2 text-muted">
 											수강 인원: <span><%= c.getClassTuteeMin() %></span>~<span><%= c.getClassTuteeMax() %></span>명 (최소인원 <span><%= c.getClassTuteeMin() %></span>명)
 										</h6>
-										<h6 class="card-subtitle mb-2 text-muted">
-											클래스 일정: <span><%= c.getClassTime() %></span>시간
-										</h6>
+<!-- 										<h6 class="card-subtitle mb-2 text-muted"> -->
+<%-- 											클래스 수업 시간: <span><%= c.getClassTime() %></span>시간 --%>
+<!-- 										</h6> -->
 										<h6 class="card-subtitle mb-2 text-muted">
 											수강료: <span><%= c.getClassFee() %></span>원
 										</h6>
 										<h6 class="card-subtitle mb-2 text-muted">
-										클래스 시작 시간
+										클래스 시작 시간 : 
 										<% for (int i = 0; i < s.size(); i++) { %>
 										<% 		if (s.size() > 1 && i != 0 && s.get(i-1).getSchduleTime().equals(s.get(i).getSchduleTime())) { %>
 																								
 										<% 		} else { %>
-															<input type = "text" class="timeOption" value="<%= s.get(i).getSchduleTime() %>">
+<%-- 										<span type = "text" class="timeOption"><%= s.get(i).getSchduleDay() %></span> --%>
+										<span type = "text" class="timeOption"><%= s.get(i).getSchduleTime() %></span>
 										<% 		} %>
 										<% } %>
 										<br>
 										</h6>
+										
 
 									</div>
 									
@@ -613,5 +616,10 @@
 	}
 	
 </script>
+
+	
+
+    
+
 </body>
 </html>

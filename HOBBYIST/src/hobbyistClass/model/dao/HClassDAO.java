@@ -629,13 +629,13 @@ public class HClassDAO {
 		return list;
 	}
 
-	public ArrayList<HClass> selectAPVNList(Connection conn) {
+	public ArrayList<HClass> selectAPVNList(Connection conn, int tutorNo) {
 		Statement stmt = null;
 		ResultSet rset = null;
 		ArrayList<HClass> list = null;
 
 		String query = prop.getProperty("selectAList");
-
+		query += " AND TUTOR_NO = "+ tutorNo;
 		try {
 			stmt = conn.createStatement();
 			rset = stmt.executeQuery(query);
@@ -659,13 +659,13 @@ public class HClassDAO {
 
 		return list;
 	}
-	public ArrayList<HClass> selectClearList(Connection conn) {
+	public ArrayList<HClass> selectClearList(Connection conn, int tutorNo) {
 		Statement stmt = null;
 		ResultSet rset = null;
 		ArrayList<HClass> list = null;
 
 		String query = prop.getProperty("selectCList");
-
+		query += " AND TUTOR_NO = "+ tutorNo;
 		try {
 			stmt = conn.createStatement();
 			rset = stmt.executeQuery(query);
@@ -690,13 +690,13 @@ public class HClassDAO {
 		return list;
 	}
 	
-	public ArrayList<HClass> selectBList(Connection conn) {
+	public ArrayList<HClass> selectBList(Connection conn, int tutorNo) {
 		Statement stmt = null;
 		ResultSet rset = null;
 		ArrayList<HClass> list = null;
 
 		String query = prop.getProperty("selectBList");
-
+		query += " AND TUTOR_NO = "+ tutorNo;
 		try {
 			stmt = conn.createStatement();
 			rset = stmt.executeQuery(query);
@@ -795,25 +795,22 @@ public class HClassDAO {
 		return list;
 	}
 	
-	public int deleteOpenClass(Connection conn, int bId) {
+	public int deleteOpenClass(Connection conn, int classNo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query = prop.getProperty("deleteOpenClass");
+		String query = prop.getProperty("deleteClass");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, bId);
+			pstmt.setInt(1, classNo);
 			
 			result = pstmt.executeUpdate();
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
 		}
-		
-		
 		return result;
 	}
 
@@ -859,7 +856,7 @@ public class HClassDAO {
 		System.out.println(list);
 		return list;
 	}	
-	
+		
 	public HClassSchedule selectSchedule(Connection conn, int cNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -888,5 +885,6 @@ public class HClassDAO {
 		
 		return s1;
 	}
+
 
 }

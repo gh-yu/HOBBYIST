@@ -26,7 +26,7 @@ public class WriteClassNoticeFormServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int cNo = Integer.parseInt(request.getParameter("no"));
+		int cNo = Integer.parseInt(request.getParameter("cNo"));
 		request.setAttribute("cNo", cNo);
 		request.getRequestDispatcher("WEB-INF/views/tutor/noticeWriteForm.jsp").forward(request, response);
 	}

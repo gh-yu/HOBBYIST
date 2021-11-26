@@ -2,6 +2,7 @@
     pageEncoding="UTF-8" import="classNotice.model.vo.ClassNotice , member.model.vo.Member" %>
 <%
 	ClassNotice notice = (ClassNotice)request.getAttribute("classNotice");
+	Member loginUser = (Member)session.getAttribute("loginUser");
 
 %>
 <!DOCTYPE html>
@@ -21,7 +22,7 @@
 </head>
 <body>
 <%-- 	<%@ include file="../common/menubar.jsp" %> --%>
-	<%@ include file="../common/topbar.jsp" %>
+<%-- 	<%@ include file="../common/topbar.jsp" %> --%>
 
 	<div class="outer">
 		<br>
@@ -56,6 +57,7 @@
 						</td>
 					</tr>
 				</table>
+				<input type= "hidden"name ="cNo" value="<%=notice.getClassNo() %>">
 				
 				<br>
 				
