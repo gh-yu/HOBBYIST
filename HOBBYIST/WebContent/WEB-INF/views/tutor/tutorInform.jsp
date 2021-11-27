@@ -400,21 +400,6 @@ label[for="fabk"], [for="twit"], [for="insta"], [for="pinter"], [for="youtu"] {
 		
 		  <hr />
 		
-		  <div class="card-profile-stats-container">
-		    <div class="card-profile-stats-statistic">
-		      <span class="stat">아이패드 그림 기초</span>
-		      <p style="font-weight:bold">수강명</p>
-		    </div> <!-- /.card-profile-stats-statistic -->
-		    <div class="card-profile-stats-statistic">
-		      <span class="stat">25</span>
-		      <p style="font-weight:bold">수강 인원</p>
-		    </div> <!-- /.card-profile-stats-statistic -->
-		    <div class="card-profile-stats-statistic">
-		      <span class="stat">15</span>
-		      <p style="font-weight:bold">후기 수</p>
-		    </div> <!-- /.card-profile-stats-statistic -->
-		  </div> <!-- /.card-profile-stats-container -->
-		
 		  <div class="card-profile-stats-more">
 		    <p class="card-profile-stats-more-link"><a href="#"><i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
 		    <div class="card-profile-stats-more-content">	<!-- 클릭하면 접히는 화살표 -->

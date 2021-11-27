@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import classNotice.model.service.ClassNoticeService;
+import classNotice.model.vo.ClassNotice;
 import hobbyistClass.model.service.HClassService;
 import hobbyistClass.model.vo.HClass;
 import hobbyistClass.model.vo.HClassFile;
@@ -49,15 +51,18 @@ public class TuteeClassDetailServlet extends HttpServlet {
 		String memberEmail = ((Member)request.getSession().getAttribute("loginUser")).getMemberEmail();	
 		ArrayList<TuteeClass> tuteeSchedule = new TuteeService().selectTuteeSchedule(cNo, memberEmail);
 
+		ArrayList<ClassNotice> list = new ClassNoticeService().selectClassList();
+		
 		String page = null;
-		if (c != null && fileList != null && tutor != null && tuteeSchedule != null) {
+		if (c != null && fileList != null && tutor != null && tuteeSchedule != null && list != null) {
 			
 			page = "WEB-INF/views/tutee/tuteeClassDetail.jsp";
 			request.setAttribute("c", c);
 			request.setAttribute("fileList", fileList);
 			request.setAttribute("tutor", tutor);
 			request.setAttribute("tuteeSchedule", tuteeSchedule);
-			 
+			request.setAttribute("list", list);
+			
 		} else {
 			request.setAttribute("msg", "튜티의 클래스 상세보기 실패");
 			page = "WEB-INF/views/common/errorPage.jsp";

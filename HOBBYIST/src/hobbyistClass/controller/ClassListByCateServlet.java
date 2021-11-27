@@ -42,6 +42,7 @@ public class ClassListByCateServlet extends HttpServlet {
 		String page = null;
 		if (classList != null && fileList != null) {
 			request.setAttribute("classCateList", classList);
+			request.setAttribute("cateName", cateName);
 			request.setAttribute("fileList", fileList);
 			page = "WEB-INF/views/hobbyistClass/classByCtegory.jsp";
 			

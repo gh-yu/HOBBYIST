@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="member.model.vo.Member, hobbyistClass.model.vo.*, tutee.model.vo.*, java.util.ArrayList"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member, hobbyistClass.model.vo.*, tutee.model.vo.*, tutor.model.vo.Tutor, java.util.ArrayList"%>
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
+	Tutor tutor = (Tutor)session.getAttribute("tutor");
 	ArrayList<LikeClass> lcList = (ArrayList)request.getAttribute("lcList");
 	ArrayList<HClassFile> fileList = (ArrayList)request.getAttribute("fileList");
 %>
@@ -38,11 +39,14 @@
 					<div class="col-sm-12">
 						<div class="custom_menu">
 							<ul>
-								<li><a href="index.jsp">MAIN</a></li>
-								<li></li>
+								<li><a href="<%= request.getContextPath() %>">MAIN</a></li>
 							<% if(loginUser == null) { %>
-								<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">LIKED-CLASS</a></li>
+								<li></li>
+								<li><a href="#" onclick="alert('로그인이 필요한 서비스입니다.');">LIKED-CLASS</a></li>
+							<% } else if(loginUser.getMemberGrade().equals("A")){ %>
+							<!-- 관리자면 LIKED-CLASS버튼 비활성화 -->
 							<% } else { %>
+								<li></li>
 								<li><a href="<%= request.getContextPath() %>/likedClass.te">LIKED-CLASS</a></li>
 							<% } %>
 								<li></li>
@@ -53,7 +57,7 @@
 							<% } %>
 								<li></li>
 							<% if(loginUser == null) { %>
-								<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">MY INFO</a></li>
+								<li><a href="#" onclick="alert('로그인이 필요한 서비스입니다.');">MY INFO</a></li>
 							<% } else { %>
 								<li><a href="<%= request.getContextPath() %>/myInfo.me">MY INFO</a></li>
 							<% } %>
@@ -70,7 +74,11 @@
 				<div class="scrollbar-inner sidebar-wrapper">
 					<div class="user">
 						<div class="photo">
-							<img src="<%= request.getContextPath() %>/assets/images/hlogo_g.png">
+							<%  if (tutor == null) { %>
+								<img src="<%= request.getContextPath() %>/assets/images/hlogo_g.png">
+							<%  } else { %>
+								<img src="<%= request.getContextPath() %>/uploadFiles/<%= tutor.getTutorImgChangeName()  %>">
+							<%  } %>
 						</div>
 						<div class="info">
 							<a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -103,7 +111,7 @@
 										</a>
 									</li>
 									<li>
-										<a href="<%= request.getContextPath() %>/deleteConfirm.me">
+										<a href="<%= request.getContextPath() %>/delete.me">
 											<span class="link-collapse">튜티 탈퇴</span>
 										</a>
 									</li>
@@ -122,12 +130,11 @@
 							class="la la-gittip"></i>
 							<p>LIKED CLASS</p>
 					</a></li>
-					<li class="nav-item"><a
+<%-- 					<li class="nav-item"><a
 						href="<%=request.getContextPath()%>/review.re"> <i
 							class="la la-camera-retro"></i>
 							<p>MY REVIEW</p>
-					</a></li>
-					<hr>
+					</a></li> --%>
 					
 					<li class="nav-item"><a
 						href="<%=request.getContextPath()%>/list.cs"> <i
@@ -137,15 +144,20 @@
 					<% if(loginUser != null && loginUser.getMemberGrade().equals("B")) { %>
 					<hr>
 					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/tutorSignUp.no"> <i
+						href="<%=request.getContextPath()%>/move.co"> <i
 							class="la la-pencil"></i>
-							<p>APPLICATION</p>
+							<p>APPLY FOR CLASS</p>
 					</a></li>
 					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/tutorClass.no"> <i
+						href="<%=request.getContextPath()%>/tutorMyPage.tt"> <i
 							class="la la-calendar-o"></i>
 							<p>TUTOR ON CLASS</p>
 					</a></li>
+					<li class="nav-item"><a
+                        href="<%=request.getContextPath()%>/tutorInform.me"> <i
+                            class="la la-user"></i>
+                            <p>TUTOR INFO</p>
+                    </a></li>
 					<% } else { %>
 					
 					<li class="nav-item update-pro">
@@ -209,5 +221,10 @@
 			</div>
 
 <%@ include file="../common/js.jsp" %>
+<script>
+	function reservation() {
+    	location.href = "<%= request.getContextPath() %>/tuteeEnroll.me";
+	}
+</script>
 </body>
 </html>

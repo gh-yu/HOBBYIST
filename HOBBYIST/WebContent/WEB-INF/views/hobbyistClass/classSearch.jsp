@@ -25,23 +25,30 @@
 					<div class="col-sm-12">
 						<div class="custom_menu">
 							<ul>
-								<li><a href="#">MAIN</a></li>
+								<li><a href="<%= request.getContextPath() %>">MAIN</a></li>
+							<% if(loginUser == null) { %>
 								<li></li>
-								<li><a href="#">CLASS</a></li>
+								<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">LIKED-CLASS</a></li>
+							<% } else if(loginUser.getMemberGrade().equals("A")){ %>
+							<!-- 관리자면 LIKED-CLASS버튼 비활성화 -->
+							<% } else { %>
 								<li></li>
-								<% if(loginUser == null) { %>
-								<li><a href="loginForm.me">LOG-IN</a></li>
-								<% } else { %>
-								<li><a href="logout.me">LOG-OUT</a></li> <!-- 마이페이지 정보조회 아이콘 -->
-								<% }  %>			
+								<li><a href="<%= request.getContextPath() %>/likedClass.te">LIKED-CLASS</a></li>
+							<% } %>
 								<li></li>
-								<% if(loginUser == null) { %>
-								<li><a onclick="alert('로그인이 필요한 서비스입니다.');">MY INFO</a></li>
-								<% } else { %>
-								<li><a href="myInfo.me">MY INFO</a></li> <!-- 마이페이지 정보조회 아이콘 -->
-								<% }  %>			
+							<% if(loginUser == null) { %>
+								<li><a href="<%= request.getContextPath() %>/loginForm.me">LOG-IN</a></li> <!-- 로그인 -->
+							<% } else { %>
+								<li><a href="<%= request.getContextPath() %>/logout.me">LOG-OUT</a></li> <!-- 로그아웃 -->
+							<% } %>
 								<li></li>
-								<li><a href="FAQ.bo">FAQ</a></li>
+							<% if(loginUser == null) { %>
+								<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">MY INFO</a></li>
+							<% } else { %>
+								<li><a href="<%= request.getContextPath() %>/myInfo.me">MY INFO</a></li>
+							<% } %>
+								<li></li>
+								<li><a href="<%= request.getContextPath() %>/FAQ.bo">FAQ</a></li>
 							</ul>
 						</div>
 					</div>
@@ -164,10 +171,10 @@
 														<br>	
 															<div class="btn_main">
 																<div class="buy_bt">
-																	<a href="#">Buy Now</a>
+																	<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= searchList.get(i).getClassNo() %>">Buy Now</a>
 																</div>
 																<div class="seemore_bt">
-																	<a href="class/classDetail.jsp">See More</a>
+																	<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= searchList.get(i).getClassNo() %>">See More</a>
 																</div>
 															</div>
 														</div>
@@ -184,35 +191,33 @@
 		</div>
 	</div>
 	<!-- 클래스 섹션 1 -->
-
 	<!-- footer -->
-	<div class="footer_section layout_padding">
-		<div class="container">
-			<div class="footer_logo">
-				<a href="index.jsp"><img src="assets/images/hlogo.png"
-					style="width: 120px"></a>
-			</div>
-			<div class="input_bt">
-				<input type="text" class="mail_bt" placeholder="Your Email"
-					name="Your Email"> <span class="subscribe_bt"
-					id="basic-addon2"><a href="#">Subscribe</a></span>
-			</div>
-			<div class="footer_menu">
-				<ul>
-					<li><a href="#">Introduction</a></li>
-					<li><a href="#">Income</a></li>
-					<li><a href="#">Class Application</a></li>
-					<li><a href="admin/faq.jsp">FAQ</a></li>
-					<li><a href="#">Customer Service</a></li>
-				</ul>
-			</div>
-			<div class="location_main">
-				HOBBYIST HOT LINE : <a href="#">+82 2 1234 5678</a>
-			</div>
-		</div>
-	</div>
-	<!-- footer section end -->
-	<!-- copyright section start -->
+    <div class="footer_section layout_padding">
+        <div class="container">
+            <div class="footer_logo">
+                <a href="index.jsp"><img src="assets/images/hlogo.png"
+                    style="width: 120px"></a>
+            </div>
+            <div class="input_bt">
+                <input type="text" class="mail_bt" placeholder=""
+                    name="Your Email"><!--  <span class="subscribe_bt"
+                    id="basic-addon2"><a href="#">Subscribe</a></span>  -->
+            </div>
+            <div class="footer_menu">
+                <ul>
+<!--                     <li><a href="#">Introduction</a></li>
+                    <li><a href="#">Income</a></li>
+                    <li><a href="#">Class Application</a></li> -->
+                <%--     <li><a href="<%= request.getContextPath() %>/FAQ.bo">FAQ</a></li> --%>
+<%--                     <li><a href="<%= request.getContextPath() %>/list.cs">Customer Service</a></li> --%>
+                </ul>
+            </div>
+            <div class="location_main"  style="font-size: x-large;">
+                HOBBYIST HOT LINE : <a href="#">+82 2 1234 5678</a>
+            </div>
+        </div>
+    </div>
+    <!-- footer section end -->
 	<div class="copyright_section">
 		<div class="container">
 			<p class="copyright_text">

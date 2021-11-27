@@ -29,7 +29,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
-
 	<div class="banner_bg_main">
 		<div class="container">
 			<div class="header_section_top">
@@ -38,18 +37,29 @@
 						<div class="custom_menu">
 							<ul>
 								<li><a href="<%= request.getContextPath() %>">MAIN</a></li>
-								<li></li>
-								<li><a href="<%= request.getContextPath() %>/myClass.te">LIKED CLASS</a></li>
-								<li></li>
-								<% if(loginUser == null) { %>
-									<li><a href="<%= request.getContextPath() %>/loginForm.me">LOG-IN</a></li> <!-- login전이면 로그인버튼 -->
-								<% } else { %>
-									<li><a href="<%= request.getContextPath() %>/logout.me">LOG-OUT</a></li> <!-- login된 상태면 로그아웃버튼 -->
-								<% } %>
-								<li></li>
-								<li><a href="<%= request.getContextPath() %>/myInfo.me">MY INFO</a></li>
-								<li></li>
-								<li><a href="<%= request.getContextPath() %>/FAQ.bo">FAQ</a></li>
+									<% if(loginUser == null) { %>
+										<li></li>
+										<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">LIKED-CLASS</a></li> <!-- 로그인 전이면 LIKED-CLASS 접근 불가 -->
+									<% } else if(loginUser.getMemberGrade().equals("A")){ %>
+										<!-- 관리자면 LIKED-CLASS버튼 비활성화 -->
+									<% } else { %>
+										<li></li>
+										<li><a href="<%= request.getContextPath() %>/likedClass.te">LIKED-CLASS</a></li>
+									<% } %>
+										<li></li>
+									<% if(loginUser == null) { %>
+										<li><a href="<%= request.getContextPath() %>/loginForm.me">LOG-IN</a></li> <!-- login전이면 로그인버튼 -->
+									<% } else { %>
+										<li><a href="<%= request.getContextPath() %>/logout.me">LOG-OUT</a></li> <!-- login된 상태면 로그아웃버튼 -->
+									<% } %>
+										<li></li>
+									<% if(loginUser == null) { %>
+										<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">MY INFO</a></li>
+									<% } else { %>
+										<li><a href="<%= request.getContextPath() %>/myInfo.me">MY INFO</a></li> <!-- 로그인 전이면 MY INFO 접근 불가 -->
+									<% } %>
+										<li></li>
+										<li><a href="<%= request.getContextPath() %>/FAQ.bo">FAQ</a></li>
 							</ul>
 						</div>
 					</div>
@@ -57,15 +67,13 @@
 			</div>
 		</div>
 	</div>
+	
+	<% if(loginUser.getMemberGrade().equals("A")) {	%>
 	<div class="sidebar">
 		<div class="scrollbar-inner sidebar-wrapper">
 			<div class="user">
 				<div class="photo">
-					<% if(tutor == null) {  %>
-					<img src="assets/images/hlogo_g.png">
-					<% } else { %>
-					<img src="<%= request.getContextPath() %>/uploadFiles/<%= tutor.getTutorImgChangeName() %>">
-					<% } %>
+					<img src="assets/images/hlogo_g.png">	
 				</div>
 				<div class="info">
 					<a class="" data-toggle="collapse" href="#collapseExample"
@@ -87,14 +95,85 @@
 					<div class="collapse in" id="collapseExample" aria-expanded="true"
 						style="">
 						<ul class="nav">
-							<li><a href="<%= request.getContextPath() %>/myInfo.me">
+							<li><a href="<%=request.getContextPath()%>/myInfo.me"> <span
+									class="link-collapse"> ADMIN 정보 보기</span>
+							</a></li>
+							<li><a href="<%=request.getContextPath()%>/updateForm.me">
+									<span class="link-collapse"> ADMIN 정보 수정</span>
+							</a></li>
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+			<ul class="nav">
+				<li class="nav-item"><a
+					href="<%=request.getContextPath()%>/tuteeList.admin"> <i
+					class="la la-user"></i>
+					<p>TUTEE LIST</p>
+				</a></li>
+				<li class="nav-item"><a
+					href="<%=request.getContextPath()%>/tutorList.admin"> <i
+					class="la la-user"></i>
+					<p>TUTOR LIST</p>
+				</a></li>
+				<li class="nav-item"><a
+					href="<%=request.getContextPath()%>/apvList.cl"> <i
+						class="la la-check-circle"></i>
+						<p>CLASS APV LIST</p>
+				</a></li>
+				<li class="nav-item"><a
+					href="<%=request.getContextPath()%>/FAQ.bo"> <i
+						class="la la-question-circle"></i>
+						<p>FAQ</p>
+				</a></li>
+				<li class="nav-item"><a
+					href="<%=request.getContextPath()%>/list.cs"> <i
+						class="la la-question-circle"></i>
+						<p>1:1 REQUEST</p>
+				</a></li>
+			</ul>
+		</div>
+	</div>
+	<% } else { %>
+	<div class="sidebar">
+		<div class="scrollbar-inner sidebar-wrapper">
+			<div class="user">
+				<div class="photo">
+					<%  if (tutor == null) { %>
+						<img src="<%= request.getContextPath() %>/assets/images/hlogo_g.png">
+					<%  } else { %>
+						<img src="<%= request.getContextPath() %>/uploadFiles/<%= tutor.getTutorImgChangeName()  %>">
+					<%  } %>
+				</div>
+				<div class="info">
+					<a class="" data-toggle="collapse" href="#collapseExample"
+						aria-expanded="true"> <span> <b><%= loginUser.getMemberNickName()  %></b> <!-- loginUser의 NickName 불러오기 -->
+							<span class="user-level"><!-- loginUser의 grade 불러오기 -->
+								<% if(loginUser.getMemberGrade().equals("A")) { %>
+									<span class="user-level">관리자(admin)</span>
+								<% } else if(loginUser.getMemberGrade().equals("B")) { %>
+									<span class="user-level">튜터(Tutor)</span>
+								<% } else { %>
+									<span class="user-level">튜티(Tutee)</span>
+								<% }  %>
+							</span> 
+						<span class="caret"></span>
+					</span>
+					</a>
+					<div class="clearfix"></div>
+
+					<div class="collapse in" id="collapseExample" aria-expanded="true"
+						style="">
+						<ul class="nav">
+							<li><a href="<%=request.getContextPath()%>/myInfo.me">
 									<span class="link-collapse">내 정보 보기</span>
 							</a></li>
-							<li><a href="<%= request.getContextPath() %>/updateForm.me">
+							<li><a href="<%=request.getContextPath()%>/updateForm.me">
 									<span class="link-collapse">내 정보 수정</span>
 							</a></li>
 							<li><a
-								href="<%= request.getContextPath() %>/deleteConfirm.me"> <span
+								href="<%=request.getContextPath()%>/delete.me"> <span
 									class="link-collapse">튜티 탈퇴</span>
 							</a></li>
 						</ul>
@@ -108,7 +187,7 @@
 						<p>MY CLASS</p>
 				</a></li>
 				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/likedClass.cl"> <i
+					href="<%=request.getContextPath()%>/likedClass.te"> <i
 						class="la la-gittip"></i>
 						<p>LIKED CLASS</p>
 				</a></li>
@@ -122,41 +201,37 @@
 						class="la la-question-circle"></i>
 						<p>1:1 REQUEST</p>
 				</a></li>
-				<%
-							if (loginUser != null && loginUser.getMemberGrade().equals("B")) {
-				%>
 				<hr>
-				<li class="nav-item"><a
+				<% if (loginUser != null && loginUser.getMemberGrade().equals("B")) { %>
+					<hr>
+					<li class="nav-item"><a
 						href="<%=request.getContextPath()%>/move.co"> <i
 							class="la la-pencil"></i>
 							<p>APPLY FOR CLASS</p>
-				</a></li>
-				<li class="nav-item active"><a
-					href="<%=request.getContextPath()%>/tutorMyPage.tt"> <i
-						class="la la-calendar-o"></i>
-						<p>TUTOR ON CLASS</p>
+					</a></li>
+					<li class="nav-item active"><a
+						href="<%=request.getContextPath()%>/tutorMyPage.tt"> <i
+							class="la la-calendar-o"></i>
+							<p>TUTOR ON CLASS</p>
 					</a></li>
 					<li class="nav-item"><a
 						href="<%=request.getContextPath()%>/tutorInform.me"> <i
 							class="la la-user"></i>
 							<p>TUTOR INFO</p>
 					</a></li>
-				<%
-							} else {
-				%>
-				<li class="nav-item update-pro">
-					<button onclick="reservation()">
-						<i class="la la-hand-pointer-o"></i>
-						<p>튜터 신청하기</p>
-					</button>
-						<%
-							}
-						%>
-				</li>
+				<% } else { %>
+					<li class="nav-item update-pro">
+						<button onclick="reservation()">
+							<i class="la la-hand-pointer-o"></i>
+							<p>튜터 신청하기</p>
+						</button>
+					</li>
+				<% } %>
 			</ul>
 		</div>
 	</div>
-	<!-- 사이드바 영역 -->
+			
+	<% } %>
 
 	<!-- 메인 영역 -->
 	<div class="main-panel">

@@ -112,10 +112,15 @@
 			</div>
 			<ul class="nav">
 				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/memberCheck.admin"> <i
-					class="la la-user"></i>
-					<p>MEMBER LIST</p>
-				</a></li>
+                    href="<%=request.getContextPath()%>/tuteeList.admin"> <i
+                    class="la la-user"></i>
+                    <p>TUTEE LIST</p>
+                </a></li>
+                <li class="nav-item"><a
+                    href="<%=request.getContextPath()%>/tutorList.admin"> <i
+                    class="la la-user"></i>
+                    <p>TUTOR LIST</p>
+                </a></li>
 				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/apvList.cl"> <i
 						class="la la-check-circle"></i>
