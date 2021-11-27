@@ -43,64 +43,73 @@ public class UpdateTutorServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		if(ServletFileUpload.isMultipartContent(request)) {
-		
-		int maxSize = 1024 * 1024 * 10;
-		String root = request.getSession().getServletContext().getRealPath("/");
-		String savePath = root + "uploadFiles/";
-		
-		File f = new File(savePath);
-		if(!f.exists()) {
-			f.mkdirs();
-		}
-		
-		System.out.println("경로:"+savePath);
-		
-		MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
-		
-		String saveFiles = null; // 파일의 바뀐 이름 저장
-		String originFiles = null;	// 파일의 원래 이름 저장
-		
-		Enumeration<String> files = multiRequest.getFileNames();
-		while(files.hasMoreElements()) {
-			String name = files.nextElement();
-			System.out.println("name:"+name);
-			System.out.println("files.nextElement():"+files.nextElement());
 			
-			if(multiRequest.getFilesystemName(name)!=null) {	// name=null이면 사진이 없는 것
-				saveFiles = multiRequest.getFilesystemName(name);	
-				originFiles = multiRequest.getOriginalFileName(name);
-				
+			int maxSize = 1024 * 1024 * 10;
+			String root = request.getSession().getServletContext().getRealPath("/");
+			String savePath = root + "uploadFiles/";
+			
+			
+			File f = new File(savePath);
+			if(!f.exists()) {
+				f.mkdirs();
+			}
+			
+			System.out.println("경로:"+savePath);
+			
+			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
+			
+			Tutor tt = (Tutor)request.getSession().getAttribute("tutor");
+			
+			String saveFiles = null; // 파일의 바뀐 이름 저장
+			String originFiles = null;	// 파일의 원래 이름 저장
+			
+			Enumeration<String> files = multiRequest.getFileNames();
+			while(files.hasMoreElements()) {
+				String name = files.nextElement();
 				System.out.println("name:"+name);
+				System.out.println("files.nextElement():"+files.nextElement());
+				System.out.println(multiRequest.getOriginalFileName(name));
+				
+				if(multiRequest.getOriginalFileName(name) == null) {
+					saveFiles = tt.getTutorImgChangeName();
+					originFiles = tt.getTutorImgOriginName();
+				} else if(multiRequest.getFilesystemName(name)!=null) {	// name=null이면 사진이 없는 것			
+					saveFiles = multiRequest.getFilesystemName(name);	
+					originFiles = multiRequest.getOriginalFileName(name);
+					
+					System.out.println(multiRequest.getOriginalFileName(name));
+					System.out.println(tt.getTutorImgChangeName());
+					System.out.println("name:"+name);
+				}
+			}
+			
+			System.out.println("파일즈:"+files);
+			System.out.println("saveFiles:"+saveFiles);
+			System.out.println("originFiles:"+originFiles);
+			
+			String myReport = multiRequest.getParameter("myReport");
+			String mySns = multiRequest.getParameter("mySns");
+			String memberEmail = ((Member)request.getSession().getAttribute("loginUser")).getMemberEmail();
+			
+			System.out.println("myReport:"+myReport);
+			System.out.println("mySns:"+mySns);
+			System.out.println("email:"+memberEmail);
+			
+			Tutor t = new Tutor(0, null, myReport, mySns, savePath, null, originFiles, saveFiles);
+			
+			int result = new TutorService().updateTutor(t, memberEmail);	// 입력한 정보 받아오기
+			System.out.println("result:"+result);
+			
+			if(result > 0) {	// 받아온 정보 화면에 뿌리기 
+				Tutor tutor = new TutorService().selectTutor(memberEmail);
+				request.getSession().setAttribute("tutor", tutor);
+				request.getRequestDispatcher("WEB-INF/views/tutor/tutorInform.jsp").forward(request, response);
+	//			response.sendRedirect("tutorInform.me");
+			} else {
+				request.setAttribute("msg", "튜터 정보 수정 실패");
+				request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
 			}
 		}
-		System.out.println("파일즈:"+files);
-		System.out.println("saveFiles:"+saveFiles);
-		System.out.println("originFiles:"+originFiles);
-		
-		String myReport = multiRequest.getParameter("myReport");
-		String mySns = multiRequest.getParameter("mySns");
-		String memberEmail = ((Member)request.getSession().getAttribute("loginUser")).getMemberEmail();
-		
-		System.out.println("myReport:"+myReport);
-		System.out.println("mySns:"+mySns);
-		System.out.println("email:"+memberEmail);
-		
-		Tutor t = new Tutor(0, null, myReport, mySns, savePath, null, originFiles, saveFiles);
-
-		
-		int result = new TutorService().updateTutor(t, memberEmail);	// 입력한 정보 받아오기
-		System.out.println("result:"+result);
-		
-		if(result > 0) {	// 받아온 정보 화면에 뿌리기 
-			Tutor tutor = new TutorService().selectTutor(memberEmail);
-			request.getSession().setAttribute("tutor", tutor);
-			request.getRequestDispatcher("WEB-INF/views/tutor/tutorInform.jsp").forward(request, response);
-//			response.sendRedirect("tutorInform.me");
-		} else {
-			request.setAttribute("msg", "튜터 정보 수정 실패");
-			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
-		}
-	}
 	}
 
 	/**

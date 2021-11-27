@@ -1,9 +1,10 @@
 <%@ page import = "java.util.Date" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
-	import="java.util.ArrayList, hobbyistClass.model.vo.*, member.model.vo.Member"%>
+	import="java.util.ArrayList, hobbyistClass.model.vo.*, member.model.vo.Member, tutor.model.vo.Tutor"%>
 <%
 	Member loginUser = (Member) session.getAttribute("loginUser");
+	Tutor tutor = (Tutor)session.getAttribute("tutor");
 %>
 <!DOCTYPE html>
 <html>
@@ -109,10 +110,10 @@ img.ui-datepicker-trigger {
 			showOn : "both", // 달력을 표시할 타이밍 (both: focus or button)
 			buttonImage : "images/calendar.gif", // 버튼 이미지
 			buttonImageOnly : true, // 버튼 이미지만 표시할지 여부
-
 			buttonText : "날짜선택", // 버튼의 대체 텍스트
 			dateFormat : "yy-mm-dd", // 날짜의 형식
 			changeMonth : true, // 월을 이동하기 위한 선택상자 표시여부
+			changeYear : true, //연도 변경 가능 설정
 			minDate: 0,                       // 선택할수있는 최소날짜, ( 0 : 오늘 이전 날짜 선택 불가)
 			onClose : function(selectedDate) {
 				// 시작일(fromDate) datepicker가 닫힐때
@@ -129,6 +130,7 @@ img.ui-datepicker-trigger {
 			buttonText : "날짜선택",
 			dateFormat : "yy-mm-dd",
 			changeMonth : true,
+			changeYear : true,
 			//minDate: 0, // 오늘 이전 날짜 선택 불가
 			onClose : function(selectedDate) {
 				$("#fromDate").datepicker("option", "maxDate", selectedDate);
@@ -169,7 +171,11 @@ img.ui-datepicker-trigger {
 			<div class="scrollbar-inner sidebar-wrapper">
 				<div class="user">
 					<div class="photo">
-						<img src="assets/images/hlogo_g.png">
+					<% if(tutor == null) {  %>
+					<img src="assets/images/hlogo_g.png">
+					<% } else { %>
+					<img src="<%= request.getContextPath() %>/uploadFiles/<%= tutor.getTutorImgChangeName() %>">
+					<% } %>
 					</div>
 					<div class="info">
 						<a class="" data-toggle="collapse" href="#collapseExample"
@@ -300,26 +306,26 @@ img.ui-datepicker-trigger {
 									<tr>
 										<th>썸네일 사진</th>
 										<td colspan="3">
-											<div id="titleImgArea">
-												<img id="titleImg" width="350" height="200">
+											<div id="titleImgArea" style="width: 365px; height:200px;">
+												<img id="titleImg" style="min-width:100%; height: 100%;">
 											</div>
 										</td>
 									</tr>
 									<tr>
 										<th>이미지 추가</th>
 										<td>
-											<div id="contentImgArea1">
-												<img id="contentImg1" width="120" height="100">
+											<div id="contentImgArea1" style="width: 120px; height: 100px;">
+												<img id="contentImg1" style="min-width:100%; height: 100%;">
 											</div>
 										</td>
 										<td>
-											<div id="contentImgArea2">
-												<img id="contentImg2" width="120" height="100">
+											<div id="contentImgArea2" style="width: 120px; height: 100px;">
+												<img id="contentImg2" style="min-width:100%; height: 100%;">
 											</div>
 										</td>
 										<td>
-											<div id="contentImgArea3">
-												<img id="contentImg3" width="120" height="100">
+											<div id="contentImgArea3" style="width: 120px; height: 100px;">
+												<img id="contentImg3" style="min-width:100%; height: 100%;">
 											</div>
 										</td>
 									</tr>

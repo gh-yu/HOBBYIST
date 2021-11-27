@@ -231,7 +231,11 @@
 							<li class="page-item">
 								<button id="afterBtn" class="page-link" onclick="location.href='<%= request.getContextPath() %>/tutorList.admin?currentPage=<%= pi.getCurrentPage() + 1 %>'"
 									aria-label="Next"> &raquo;</button>
-							</li>
+							</li>	
+							<%-- <li class="page-item">
+								<button id="afterBtn" class="page-link" onclick="location.href='<%= request.getContextPath() %>/tutorList.admin?currentPage=<%= pi.getCurrentPage() + 1 %>'"
+									aria-label="Next"> &raquo;</button>
+							</li> --%>
 							<li class="page-item">
 								<button id="toLastBtn" class="page-link" onclick="location.href='<%= request.getContextPath() %>/tutorList.admin?currentPage=<%= pi.getMaxPage() %>'" 
 									aria-label="Next"> &raquo; </button>
@@ -239,11 +243,18 @@
 						</ul>
 					
 						<script>
+							if(<%= pi.getCurrentPage() %> <= 1){
+								$('#beforeBtn').prop('disabled', true);
+								$('#toFirstBtn').prop('disabled', true);
+							}
+							
 							if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>){
-									$('#afterBtn').prop('disabled', true);
-									$('#toLastBtn').prop('disabled', true);
-							} 
+								$('#afterBtn').prop('disabled', true);
+								$('#toLastBtn').prop('disabled', true);
+							}
+							
 						</script>
+						
 						</nav>
 						<br>
 					</div>

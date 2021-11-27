@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="classNotice.controller.*, hobbyistClass.model.vo.*, member.model.vo.Member, tutor.model.vo.Tutor, java.util.ArrayList , hobbyistClass.model.vo.*, classNotice.model.vo.*"%>
+	pageEncoding="UTF-8" import="tutee.model.vo.*,   classNotice.controller.*, java.text.DecimalFormat, hobbyistClass.model.vo.*, member.model.vo.Member, tutor.model.vo.Tutor, java.util.ArrayList , hobbyistClass.model.vo.*, classNotice.model.vo.*"%>
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
 
@@ -8,7 +8,7 @@
 	Tutor t = (Tutor)request.getAttribute("tutor");
 	ArrayList<HClassSchedule> s = (ArrayList)request.getAttribute("sList");
 	ArrayList<ClassNotice> list = (ArrayList) request.getAttribute("list");
-	
+	DecimalFormat dc = new DecimalFormat("###,###,###");
 	
 	// 달력의 요일과 DB에서 가져온 요일데이터를 비교하는 조건식 생성 -> script에서 배열에 저장하여 활용
 	String dayPick = "";
@@ -138,6 +138,16 @@
 	font-family: monospace;
 	font-weight: bold;
 }
+
+.tutorProfile{
+	width: 200px;
+	height: 150px;	
+}
+	
+.tutorProfile img{
+	width: 180px;
+	height: 140px;
+}
 </style>
 </head>
 <body>
@@ -246,38 +256,30 @@
 							</thead>
 							<tbody>
 							
-								<%
-									if (!list.isEmpty()) {
-								%>	
-									<% boolean check = false; %>
-							
-									<%
-									for (int i = 0; i < list.size(); i++) {
-									%>
-								<% 	if(c.getClassNo() == list.get(i).getClassNo()) {%>
-								<tr>
-									<td><%=list.get(i).getClassBoardNo()%></td>
-									<td><%=list.get(i).getClassBoardName()%></td>
-									<td><%=list.get(i).getClassBoardWriter()%></td>
-									<td><%=list.get(i).getClassBoardViews()%></td>
-									<td><%=list.get(i).getClassBoardDate()%></td>
-								</tr>
-									<%	check = true; %>
-								<%
-									}
-								%>
-							<%
-							} 
-							%>
-							<% if(!check) {%> 
-							<tr>
-								<td colspan="5">존재하는 공지사항이 없습니다.</td>
-							</tr>
-							<% } %>
-					<%
-  						}    
- 					%>  
-							</tbody>
+								<% boolean check = false; %>
+                                        <%    if (!list.isEmpty()) { %>
+
+                                                <%for (int i = 0; i < list.size(); i++) { %>
+
+                                            <%     if(c.getClassNo() == list.get(0).getClassNo()) {%>
+                                                <tr>
+                                                    <td><%=list.get(i).getClassBoardNo()%></td>
+                                                    <td><%=list.get(i).getClassBoardName()%></td>
+                                                    <td><%=list.get(i).getClassBoardWriter()%></td>
+                                                    <td><%=list.get(i).getClassBoardViews()%></td>
+                                                    <td><%=list.get(i).getClassBoardDate()%></td>
+                                                </tr>
+                                                    <%    check = true; %>
+                                                <% } %>
+                                            <% } %>
+
+                                        <%    } %>
+                                    <% if(!check) { %> 
+                                                <tr>
+                                                    <td colspan="5">존재하는 공지사항이 없습니다.</td>
+                                                </tr>
+                                    <% } %>
+                            </tbody>
 						</table>
 					</div>
 					<div align="right">
@@ -301,9 +303,9 @@
        $(this).parent().css({'background':'none'});
       }).click(function(){
        var num = $(this).parent().children().eq(0).text(); // 글번호 가져오기
-      if ($(this).text() != '존재하는 공지사항이 없습니다.') {
+//       if ($(this).text() != '존재하는 공지사항이 없습니다.') {
              location.href = '<%=request.getContextPath()%>/classNoticedetail.no?cNo='+ num;
-       }
+//        }
     });
 </script>	
 							
@@ -314,6 +316,9 @@
 										<div class="card-title">[LIVE]</div>
 									</div>
 									<div class="card-body">
+										<div class="tutorProfile">
+											<img src="<%= request.getContextPath() %>/uploadFiles/<%= t.getTutorImgChangeName() %>">
+										</div>
 										<h6 class="card-subtitle mb-2 text-muted"><%= t.getMemberNickName() %>의 클래스</h6>
 										<p class="card-text">
 											<p><%= t.getTutorReport() %></p>
@@ -339,7 +344,7 @@
 <%-- 											클래스 수업 시간: <span><%= c.getClassTime() %></span>시간 --%>
 <!-- 										</h6> -->
 										<h6 class="card-subtitle mb-2 text-muted">
-											수강료: <span><%= c.getClassFee() %></span>원
+											수강료: <span><%= dc.format(c.getClassFee()) %></span>원
 										</h6>
 										<h6 class="card-subtitle mb-2 text-muted">
 										클래스 시작 시간 : 

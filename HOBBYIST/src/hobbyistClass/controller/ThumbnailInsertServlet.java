@@ -45,7 +45,7 @@ public class ThumbnailInsertServlet extends HttpServlet {
 		if (ServletFileUpload.isMultipartContent(request)) {
 			
 			// 파일 업로드 처리를 위한 변수 설정
-			int maxSize = 1024*1024*10; // 10Mbyte
+			int maxSize = 1024*1024*100; // 10->100Mbyte로 수정
 			String root = request.getSession().getServletContext().getRealPath("/"); 
 			String savePath = root + "uploadFiles/";
 			

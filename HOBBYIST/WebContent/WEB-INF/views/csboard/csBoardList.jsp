@@ -144,7 +144,11 @@
 		<div class="scrollbar-inner sidebar-wrapper">
 			<div class="user">
 				<div class="photo">
-					<img src="<%= request.getContextPath() %>/assets/images/hlogo_g.png">
+					<%  if (tutor == null) { %>
+						<img src="<%= request.getContextPath() %>/assets/images/hlogo_g.png">
+					<%  } else { %>
+						<img src="<%= request.getContextPath() %>/uploadFiles/<%= tutor.getTutorImgChangeName()  %>">
+					<%  } %>
 				</div>
 				<div class="info">
 					<a class="" data-toggle="collapse" href="#collapseExample"
@@ -196,6 +200,7 @@
 						class="la la-camera-retro"></i>
 						<p>MY REVIEW</p>
 				</a></li> --%>
+
 				<li class="nav-item active"><a
 					href="<%=request.getContextPath()%>/list.cs"> <i
 						class="la la-question-circle"></i>
@@ -346,10 +351,12 @@
 						<script>
 							if(<%= pi.getCurrentPage() %> <= 1){
 								$('#beforeBtn').prop('disabled', true);
+								$('#toFirstBtn').prop('disabled', true);
 							}
 							
 							if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>){
 								$('#afterBtn').prop('disabled', true);
+								$('#toLastBtn').prop('disabled', true);
 							}
 							
 							if ('<%= list.isEmpty() %>' == 'false') {
@@ -384,5 +391,6 @@
     	location.href = "<%= request.getContextPath() %>/tuteeEnroll.me";
 	}
 </script>
+
 </body>
 </html>

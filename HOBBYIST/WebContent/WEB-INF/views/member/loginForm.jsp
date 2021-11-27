@@ -102,39 +102,33 @@
         </div>
     </section>
 
-    <!--======================================== 
-
-           Footer
-
-    ========================================-->
-
-
-    
+<!-- footer -->
     <div class="footer_section layout_padding">
-		<div class="container">
-			<div class="footer_logo">
-				<a href="index.jsp"><img src="assets/images/hlogo.png"
-					style="width: 120px"></a>
-			</div>
-			<div class="input_bt">
-				<input type="text" class="mail_bt" placeholder="Your Email"
-					name="Your Email"> <span class="subscribe_bt"
-					id="basic-addon2"><a href="#">Subscribe</a></span>
-			</div>
-			<div class="footer_menu">
-				<ul>
-					<li><a href="#">Introduction</a></li>
-					<li><a href="#">Income</a></li>
-					<li><a href="#">Class Application</a></li>
-					<li><a href="admin/faq.jsp">FAQ</a></li>
-					<li><a href="#">Customer Service</a></li>
-				</ul>
-			</div>
-			<div class="location_main">
-				HOBBYIST HOT LINE : <a href="#">+82 2 1234 5678</a>
-			</div>
-		</div>
-	</div>
+        <div class="container">
+            <div class="footer_logo">
+                <a href="index.jsp"><img src="assets/images/hlogo.png"
+                    style="width: 120px"></a>
+            </div>
+            <div class="input_bt">
+                <input type="text" class="mail_bt" placeholder=""
+                    name="Your Email"><!--  <span class="subscribe_bt"
+                    id="basic-addon2"><a href="#">Subscribe</a></span>  -->
+            </div>
+            <div class="footer_menu">
+                <ul>
+<!--                     <li><a href="#">Introduction</a></li>
+                    <li><a href="#">Income</a></li>
+                    <li><a href="#">Class Application</a></li> -->
+                <%--     <li><a href="<%= request.getContextPath() %>/FAQ.bo">FAQ</a></li> --%>
+<%--                     <li><a href="<%= request.getContextPath() %>/list.cs">Customer Service</a></li> --%>
+                </ul>
+            </div>
+            <div class="location_main"  style="font-size: x-large;">
+                HOBBYIST HOT LINE : <a href="#">+82 2 1234 5678</a>
+            </div>
+        </div>
+    </div>
+    <!-- footer section end -->
 	
 	<!-- copyright section start -->
 	<div class="copyright_section">

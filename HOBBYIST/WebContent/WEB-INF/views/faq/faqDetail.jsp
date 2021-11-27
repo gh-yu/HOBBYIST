@@ -111,7 +111,8 @@
 													<tr>
 														<th id="memberReplyArea" class="thReply" style="background color: #eeeeee; text-align: center;"> 답변</th>
 														<td class="tdReply" >
-															<%= faq.getFaqReply() %>
+															<textarea readonly style="border: none; resize: none; width: 700px; height: 100px; text-align: center;"><%= faq.getFaqReply() %></textarea>
+															<%-- <%= faq.getFaqReply() %> --%>
 															<input type="hidden" id="replyArea" name="reply" value="<%= faq.getFaqReply() %>">
 														</td>
 													</tr>												
@@ -171,16 +172,21 @@
 			</div>
 			<ul class="nav">
 				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/memberCheck.admin"> <i
+					href="<%=request.getContextPath()%>/tuteeList.admin"> <i
 					class="la la-user"></i>
-					<p>MEMBER LIST</p>
+					<p>TUTEE LIST</p>
+				</a></li>
+				<li class="nav-item"><a
+					href="<%=request.getContextPath()%>/tutorList.admin"> <i
+					class="la la-user"></i>
+					<p>TUTOR LIST</p>
 				</a></li>
 				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/apvList.cl"> <i
 						class="la la-check-circle"></i>
 						<p>CLASS APV LIST</p>
 				</a></li>
-				<li class="nav-item"><a
+				<li class="nav-item active"><a
 					href="<%=request.getContextPath()%>/FAQ.bo"> <i
 						class="la la-question-circle"></i>
 						<p>FAQ</p>
@@ -239,7 +245,8 @@
 													<tr>
 														<th id="adminReplyArea" style="background color: #eeeeee; text-align: center;"> 답변</th>
 														<td id="td_content_reply">
-															<%= faq.getFaqReply() %>
+															<textarea readonly style="border: none; resize: none; width: 700px; height: 100px; text-align: center;"><%= faq.getFaqReply() %></textarea>
+															<%-- <%= faq.getFaqReply() %> --%>
 															<input type="hidden" id="reply" name="reply" value="<%= faq.getFaqReply() %>">
 														</td>
 													</tr>												

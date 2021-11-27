@@ -239,10 +239,16 @@
 						</ul>
 					
 						<script>
+							if(<%= pi.getCurrentPage() %> <= 1){
+								$('#beforeBtn').prop('disabled', true);
+								$('#toFirstBtn').prop('disabled', true);
+							}
+							
 							if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>){
-									$('#afterBtn').prop('disabled', true);
-									$('#toLastBtn').prop('disabled', true);
-							} 
+								$('#afterBtn').prop('disabled', true);
+								$('#toLastBtn').prop('disabled', true);
+							}
+							
 						</script>
 						</nav>
 						<br>
