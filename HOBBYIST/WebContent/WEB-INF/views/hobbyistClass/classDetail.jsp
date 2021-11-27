@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="hobbyistClass.model.vo.*, member.model.vo.Member, tutor.model.vo.Tutor, java.util.ArrayList"%>
+	pageEncoding="UTF-8" import="hobbyistClass.model.vo.*, member.model.vo.Member, tutor.model.vo.Tutor, java.util.ArrayList, java.text.DecimalFormat"%>
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
 
@@ -7,6 +7,7 @@
 	ArrayList<HClassFile> f = (ArrayList)request.getAttribute("fileList");
 	Tutor t = (Tutor)request.getAttribute("tutor");
 	ArrayList<HClassSchedule> s = (ArrayList)request.getAttribute("sList");
+	DecimalFormat dc = new DecimalFormat("###,###,###");
 	
 	// 달력의 요일과 DB에서 가져온 요일데이터를 비교하는 조건식 생성 -> script에서 배열에 저장하여 활용
 	String dayPick = "";
@@ -50,7 +51,17 @@
 	#btnSub:hover {
 		background: #9ED4C2;
 	}
-
+	
+	.tutorProfile{
+		width: 200px;
+		height: 150px;	
+	}
+	
+	.tutorProfile img{
+		width: 180px;
+		height: 140px;
+	}
+	
 </style>
 </head>
 <body>
@@ -156,6 +167,9 @@
 										<div class="card-title">[LIVE]</div>
 									</div>
 									<div class="card-body">
+										<div class="tutorProfile">
+											<img src="<%= request.getContextPath() %>/uploadFiles/<%= t.getTutorImgChangeName() %>">
+										</div>
 										<h6 class="card-subtitle mb-2 text-muted"><%= t.getMemberNickName() %>의 클래스</h6>
 										<p class="card-text">
 											<p><%= t.getTutorReport() %></p>
@@ -206,7 +220,7 @@
 												<input type="hidden" name="cNo" value="<%= c.getClassNo() %>">
 												<div id="price">
 													<label for="exampleFormControlSelect1">수강료 &nbsp;</label> 
-													<input placeholder="<%= c.getClassFee() %>원" disabled>
+													<input placeholder="<%= dc.format(c.getClassFee()) %>원" disabled>
 													<small id="imageHelp" class="form-text text-muted">수강료는 이미 책정된 내역으로 변경할 수 없습니다.</small> 
 												
 													<br><br><br>
@@ -232,7 +246,7 @@
 	</div>
 	<br>
 	<!-- 클래스 리뷰 영역 -->
-	<div class="row justify-content-center">
+<!-- 	<div class="row justify-content-center">
 		<div class="col-md-10">
 			<div class="card">
 				<div class="card-header">
@@ -262,13 +276,13 @@
 							<div class="swiper-slide"
 								style="background-image: url(assets/images/painting.jpg)"></div>
 						</div>
-						<!-- Add Pagination -->
+						Add Pagination
 						<div class="swiper-pagination"></div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 <%@ include file="../common/js.jsp" %>
 <script src="assets/js/swiper.js"></script>
@@ -394,7 +408,7 @@
 		closeText : '닫기',
 		showAnim : "slide",
 
-		beforeShowDay : onlyClassday, // 요일 선택 제한, 값으로 함수를 넣었음
+		beforeShowDay : onlyClassday, // 요일 선택 제한, 강사가 신청한 요일만 선택 가능하게 / 값으로 함수를 넣어 반환값인 베열이 저장됨
 		regional : "ko", // 지역
 
 	});

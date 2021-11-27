@@ -1,7 +1,7 @@
 <%@page import="org.apache.catalina.tribes.util.TcclThreadFactory"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="hobbyistClass.model.vo.*, member.model.vo.Member, 
-								tutor.model.vo.Tutor, java.util.ArrayList, tutee.model.vo.TuteeClass, classNotice.model.vo.*"%>
+								tutor.model.vo.Tutor, java.util.ArrayList, tutee.model.vo.TuteeClass, classNotice.model.vo.*, java.text.DecimalFormat"%>
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
 
@@ -10,7 +10,7 @@
 	Tutor t = (Tutor)request.getAttribute("tutor");
 	ArrayList<TuteeClass> s = (ArrayList)request.getAttribute("tuteeSchedule");
 	ArrayList<ClassNotice> list = (ArrayList)request.getAttribute("list");
-	System.out.println(c);
+	DecimalFormat dc = new DecimalFormat("###,###,###");
 %>
 <!DOCTYPE html>
 <html>
@@ -103,6 +103,15 @@
 	    text-decoration: none;
 	}
 		
+	.tutorProfile{
+		width: 200px;
+		height: 150px;	
+	}
+	
+	.tutorProfile img{
+		width: 180px;
+		height: 140px;
+	}
 
 </style>
 </head>
@@ -214,9 +223,9 @@
 												</tr>
 											</thead>
 											<tbody>
-											
+									<% boolean check = false; %>	
 										<%	if (!list.isEmpty()) { %>	
-											<% boolean check = false; %>
+											
 												<%for (int i = 0; i < list.size(); i++) { %>
 												
 											<% 	if(c.getClassNo() == list.get(0).getClassNo()) {%>
@@ -230,12 +239,13 @@
 													<%	check = true; %>
 												<% } %>
 											<% } %>
-											<% if(!check) { %> 
+
+										<%	} %>  
+									<% if(!check) { %> 
 												<tr>
 													<td colspan="5">존재하는 공지사항이 없습니다.</td>
 												</tr>
-											<% } %>
-										<%	} %>  
+									<% } %>
 											</tbody>
 										</table>
 									</div>
@@ -262,6 +272,9 @@
 										<div class="card-title">[LIVE]</div>
 									</div>
 									<div class="card-body">
+										<div class="tutorProfile">
+											<img src="<%= request.getContextPath() %>/uploadFiles/<%= t.getTutorImgChangeName() %>">
+										</div>
 										<h6 class="card-subtitle mb-2 text-muted"><%= t.getMemberNickName() %>의 클래스</h6>
 										<p class="card-text">
 											<p><%= t.getTutorReport() %></p>
@@ -326,7 +339,7 @@
 										 	<tfoot>
 										 		<tr><th colspan="6"><hr></th></tr>
 										 		<tr>
-										 			<th colspan="6">수강료: <%= c.getClassFee() %>원</th>
+										 			<th colspan="6">수강료: <%= dc.format(c.getClassFee()) %>원</th>
 										 		</tr>
 										 		<tr><th colspan="6"><br></th></tr>
 										 		<tr>

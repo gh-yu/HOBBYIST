@@ -3,7 +3,6 @@
 <%
 	ClassNotice classnotice = (ClassNotice)request.getAttribute("classnotice");
 	Member loginUser = (Member)session.getAttribute("loginUser");
-	Member member = (Member)request.getAttribute("Member");
 	Tutor tutor = (Tutor)session.getAttribute("tutor");
 	HClass c = (HClass)request.getAttribute("c");
 	System.out.println("c111 :" + c);
@@ -46,7 +45,7 @@
 					<tr>
 						<th>작성자</th>
 						<td>
-							<%= member.getMemberNickName()%>
+							<%=classnotice.getClassBoardWriter()%>
 							<input type="hidden" name="writer" value="<%= classnotice.getClassBoardWriter() %>"> 
 						</td>
 						<th>작성일</th>
@@ -111,7 +110,7 @@
 <%-- function deleteNotice() { --%>
 // 		if (confirm("정말로 삭제하시겠습니까?")) {
 <%-- 			$('#detailForm').attr('action', 'classNoticeDelete.no?cNo='<%= classnotice.getClassBoardNo()%>); --%>
-// 			$('#detailForm').submit(); /* form에 대한 submit() -> 제출  */
+// 			$('#detailForm').submit(); /* form에 대한 submit() -> 제출  
 // 		}
 // 	}
 

@@ -29,7 +29,7 @@
 										<!-- 관리자면 LIKED-CLASS버튼 비활성화 -->
 									<% } else { %>
 										<li></li>
-										<li><a href="<%= request.getContextPath() %>/myClass.te">LIKED-CLASS</a></li>
+										<li><a href="<%= request.getContextPath() %>/likedClass.te">LIKED-CLASS</a></li>
 									<% } %>
 										<li></li>
 									<% if(loginUser == null) { %>
@@ -159,24 +159,29 @@
 			</div>
 			<ul class="nav">
 				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/memberCheck.admin"> <i
+					href="<%=request.getContextPath()%>/tuteeList.admin"> <i
 					class="la la-user"></i>
-					<p>MEMBER LIST</p>
+					<p>TUTEE LIST</p>
+				</a></li>
+				<li class="nav-item"><a
+					href="<%=request.getContextPath()%>/tutorList.admin"> <i
+					class="la la-user"></i>
+					<p>TUTOR LIST</p>
 				</a></li>
 				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/apvList.cl"> <i
-						class="la la-check-circle"></i>
-						<p>CLASS APV LIST</p>
+					class="la la-check-circle"></i>
+					<p>CLASS APV LIST</p>
 				</a></li>
-				<li class="nav-item"><a
+				<li class="nav-item active"><a
 					href="<%=request.getContextPath()%>/FAQ.bo"> <i
-						class="la la-question-circle"></i>
-						<p>FAQ</p>
+					class="la la-question-circle"></i>
+					<p>FAQ</p>
 				</a></li>
 				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/list.cs"> <i
-						class="la la-question-circle"></i>
-						<p>1:1 REQUEST</p>
+					class="la la-question-circle"></i>
+					<p>1:1 REQUEST</p>
 				</a></li>
 			</ul>
 		</div>

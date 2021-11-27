@@ -37,11 +37,8 @@ public class ClassUpdateServlet extends HttpServlet {
 		
 		int result = new HClassService().updateHClass(bId, cateId, title, content);
 		if (result > 0) {
-//			Board board = new BoardService().selectBoard(bId); // 수정 성공시, 해당 게시글의 상세페이지로 넘어가기 위해 select해옴
-//			request.setAttribute("board", board);
-//			request.getRequestDispatcher("WEB-INF/views/board/boardDetail.jsp").forward(request, response); 
-			
-			response.sendRedirect("detail.bo?bId=" + bId + "&upd=Y"); // "&upd=Y" 집어넣은 이유 -> 수정 후 조회수 증가시키는 걸 막기 위해 
+		
+			response.sendRedirect("classManagement.tt?bId=" + bId + "&upd=Y"); // "&upd=Y" 집어넣은 이유 -> 수정 후 조회수 증가시키는 걸 막기 위해 
 		} else {
 			request.setAttribute("msg", "게시글 수정 실패");
 			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);

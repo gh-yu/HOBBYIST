@@ -49,8 +49,8 @@ public class TutorDAO {
             pstmt.setString(2, t.getTutorSns());
             pstmt.setString(3, t.getTutorImgPath());
             //pstmt.setString(4, memberEmail);
-            pstmt.setString(4, t.getTutorImgOriginName());
-            pstmt.setString(5, memberEmail);
+            pstmt.setString(4, memberEmail);
+            pstmt.setString(5, t.getTutorImgOriginName());
             pstmt.setString(6, t.getTutorImgChangeName());
 
             result = pstmt.executeUpdate();

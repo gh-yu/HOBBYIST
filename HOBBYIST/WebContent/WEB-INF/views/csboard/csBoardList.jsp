@@ -112,10 +112,15 @@
 			</div>
 			<ul class="nav">
 				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/memberCheck.admin"> <i
-					class="la la-user"></i>
-					<p>MEMBER LIST</p>
-				</a></li>
+                    href="<%=request.getContextPath()%>/tuteeList.admin"> <i
+                    class="la la-user"></i>
+                    <p>TUTEE LIST</p>
+                </a></li>
+                <li class="nav-item"><a
+                    href="<%=request.getContextPath()%>/tutorList.admin"> <i
+                    class="la la-user"></i>
+                    <p>TUTOR LIST</p>
+                </a></li>
 				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/apvList.cl"> <i
 						class="la la-check-circle"></i>
@@ -139,7 +144,11 @@
 		<div class="scrollbar-inner sidebar-wrapper">
 			<div class="user">
 				<div class="photo">
-					<img src="<%= request.getContextPath() %>/assets/images/hlogo_g.png">
+					<%  if (tutor == null) { %>
+						<img src="<%= request.getContextPath() %>/assets/images/hlogo_g.png">
+					<%  } else { %>
+						<img src="<%= request.getContextPath() %>/uploadFiles/<%= tutor.getTutorImgChangeName()  %>">
+					<%  } %>
 				</div>
 				<div class="info">
 					<a class="" data-toggle="collapse" href="#collapseExample"
@@ -191,8 +200,7 @@
 						class="la la-camera-retro"></i>
 						<p>MY REVIEW</p>
 				</a></li> --%>
-				
-				<hr>
+
 				<li class="nav-item active"><a
 					href="<%=request.getContextPath()%>/list.cs"> <i
 						class="la la-question-circle"></i>

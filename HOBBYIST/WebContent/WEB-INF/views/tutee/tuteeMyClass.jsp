@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="member.model.vo.Member, hobbyistClass.model.vo.*, tutee.model.vo.TuteeClass, java.util.ArrayList"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member, hobbyistClass.model.vo.*, tutor.model.vo.Tutor, tutee.model.vo.TuteeClass, java.util.ArrayList"%>
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
+	Tutor tutor = (Tutor)session.getAttribute("tutor");
 	ArrayList<HClass> tcBeforeList = (ArrayList)request.getAttribute("tcBeforeList");
 	ArrayList<HClass> tcAfterList = (ArrayList)request.getAttribute("tcAfterList");
 	ArrayList<HClassFile> fileList = (ArrayList)request.getAttribute("fileList");
@@ -77,7 +78,11 @@
 				<div class="scrollbar-inner sidebar-wrapper">
 					<div class="user">
 						<div class="photo">
-							<img src="<%= request.getContextPath() %>/assets/images/hlogo_g.png">
+							<%  if (tutor == null) { %>
+								<img src="<%= request.getContextPath() %>/assets/images/hlogo_g.png">
+							<%  } else { %>
+								<img src="<%= request.getContextPath() %>/uploadFiles/<%= tutor.getTutorImgChangeName()  %>">
+							<%  } %>
 						</div>
 						<div class="info">
 							<a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -139,8 +144,7 @@
 							class="la la-camera-retro"></i>
 							<p>MY REVIEW</p>
 					</a></li> --%>
-					
-					<hr>
+
 					<li class="nav-item"><a
 						href="<%=request.getContextPath()%>/list.cs"> <i
 							class="la la-bell"></i>
