@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
-	import="java.util.ArrayList, classNotice.model.vo.*, member.model.vo.Member, hobbyistClass.model.vo.*"%>
+	import="java.util.ArrayList, classNotice.model.vo.*, member.model.vo.Member, hobbyistClass.model.vo.*, tutor.model.vo.Tutor"%>
 <%@ page
 	import="hobbyistClass.model.vo.*, hobbyistClass.model.service.*"%>
 <%
@@ -12,8 +12,7 @@
 	ArrayList<HClassFile> fileList = (ArrayList)request.getAttribute("cfList");
 	ArrayList<HClass> classAList = (ArrayList)request.getAttribute("aList");
 	ArrayList<HClass> classCList = (ArrayList)request.getAttribute("cList");
-
-/* Tutor tutor = (Tutor)session.getAttribute("tutor"); */
+	Tutor tutor = (Tutor)session.getAttribute("tutor");
 %>
 <!DOCTYPE html>
 <html>
@@ -62,14 +61,16 @@
 		<div class="scrollbar-inner sidebar-wrapper">
 			<div class="user">
 				<div class="photo">
+					<% if(tutor == null) {  %>
 					<img src="assets/images/hlogo_g.png">
+					<% } else { %>
+					<img src="<%= request.getContextPath() %>/uploadFiles/<%= tutor.getTutorImgChangeName() %>">
+					<% } %>
 				</div>
 				<div class="info">
 					<a class="" data-toggle="collapse" href="#collapseExample"
-						aria-expanded="true"> <span>
-									<!-- loginUser의 NickName 불러오기 -->
-									<b><%= loginUser.getMemberNickName() %></b>
-									<!-- loginUser의 grade 불러오기 -->
+						aria-expanded="true"> <span> <b><%= loginUser.getMemberNickName()  %></b> <!-- loginUser의 NickName 불러오기 -->
+							<span class="user-level"><!-- loginUser의 grade 불러오기 -->
 								<% if(loginUser.getMemberGrade().equals("A")) { %>
 									<span class="user-level">관리자(admin)</span>
 								<% } else if(loginUser.getMemberGrade().equals("B")) { %>
@@ -77,8 +78,8 @@
 								<% } else { %>
 									<span class="user-level">튜티(Tutee)</span>
 								<% }  %>
-									<span class="caret"></span>
-								</span>
+							</span> 
+							<span class="caret"></span>
 					</span>
 					</a>
 					<div class="clearfix"></div>
@@ -101,22 +102,26 @@
 				</div>
 			</div>
 			<ul class="nav">
-				<li class="nav-item active"><a
+				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/myClass.te"> <i
 						class="la la-toggle-on"></i>
-						<p>MY CLASS</p> <span class="badge badge-primary">5</span>
+						<p>MY CLASS</p>
 				</a></li>
 				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/likedClass.cl"> <i
 						class="la la-gittip"></i>
 						<p>LIKED CLASS</p>
 				</a></li>
+<!-- 				<li class="nav-item"><a -->
+<%-- 					href="<%=request.getContextPath()%>/review.re"> <i --%>
+<!-- 						class="la la-camera-retro"></i> -->
+<!-- 						<p>MY REVIEW</p> -->
+<!-- 				</a></li> -->
 				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/review.re"> <i
-						class="la la-camera-retro"></i>
-						<p>MY REVIEW</p>
+					href="<%=request.getContextPath()%>/list.cs"> <i
+						class="la la-question-circle"></i>
+						<p>1:1 REQUEST</p>
 				</a></li>
-				<hr>
 				<%
 							if (loginUser != null && loginUser.getMemberGrade().equals("B")) {
 				%>
@@ -129,7 +134,12 @@
 				<li class="nav-item active"><a
 					href="<%=request.getContextPath()%>/tutorMyPage.tt"> <i
 						class="la la-calendar-o"></i>
-						<p>TUTOR ON CLASS</p><span class="badge badge-primary">5</span>
+						<p>TUTOR ON CLASS</p>
+					</a></li>
+					<li class="nav-item"><a
+						href="<%=request.getContextPath()%>/tutorInform.me"> <i
+							class="la la-user"></i>
+							<p>TUTOR INFO</p>
 					</a></li>
 				<%
 							} else {
@@ -241,7 +251,7 @@
 												<button class="btn btn-default pull-right" 
 													onclick="location.href = '<%=request.getContextPath()%>/classOpenDetail.tt?bId=<%=classAList.get(i).getClassNo()%>'"
 													type="button">
-													<span>클래스신청 수정하기</span>
+													<span>신청서 확인하기</span>
 												</button>
 											</span> <br> <br> <br> <br>
 										</div>

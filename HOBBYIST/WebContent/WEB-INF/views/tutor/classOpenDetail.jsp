@@ -1,13 +1,14 @@
 <%@ page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
-	import="java.util.ArrayList, hobbyistClass.model.vo.*, member.model.vo.Member, hobbyistClass.model.vo.*"%>
+	import="java.util.ArrayList, hobbyistClass.model.vo.*, member.model.vo.Member, hobbyistClass.model.vo.*, tutor.model.vo.Tutor"%>
 <%
 	Member loginUser = (Member) session.getAttribute("loginUser");
 	HClass hc = (HClass)request.getAttribute("hc");
 	ArrayList<HClassFile> f = (ArrayList)request.getAttribute("fileList");
 	ArrayList<HClassSchedule> s = (ArrayList)request.getAttribute("sList");
 	HClassSchedule hs = (HClassSchedule)request.getAttribute("hSchedule");
+	Tutor tutor = (Tutor)session.getAttribute("tutor");
 %>
 <!DOCTYPE html>
 <html>
@@ -147,15 +148,19 @@ img.ui-datepicker-trigger {
 					<div class="col-sm-12">
 						<div class="custom_menu">
 							<ul>
-								<li><a href="mainPage.jsp">MAIN</a></li>
+								<li><a href="<%= request.getContextPath() %>">MAIN</a></li>
 								<li></li>
-								<li><a href="../tutee/likedClass.jsp">LIKED CLASS</a></li>
+								<li><a href="<%= request.getContextPath() %>/myClass.te">LIKED CLASS</a></li>
 								<li></li>
-								<li><a href="../member/loginPage.jsp">LOG-IN</a></li>
+								<% if(loginUser == null) { %>
+									<li><a href="<%= request.getContextPath() %>/loginForm.me">LOG-IN</a></li> <!-- login전이면 로그인버튼 -->
+								<% } else { %>
+									<li><a href="<%= request.getContextPath() %>/logout.me">LOG-OUT</a></li> <!-- login된 상태면 로그아웃버튼 -->
+								<% } %>
 								<li></li>
-								<li><a href="../member/myInfo.jsp">MY INFO</a></li>
+								<li><a href="<%= request.getContextPath() %>/myInfo.me">MY INFO</a></li>
 								<li></li>
-								<li><a href="../admin/faq.jsp">FAQ</a></li>
+								<li><a href="<%= request.getContextPath() %>/FAQ.bo">FAQ</a></li>
 							</ul>
 						</div>
 					</div>
@@ -167,7 +172,11 @@ img.ui-datepicker-trigger {
 		<div class="scrollbar-inner sidebar-wrapper">
 			<div class="user">
 				<div class="photo">
-					<img src="../assets/images/iu3.jpg">
+					<% if(tutor == null) {  %>
+					<img src="assets/images/hlogo_g.png">
+					<% } else { %>
+					<img src="<%= request.getContextPath() %>/uploadFiles/<%= tutor.getTutorImgChangeName() %>">
+					<% } %>
 				</div>
 				<div class="info">
 					<a class="" data-toggle="collapse" href="#collapseExample"
@@ -216,42 +225,26 @@ img.ui-datepicker-trigger {
 						<p>LIKED CLASS</p>
 				</a></li>
 				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/review.re"> <i
-						class="la la-camera-retro"></i>
-						<p>MY REVIEW</p>
-				</a></li>
+					href="<%=request.getContextPath()%>/list.cs"> <i
+						class="la la-question-circle"></i>
+						<p>1:1 REQUEST</p>
+					</a></li>
 				<hr>
 				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/paymend.pa"> <i
-						class="la la-money"></i>
-						<p>MY PAYMENT</p>
-				</a></li>
-				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/notification.no"> <i
-						class="la la-bell"></i>
-						<p>NOTIFICATIONS</p>
-				</a></li>
-				<hr>
-				<li class="nav-item active"><a
-					href="<%=request.getContextPath()%>/notification.no"> <i
-						class="la la-pencil"></i>
-						<p>APPLICATION</p> <span class="badge badge-primary">3</span>
-				</a></li>
-				<!-- DAO가 없기 때문에 빨간줄이 떠서 주석처리 / model단 받아오시면 주석풀면 됩니다. -->
-				<%-- <%
-							if (loginUser != null && loginUser.getMemberGrade().equals("B")) {
-					%> --%>
-				<hr>
-				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/tutorSignUp.no"> <i
-						class="la la-pencil"></i>
-						<p>APPLICATION</p>
+						href="<%=request.getContextPath()%>/move.co"> <i
+							class="la la-pencil"></i>
+							<p>APPLY FOR CLASS</p>
 				</a></li>
 				<li class="nav-item active"><a
-					href="<%=request.getContextPath()%>/tutorClass.no"> <i
+					href="<%=request.getContextPath()%>/tutorMyPage.tt"> <i
 						class="la la-calendar-o"></i>
-						<p>TUTOR ON CLASS</p> <span class="badge badge-primary">5</span>
-				</a></li>
+						<p>TUTOR ON CLASS</p>
+					</a></li>
+					<li class="nav-item"><a
+						href="<%=request.getContextPath()%>/tutorInform.me"> <i
+							class="la la-user"></i>
+							<p>TUTOR INFO</p>
+					</a></li>
 			</ul>
 		</div>
 	</div>
@@ -531,7 +524,7 @@ img.ui-datepicker-trigger {
 									</div>
 									<div class="row justify-content-center">
 										<div align="center">
-											<input type="submit" id="updateBtn" value="수정"> <input
+											<input type="hidden" id="updateBtn" value="수정"> <input
 												type="button" onclick="deleteOpenClass();" id="deleteBtn"
 												value="삭제"> <input type="button"
 												onclick="location.href='javascript:history.go(-1);'"
@@ -552,7 +545,7 @@ img.ui-datepicker-trigger {
 	<script>
  		function deleteOpenClass(){
 			if(confirm('정말로 삭제하시겠습니까?')) {
-				location.href='<%= request.getContextPath() %>/deleteClassOpen.hc?classno=<%= hc.getClassNo() %>';
+				location.href='<%= request.getContextPath() %>/deleteClassOpen.hc?classno=<%=hc.getClassNo()%>';
 			}
 		} 
 		

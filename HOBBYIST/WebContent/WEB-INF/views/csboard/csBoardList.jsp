@@ -1,11 +1,12 @@
 <%@page import="oracle.net.aso.i"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="csBoard.model.vo.*, java.util.ArrayList, member.model.vo.Member" %>
+    pageEncoding="UTF-8" import="csBoard.model.vo.*, java.util.ArrayList, member.model.vo.Member, tutor.model.vo.Tutor" %>
 <%
 	Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 	ArrayList<RequestBoard> list = (ArrayList<RequestBoard>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	int countPrev = (int)request.getAttribute("countPrev");
+	Tutor tutor = (Tutor)session.getAttribute("tutor");
 %>
 <!DOCTYPE html>
 <html>
@@ -35,29 +36,29 @@
 						<div class="custom_menu">
 							<ul>
 								<li><a href="<%= request.getContextPath() %>">MAIN</a></li>
-									<% if(loginUser == null) { %>
-										<li></li>
-										<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">LIKED-CLASS</a></li> <!-- 로그인 전이면 LIKED-CLASS 접근 불가 -->
-									<% } else if(loginUser.getMemberGrade().equals("A")){ %>
-										<!-- 관리자면 LIKED-CLASS버튼 비활성화 -->
-									<% } else { %>
-										<li></li>
-										<li><a href="<%= request.getContextPath() %>/myClass.te">LIKED-CLASS</a></li>
-									<% } %>
-										<li></li>
-									<% if(loginUser == null) { %>
-										<li><a href="<%= request.getContextPath() %>/loginForm.me">LOG-IN</a></li> <!-- login전이면 로그인버튼 -->
-									<% } else { %>
-										<li><a href="<%= request.getContextPath() %>/logout.me">LOG-OUT</a></li> <!-- login된 상태면 로그아웃버튼 -->
-									<% } %>
-										<li></li>
-									<% if(loginUser == null) { %>
-										<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">MY INFO</a></li>
-									<% } else { %>
-										<li><a href="<%= request.getContextPath() %>/myInfo.me">MY INFO</a></li> <!-- 로그인 전이면 MY INFO 접근 불가 -->
-									<% } %>
-										<li></li>
-										<li><a href="<%= request.getContextPath() %>/FAQ.bo">FAQ</a></li>
+							<% if(loginUser == null) { %>
+								<li></li>
+								<li><a href="#" onclick="alert('로그인이 필요한 서비스입니다.');">LIKED-CLASS</a></li>
+							<% } else if(loginUser.getMemberGrade().equals("A")){ %>
+							<!-- 관리자면 LIKED-CLASS버튼 비활성화 -->
+							<% } else { %>
+								<li></li>
+								<li><a href="<%= request.getContextPath() %>/likedClass.te">LIKED-CLASS</a></li>
+							<% } %>
+								<li></li>
+							<% if(loginUser == null) { %>
+								<li><a href="<%= request.getContextPath() %>/loginForm.me">LOG-IN</a></li> <!-- 로그인 -->
+							<% } else { %>
+								<li><a href="<%= request.getContextPath() %>/logout.me">LOG-OUT</a></li> <!-- 로그아웃 -->
+							<% } %>
+								<li></li>
+							<% if(loginUser == null) { %>
+								<li><a href="#" onclick="alert('로그인이 필요한 서비스입니다.');">MY INFO</a></li>
+							<% } else { %>
+								<li><a href="<%= request.getContextPath() %>/myInfo.me">MY INFO</a></li>
+							<% } %>
+								<li></li>
+								<li><a href="<%= request.getContextPath() %>/FAQ.bo">FAQ</a></li>
 							</ul>
 						</div>
 					</div>
@@ -72,7 +73,11 @@
 		<div class="scrollbar-inner sidebar-wrapper">
 			<div class="user">
 				<div class="photo">
+					<% if(tutor == null) {  %>
 					<img src="assets/images/hlogo_g.png">
+					<% } else { %>
+					<img src="<%= request.getContextPath() %>/uploadFiles/<%= tutor.getTutorImgChangeName() %>">
+					<% } %>
 				</div>
 				<div class="info">
 					<a class="" data-toggle="collapse" href="#collapseExample"
@@ -134,7 +139,11 @@
 		<div class="scrollbar-inner sidebar-wrapper">
 			<div class="user">
 				<div class="photo">
-					<img src="<%= request.getContextPath() %>/assets/images/hlogo_g.png">
+					<%  if (tutor == null) { %>
+						<img src="<%= request.getContextPath() %>/assets/images/hlogo_g.png">
+					<%  } else { %>
+						<img src="<%= request.getContextPath() %>/uploadFiles/<%= tutor.getTutorImgChangeName()  %>">
+					<%  } %>
 				</div>
 				<div class="info">
 					<a class="" data-toggle="collapse" href="#collapseExample"
@@ -177,16 +186,17 @@
 						<p>MY CLASS</p>
 				</a></li>
 				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/likedClass.cl"> <i
+					href="<%=request.getContextPath()%>/likedClass.te"> <i
 						class="la la-gittip"></i>
 						<p>LIKED CLASS</p>
 				</a></li>
-				<li class="nav-item"><a
+<%-- 				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/review.re"> <i
 						class="la la-camera-retro"></i>
 						<p>MY REVIEW</p>
-				</a></li>
-				<li class="nav-item"><a
+				</a></li> --%>
+
+				<li class="nav-item active"><a
 					href="<%=request.getContextPath()%>/list.cs"> <i
 						class="la la-question-circle"></i>
 						<p>1:1 REQUEST</p>
@@ -195,15 +205,20 @@
 				<% if (loginUser != null && loginUser.getMemberGrade().equals("B")) { %>
 					<hr>
 					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/tutorSignUp.no"> <i
+						href="<%=request.getContextPath()%>/move.co"> <i
 							class="la la-pencil"></i>
 							<p>APPLY FOR CLASS</p>
 					</a></li>
 					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/tutorClass.no"> <i
+						href="<%=request.getContextPath()%>/tutorMyPage.tt"> <i
 							class="la la-calendar-o"></i>
 							<p>TUTOR ON CLASS</p>
 					</a></li>
+					<li class="nav-item"><a
+                        href="<%=request.getContextPath()%>/tutorInform.me"> <i
+                            class="la la-user"></i>
+                            <p>TUTOR INFO</p>
+                    </a></li>
 				<% } else { %>
 					<li class="nav-item update-pro">
 						<button onclick="reservation()">
@@ -331,10 +346,12 @@
 						<script>
 							if(<%= pi.getCurrentPage() %> <= 1){
 								$('#beforeBtn').prop('disabled', true);
+								$('#toFirstBtn').prop('disabled', true);
 							}
 							
 							if(<%= pi.getCurrentPage() %> >= <%= pi.getMaxPage() %>){
 								$('#afterBtn').prop('disabled', true);
+								$('#toLastBtn').prop('disabled', true);
 							}
 							
 							if ('<%= list.isEmpty() %>' == 'false') {
@@ -363,5 +380,12 @@
 	</div>
 
 	<%@ include file="../common/js.jsp"%>
+	
+<script>
+	function reservation() {
+    	location.href = "<%= request.getContextPath() %>/tuteeEnroll.me";
+	}
+</script>
+
 </body>
 </html>

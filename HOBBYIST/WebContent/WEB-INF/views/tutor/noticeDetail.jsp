@@ -2,7 +2,7 @@
     pageEncoding="UTF-8" import="classNotice.model.vo.ClassNotice, hobbyistClass.model.vo.* , tutor.model.vo.* , member.model.vo.*" %>
 <%
 	ClassNotice classnotice = (ClassNotice)request.getAttribute("classnotice");
-	Member loginUser = (Member)session.getAttribute("loginUser");
+//	Member loginUser = (Member)session.getAttribute("loginUser");
 	Member member = (Member)request.getAttribute("Member");
 	Tutor tutor = (Tutor)session.getAttribute("tutor");
 	HClass c = (HClass)request.getAttribute("c");
@@ -46,7 +46,7 @@
 					<tr>
 						<th>작성자</th>
 						<td>
-							<%= member.getMemberNickName()%>
+							<%= classnotice.getClassBoardWriter()%>
 							<input type="hidden" name="writer" value="<%= classnotice.getClassBoardWriter() %>"> 
 						</td>
 						<th>작성일</th>

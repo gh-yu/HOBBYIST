@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="member.model.vo.Member" %>
+	pageEncoding="UTF-8" import="member.model.vo.Member, tutor.model.vo.Tutor" %>
 <%
 	Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+	Tutor tutor = (Tutor)session.getAttribute("tutor");
 %>
 <!DOCTYPE html>
 <html>
@@ -21,29 +22,29 @@
 						<div class="custom_menu">
 							<ul>
 								<li><a href="<%= request.getContextPath() %>">MAIN</a></li>
-							<% if(loginUser == null) { %>
-								<li></li>
-								<li><a href="#" onclick="alert('로그인이 필요한 서비스입니다.');">LIKED-CLASS</a></li>
-							<% } else if(loginUser.getMemberGrade().equals("A")){ %>
-							<!-- 관리자면 LIKED-CLASS버튼 비활성화 -->
-							<% } else { %>
-								<li></li>
-								<li><a href="<%= request.getContextPath() %>/likedClass.te">LIKED-CLASS</a></li>
-							<% } %>
-								<li></li>
-							<% if(loginUser == null) { %>
-								<li><a href="<%= request.getContextPath() %>/loginForm.me">LOG-IN</a></li> <!-- 로그인 -->
-							<% } else { %>
-								<li><a href="<%= request.getContextPath() %>/logout.me">LOG-OUT</a></li> <!-- 로그아웃 -->
-							<% } %>
-								<li></li>
-							<% if(loginUser == null) { %>
-								<li><a href="#" onclick="alert('로그인이 필요한 서비스입니다.');">MY INFO</a></li>
-							<% } else { %>
-								<li><a href="<%= request.getContextPath() %>/myInfo.me">MY INFO</a></li>
-							<% } %>
-								<li></li>
-								<li><a href="<%= request.getContextPath() %>/FAQ.bo">FAQ</a></li>
+									<% if(loginUser == null) { %>
+										<li></li>
+										<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">LIKED-CLASS</a></li> <!-- 로그인 전이면 LIKED-CLASS 접근 불가 -->
+									<% } else if(loginUser.getMemberGrade().equals("A")){ %>
+										<!-- 관리자면 LIKED-CLASS버튼 비활성화 -->
+									<% } else { %>
+										<li></li>
+										<li><a href="<%= request.getContextPath() %>/myClass.te">LIKED-CLASS</a></li>
+									<% } %>
+										<li></li>
+									<% if(loginUser == null) { %>
+										<li><a href="<%= request.getContextPath() %>/loginForm.me">LOG-IN</a></li> <!-- login전이면 로그인버튼 -->
+									<% } else { %>
+										<li><a href="<%= request.getContextPath() %>/logout.me">LOG-OUT</a></li> <!-- login된 상태면 로그아웃버튼 -->
+									<% } %>
+										<li></li>
+									<% if(loginUser == null) { %>
+										<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">MY INFO</a></li>
+									<% } else { %>
+										<li><a href="<%= request.getContextPath() %>/myInfo.me">MY INFO</a></li> <!-- 로그인 전이면 MY INFO 접근 불가 -->
+									<% } %>
+										<li></li>
+										<li><a href="<%= request.getContextPath() %>/FAQ.bo">FAQ</a></li>
 							</ul>
 						</div>
 					</div>
@@ -57,7 +58,11 @@
 		<div class="scrollbar-inner sidebar-wrapper">
 			<div class="user">
 				<div class="photo">
+					<% if(tutor == null) {  %>
 					<img src="assets/images/hlogo_g.png">
+					<% } else { %>
+					<img src="<%= request.getContextPath() %>/uploadFiles/<%= tutor.getTutorImgChangeName() %>">
+					<% } %>
 				</div>
 				<div class="info">
 					<a class="" data-toggle="collapse" href="#collapseExample"
@@ -94,22 +99,27 @@
 				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/memberCheck.admin"> <i
 					class="la la-user"></i>
-					<p>MEMBER LIST</p>
+					<p>TUTEE LIST</p>
+				</a></li>
+				<li class="nav-item"><a
+					href="<%=request.getContextPath()%>/memberCheck2.admin"> <i
+					class="la la-user"></i>
+					<p>TUTOR LIST</p>
 				</a></li>
 				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/apvList.cl"> <i
-						class="la la-check-circle"></i>
-						<p>CLASS APV LIST</p>
+					class="la la-check-circle"></i>
+					<p>CLASS APV LIST</p>
 				</a></li>
 				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/FAQ.bo"> <i
-						class="la la-question-circle"></i>
-						<p>FAQ</p>
+					class="la la-question-circle"></i>
+					<p>FAQ</p>
 				</a></li>
 				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/list.cs"> <i
-						class="la la-question-circle"></i>
-						<p>1:1 REQUEST</p>
+					class="la la-question-circle"></i>
+					<p>1:1 REQUEST</p>
 				</a></li>
 			</ul>
 		</div>
@@ -166,11 +176,11 @@
 						class="la la-gittip"></i>
 						<p>LIKED CLASS</p>
 				</a></li>
-				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/review.re"> <i
-						class="la la-camera-retro"></i>
-						<p>MY REVIEW</p>
-				</a></li>
+<!-- 				<li class="nav-item"><a -->
+<%-- 					href="<%=request.getContextPath()%>/review.re"> <i --%>
+<!-- 						class="la la-camera-retro"></i> -->
+<!-- 						<p>MY REVIEW</p> -->
+<!-- 				</a></li> -->
 				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/list.cs"> <i
 						class="la la-question-circle"></i>
@@ -235,14 +245,6 @@
 															</div>
 <%-- 													<% } %> --%>
 													<div class="col-md-6">
-													<% if(loginUser.getMemberGrade().equals("B")) {%>
-														<div class="justify-content-center">												
-															<i class="la la-facebook"></i> <a href="#" class="card-link">Facebook</a>&nbsp;<br>
-															<i class="la la-twitter"></i> <a href="#" class="card-link">Twitter</a>&nbsp;<br>
-															<i class="la la-instagram"></i> <a href="#" class="card-link">Instagram</a>&nbsp;<br>
-															<i class="la la-youtube"></i> <a href="#" class="card-link">Youtube</a>&nbsp;<br>
-														</div>
-													<% } %>
 													</div>
 												</div>
 											</div>

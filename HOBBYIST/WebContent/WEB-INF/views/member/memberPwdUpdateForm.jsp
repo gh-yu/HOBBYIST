@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="member.model.vo.Member" %>
+	pageEncoding="UTF-8" import="member.model.vo.Member, tutor.model.vo.Tutor" %>
 <%
 	Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+	Tutor tutor = (Tutor)session.getAttribute("tutor");
 %>
 <!DOCTYPE html>
 <html>
@@ -124,7 +125,11 @@
 		<div class="scrollbar-inner sidebar-wrapper">
 			<div class="user">
 				<div class="photo">
+					<% if(tutor == null) {  %>
 					<img src="assets/images/hlogo_g.png">
+					<% } else { %>
+					<img src="<%= request.getContextPath() %>/uploadFiles/<%= tutor.getTutorImgChangeName() %>">
+					<% } %>
 				</div>
 				<div class="info">
 					<a class="" data-toggle="collapse" href="#collapseExample"
@@ -171,11 +176,11 @@
 						class="la la-gittip"></i>
 						<p>LIKED CLASS</p>
 				</a></li>
-				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/review.re"> <i
-						class="la la-camera-retro"></i>
-						<p>MY REVIEW</p>
-				</a></li>
+<!-- 				<li class="nav-item"><a -->
+<%-- 					href="<%=request.getContextPath()%>/review.re"> <i --%>
+<!-- 						class="la la-camera-retro"></i> -->
+<!-- 						<p>MY REVIEW</p> -->
+<!-- 				</a></li> -->
 				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/list.cs"> <i
 						class="la la-question-circle"></i>
@@ -240,14 +245,6 @@
 															</div>
 <%-- 													<% } %> --%>
 													<div class="col-md-6">
-													<% if(loginUser.getMemberGrade().equals("B")) {%>
-														<div class="justify-content-center">												
-															<i class="la la-facebook"></i> <a href="#" class="card-link">Facebook</a>&nbsp;<br>
-															<i class="la la-twitter"></i> <a href="#" class="card-link">Twitter</a>&nbsp;<br>
-															<i class="la la-instagram"></i> <a href="#" class="card-link">Instagram</a>&nbsp;<br>
-															<i class="la la-youtube"></i> <a href="#" class="card-link">Youtube</a>&nbsp;<br>
-														</div>
-													<% } %>
 													</div>
 												</div>
 											</div>

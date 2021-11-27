@@ -47,7 +47,7 @@ public class ThumbnailDetailServlet extends HttpServlet {
 		
 		String page = null;
 		if (hc != null && fileList != null) {
-			page = "WEB-INF/views/tutor/ClassOpenDetail.jsp";
+			page = "WEB-INF/views/tutor/classOpenDetail.jsp";
 			request.setAttribute("hc", hc);
 			request.setAttribute("fileList", fileList);
 		} else {
