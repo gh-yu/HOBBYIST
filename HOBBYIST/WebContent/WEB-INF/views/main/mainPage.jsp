@@ -18,6 +18,15 @@
 <title>HOBBYIST</title>
 	<%@ include file="../common/css.jsp" %>
 	<script src="js/jquery-3.6.0.min.js"></script>
+	<style>
+		#h1Tag{
+			display: inline;
+		}
+		
+		#h1Arrange{
+			text-align: center;
+		}
+	</style>
 </head>
 <body>
 	<div class="banner_bg_main">
@@ -203,7 +212,9 @@
 				<div class="carousel-item active">
 					<div class="container">
 						<br><br><br><br>
-						<h1 class="fashion_taital">인기 상승 중인 클래스</h1>
+							<div id="h1Arrange">
+								<span style="font-size: 45px">&#127942;</span><h1 id="h1Tag" class="fashion_taital">인기 상승 중인 클래스</h1><span style="font-size: 45px">&#127942;</span>
+							</div>
 						<div class="fashion_section_2">
 							<div class="row">
 						<% if (classList == null || classList.isEmpty()) { %>
@@ -268,7 +279,9 @@
 				<div class="carousel-item">
 					<div class="container">
 						<br><br><br><br>
-						<h1 class="fashion_taital">인기 상승 중인 클래스</h1>
+							<div id="h1Arrange">
+								<span style="font-size: 45px">&#128293;</span><h1 id="h1Tag" class="fashion_taital">인기 상승 중인 클래스</h1><span style="font-size: 45px">&#128293;</span>
+							</div>
 						<div class="fashion_section_2">
 							<div class="row">
 						<% 	for (int i = 3; i < classList.size(); i++) { %>
@@ -328,7 +341,9 @@
 				<div class="carousel-item">
 					<div class="container">
 						<br><br><br><br>
-						<h1 class="fashion_taital">인기 상승 중인 클래스</h1>
+							<div id="h1Arrange">
+								<span style="font-size: 45px">&#127882;</span><h1 id="h1Tag" class="fashion_taital">인기 상승 중인 클래스</h1><span style="font-size: 45px">&#127882;</span>
+							</div>
 						<div class="fashion_section_2">
 							<div class="row">
 						<% 	for (int i = 6; i < classList.size(); i++) { %>

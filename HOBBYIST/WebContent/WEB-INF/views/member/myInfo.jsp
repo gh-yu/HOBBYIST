@@ -27,7 +27,7 @@
 										<!-- 관리자면 LIKED-CLASS버튼 비활성화 -->
 									<% } else { %>
 										<li></li>
-										<li><a href="<%= request.getContextPath() %>/myClass.te">LIKED-CLASS</a></li>
+										<li><a href="<%= request.getContextPath() %>/likedClass.te">LIKED-CLASS</a></li>
 									<% } %>
 										<li></li>
 									<% if(loginUser == null) { %>
@@ -91,9 +91,14 @@
 			</div>
 			<ul class="nav">
 				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/memberCheck.admin"> <i
+					href="<%=request.getContextPath()%>/tuteeList.admin"> <i
 					class="la la-user"></i>
-					<p>MEMBER LIST</p>
+					<p>TUTEE LIST</p>
+				</a></li>
+				<li class="nav-item"><a
+					href="<%=request.getContextPath()%>/tutorList.admin"> <i
+					class="la la-user"></i>
+					<p>TUTOR LIST</p>
 				</a></li>
 				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/apvList.cl"> <i
@@ -161,7 +166,7 @@
 						<p>MY CLASS</p>
 				</a></li>
 				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/likedClass.cl"> <i
+					href="<%=request.getContextPath()%>/likedClass.te"> <i
 						class="la la-gittip"></i>
 						<p>LIKED CLASS</p>
 				</a></li>

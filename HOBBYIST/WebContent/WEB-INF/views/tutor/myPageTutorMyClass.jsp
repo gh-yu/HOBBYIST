@@ -111,11 +111,16 @@
 						class="la la-gittip"></i>
 						<p>LIKED CLASS</p>
 				</a></li>
+<!-- 				<li class="nav-item"><a -->
+<%-- 					href="<%=request.getContextPath()%>/review.re"> <i --%>
+<!-- 						class="la la-camera-retro"></i> -->
+<!-- 						<p>MY REVIEW</p> -->
+<!-- 				</a></li> -->
 				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/review.re"> <i
-						class="la la-camera-retro"></i>
-						<p>MY REVIEW</p>
-				</a></li>
+                    href="<%=request.getContextPath()%>/list.cs"> <i
+                        class="la la-question-circle"></i>
+                        <p>1:1 REQUEST</p>
+                </a></li>
 				<hr>
 				<%
 							if (loginUser != null && loginUser.getMemberGrade().equals("B")) {
@@ -241,7 +246,7 @@
 												<button class="btn btn-default pull-right" 
 													onclick="location.href = '<%=request.getContextPath()%>/classOpenDetail.tt?bId=<%=classAList.get(i).getClassNo()%>'"
 													type="button">
-													<span>클래스신청 수정하기</span>
+													<span>클래스신청 보기</span>
 												</button>
 											</span> <br> <br> <br> <br>
 										</div>

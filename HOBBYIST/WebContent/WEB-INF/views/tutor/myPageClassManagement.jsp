@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="classNotice.controller.*, hobbyistClass.model.vo.*, member.model.vo.Member, tutor.model.vo.Tutor, java.util.ArrayList , hobbyistClass.model.vo.*, classNotice.model.vo.*"%>
+	pageEncoding="UTF-8" import="tutee.model.vo.*,   classNotice.controller.*, hobbyistClass.model.vo.*, member.model.vo.Member, tutor.model.vo.Tutor, java.util.ArrayList , hobbyistClass.model.vo.*, classNotice.model.vo.*"%>
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
 
@@ -8,6 +8,7 @@
 	Tutor t = (Tutor)request.getAttribute("tutor");
 	ArrayList<HClassSchedule> s = (ArrayList)request.getAttribute("sList");
 	ArrayList<ClassNotice> list = (ArrayList) request.getAttribute("list");
+	
 	
 	
 	// 달력의 요일과 DB에서 가져온 요일데이터를 비교하는 조건식 생성 -> script에서 배열에 저장하여 활용
@@ -301,9 +302,9 @@
        $(this).parent().css({'background':'none'});
       }).click(function(){
        var num = $(this).parent().children().eq(0).text(); // 글번호 가져오기
-      if ($(this).text() != '존재하는 공지사항이 없습니다.') {
+//       if ($(this).text() != '존재하는 공지사항이 없습니다.') {
              location.href = '<%=request.getContextPath()%>/classNoticedetail.no?cNo='+ num;
-       }
+//        }
     });
 </script>	
 							

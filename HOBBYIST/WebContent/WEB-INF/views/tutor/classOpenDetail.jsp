@@ -535,7 +535,7 @@ img.ui-datepicker-trigger {
 									</div>
 									<div class="row justify-content-center">
 										<div align="center">
-											<input type="submit" id="updateBtn" value="수정"> <input
+				<!-- 히든으로 변경 -->				<input type="hidden" id="updateBtn" value="수정"> <input					
 												type="button" onclick="deleteOpenClass();" id="deleteBtn"
 												value="삭제"> <input type="button"
 												onclick="location.href='javascript:history.go(-1);'"

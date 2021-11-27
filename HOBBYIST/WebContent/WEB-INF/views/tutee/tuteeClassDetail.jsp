@@ -1,7 +1,7 @@
 <%@page import="org.apache.catalina.tribes.util.TcclThreadFactory"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="hobbyistClass.model.vo.*, member.model.vo.Member, 
-								tutor.model.vo.Tutor, java.util.ArrayList, tutee.model.vo.TuteeClass"%>
+								tutor.model.vo.Tutor, java.util.ArrayList, tutee.model.vo.TuteeClass, classNotice.model.vo.*"%>
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
 
@@ -9,6 +9,8 @@
 	ArrayList<HClassFile> f = (ArrayList)request.getAttribute("fileList");
 	Tutor t = (Tutor)request.getAttribute("tutor");
 	ArrayList<TuteeClass> s = (ArrayList)request.getAttribute("tuteeSchedule");
+	ArrayList<ClassNotice> list = (ArrayList)request.getAttribute("list");
+	System.out.println(c);
 %>
 <!DOCTYPE html>
 <html>
@@ -35,6 +37,72 @@
 		border-radius: 5px;
 	}
 	
+	.board_list_wrap1 {
+    	padding: 50px;
+	}
+
+	.board_list1 {
+	    width: 100%;
+	    border-top: 2px solid #9ED4C2;
+	}
+	
+	.board_list1 tr {
+	    border-bottom: 1px solid #9ED4C2;
+	}
+	
+	.board_list1 th,
+	.board_list1 td {
+	    padding: 10px;
+	    font-size: 14px;
+	}
+	
+	.board_list1 td {
+	    text-align: center;
+	}
+	
+	.board_list1 .tit {
+	    text-align: left;
+	}
+	
+	.board_list1 .tit:hover {
+	    text-decoration: underline;
+	}
+	
+	.board_list_wrap1 .paging {
+	    margin-top: 20px;
+	    text-align: center;
+	    font-size: 0;
+	}
+	.board_list_wrap1 .paging a {
+	    display: inline-block;
+	    margin-left: 10px;
+	    padding: 5px 10px;
+	    border-radius: 100px;
+	    font-size: 12px;
+	}
+	.board_list_wrap1 .paging a:first-child {
+	    margin-left: 0;
+	}
+	
+	.board_list_wrap1 .paging a.bt {
+	    border: 1px solid #eee;
+	    background: #eee;
+	    text-decoration: none;
+	}
+	
+	.board_list_wrap1 .paging a.num {
+	    border: 1px solid #9ED4C2;
+	    font-weight: 600;
+	    color: #9ED4C2;
+	    text-decoration: none;
+	}
+	
+	.board_list_wrap1 .paging a.num.on {
+	    background: #9ED4C2;
+	    color: #fff;
+	    text-decoration: none;
+	}
+		
 
 </style>
 </head>
@@ -131,7 +199,60 @@
 								<div style="border: 1px solid #d9d9d9; padding: 10px">
 									<textarea style="min-width: 750px; min-height: 400px; resize: none; border: none;" readonly><%= c.getClassContent() %></textarea>
 								</div>
+								<div class="board_list_wrap1">
+									<br>
+									<div>
+										<table class="board_list1" id="listArea">
+											<h2>공지사항</h2>
+											<thead>
+												<tr>
+													<th>글번호</th>
+													<th>글제목</th>
+													<th>작성자</th>
+													<th>조회수</th>
+													<th>작성일</th>
+												</tr>
+											</thead>
+											<tbody>
+											
+										<%	if (!list.isEmpty()) { %>	
+											<% boolean check = false; %>
+												<%for (int i = 0; i < list.size(); i++) { %>
+												
+											<% 	if(c.getClassNo() == list.get(0).getClassNo()) {%>
+												<tr>
+													<td><%=list.get(i).getClassBoardNo()%></td>
+													<td><%=list.get(i).getClassBoardName()%></td>
+													<td><%=list.get(i).getClassBoardWriter()%></td>
+													<td><%=list.get(i).getClassBoardViews()%></td>
+													<td><%=list.get(i).getClassBoardDate()%></td>
+												</tr>
+													<%	check = true; %>
+												<% } %>
+											<% } %>
+											<% if(!check) { %> 
+												<tr>
+													<td colspan="5">존재하는 공지사항이 없습니다.</td>
+												</tr>
+											<% } %>
+										<%	} %>  
+											</tbody>
+										</table>
+									</div>
+								</div>
 							</div>
+							<script>
+								$('#listArea td').mouseenter(function(){
+									$(this).parent().css({'background':'darkgray', 'cursor':'pointer'});
+								}).mouseout(function(){
+									$(this).parent().css({'background':'none'});
+								}).click(function(){
+									var num = $(this).parent().children().eq(0).text(); // 글번호 가져오기
+									if ($(this).text() != '존재하는 공지사항이 없습니다.') {
+										location.href = '<%=request.getContextPath()%>/classNoticedetail.no?cNo='+ num;	
+									}
+								});
+							</script>	
 							
 							
 							<!-- 사이드 / 클래스 소개 -->
@@ -226,10 +347,8 @@
 	</div>
 	<br>
 	
-	<%-- 클래스 공지사항 연결 --%>
-	
 	<!-- 클래스 리뷰 영역 -->
-	<div class="row justify-content-center">
+<!-- 	<div class="row justify-content-center">
 		<div class="col-md-10">
 			<div class="card">
 				<div class="card-header">
@@ -259,13 +378,13 @@
 							<div class="swiper-slide"
 								style="background-image: url(assets/images/painting.jpg)"></div>
 						</div>
-						<!-- Add Pagination -->
+						Add Pagination
 						<div class="swiper-pagination"></div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 <%@ include file="../common/js.jsp" %>
 <script src="assets/js/swiper.js"></script>

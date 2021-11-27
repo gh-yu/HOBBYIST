@@ -165,10 +165,10 @@
 														<br>	
 															<div class="btn_main">
 																<div class="buy_bt">
-																	<a href="#">Buy Now</a>
+																	<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= classCateList.get(i).getClassNo() %>">Buy Now</a>
 																</div>
 																<div class="seemore_bt">
-																	<a href="class/classDetail.jsp">See More</a>
+																	<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= classCateList.get(i).getClassNo() %>">See More</a>
 																</div>
 															</div>
 														</div>
@@ -182,8 +182,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
 	<!-- 클래스 섹션 1 -->
 
 	<!-- footer -->

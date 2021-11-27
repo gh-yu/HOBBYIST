@@ -104,36 +104,37 @@ img.ui-datepicker-trigger {
 		//datepicker 한국어로 사용하기 위한 언어설정
 		$.datepicker.setDefaults($.datepicker.regional['ko']);
 
-		//시작일.
 		$('#fromDate').datepicker({
-			showOn : "both", // 달력을 표시할 타이밍 (both: focus or button)
-			buttonImage : "images/calendar.gif", // 버튼 이미지
-			buttonImageOnly : true, // 버튼 이미지만 표시할지 여부
+            showOn : "both", // 달력을 표시할 타이밍 (both: focus or button)
+            buttonImage : "images/calendar.gif", // 버튼 이미지
+            buttonImageOnly : true, // 버튼 이미지만 표시할지 여부
 
-			buttonText : "날짜선택", // 버튼의 대체 텍스트
-			dateFormat : "yy-mm-dd", // 날짜의 형식
-			changeMonth : true, // 월을 이동하기 위한 선택상자 표시여부
-			minDate: 0,                       // 선택할수있는 최소날짜, ( 0 : 오늘 이전 날짜 선택 불가)
-			onClose : function(selectedDate) {
-				// 시작일(fromDate) datepicker가 닫힐때
-				// 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
-				$("#toDate").datepicker("option", "minDate", selectedDate);
-			}
-		});
+            buttonText : "날짜선택", // 버튼의 대체 텍스트
+            dateFormat : "yy-mm-dd", // 날짜의 형식
+            changeMonth : true, // 월을 이동하기 위한 선택상자 표시여부
+            changeYear : true,
+            minDate: 0,                       // 선택할수있는 최소날짜, ( 0 : 오늘 이전 날짜 선택 불가)
+            onClose : function(selectedDate) {
+                // 시작일(fromDate) datepicker가 닫힐때
+                // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
+                $("#toDate").datepicker("option", "minDate", selectedDate);
+            }
+        });
 
-		//종료일
-		$('#toDate').datepicker({
-			showOn : "both",
-			buttonImage : "images/calendar.gif",
-			buttonImageOnly : true,
-			buttonText : "날짜선택",
-			dateFormat : "yy-mm-dd",
-			changeMonth : true,
-			//minDate: 0, // 오늘 이전 날짜 선택 불가
-			onClose : function(selectedDate) {
-				$("#fromDate").datepicker("option", "maxDate", selectedDate);
-			}
-		});
+        //종료일
+        $('#toDate').datepicker({
+            showOn : "both",
+            buttonImage : "images/calendar.gif",
+            buttonImageOnly : true,
+            buttonText : "날짜선택",
+            dateFormat : "yy-mm-dd",
+            changeMonth : true,
+            changeYear : true,
+            //minDate: 0, // 오늘 이전 날짜 선택 불가
+            onClose : function(selectedDate) {
+                $("#fromDate").datepicker("option", "maxDate", selectedDate);
+            }
+        });
 	});
 </script>
 </head>
@@ -223,6 +224,11 @@ img.ui-datepicker-trigger {
 							class="la la-camera-retro"></i>
 							<p>MY REVIEW</p>
 					</a></li>
+					<li class="nav-item"><a
+                    href="<%=request.getContextPath()%>/list.cs"> <i
+                        class="la la-question-circle"></i>
+                        <p>1:1 REQUEST</p>
+                	</a></li>
 					<hr>
 					<li class="nav-item"><a
 						href="<%=request.getContextPath()%>/move.co"> <i

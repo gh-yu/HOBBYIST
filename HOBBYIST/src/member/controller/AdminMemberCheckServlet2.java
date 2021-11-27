@@ -19,14 +19,14 @@ import member.model.vo.MemberInfo;
 /**
  * Servlet implementation class AdminMemberCheckServlet
  */
-@WebServlet("/tuteeList.admin")
-public class AdminMemberCheckServlet extends HttpServlet {
+@WebServlet("/tutorList.admin")
+public class AdminMemberCheckServlet2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminMemberCheckServlet() {
+    public AdminMemberCheckServlet2() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -80,7 +80,7 @@ public class AdminMemberCheckServlet extends HttpServlet {
 			request.setAttribute("tuteeList", tuteeList);
 			request.setAttribute("tutorList", tutorList);
 			request.setAttribute("pi", pi);
-			page = "WEB-INF/views/admin/MemberCheckList.jsp";
+			page = "WEB-INF/views/admin/MemberCheckList2.jsp";
 		} else {
 			request.setAttribute("msg", "튜티 목록 조회 실패");
 			page = "WEB-INF/views/common/errorPage.jsp";
