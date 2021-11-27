@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<%@ include file="../common/css.jsp" %>
 <!-- 마이페이지 - 로그인 -->
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,6 +14,7 @@
     <meta name="author" content="Made By GN DESIGNS">
 
     <title>로그인 페이지</title>
+    
     <!-- // PLUGINS (css files) // -->
     <link href="js/plugins/bootsnav_files/skins/color.css" rel="stylesheet">
     <link href="js/plugins/bootsnav_files/css/animate.css" rel="stylesheet">
@@ -34,6 +36,9 @@
 </head>
 <!-- 추가한 css -->
 <style>
+#signUpForm{
+	width:470px;
+}
 .snslogin{font-weight:bolder; color:#9ED4C2; font-size:large;}
 .row expanded app-dashboard-top-nav-bar {backgroundcolor:black;}
 .col-md-5{position:relative;}
@@ -49,67 +54,47 @@
                 <div class="col-md-6 caption">
                     <h1>Welcome To Hobbyist</h1>
                     <h2>
-                           하비스트<span class="animated-text"></span><span class="typed-cursor"></span>
-                        </h2>
+                        	   하비스트<span class="animated-text"></span><span class="typed-cursor"></span>
+                     </h2>
                     <p>맞춤형 원데이 클래스 사이트</p>
-                    <a href="#" class="btn btn-blue btn-transparent">Main Page로 이동</a>
-
+                    <a href="<%=request.getContextPath() %>" class="btn btn-blue btn-transparent">Main Page로 이동</a>
                 </div>
 
                 <!-- Sign Up -->
 
                 <div class="col-md-5 col-md-offset-1">
-                
-                    <form class="signup-form" action="<%=request.getContextPath() %>/login.me" method="post">
-                        <img src="./image/img/logogreen.png" style="display: block; margin: 0 auto;" class="logogreen">
-                        <hr>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="아이디를 입력하세요" required="required" name="memberEmail">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" placeholder="비밀번호를 입력하세요" required="required" name="memberPwd">
-                        </div>
-                       
-                       <table>
-                       <tr>
-                        <td style="font-size:small; color:#9ED4C2;">아이디/비밀번호를 잊으셨나요?</td>
-                        <td width="96px"></td>
-                       
-                     <td class="join1" align="right" style="color:#9ED4C2; font-weight:bold; cursor:pointer;" onclick="location.href='<%= request.getContextPath()%>/joinForm.me'">회원가입하기</td>
-					</tr>
-					</table>
-                     
+					<form id="signUpForm" class="signup-form" action="<%=request.getContextPath() %>/login.me" method="post">
+						<img src="./image/img/logogreen.png" style="display: block; margin: 0 auto;" class="logogreen">
+							<hr>
+							<div class="form-group">
+                            	<input type="text" class="form-control" placeholder="아이디를 입력하세요" required="required" name="memberEmail">
+                       		</div>
+							<div class="form-group">
+								<input type="password" class="form-control" placeholder="비밀번호를 입력하세요" required="required" name="memberPwd">
+							</div>
+						<table>
+	                       <tr>
+		                        <td style="font-size:small; color:#9ED4C2;" onclick="location.href='<%= request.getContextPath()%>/searchId.do'">아이디/비밀번호를 잊으셨나요?</td>
+		                        <td width="96px"></td>
+		 						<td class="join1" align="right" style="color:#9ED4C2; font-weight:bold; cursor:pointer;" onclick="location.href='<%= request.getContextPath()%>/joinForm.me'">회원가입하기</td>
+							</tr>
+						</table>
 						<br>
                         <div class="form-group text-center">
-                        <table>
-                        <tr height="100px">
-                            <td width="30%"></td>
-                            <td><button type="submit" class="btn btn-blue btn-block" style="background-color: #9ED4C2; width:200px; " >로그인 하기</button>
-                            </td>
-                            <td></td>
-                           </tr>
-						
-
-						<tr>
-						<td></td>
-						<td>
-						<div onclick="kakaoLogin();">
-						<a href="javascript:void(0)">
-						<img src="./image/img/kakaologin.png" style="height:50px">
-						</a>
-						</div>
-						</td>
-						<td></td>
-						</tr>
-						
-						</table>
-						<ul>
-	<li onclick="kakaoLogout();">
-      <a href="javascript:void(0)">
-          <span>카카오 로그아웃</span>
-      </a>
-	</li>
-</ul>
+	                        <table>
+	                        	<tr height="100px">
+	                            	<td width="30%"></td>
+	                            	<td><button type="submit" class="btn btn-blue btn-block" style="background-color: #9ED4C2; width:200px;">로그인</button></td>
+	                            	<td></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+							</table>
+							<ul>
+							</ul>
                         </div>
                     </form>
                 </div>
@@ -117,37 +102,43 @@
         </div>
     </section>
 
-
-
-   
-
-
-    <!--======================================== 
-
-           Footer
-
-    ========================================-->
-
-
-    <footer>
+<!-- footer -->
+    <div class="footer_section layout_padding">
         <div class="container">
-            <div class="row">
-                <div class="footer-caption">
-                    <img src="./image/img/logo.png" class="img-responsive center-block" alt="logo">
-                    <hr>
-                    <h5 class="pull-left">Vortex, &copy;2016 All rights reserved</h5>
-                    <ul class="liste-unstyled pull-right">
-                        <li><a href="#twitter"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#instagram"><i class="fa fa-instagram"></i></a></li>
-                    </ul>
-                </div>
+            <div class="footer_logo">
+                <a href="index.jsp"><img src="assets/images/hlogo.png"
+                    style="width: 120px"></a>
+            </div>
+            <div class="input_bt">
+                <input type="text" class="mail_bt" placeholder=""
+                    name="Your Email"><!--  <span class="subscribe_bt"
+                    id="basic-addon2"><a href="#">Subscribe</a></span>  -->
+            </div>
+            <div class="footer_menu">
+                <ul>
+<!--                     <li><a href="#">Introduction</a></li>
+                    <li><a href="#">Income</a></li>
+                    <li><a href="#">Class Application</a></li> -->
+                <%--     <li><a href="<%= request.getContextPath() %>/FAQ.bo">FAQ</a></li> --%>
+<%--                     <li><a href="<%= request.getContextPath() %>/list.cs">Customer Service</a></li> --%>
+                </ul>
+            </div>
+            <div class="location_main"  style="font-size: x-large;">
+                HOBBYIST HOT LINE : <a href="#">+82 2 1234 5678</a>
             </div>
         </div>
-    </footer>
-
-
-
-
+    </div>
+    <!-- footer section end -->
+	
+	<!-- copyright section start -->
+	<div class="copyright_section">
+		<div class="container">
+			<p class="copyright_text">
+				© 2021 All Rights Reserved. Design by <a href="index.jsp">HOBBYIST</a>
+			</p>
+		</div>
+	</div>
+ 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 
@@ -156,86 +147,41 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
 
     <script src="./js/bootstrap.min.js"></script>
-
     <script src="./js/plugins/owl-carousel/owl.carousel.min.js"></script>
-
     <script src="./js/plugins/bootsnav_files/js/bootsnav.js"></script>
-
     <script src="./js/plugins/typed.js-master/typed.js-master/dist/typed.min.js"></script>
-
     <script src="./js/plugins/Magnific-Popup-master/Magnific-Popup-master/dist/jquery.magnific-popup.js"></script>
-
     <script src="./js/main.js"></script>
+	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+	
+	<script>
 
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<script>
+		var userAgent=navigator.userAgent.toLowerCase();
+		var browser;
+		
+		if(userAgent.indexOf('edge')>-1){
+		
+			browser='익스플로러 엣지';
+		
+		}else if(userAgent.indexOf('whale')>-1){
+		
+			browser='네이버 웨일';
+		
+		}else if(userAgent.indexOf('chrome')>-1){
+		
+			browser='크롬';
+		
+		}else if(userAgent.indexOf('firefox')>-1){
+		
+			browser='파이어폭스';
+		
+		}else{
+		
+			browser='익스플로러';
+		
+		}
 
-var userAgent=navigator.userAgent.toLowerCase();
-
-var browser;
-
-if(userAgent.indexOf('edge')>-1){
-
-	browser='익스플로러 엣지';
-
-}else if(userAgent.indexOf('whale')>-1){
-
-	browser='네이버 웨일';
-
-}else if(userAgent.indexOf('chrome')>-1){
-
-	browser='크롬';
-
-}else if(userAgent.indexOf('firefox')>-1){
-
-	browser='파이어폭스';
-
-}else{
-
-	browser='익스플로러';
-
-}
-
-
-
-Kakao.init('85f715b51f5b518271c48383bcb54f97'); 
-console.log(Kakao.isInitialized());
-//카카오로그인
-function kakaoLogin() {
-	window.open(),
-    Kakao.Auth.login({
-      success: function (response) {
-        Kakao.API.request({
-          url: '/v2/user/me',
-          success: function (response) {
-        	  console.log(response)
-          },
-          fail: function (error) {
-            console.log(error)
-          },
-        })
-      },
-      fail: function (error) {
-        console.log(error)
-      },
-    })
-  }
-  
-function kakaoLogout() {
-    if (Kakao.Auth.getAccessToken()) {
-      Kakao.API.request({
-        url: '/v1/user/unlink',
-        success: function (response) {
-        	console.log(response)
-        },
-        fail: function (error) {
-          console.log(error)
-        },
-      })
-      Kakao.Auth.setAccessToken(undefined)
-    }
-  }  
-</script>
+	</script>
   
 
 

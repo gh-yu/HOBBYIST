@@ -135,105 +135,11 @@ body{
 </head>
 <body>
 <div class="app-dashboard shrink-medium">
-		
-		<!-- 상단바 -->
-		<%@ include file="../common/topbar.jsp" %>
 	
-		<!-- 바디 영역(사이드바, 본문) -->
-		<div class="app-dashboard-body off-canvas-wrapper">
-		
-			<!-- 사이드바 영역 -->
-			<div id="app-dashboard-sidebar" class="app-dashboard-sidebar position-left off-canvas off-canvas-absolute reveal-for-medium" data-off-canvas>
-				
-				<!-- 사이드바 close, open -->
-				<div class="app-dashboard-sidebar-title-area">
-					<div class="app-dashboard-close-sidebar">
-						<!-- Close button -->
-						<button id="close-sidebar" data-app-dashboard-toggle-shrink
-							class="app-dashboard-sidebar-close-button show-for-medium"
-							aria-label="Close menu" type="button">
-							<span aria-hidden="true"><a href="#"><i
-									class="large fa fa-angle-double-left"><img
-								src="images/three-dots-vertical.svg"></i></a></span> 
-						</button>
-					</div>
-					<!-- open button -->
-					<div class="app-dashboard-open-sidebar">
-						<button id="open-sidebar" data-app-dashboard-toggle-shrink
-							class="app-dashboard-open-sidebar-button show-for-medium"
-							aria-label="open menu" type="button">
-							<span aria-hidden="true"><a href="#"><i
-									class="large fa fa-angle-double-right"><img
-								src="images/three-dots-vertical.svg"></i></a></span> 
-						</button>
-					</div>
-				</div>
-				
-				<!-- 사이드바 -->
-				<div class="app-dashboard-sidebar-inner">
-					<ul class="menu vertical">
-						<li><a href="<%= request.getContextPath() %>/myClass.te">
-							<span class="app-dashboard-sidebar-text"><h3>나의 클래스룸</h3></span>
-						</a></li>
-						<li><a href="#">
-							<span class="app-dashboard-sidebar-text">수강중인 클래스</span>
-						</a></li>
-						<li><a href="#"> 
-							<span class="app-dashboard-sidebar-text">수강완료 클래스</span>
-						</a></li>
-						<li><a href="#"> 
-							<span class="app-dashboard-sidebar-text">찜한 클래스</span>
-						</a></li>
-						<li><a href="#"> 
-							<span class="app-dashboard-sidebar-text">내가 쓴 후기</span>
-						</a></li>
-						<br>
-						<li><a href="<%= request.getContextPath() %>/myInfo.me"> 
-							<span class="app-dashboard-sidebar-text"><h3>내 정보</h3></span>
-						</a></li>
-						<li><a href="<%= request.getContextPath() %>/updateForm.me"> 
-							<span class="app-dashboard-sidebar-text">내 정보 수정</span>
-						</a></li>
-						<li><a href=""> 
-							<span class="app-dashboard-sidebar-text">결제정보</span>
-						</a></li>
-						<li><a href="<%= request.getContextPath() %>/delete.me"> 
-							<span class="app-dashboard-sidebar-text">튜티 탈퇴</span>
-						</a></li>
-						<br><br><br>
-						
-						<% if(loginUser != null && loginUser.getMemberGrade().equals("B")) { %>  
-						<li>
-							<span class="app-dashboard-sidebar-text"><h3>튜터</h3></span> 
-						</li>
-						<li ><a href=""> 
-							<span class="app-dashboard-sidebar-text">내 클래스</span>  <%-- 누르고 서블릿 이동하면 tutor정보도 세션에 저장하기? --%>
-						</a></li>
-						<li style="color: #9ED4C2"><a href="<%= request.getContextPath() %>/tutorInform.me"> 
-							<span class="app-dashboard-sidebar-text">튜터 정보</span>
-						</a></li>
-						<li style="color: #9ED4C2"><a href=""> 
-							<span class="app-dashboard-sidebar-text">정산하기</span>
-						</a></li>		
-						
-						<% } else { %>  <%-- 로그인한 유저의 그레이드가 'B'즉 튜터가 아니면 튜터 신청 버튼 활성화 --%>
-						<li>
-							<a href="<%= request.getContextPath() %>/tuteeEnroll.me">
-							<span class="app-dashboard-sidebar-text"><button id="apply-tutor-btn">튜터 신청하기</button></span></a>
-						</li> <%-- span class="app-dashboard-sidebar-text"가 있어야 사이드바 닫힐때 안 보임  --%>	
-						
-						<% }  %>
-						<br><br><br>
-					</ul>
-					
-					
-				</div>
-			</div>
-
 			<!-- 본문 영역 -->
 			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
 				<div class="box1">
-				<form action="<%=request.getContextPath()%>/insertTutee.me" method="post" encType="multipart/form-data">
+				<form action="<%=request.getContextPath()%>/insertTutee.me" method="post" encType="multipart/form-data" onsubmit="return check();">
 						<div class="box">	<!-- sign in 박스 시작 -->
 							<span class="text-center">TUTOR SIGN-IN</span>
 							<div class="tutorPro">
@@ -250,7 +156,7 @@ body{
 							<label>Phone</label>
 						</div>
 						<div class="input-container">		
-							<input type="text" name="mySns" required>
+							<input type="text" name="mySns">
 							<label>SNS</label>
 						</div>
 						<div class="input-container">		
@@ -259,38 +165,30 @@ body{
 						</div>
 						
 							<button type="submit" class="btn">등록하기</button>
-					
+							
 					<!-- 파일 업로드 하는 부분 -->
 							<div id="fileArea">
-								<input type="file" id="profileImg" multiple="multiple" name="profileImg" onchange="LoadImg(this,1)">
+								<input type="file" id="profileImg" multiple="multiple" name="profileImg" onchange="LoadImg(this,1)" >
 							</div>
 					</div>	<!-- sign in 박스 끝 -->
 				</form>
+				
 				</div> <!-- box1 끝 -->
-				
-				
+					
 				<div class="box2">
 					<img src="./images/flower.png" alt="" class="imgresponsive">
 				</div> <!-- box2 끝 -->
 				
 				</div>	<!-- box1+box2끝 -->
-			
-			</div>	
 					
-		</div>
-		
-			<!-- FOOTER -->
-			<footer class="container" style="text-align: center; background: #F5F5F5;">
+			<br>
+			<div align="center">
+				<a href="<%=request.getContextPath() %>/myInfo.me" class="btn btn-blue btn-transparent">My Page로 이동</a>
+			</div>
 			
-				<p class="float-end">
-					<a href="#">Back to top</a>
-				</p>
-				<p>
-					&copy; 2021 HOBBYIST, Inc. &middot; <a href="<%= request.getContextPath() %>/contact.co">Contact</a>
-					<!-- &middot; <a href="#">Terms</a> -->
-				</p>
-			</footer> 
-
+				
+			</div>
+					
 <script>
 // 프로필 사진
 	$(function(){
@@ -341,6 +239,15 @@ body{
 // 						}
 // 					}
 	
+	
+	function check() {
+		if ($('#profileImg').val() == '') {
+			alert('프로필이미지는 필수 입력사항입니다.');
+			return false;
+		}
+		return true;
+		
+	}
 	
 </script>	
 	

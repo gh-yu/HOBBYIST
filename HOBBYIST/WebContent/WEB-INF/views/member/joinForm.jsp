@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="../common/css.jsp" %>
 <!-- <script src="../../../js/jquery-3.6.0.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- 마이페이지 - 회원가입 -->
@@ -42,37 +43,24 @@
 
 <!-- 추가한 css -->
 <style>
+	#joinForm{
+		width:470px;
+	}
+
+	input #emailCheck {
+		background-color: lightgray;
+	}
+	
+	div > td {
+		
+	}
+
 .econfirm {border-radius:5px; background:#9ED4C2; color:white; font-size:small;}
 .page-header {background:#9ED4C2;}
 </style>
 
 
 <body>
-<!-- 상단바 -->
-<!-- <div class="row expanded app-dashboard-top-nav-bar"> -->
-<!--             <div class="columns medium-2"> -->
-<!--                 <a class="app-dashboard-logo" href=#><img src="./vortex-master/assets/img/logo.png" -->
-<!--                     width="70px" height="55px"></a> -->
-<!--             </div> -->
-<!--             <div class="columns sRhow-for-medium"> -->
-<!--                 <div class="app-dashboard-search-bar-container"> -->
-<!--                 </div> -->
-<!--             </div> -->
-<!--             <div class="columns shrink app-dashboard-top-bar-actions"> -->
-<!--                 <button href="#" class="button hollow">Logout</button> -->
-<!--                 로그아웃 버튼 -->
-<!--                 <a href="#" height="30" width="30" alt=""><i -->
-<!--                     class="fa fa-info-circle"></i></a> -->
-<!--             </div> -->
-<!-- </div> -->
-
-
-
-    <!--======================================== 
-
-           Preloader
-
-    ========================================-->
 
     <div class="page-preloader">
         <div class="spinner">
@@ -84,37 +72,7 @@
         </div>
     </div>
 
-    <!--======================================== 
-
-           Header
-
-    ========================================-->
-
-
-
-    <!--//** Navigation**//-->
-<!-- <div class="page-header"> -->
-<!-- 	  <img src="./image/img/logo.png" > -->
-
-   
-
-<!--             Collect the nav links, forms, and other content for toggling -->
-
-<!--             <div class="collapse navbar-collapse" id="navbar-menu"> -->
-<!--                 <ul class="nav navbar-nav navbar-right"> -->
-<!--                        <button type="button" class="btn btn-blue navbar-btn" data-toggle="modal" data-target="#SignIn">가입하기</button> -->
-<!--                 </ul> -->
-
-<!--             </div> -->
-
-<!--             /.navbar-collapse -->
-
-<!--         </div> -->
-
-<!--     </nav> -->
-<!-- </div> -->
-
-
+    
     <!--//** Banner**//-->
 
     <section id="home">
@@ -126,49 +84,47 @@
                 <div class="col-md-6 caption">
                     <h1>Welcome To Hobbyist</h1>
                     <h2>
-                           하비스트<span class="animated-text"></span><span class="typed-cursor"></span>
-                        </h2>
+                       	   하비스트<span class="animated-text"></span><span class="typed-cursor"></span>
+                    </h2>
 
                     <p>맞춤형 원데이 클래스 사이트</p>
 					
-                    <a href="#" class="btn btn-transparent">Main Page로 이동</a>
+                    <a href="<%=request.getContextPath() %>" class="btn btn-transparent">Main Page로 이동</a>
 
                 </div>
 
                 <!-- Sign Up -->
 
                 <div class="col-md-5 col-md-offset-1">
-                    <form class="signup-form" action="<%=request.getContextPath() %>/join.me" method="post" id="joinForm" name="joinForm">
+                    <form class="signup-form" action="<%=request.getContextPath() %>/join.me" method="post" id="joinForm" name="joinForm" onsubmit="return checkForm();">
                     <div class="form-group">
-                    		<label id="memberE">EMAIL</label>
-                            <input type="email" id="email" class="form-control" name="memberEmail" required="required"><br>
-                            <input type="button" id="emailCheck" class="form-control" value="이메일 인증">&nbsp;
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="이름을 입력하세요" name="memberName" required="required">
-                        </div>
-                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="닉네임을 입력하세요" name="memberNickName" required="required">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="전화번호를 입력하세요" name="memberPhone" required="required">
-                  </div>
+                    	<label id="memberE"><b>EMAIL</b></label>
+                        <input type="email" id="email" class="form-control" name="memberEmail" placeholder="사용하실 이메일을 입력하세요" required="required"><br>
+                        <input type="button" id="emailCheck" class="form-control" style="background-color: lightgray" value="이메일 인증">&nbsp;
+                        <input type="text" id="code" class="form-control" required="required" placeholder="인증 코드를 입력하세요.">
+                    </div>
+                    <div class="form-group">
+                       	<label id="memberE"><b>INFORMATION</b></label>
+                        <input type="text" class="form-control" placeholder="이름을 입력하세요" name="memberName" required="required"><br>
+                        <input type="text" id="memberNickName" class="form-control" placeholder="닉네임을 입력하세요" name="memberNickName" required="required">
+                        <div><span id="NickNameCheckResult"></span></div><br>
+                        <input type="text" id="memberPhone" class="form-control" placeholder="전화번호를 입력하세요(-포함)" name="memberPhone" required="required">
+                        <div><span id="phoneResult"></span></div>
+                    </div>
+                    <div class="form-group">
+                      	<label id="memberE"><b>PASSWORD</b><br>(영어로 시작하는 8-12글자로 영어, 숫자, !*$만 가능합니다)</label>
+                        <input type="password" id="joinPwd" class="form-control" placeholder="비밀번호를 입력하세요" name="memberPwd" required="required">
+                        <div><span id="pwd1Result"></span></div><br>
+                        <input type="password" id="checkPwd"class="form-control" placeholder="비밀번호를 확인해주세요" name="memberPwd" required="required">
+                        <div><span id="pwd2Result"></span></div>
+              		</div>
                         
                             
 <!--                             <input type="button" class="econfirm" value="인증 번호 받기" onclick="emailAuthentication()">&nbsp; -->
 <!--                            <input type="button" class="econfirm" value="인증 번호 확인" onclick="authCodeCheck()">  -->
 <!--                             <br><br> -->
 <!--                            <input type="password" class="form-control" placeholder="인증번호를 입력하세요" name="authenticNo" required="required"> -->
-                          <br>
-                        <div class="form-group">
-                            <input type="password" class="form-control" placeholder="비밀번호를 입력하세요" name="memberPwd" required="required">
-                        </div>
-                      
-                        <div class="form-group">
-                            <input type="password" class="form-control" placeholder="비밀번호를 확인해주세요" name="memberPwd" required="required">
-                        </div>
-                      
-						<br><br>
+                        <br>
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-blue btn-block" style="background-color: #9ED4C2;">회원가입</button>
                         </div>
@@ -182,30 +138,42 @@
 
 
 
-    <!--======================================== 
-
-           Footer
-
-    ========================================-->
-
-
-
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="footer-caption">
-                    <img src="./image/img/logo.png" class="img-responsive center-block" alt="logo">
-                    <hr>
-                    <h5 class="pull-left">Vortex, &copy;2016 All rights reserved</h5>
-                    <ul class="liste-unstyled pull-right">
-                        <li><a href="#twitter"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#instagram"><i class="fa fa-instagram"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
-
+   <!-- footer -->
+	<div class="footer_section layout_padding">
+		<div class="container">
+			<div class="footer_logo">
+				<a href="index.jsp"><img src="assets/images/hlogo.png"
+					style="width: 120px"></a>
+			</div>
+			<div class="input_bt">
+				<input type="text" class="mail_bt" placeholder=""
+					name="Your Email"><!--  <span class="subscribe_bt"
+					id="basic-addon2"><a href="#">Subscribe</a></span>  -->
+			</div>
+			<div class="footer_menu">
+				<ul>
+<!-- 					<li><a href="#">Introduction</a></li>
+					<li><a href="#">Income</a></li>
+					<li><a href="#">Class Application</a></li> -->
+				<%-- 	<li><a href="<%= request.getContextPath() %>/FAQ.bo">FAQ</a></li> --%>
+<%-- 					<li><a href="<%= request.getContextPath() %>/list.cs">Customer Service</a></li> --%>
+				</ul>
+			</div>
+			<div class="location_main"  style="font-size: x-large;">
+				HOBBYIST HOT LINE : <a href="#">+82 2 1234 5678</a>
+			</div>
+		</div>
+	</div>
+	<!-- footer section end -->
+	
+	<!-- copyright section start -->
+	<div class="copyright_section">
+		<div class="container">
+			<p class="copyright_text">
+				© 2021 All Rights Reserved. Design by <a href="index.jsp">HOBBYIST</a>
+			</p>
+		</div>
+	</div>
 
 
     <!--======================================== 
@@ -218,62 +186,188 @@
 
     <!-- Modal -->
 
-    <div class="modal fade" id="SignIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title text-center" id="myModalLabel">Sign In</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="signup-form">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="User Name" required="required">
-                        </div>
+<!--     <div class="modal fade" id="SignIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> -->
+<!--         <div class="modal-dialog" role="document"> -->
+<!--             <div class="modal-content"> -->
+<!--                 <div class="modal-header"> -->
+<!--                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+<!--                     <h4 class="modal-title text-center" id="myModalLabel">Sign In</h4> -->
+<!--                 </div> -->
+<!--                 <div class="modal-body"> -->
+<!--                     <form class="signup-form"> -->
+<!--                         <div class="form-group"> -->
+<!--                             <input type="text" class="form-control" placeholder="User Name" required="required"> -->
+<!--                         </div> -->
 
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Password" required="required">
-                        </div>
-                        <div class="form-group text-center">
-                            <button type="submit" class="btn btn-blue btn-block">Log In</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer text-center">
-                    <a href="#">Forgot your password /</a>
-                    <a href="#">Signup</a>
-                </div>
-            </div>
-        </div>
-    </div>
+<!--                         <div class="form-group"> -->
+<!--                             <input type="text" class="form-control" placeholder="Password" required="required"> -->
+<!--                         </div> -->
+<!--                         <div class="form-group text-center"> -->
+<!--                             <button type="submit" class="btn btn-blue btn-block">Log In</button> -->
+<!--                         </div> -->
+<!--                     </form> -->
+<!--                 </div> -->
+<!--                 <div class="modal-footer text-center"> -->
+<!--                     <a href="#">Forgot your password /</a> -->
+<!--                     <a href="#">Signup</a> -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--     </div> -->
     
     <script>
-    	// 이메일 인증
-    	$('#emailCheck').on('click', function(){
-    		$.ajax({
-    			url: 'confirmMail.me',
-    			data: {email:$('#email').val()},
-    			success: function(data){
-    				console.log(data)
-    				if(data == null || data == ""){
-    				alert("다시 입력해주세요");
-    				} else {
-    					alert("이메일이 성공적으로 발송되었습니다.");
-    				}
-    			},
-    			error: function(data){
-    				console.log(data);
-    				alert("인증 메일 발송 실패");
-    			}
-    		});
-    	});
-
+    //필요 변수 선언
+    var isUsable = false;		// form 제출 가능 여부
+    var isPhoneChecked = false; // 폰 체크 여부
+    var phone = document.getElementById('memberPhone');
+    
+    var isEmailChecked = false; // 이메일 체크 여부
 	
-    </script>
+    var isNickChecked = false;	// 닉네임 체크 여부
+	var nickName = document.getElementById('nickName');
+	
     
-    
-    
+ 	 //휴대폰번호 양식 체크
+	$('#memberPhone').on('change paste keyup', function(){ // 연락처에 입력사항이 변경, 붙여넣기, 키업 이벤트가  발생했을 경우 
+		isPhoneChecked = false; // false로 초기화
+	});
+	
+	$('#memberPhone').on('change', function(){
+		var regExpPhone = /^01([0|1|6|7|8|9])-([0-9]{3,4})-([0-9]{4})$/;
+		
+		if (memberPhone.value.trim() == '' || memberPhone.value.trim().length == 0) {
+			$('#phoneResult').text('');
+			isUsable = true;
+			isPhoneChecked = true;
+		} else if (!regExpPhone.test($(this).val().trim())) {
+			$('#phoneResult').text('형식에 맞지 않는 전화번호입니다.');
+			$('#phoneResult').css('color', 'red');
+			isUsable = false;
+			isPhoneChecked = false;
+		} else {
+			$('#phoneResult').text('사용 가능합니다.');
+			$('#phoneResult').css('color', 'green');
+			isUsable = true;
+			isPhoneChecked = true;
+		}
+	});
+	
+	//비밀번호 체크
+	
+	var pwd1 = $('#joinPwd');  //가입시 입력하는 pwd
+	var pwd2 = $('#checkPwd'); //비밀번호 확인
+	var pwd1Result = $('#pwd1Result'); //pwd1이 양식에 맞는지 표시할 영역
+	var pwd2Result = $('#pwd2Result'); //pwd2가 양식에 맞는지 표시할 영역
+	var pwd1Val; 
+	
+	$('#joinPwd').keyup(function(e){
 
+		pwd1Val = $(this).val();
+		
+		var pwd1Reg = /^[a-zA-Z][a-zA-Z0-9!*$]{8,12}/gi;
+		
+		if(pwd1Reg.test(pwd1Val) === true){
+			if(pwd1Val.length < 8 || pwd1Val.length > 12 || pwd1Val.length == '') {
+				pwd1Result.css('color', 'red').text('8-12자리로 입력해주세요.')
+				check = false;
+			} else {
+				pwd1Result.css('color', 'green').text('사용할 수 있는 비밀번호 입니다')
+				check = true;
+			}
+		} else {
+			pwd1Result.css('color', 'red').text('형식에 맞지 않는 비밀번호 입니다');
+				check = false;
+		}
+	});
+	
+	// 비밀번호 확인
+	$('#checkPwd').keyup(function(e){
+		
+		var pwd2Val = $(this).val();
+		
+		if(pwd2Val !== pwd1Val) {
+			pwd2Result.css('color', 'red').text('입력하신 비밀번호와 일치하지 않습니다');
+		} else {
+			pwd2Result.css('color', 'green').text('입력하신 비밀번호와 일치합니다')
+		}
+	});
+		
+	// 닉네임 중복 체크
+	
+	$('#memberNickName').on('change', function(){
+	
+		$.ajax({
+			url : 'checkNick.me',
+			data : {inputNickName : $('#memberNickName').val()},
+			type : 'POST',
+			success : function(data){
+				console.log(data);
+				
+				if(data.trim() == '0'){
+					$('#NickNameCheckResult').text('사용 가능한 닉네임입니다').css({'color':'green'})
+				} else {
+					$('#NickNameCheckResult').text('중복된 닉네임입니다').css({'color':'red'})
+				} 
+				
+				if($('#memberNickName').val() == ''){
+					$('#NickNameCheckResult').text('사용할 닉네임을 입력해 주세요').css({'color':'red'})
+				}
+				
+			},
+			error : function(data){
+				console.log(data);
+				
+			}
+		})
+	});
+	
+	function updateValidate(){
+		if(isUsable && isNickChecked && isPhoneChecked) {
+			return true;
+		} else if (!isNickChecked && nickName.value.trim() != originNickName.trim()) {
+			alert('닉네임을 확인해주세요.');
+			nickName.focus();
+			return false;
+		} else if (!isPhoneChecked && phone.value.trim() != originPhone.trim()) {
+			if (!(phone.value.trim() == '' || phone.value.trim().length == 0)) {
+				alert('휴대폰 번호 형식을 확인해주세요.');
+				phone.focus();
+				return false;
+			}
+		} 
+		return true;
+	}	
+    
+	// 이메일 인증
+	var code = ''; 
+	
+	$('#emailCheck').on('click', function(){
+		$emailCheck = $(this);
+		
+		alert('입력하신 이메일로 인증코드를 전송하였습니다. 인증코드를 입력해주세요.');
+		$.ajax({
+			url: 'confirmMail.me',
+			data: {email:$('#email').val()},
+			success: function(data){
+				code = data.trim();
+				$('#code').focus();
+			},
+			error: function(data){
+				console.log(data);
+			}
+		});
+	});
+	
+	function checkForm() {
+		if ($('#code').val() != code.trim()) {
+			alert('인증 코드를 확인해주세요.');
+			return false;
+		} 
+		return true;
+	}
+    
+    </script>
+        
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

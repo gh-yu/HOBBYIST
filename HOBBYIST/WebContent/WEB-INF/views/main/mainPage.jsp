@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="member.model.vo.Member, hobbyistClass.model.vo.*, 
-    hobbyistClass.model.service.HClassService, java.util.ArrayList, java.text.DecimalFormat, hobbyistClass.model.vo.* "%>
+    hobbyistClass.model.service.HClassService, java.util.ArrayList, java.text.DecimalFormat"%>
 <%
 	HClassService hService = new HClassService();
 	ArrayList<HClass> classList = hService.selectClassList();
@@ -18,6 +18,15 @@
 <title>HOBBYIST</title>
 	<%@ include file="../common/css.jsp" %>
 	<script src="js/jquery-3.6.0.min.js"></script>
+	<style>
+		#h1Tag{
+			display: inline;
+		}
+		
+		#h1Arrange{
+			text-align: center;
+		}
+	</style>
 </head>
 <body>
 	<div class="banner_bg_main">
@@ -35,7 +44,7 @@
 							<!-- 관리자면 LIKED-CLASS버튼 비활성화 -->
 							<% } else { %>
 								<li></li>
-								<li><a href="<%= request.getContextPath() %>/myClass.te">LIKED-CLASS</a></li>
+								<li><a href="<%= request.getContextPath() %>/likedClass.te">LIKED-CLASS</a></li>
 							<% } %>
 								<li></li>
 							<% if(loginUser == null) { %>
@@ -72,18 +81,34 @@
 		<div class="header_section">
 			<div class="container">
 				<div class="containt_main">
-					<div id="mySidenav" class="sidenav">
-						<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+ 					<div id="mySidenav" class="sidenav">
+<!-- 						<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 						<a href="index.jsp">Coding</a> <a href="login.jsp">Decoration</a>
 						<a href="csBoard.jsp">Cooking</a> <a href="jewellery.html">Music</a>
 						<a href="jewellery.html">Health</a> <a href="jewellery.html">Writing</a>
 						<a href="jewellery.html">Picture</a> <a href="jewellery.html">Drawing</a>
 						<a href="jewellery.html">Making Video</a> <a href="jewellery.html">Stock</a>
-						<a href="jewellery.html">Tarot</a>
+						<a href="jewellery.html">Tarot</a> -->
+						<a href="" class="closebtn" onclick="">&times;</a>
+						<a class="category" id="개발/코딩" href="">Coding</a> <a class="category" id="인테리어" href="">Decoration</a>
+						<a class="category" id="요리" href="">Cooking</a> <a class="category" id="악기" href="">Music</a>
+						<a class="category" id="건강/헬스" href="">Health</a> <a class="category" id="글쓰기" href="">Writing</a>
+						<a class="category" id="사진" href="">Picture</a> <a class="category" id="드로잉" href="">Drawing</a>
+						<a class="category" id="영상편집" href="">Making Video</a> <a class="category" id="주식" href="">Stock</a>
+						<a class="category" id="사주/타로" href="">Tarot</a>
 					</div>
 					<span class="toggle_icon" onclick="openNav()"><img
 						src="assets/images/toggle-icon.png"></span>
-					<div class="dropdown">
+					<script>
+						$('.category').on('click', function(){
+							console.log($(this).attr('id'));
+							var cateName = $(this).attr('id');
+							var queryStr = "<%= request.getContextPath() %>/classListByCate?cate=" + cateName;
+							$(this).attr('href',  queryStr);
+						});
+					
+					</script>	
+ <!-- 					<div class="dropdown">
 						<button class="btn btn-secondary dropdown-toggle" type="button"
 							id="dropdownMenuButton" data-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="false">카테고리</button>
@@ -92,7 +117,7 @@
 								class="dropdown-item" href="#">클래스별</a> <a class="dropdown-item"
 								href="#">후기별</a>
 						</div>
-					</div>
+					</div>  -->
 					<div class="main">
 					<!-- Another variation with a button -->
 					<!-- 검색어 입력 시 넘어가는 form 태그 -->
@@ -115,12 +140,28 @@
 			<div class="container">
 				<div id="my_slider" class="carousel slide" data-ride="carousel">
 					<div class="carousel-inner">
-						<div class="carousel-item active">
+					<div class="carousel-item active">
 							<div class="row">
 								<div class="col-sm-12">
 									<h1 class="banner_taital">
-										HOBBYIST SPECIALIZES<br>
-										IN LIVE CLASSES
+										WELCOME & ENJOY<br> 
+										"HOBBYIST"<br>
+										
+									</h1>
+									<div class="buynow_bt">
+										<a href="#class-content">둘러 보기</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="carousel-item">
+							<div class="row">
+								<div class="col-sm-12">
+									<h1 class="banner_taital">
+										SPECIALIZED PLATFORM<br> 
+										FOR LIVE CLASSES<br>
+										
 									</h1>
 									<div class="buynow_bt">
 										<a href="#class-content">둘러 보기</a>
@@ -171,7 +212,9 @@
 				<div class="carousel-item active">
 					<div class="container">
 						<br><br><br><br>
-						<h1 class="fashion_taital">인기 상승 중인 클래스</h1>
+							<div id="h1Arrange">
+								<span style="font-size: 45px">&#127942;</span><h1 id="h1Tag" class="fashion_taital">인기 상승 중인 클래스</h1><span style="font-size: 45px">&#127942;</span>
+							</div>
 						<div class="fashion_section_2">
 							<div class="row">
 						<% if (classList == null || classList.isEmpty()) { %>
@@ -187,7 +230,7 @@
 									<div class="box_main">
 										<h4 class="shirt_text"><%= classList.get(i).getClassName() %></h4>
 										<p class="price_text">
-											Price <span style="color: #ff0000;"><%= dc.format(classList.get(i).getClassFee()) %></span>
+											<span style= "color: #9ED4C2">PRICE_ </span><span style="color: #ff0000;"><%= dc.format(classList.get(i).getClassFee()) %> 🛒</span>
 											<!-- 좋아요 버튼 -->
 											&nbsp;
 											<span class="likeBtnArea">
@@ -236,7 +279,9 @@
 				<div class="carousel-item">
 					<div class="container">
 						<br><br><br><br>
-						<h1 class="fashion_taital">인기 상승 중인 클래스</h1>
+							<div id="h1Arrange">
+								<span style="font-size: 45px">&#128293;</span><h1 id="h1Tag" class="fashion_taital">인기 상승 중인 클래스</h1><span style="font-size: 45px">&#128293;</span>
+							</div>
 						<div class="fashion_section_2">
 							<div class="row">
 						<% 	for (int i = 3; i < classList.size(); i++) { %>
@@ -247,7 +292,7 @@
 									<div class="box_main">
 										<h4 class="shirt_text"><%= classList.get(i).getClassName() %></h4>
 										<p class="price_text">
-											Price <span style="color: #ff0000;"><%= dc.format(classList.get(i).getClassFee()) %></span>
+										<span style= "color: #9ED4C2">PRICE_ </span><span style="color: #ff0000;"><%= dc.format(classList.get(i).getClassFee()) %> 🛒</span>
 											<!-- 좋아요 버튼 -->
 											&nbsp;
 											<span class="likeBtnArea">
@@ -296,7 +341,9 @@
 				<div class="carousel-item">
 					<div class="container">
 						<br><br><br><br>
-						<h1 class="fashion_taital">인기 상승 중인 클래스</h1>
+							<div id="h1Arrange">
+								<span style="font-size: 45px">&#127882;</span><h1 id="h1Tag" class="fashion_taital">인기 상승 중인 클래스</h1><span style="font-size: 45px">&#127882;</span>
+							</div>
 						<div class="fashion_section_2">
 							<div class="row">
 						<% 	for (int i = 6; i < classList.size(); i++) { %>
@@ -307,7 +354,7 @@
 									<div class="box_main">
 										<h4 class="shirt_text"><%= classList.get(i).getClassName() %></h4>
 										<p class="price_text">
-											Price <span style="color: #ff0000;"><%= dc.format(classList.get(i).getClassFee()) %></span>
+											<span style= "color: #9ED4C2">PRICE_ </span><span style="color: #ff0000;"><%= dc.format(classList.get(i).getClassFee()) %> 🛒</span>
 											<!-- 좋아요 버튼 -->
 											&nbsp;
 											<span class="likeBtnArea">
@@ -438,7 +485,7 @@
 					});
 				}
 			<% } %>
-		}
+			}
 		});
 
 		// 카테고리 선택시 카테고리 별로 보이게 ajax로 select
@@ -690,20 +737,20 @@
 					style="width: 120px"></a>
 			</div>
 			<div class="input_bt">
-				<input type="text" class="mail_bt" placeholder="Your Email"
-					name="Your Email"> <span class="subscribe_bt"
-					id="basic-addon2"><a href="#">Subscribe</a></span>
+				<input type="text" class="mail_bt" placeholder=""
+					name="Your Email"><!--  <span class="subscribe_bt"
+					id="basic-addon2"><a href="#">Subscribe</a></span>  -->
 			</div>
 			<div class="footer_menu">
 				<ul>
-					<li><a href="#">Introduction</a></li>
+<!-- 					<li><a href="#">Introduction</a></li>
 					<li><a href="#">Income</a></li>
-					<li><a href="#">Class Application</a></li>
-					<li><a href="admin/faq.jsp">FAQ</a></li>
-					<li><a href="#">Customer Service</a></li>
+					<li><a href="#">Class Application</a></li> -->
+				<%-- 	<li><a href="<%= request.getContextPath() %>/FAQ.bo">FAQ</a></li> --%>
+<%-- 					<li><a href="<%= request.getContextPath() %>/list.cs">Customer Service</a></li> --%>
 				</ul>
 			</div>
-			<div class="location_main">
+			<div class="location_main"  style="font-size: x-large;">
 				HOBBYIST HOT LINE : <a href="#">+82 2 1234 5678</a>
 			</div>
 		</div>

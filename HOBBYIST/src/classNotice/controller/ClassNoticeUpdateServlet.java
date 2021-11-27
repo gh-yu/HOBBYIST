@@ -35,10 +35,12 @@ public class ClassNoticeUpdateServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		int classBoardNo = Integer.parseInt(request.getParameter("no"));
 		String classBoardName = request.getParameter("title");
-		String nickname = request.getParameter("nickname");
+//		String nickname = request.getParameter("nickname");
 		String classBoardContent = request.getParameter("content");
-		// String userId = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
+		String userEmail = ((Member)request.getSession().getAttribute("loginUser")).getMemberNickName();
+		int classno = Integer.parseInt(request.getParameter("cNo"));
 		
+		System.out.println("updateSevler cNo : " + classno );
 		String date = request.getParameter("date");
 		System.out.println(date);
 		Date noticeDate = null;
@@ -53,10 +55,10 @@ public class ClassNoticeUpdateServlet extends HttpServlet {
 			noticeDate = new Date(new GregorianCalendar(year, month, day).getTimeInMillis());
 		}
 		
-		ClassNotice notice = new ClassNotice(classBoardNo, classBoardName, classBoardContent, 0, noticeDate, 1, 1, null);
+		ClassNotice notice = new ClassNotice(classBoardNo, classBoardName, classBoardContent, 0, noticeDate, 1,classno , userEmail);
 		
 		int result = new ClassNoticeService().updateClassNotice(notice);
-		
+		System.out.println("업데이트 안에 result"+ result);
 		String page = null;
 		if (result > 0) {
 			request.setAttribute("classnotice", notice);

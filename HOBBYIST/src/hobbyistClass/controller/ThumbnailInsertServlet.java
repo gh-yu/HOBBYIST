@@ -45,7 +45,7 @@ public class ThumbnailInsertServlet extends HttpServlet {
 		if (ServletFileUpload.isMultipartContent(request)) {
 			
 			// 파일 업로드 처리를 위한 변수 설정
-			int maxSize = 1024*1024*10; // 10Mbyte
+			int maxSize = 1024*1024*100; // 10Mbyte
 			String root = request.getSession().getServletContext().getRealPath("/"); 
 			String savePath = root + "uploadFiles/";
 			
@@ -83,17 +83,17 @@ public class ThumbnailInsertServlet extends HttpServlet {
 			DecimalFormat form = new DecimalFormat("#.#");
 			double time = Double.parseDouble(multiRequest.getParameter("classtime"));
 			
-			System.out.println("값 :"+multiRequest.getParameter("classtime"));
-			System.out.println("time"+time);
-			System.out.println("content"+content);
-			System.out.println("categoryname"+categoryname);
-			System.out.println("fee"+fee);
+//			System.out.println("값 :"+multiRequest.getParameter("classtime"));
+//			System.out.println("time"+time);
+//			System.out.println("content"+content);
+//			System.out.println("categoryname"+categoryname);
+//			System.out.println("fee"+fee);
 			
 			String date1 = multiRequest.getParameter("startdate"); // date String값으로 넘어오는데 년도-월-일 이렇게 '-'로 구분돼서 넘어옴
 			String date2 = multiRequest.getParameter("enddate");
 				
-			System.out.println("date1 : "+ date1);
-			System.out.println("date2 : "+ date2);
+//			System.out.println("date1 : "+ date1);
+//			System.out.println("date2 : "+ date2);
 			Date fromdate = null;
 			Date toDate = null; 
 			
