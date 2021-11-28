@@ -144,12 +144,13 @@
 							class="la la-camera-retro"></i>
 							<p>MY REVIEW</p>
 					</a></li> --%>
-
+			
 					<li class="nav-item"><a
 						href="<%=request.getContextPath()%>/list.cs"> <i
-							class="la la-bell"></i>
+						class="la la-question-circle"></i>
 							<p>1:1 REQUEST</p>
 					</a></li>
+					<hr>
 					<% if(loginUser != null && loginUser.getMemberGrade().equals("B")) { %>
 					<hr>
 					<li class="nav-item"><a

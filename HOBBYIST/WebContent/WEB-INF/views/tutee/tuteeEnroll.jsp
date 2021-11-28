@@ -10,7 +10,6 @@
 <title>튜터 신청하기 페이지</title>
 <!-- CDN -->
 <script src="js/jquery-3.6.0.min.js"></script>
-
 <style>
 /*튜터 프로필 사진*/
 .tutorPro{width:100px; height:100px;}
@@ -37,12 +36,12 @@ body{
 }
 .box{
 	position:absolute;
-	left:50%;
-	top:50%;
+	left:45%; /* sign-in 박스 위치 조절 */
+	top:50%; /* sign-in 박스 위치 조절 */
  	transform: translate(-115%,-50%); 
     background-color: rgba(0, 115, 14, 0.19);
 	border-radius: 15px;
-	padding:60px 80px;
+	padding:70px 90px; /* 박스 사이즈 조절 */
 }
 .input-container{
 	position:relative;
@@ -103,28 +102,26 @@ body{
 
 .off-canvas-content{
 	text-align:center;
-	border: 1px solid black;
-	
-	
+	/* border: 1px solid black; */
 }
 .box1{
-	border: 1px solid black;
-	width: 49%;
-	height: 700px;
+	/* border: 1px solid black; */
+	width: 50%;
+	min-height: 900px;
 	float:left;
 	}
 .box2{
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	width: 49%;
-	height: 700px;
+	height: 900px;
 	float:left;
 	overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-	}
+}
 .imgresponsive{
-	height:702px;
+	height:900px;
 }
 
 /*sign up 박스*/
@@ -134,8 +131,7 @@ body{
 
 </head>
 <body>
-<div class="app-dashboard shrink-medium">
-	
+			
 			<!-- 본문 영역 -->
 			<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
 				<div class="box1">
@@ -170,25 +166,24 @@ body{
 							<div id="fileArea">
 								<input type="file" id="profileImg" multiple="multiple" name="profileImg" onchange="LoadImg(this,1)" >
 							</div>
+						
 					</div>	<!-- sign in 박스 끝 -->
 				</form>
 				
 				</div> <!-- box1 끝 -->
 					
-				<div class="box2">
+				<div class="box2" style="position: relative;">
 					<img src="./images/flower.png" alt="" class="imgresponsive">
+					
+						<div align="center" style="display: inline-block;">
+							<a href="<%=request.getContextPath() %>/myInfo.me" class="btn btn-blue btn-transparent" 
+							style="background: lightgray; color: black; position: absolute; top: 75%; left: 50%;transform: translate( -50%, -50% ); ">My Page로 이동</a>
+						</div>
+							
 				</div> <!-- box2 끝 -->
 				
 				</div>	<!-- box1+box2끝 -->
-					
-			<br>
-			<div align="center">
-				<a href="<%=request.getContextPath() %>/myInfo.me" class="btn btn-blue btn-transparent">My Page로 이동</a>
-			</div>
-			
-				
-			</div>
-					
+		
 <script>
 // 프로필 사진
 	$(function(){

@@ -425,10 +425,10 @@
 	});
 	
 	function onlyClassday(date) { // 리턴한 요일만 선택되게 하는 함수
-		var day = date.getDay();
+		 var day = date.getDay();
 		// return [(day == 1), '']; // day == 1 월요일만 선택
 		// return [(day != 0 && day != 1 && day != 3)]; // 특정 요일 제한 -> 일,월,수만 선택 안하기
-		// var classDay = [ (day == 0 || day == 1 || day == 3) ];
+		// var classDay = [ (day == 0 || day == 1 || day == 3) ]; // 일, 월, 수만 선택하기
 		// return classDay;
 		
 		var classDay = new Array();

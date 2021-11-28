@@ -159,7 +159,7 @@
 																	</button>
 																</span>
 															</p>
-															<br><br>				
+															<br>				
 												<%	for(int j = 0; j < list.size(); j++) { %>			
 												<%		if(searchList.get(i).getClassNo() == list.get(j).getBoardNo()) { %> 
 														<div class="thumbnailArea" style="height: 300px; width: 100%;">
