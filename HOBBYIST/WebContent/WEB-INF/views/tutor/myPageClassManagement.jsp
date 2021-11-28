@@ -160,7 +160,7 @@
 					<div class="col-sm-12">
 						<div class="custom_menu">
 							<ul>
-								<li><a href="#">MAIN</a></li>
+								<li><a href="<%= request.getContextPath() %>">MAIN</a></li>
 							<% if(loginUser == null) { %>
 								<li></li>
 								<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">LIKED-CLASS</a></li>
@@ -261,7 +261,7 @@
 
                                                 <%for (int i = 0; i < list.size(); i++) { %>
 
-                                            <%     if(c.getClassNo() == list.get(0).getClassNo()) {%>
+                                            <%     if(c.getClassNo() == list.get(i).getClassNo()) {%>
                                                 <tr>
                                                     <td><%=list.get(i).getClassBoardNo()%></td>
                                                     <td><%=list.get(i).getClassBoardName()%></td>

@@ -48,21 +48,21 @@ public class CSBoardDetailServlet extends HttpServlet {
 		
 		response.setContentType("text/html; charset=UTF-8");
 		if(board != null) {
-			if (!(board.getReqWriter().equals(loginUser.getMemberEmail()) || loginUser.getMemberGrade().equals("A"))) { // 작성자와 관리자(등급A)만 열람할 수 있게
+			if (board.getReqWriter().equals(loginUser.getMemberEmail()) || loginUser.getMemberGrade().equals("A")) { // 작성자와 관리자(등급A)만 열람할 수 있게	
+				request.setAttribute("board", board);
+				request.setAttribute("list", list);
+				request.setAttribute("fList", fList);
+				request.getRequestDispatcher("WEB-INF/views/csboard/csBoardDetail.jsp").forward(request, response);
+			} else {
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('작성자만 열람할 수 있습니다.')");
 				script.println("history.back()");
 				script.println("</script>");
-			} else {
-				request.getRequestDispatcher("WEB-INF/views/csboard/csBoardDetail.jsp").forward(request, response);
-				request.setAttribute("board", board);
-				request.setAttribute("list", list);
-				request.setAttribute("fList", fList);
 			}
 		} else {
-			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
 			request.setAttribute("msg", "1:1문의글 조회 실패");
+			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
 		}
 		
 	}
