@@ -74,7 +74,7 @@ public class InsertTuteeClassServlet extends HttpServlet {
 		}
 		
 		if (result > 0) {
-			 response.sendRedirect("detail.hcl?cNo=" + cNo); // 추후 튜티 내 클래스 디테일로 넘어가게 변경
+			 response.sendRedirect("detail.hcl?cNo=" + cNo);
 		} else {
 			request.setAttribute("msg", "클래스 예약 등록 실패");
 			request.getRequestDispatcher("WEB-INF/common/errorPage.jsp");

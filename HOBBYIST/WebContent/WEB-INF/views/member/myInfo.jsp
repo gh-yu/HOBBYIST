@@ -250,7 +250,7 @@
 																<div class="page-content" style="margin: 20px;">
 																	<%= loginUser.getMemberNickName() %>
 																</div>
-															</div>
+														</div>
 <%-- 													<% } %> --%>
 													<div class="col-md-6">
 <%-- 													<% if(loginUser.getMemberGrade().equals("B")) {%> --%>

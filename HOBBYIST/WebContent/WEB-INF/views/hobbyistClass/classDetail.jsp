@@ -428,8 +428,8 @@
 		var dt = new Date();
 	});
 	
-	function onlyClassday(date) { // 리턴한 요일만 선택되게 하는 함수
-		 var day = date.getDay();
+	function onlyClassday(date) { // 요일 선택을 제한하는 함수
+		var day = date.getDay(); // 달력의 날짜의 요일을 구하는 함수
 		// return [(day == 1), '']; // day == 1 월요일만 선택
 		// return [(day != 0 && day != 1 && day != 3)]; // 특정 요일 제한 -> 일,월,수만 선택 안하기
 		// var classDay = [ (day == 0 || day == 1 || day == 3) ]; // 일, 월, 수만 선택하기
@@ -475,10 +475,6 @@
 			}
 		}
 	});
-
-	// 해당 강의시간의 최대인원 초과하는지 조회
-	var tuteeCount = 0;	
-
 	
 	// 신청 form제출시 로그인 여부 check
 	function check() {

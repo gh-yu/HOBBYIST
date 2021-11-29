@@ -212,7 +212,7 @@
 								<div class="board_list_wrap1">
 									<br>
 									<div>
-										<table class="board_list1" id="listArea">
+										<table class="board_list1" id="noticeArea">
 											<h2>공지사항</h2>
 											<thead>
 												<tr>
@@ -253,7 +253,7 @@
 								</div>
 							</div>
 							<script>
-								$('#listArea td').mouseenter(function(){
+								$('#noticeArea td').mouseenter(function(){
 									$(this).parent().css({'background':'darkgray', 'cursor':'pointer'});
 								}).mouseout(function(){
 									$(this).parent().css({'background':'none'});

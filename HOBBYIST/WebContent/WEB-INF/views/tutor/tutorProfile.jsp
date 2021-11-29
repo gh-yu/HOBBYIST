@@ -407,7 +407,7 @@ label[for="fabk"], [for="twit"], [for="insta"], [for="pinter"], [for="youtu"] {
 		    	  <label>Phone : <%= m.getMemberPhone() %></label><br><br>
 		    	  <label>Email : <%= m.getMemberEmail() %></label><br><br>
 		    	  <label>Report : </label>
-				  <input type="text" id="myReport"  name="myReport" value="<%= tt.getTutorReport() %>" placeholder="자기소개를 입력하세요" required>
+				  <input type="text" id="myReport" name="myReport" value="<%= tt.getTutorReport() %>" placeholder="자기소개를 입력하세요" required>
 			      <br><br>
 				 <label>SNS :  </label>
 				  <input type="text" id="mySns" name="mySns" value="<%= tt.getTutorSns() == null ? "" : tt.getTutorSns()%>" placeholder="sns계정을 입력하세요">
