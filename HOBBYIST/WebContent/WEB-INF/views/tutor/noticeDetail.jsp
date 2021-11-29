@@ -2,12 +2,9 @@
     pageEncoding="UTF-8" import="classNotice.model.vo.ClassNotice, hobbyistClass.model.vo.* , tutor.model.vo.* , member.model.vo.*" %>
 <%
 	ClassNotice classnotice = (ClassNotice)request.getAttribute("classnotice");
-//	Member loginUser = (Member)session.getAttribute("loginUser");
-	Member member = (Member)request.getAttribute("Member");
-	Tutor tutor = (Tutor)session.getAttribute("tutor");
+	Member loginUser = (Member)session.getAttribute("loginUser");
+	Tutor t = (Tutor)request.getAttribute("t");
 	HClass c = (HClass)request.getAttribute("c");
-	System.out.println("c111 :" + c);
-	System.out.println("tutor : "+tutor);
 %>
 <!DOCTYPE html>
 <html>
@@ -72,14 +69,15 @@
 				<div align="center">
  				<%-- 로그인하지 않은 경우 고려 -> loginUser != null추가(이 코드 없으면 nullPointerException 뜸) --%>
  				<%-- String 비교는 ==가 아닌 equals로 비교! java코드이기 때문 --%>
-<%-- 				<% if (loginUser != null && c.getTutorNo() == tutor.getTutorNo() ) { %> 				 --%>
+ 				<% if (loginUser != null && loginUser.getMemberEmail().equals(t.getMemberEmail())) { %> 
 					<input type="submit" id="updateNoBtn" value="수정하기">
-					
-<!-- 					<input type="hidden" id="deleteNoBtn"onclick="deleteNotice();" value="삭제하기"> -->
-<%-- 				<% } %> <!-- 로그인하지 않았거나, 게시글 작성자와 로그인한 user의 아이디가 같지 않으면  위의 수정하기 버튼 안 보임--> --%>
-					<input type="button" onclick="location.href='<%= request.getContextPath() %>/classManagement.tt?cNo=<%=classnotice.getClassNo()%>'" id="cancelBtn" value="뒤로 가기">
+					<input type="button" onclick="location.href='<%= request.getContextPath() %>/classManagement.tt?cNo=<%=classnotice.getClassNo()%>'" id="cancelBtn" value="뒤로 가기">				
+ 					<input type="button" id="deleteNoBtn" onclick="deleteNotice();" value="삭제하기">
+ 				<% } else { %> <!-- 로그인하지 않았거나, 게시글 작성자와 로그인한 user의 아이디가 같지 않으면  위의 수정하기 버튼 안 보임-->
+					<input type="button" onclick="location.href='<%= request.getContextPath() %>/detail.te?cNo=<%=classnotice.getClassNo()%>'" id="cancelBtn" value="뒤로 가기">				
+				<% } %>
 				</div>
-				</form>
+			</form>
 		</div>
 	</div>
 	
@@ -100,20 +98,19 @@
     </script>
 	<script>
 	
-	
-// 		function deleteNotice() {
-// 			if (confirm("삭제하시겠습니까?")) {
-<%-- 				location.href = '<%= request.getContextPath() %>/classNoticeDelete.no?del=<%=classnotice.getClassBoardNo()%>&cNo=<%=c.get%>'; --%>
-				
-// 			}
-// 		}
-		
-<%-- function deleteNotice() { --%>
-// 		if (confirm("정말로 삭제하시겠습니까?")) {
-<%-- 			$('#detailForm').attr('action', 'classNoticeDelete.no?cNo='<%= classnotice.getClassBoardNo()%>); --%>
-// 			$('#detailForm').submit(); /* form에 대한 submit() -> 제출  */
-// 		}
-// 	}
+	function deleteNotice() {
+		if (confirm("삭제하시겠습니까?")) {
+			$('#detailForm').attr('action', 'classNoticeDelete.no');
+			$('#detailForm').submit();
+		}
+	}
+
+//	function deleteNotice() {
+//	if (confirm("정말로 삭제하시겠습니까?")) {
+//		<%-- 	$('#detailForm').attr('action', 'classNoticeDelete.no?cNo='<%= classnotice.getClassBoardNo()%>); --%> --%>
+//		$('#detailForm').submit(); /* form에 대한 submit() -> 제출  */
+//	}
+//}
 
 	</script>
 </body>
