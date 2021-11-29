@@ -82,7 +82,7 @@
 							<!-- 관리자면 LIKED-CLASS버튼 비활성화 -->
 							<% } else { %>
 								<li></li>
-								<li><a href="<%= request.getContextPath() %>/myClass.te">LIKED-CLASS</a></li>
+								<li><a href="<%= request.getContextPath() %>/likedClass.te">LIKED-CLASS</a></li>
 							<% } %>
 								<li></li>
 							<% if(loginUser == null) { %>
@@ -175,7 +175,9 @@
 											<p><%= t.getTutorReport() %></p>
 
 										<div class="notif-icon notif-danger">
-											<i class="la la-instagram"></i> <a href="<%= t.getTutorSns() %>" class="card-link">SNS</a>
+											<% if (t.getTutorSns() != null) { %>
+												<i class="la la-instagram"></i> <a href="<%= t.getTutorSns() %>" class="card-link">SNS</a>
+											<% } %>
 										</div>
 										<hr>
 									</div>
@@ -193,6 +195,8 @@
 									</div>
 								</div>
 								<!-- 사이드 / 클래스 신청 -->
+								<% if (loginUser != null && !loginUser.getMemberGrade().equals("A") && !loginUser.getMemberEmail().equals(t.getMemberEmail())) { %>
+												
 								<div class="card">
 									<div class="card-header">
 										<div class="card-title">클래스 신청하기</div>
@@ -226,9 +230,8 @@
 													<br><br><br>
 												</div>	
 												<div align="center">
-												<% if (loginUser != null && !loginUser.getMemberGrade().equals("A") && !loginUser.getMemberEmail().equals(t.getMemberEmail())) { %>
 													<input type="submit" id="btnSub" value="신청">
-												<% } %>
+												
 												</div>
 												<br>
 											</form>
@@ -237,6 +240,7 @@
 									
 									
 								</div>
+								<% } %>
 							</div>
 						</div>
 					</div>
@@ -425,10 +429,10 @@
 	});
 	
 	function onlyClassday(date) { // 리턴한 요일만 선택되게 하는 함수
-		var day = date.getDay();
+		 var day = date.getDay();
 		// return [(day == 1), '']; // day == 1 월요일만 선택
 		// return [(day != 0 && day != 1 && day != 3)]; // 특정 요일 제한 -> 일,월,수만 선택 안하기
-		// var classDay = [ (day == 0 || day == 1 || day == 3) ];
+		// var classDay = [ (day == 0 || day == 1 || day == 3) ]; // 일, 월, 수만 선택하기
 		// return classDay;
 		
 		var classDay = new Array();
@@ -474,36 +478,16 @@
 
 	// 해당 강의시간의 최대인원 초과하는지 조회
 	var tuteeCount = 0;	
-	$('#datepicker').on('click blur change', function() {
-		var date = $('#datepicker').val();
-		var time = $('#time').val();
-		
-		$.ajax({
-			url: 'countTuteeMax.te',
-			data: {date:date, time:time, cNo:<%= c.getClassNo() %>},
-			type: 'GET',
-			success: function(data){
-				console.log(data);
-				tuteeCount = data.trim();
-			},
-			error: function(data){
-				console.log(data);
-			}
-		});
-	});
+
 	
 	// 신청 form제출시 로그인 여부 check
 	function check() {
 
-		console.log(tuteeCount);
 		if ('<%= loginUser %>' == 'null') {
 			alert('로그인이 필요한 서비스입니다.');
 			return false;
 		} else if ( $('#datepicker').val() == '' ||  $('time').val() == '') {
 			alert('클래스 일정을 선택해주세요.');
-			return false;
-		} else if (tuteeCount >= <%= c.getClassTuteeMax() %>) {
-			alert('선택하신 일정은 정원 초과입니다.');
 			return false;
 		} else {
 			if(confirm($("#datepicker").val() + "일, " + $('#time').val() +"분을 선택하신 것이 맞습니까?")) {
@@ -511,8 +495,8 @@
 			} else {
 				return false;
 			}
-		}
-		
+		}	
+		return true;
 	}
 	
 </script>

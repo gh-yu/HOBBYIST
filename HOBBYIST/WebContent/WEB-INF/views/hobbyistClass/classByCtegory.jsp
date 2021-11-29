@@ -152,7 +152,7 @@
 																</button>
 															</span>
 														</p>
-														<br><br>
+														<br>
 												<%	for(int j = 0; j < fileList.size(); j++) { %>			
 												<%		if(classCateList.get(i).getClassNo() == fileList.get(j).getBoardNo()) { %> 
 														<div class="thumbnailArea" style="height: 300px; width: 100%;">

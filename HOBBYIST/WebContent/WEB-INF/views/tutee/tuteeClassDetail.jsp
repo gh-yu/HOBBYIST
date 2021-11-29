@@ -211,7 +211,7 @@
 								<div class="board_list_wrap1">
 									<br>
 									<div>
-										<table class="board_list1" id="listArea">
+										<table class="board_list1" id="noticeArea">
 											<h2>공지사항</h2>
 											<thead>
 												<tr>
@@ -228,7 +228,7 @@
 											
 												<%for (int i = 0; i < list.size(); i++) { %>
 												
-											<% 	if(c.getClassNo() == list.get(0).getClassNo()) {%>
+											<% 	if(c.getClassNo() == list.get(i).getClassNo()) {%>
 												<tr>
 													<td><%=list.get(i).getClassBoardNo()%></td>
 													<td><%=list.get(i).getClassBoardName()%></td>
@@ -252,7 +252,7 @@
 								</div>
 							</div>
 							<script>
-								$('#listArea td').mouseenter(function(){
+								$('#noticeArea td').mouseenter(function(){
 									$(this).parent().css({'background':'darkgray', 'cursor':'pointer'});
 								}).mouseout(function(){
 									$(this).parent().css({'background':'none'});
@@ -347,10 +347,14 @@
 										 			<span style="color: #9ED4C2; font-weight: bolder;">클래스 신청 페이지로 이동</span></a></td>
 										 		</tr>
 										 		<tr><th colspan="6"><br></th></tr>
+										 		
 										 	</tfoot>
 										</table>
 									</div>
 								</div>
+<!-- 								<div> -->
+<!-- 									<input type="button" class="btn btn-default pull-right" value="목록으로" onclick="history.back();"> -->
+<!-- 								</div> -->
 							</div>
 						</div>
 					</div>

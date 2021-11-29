@@ -193,7 +193,6 @@ img.ui-datepicker-trigger {
 								<% }  %>
 									<span class="caret"></span>
 								</span>
-					<
 					</a>
 					<div class="clearfix"></div>
 

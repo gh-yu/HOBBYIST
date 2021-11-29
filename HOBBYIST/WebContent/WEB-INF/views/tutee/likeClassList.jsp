@@ -130,17 +130,12 @@
 							class="la la-gittip"></i>
 							<p>LIKED CLASS</p>
 					</a></li>
-<%-- 					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/review.re"> <i
-							class="la la-camera-retro"></i>
-							<p>MY REVIEW</p>
-					</a></li> --%>
-					
 					<li class="nav-item"><a
 						href="<%=request.getContextPath()%>/list.cs"> <i
-							class="la la-bell"></i>
+							class="la la-question-circle"></i>
 							<p>1:1 REQUEST</p>
 					</a></li>
+					<hr>
 					<% if(loginUser != null && loginUser.getMemberGrade().equals("B")) { %>
 					<hr>
 					<li class="nav-item"><a
@@ -180,39 +175,41 @@
 						<div class="row class likeClass">
 					<% if (!lcList.isEmpty()) { %>
 							<% 	for (LikeClass c : lcList) { %>
-							<div class="col-md-4">
-							<div class="card card-stats card-primary active">
-									<div class="card-body">
-										<div class="row class-card">
-<!-- 											<div class="col-5"> 
-											
-											</div> -->
+						<div class="col-md-4" style="height : 550px;">
+							<div class="card card-stats card-primary">
+								<div class="card-body">
+									<div class="row class-card">
+										<div class="col-md-12">
+											<div class="box_main">
+
 									<% if (!fileList.isEmpty()) { %>
 									<%		for(HClassFile f : fileList) { %>
 									<%			if(c.getClassNo() == f.getBoardNo()) { %>
-											<div class="thumbnailArea" style="height: 225px; width: 100%;">
-												<img style="min-width:100%; height: 100%;" src="<%= request.getContextPath() %>/uploadFiles/<%= f.getChangeName() %>"
-													class="thumbnail" alt="Thumbnail">
-											</div>
+													<div class="thumbnailArea" style="height: 350px; width: 100%;">
+														<img style="min-width:100%; height: 100%;" src="<%= request.getContextPath() %>/uploadFiles/<%= f.getChangeName() %>"
+															class="thumbnail" alt="Thumbnail">
+													</div>
 									<%			} %>
 									<% 		} %>
 									<% } %>
-	 										<div class="icon-big text-center">
-	 											<h5><%= c.getClassName() %></h5>				
+		 										<div class="icon-big text-center">
+		 											<h5><%= c.getClassName() %></h5>				
+												</div>
+												<br>
+												<div class="btn_main">
+													<div class="buy_bt">
+														<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">Buy Now</a> 
+													</div>
+													<div class="seemore_bt">
+														<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">See More</a> 
+													</div>
+												</div>											
 											</div>
-											<br><br><br>
-											<div class="btn_main">
-												<div class="buy_bt">
-													<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">Buy Now</a> 
-												</div>
-												<div class="seemore_bt">
-													<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">See More</a> 
-												</div>
-											</div>											
 										</div>
 									</div>
 								</div>
-							</div> 
+							</div>
+						</div> 
 					<% 		}  %>
 					<% }  %>	
 						</div>			

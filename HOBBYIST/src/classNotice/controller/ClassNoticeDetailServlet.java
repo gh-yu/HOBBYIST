@@ -11,6 +11,7 @@ import classNotice.model.service.ClassNoticeService;
 import classNotice.model.vo.ClassNotice;
 import hobbyistClass.model.service.HClassService;
 import hobbyistClass.model.vo.HClass;
+import tutor.model.vo.Tutor;
 
 /**
  * Servlet implementation class NoticeDetailServlet
@@ -37,10 +38,12 @@ public class ClassNoticeDetailServlet extends HttpServlet {
 		String page = null;
 		if (notice != null) {
 			HClass c = new HClassService().selectClass(notice.getClassNo());
+			Tutor t = new HClassService().selectClassTutor(c.getTutorNo());
 			
-			if (c != null) {
+			if (c != null && t != null) {
 				request.setAttribute("classnotice", notice);
 				request.setAttribute("c", c);
+				request.setAttribute("t", t);
 				page = "WEB-INF/views/tutor/noticeDetail.jsp";
 			} else {
 				request.setAttribute("msg", "공지사항 상세조회 실패");

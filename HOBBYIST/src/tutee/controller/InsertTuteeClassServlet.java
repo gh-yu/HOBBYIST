@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import hobbyistClass.model.service.HClassService;
+import hobbyistClass.model.vo.HClass;
 import member.model.vo.Member;
 import tutee.model.servuce.TuteeService;
 import tutee.model.vo.TuteeClass;
@@ -54,10 +56,24 @@ public class InsertTuteeClassServlet extends HttpServlet {
 		revDate = new Date(new GregorianCalendar(year, month, day, hour, minute).getTimeInMillis());
 		
 		TuteeClass tc = new TuteeClass(0, revDate, revTime, null, null, null, cNo, email);
-		int result = new TuteeService().insertTuteeClass(tc);
+		
+		int enTuteeCount = new TuteeService().countEnrollTuteeNum(tc);
+		
+		HClass c = new HClassService().selectClass(cNo);
+		
+		int result = 0;
+		if (enTuteeCount >= c.getClassTuteeMax()) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('선택하신 일정은 정원 초과입니다.')");
+			script.println("history.back()");
+			script.println("</script>");		
+		} else {
+			result = new TuteeService().insertTuteeClass(tc);
+		}
 		
 		if (result > 0) {
-			 response.setContentType("UTF-8"); 
 			 response.sendRedirect("detail.hcl?cNo=" + cNo); // 추후 튜티 내 클래스 디테일로 넘어가게 변경
 		} else {
 			request.setAttribute("msg", "클래스 예약 등록 실패");
