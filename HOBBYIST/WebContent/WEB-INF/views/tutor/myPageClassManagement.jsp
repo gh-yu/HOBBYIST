@@ -297,16 +297,18 @@
 				</div>
 			</div>
 <script>
-     $('#listArea td').mouseenter(function(){
-          $(this).parent().css({'background':'darkgray', 'cursor':'pointer'});
-         }).mouseout(function(){
-       $(this).parent().css({'background':'none'});
-      }).click(function(){
-       var num = $(this).parent().children().eq(0).text(); // 글번호 가져오기
-//       if ($(this).text() != '존재하는 공지사항이 없습니다.') {
-             location.href = '<%=request.getContextPath()%>/classNoticedetail.no?cNo='+ num;
-//        }
-    });
+	<% if (check) { %>
+	     $('#listArea td').mouseenter(function(){
+	          $(this).parent().css({'background':'darkgray', 'cursor':'pointer'});
+	         }).mouseout(function(){
+	       $(this).parent().css({'background':'none'});
+	      }).click(function(){
+	       var num = $(this).parent().children().eq(0).text(); // 글번호 가져오기
+	//       if ($(this).text() != '존재하는 공지사항이 없습니다.') {
+	             location.href = '<%=request.getContextPath()%>/classNoticedetail.no?cNo='+ num;
+	//        }
+	    });
+    <% } %>
 </script>	
 							
 							<!-- 사이드 / 클래스 소개 -->

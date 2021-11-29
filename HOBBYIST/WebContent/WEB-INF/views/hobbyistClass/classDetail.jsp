@@ -210,7 +210,7 @@
 												
 												<label for="exampleFormControlSelect1">강의 시간 선택 &nbsp;</label> 
 												<select id="time" name="time" style="width: 100px;" required>
-												<option class="timeOption">----</option>
+												<option class="timeOption" value="">----</option>
 												<% for (int i = 0; i < s.size(); i++) { %>
 												<% 		if (s.size() > 1 && i != 0 && s.get(i-1).getSchduleTime().equals(s.get(i).getSchduleTime())) { %>
 																								
@@ -405,7 +405,7 @@
 		changeMonth : true,
 		changeYear : true,
 
-		minDate : '0', // 0 넣으면 오늘날짜부터 선택할 수 있음
+		minDate : '0', // 0 넣으면 오늘날짜부터 선택할 수 있음, 1 넣으면 오늘 이후의 날짜부터 선택 가능
 		maxDate : new Date('<%= c.getClassEndDate() %>'), // 특정날짜 이후는 선택 못하게/ 기간 선택 범위 제한/ 클래스 종료일자 이후는 선택 불가
 		showButtonPanel : true,
 		currentText : '오늘 날짜',
@@ -445,7 +445,7 @@
 	};
 
 	
-	// 날짜 선택시 스케줄표에서 그 요일의 시간과 일치하는 것은 selected, 아닌 것은 disabled로 변경 
+	// 날짜 선택시 스케줄표에서 그 요일의 시간과 일치하는 것은 selected, 아닌 것은 hidden으로 변경 
 	$("#datepicker").off().on('change', function(){
 		var inputDate = $(this).val();
 		var inputDay = new Date(inputDate).getDay();
@@ -465,15 +465,55 @@
 		<% } %>
 		
 		for (var i in timeOption) {
-			timeOption[i].disabled = true;
+			//timeOption[i].disabled = true;
+//			if (i != 0) {
+//
+//			}
+			
+			timeOption[i].hidden = "hidden";
 			for (var j in flagArr) { 
 				if (i == flagArr[j]) { // 해당 요일의 강의시간과 일치했던 option은 disabled 해제
 					timeOption[flagArr[j]].selected = "selected";
-					timeOption[flagArr[j]].disabled = false;
+					//timeOption[flagArr[j]].disabled = false;
+					timeOption[flagArr[j]].hidden = false;
 					timeOption[flagArr[j]].style.fontColor = 'blue';
 				}
 			}
+			
 		}
+		
+		// 날짜 선택시 그 날짜가 오늘 날짜라면
+		// 이미 지난 시간은 select옵션 속성을 hidden으로 처리하여 안 보이게 하는 설정
+		var today = new Date();
+		var todayHour = today.getHours();
+		//var minutes = today.getMinutes();
+		
+	    var todayYear = today.getFullYear();
+	    var todayMonth = ("0" + (1 + today.getMonth())).slice(-2);
+	    var todayDay = ("0" + today.getDate()).slice(-2);
+	    var todayStr = todayYear + "-" + todayMonth + "-" + todayDay;
+		
+		
+		//var todayTime = hour;
+		if (todayStr == inputDate) {
+			for (var i in timeOption) {
+			
+				lectureTime = timeOption[i].innerText;
+				console.log(lectureTime);
+				if (i != 0 && i < timeOption.length) {
+					var lectureSplit = lectureTime.split(":");
+					var lectureHour = Number(lectureSplit[0]);
+					
+					if (lectureHour <= todayHour) {
+						timeOption[i].hidden = "hidden";
+						timeOption[i].selected = false;
+						// 그 날 그 시간이랑 스케줄의 강의날 강의시간이 일치하면 선택 못하게 -> 그 날 그 시간 (현재 시간 6시면 강의사간 오후 6시 30분것도 선택 불가, 다음 시간부터 선택 가능)
+					}
+				}
+			}
+		}
+
+		
 	});
 	
 	// 신청 form제출시 로그인 여부 check
@@ -482,7 +522,7 @@
 		if ('<%= loginUser %>' == 'null') {
 			alert('로그인이 필요한 서비스입니다.');
 			return false;
-		} else if ( $('#datepicker').val() == '' ||  $('time').val() == '') {
+		} else if ($('#datepicker').val() == '' ||  $('time').val() == '') {
 			alert('클래스 일정을 선택해주세요.');
 			return false;
 		} else {

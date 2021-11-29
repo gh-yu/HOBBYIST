@@ -227,9 +227,9 @@
 									<% boolean check = false; %>	
 										<%	if (!list.isEmpty()) { %>	
 											
-												<%for (int i = 0; i < list.size(); i++) { %>
+												<% for (int i = 0; i < list.size(); i++) { %>
 												
-											<% 	if(c.getClassNo() == list.get(i).getClassNo()) {%>
+												<% 	if(c.getClassNo() == list.get(i).getClassNo()) {%>
 												<tr>
 													<td><%=list.get(i).getClassBoardNo()%></td>
 													<td><%=list.get(i).getClassBoardName()%></td>
@@ -241,7 +241,7 @@
 												<% } %>
 											<% } %>
 
-										<%	} %>  
+									<%	} %>  
 									<% if(!check) { %> 
 												<tr>
 													<td colspan="5">존재하는 공지사항이 없습니다.</td>
@@ -253,16 +253,16 @@
 								</div>
 							</div>
 							<script>
+							<% if (check) { %> // 해당 클래스에 대한 공지 리스트가 있을시만 클릭 가능함
 								$('#noticeArea td').mouseenter(function(){
 									$(this).parent().css({'background':'darkgray', 'cursor':'pointer'});
 								}).mouseout(function(){
 									$(this).parent().css({'background':'none'});
 								}).click(function(){
-									var num = $(this).parent().children().eq(0).text(); // 글번호 가져오기
-									if ($(this).text() != '존재하는 공지사항이 없습니다.') {
-										location.href = '<%=request.getContextPath()%>/classNoticedetail.no?cNo='+ num;	
-									}
+									var num = $(this).parent().children().eq(0).text(); // 글번호 가져오기	
+									location.href = '<%=request.getContextPath()%>/classNoticedetail.no?cNo='+ num;	
 								});
+							<% } %>
 							</script>	
 							
 							
