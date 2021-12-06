@@ -242,7 +242,11 @@
 <!-- 														</div> -->
 <%-- 													<% } else { %> --%>
 														<div class="col-md-7 justify-content-center">
-															<img class="userImg" id="target_img" name="target_img" src="assets/images/hlogo_g.png" alt="profile-image" />
+															<%  if (tutor == null) { %>
+																<img class="userImg" id="target_img" name="target_img" src="assets/images/hlogo_g.png" alt="profile-image" />
+															<%  } else { %>
+																<img class="userImg" id="target_img" name="target_img" src="<%= request.getContextPath() %>/uploadFiles/<%= tutor.getTutorImgChangeName()  %>">
+															<%  } %>
 																<div class="page-content" style="margin: 20px;">
 																	<%= loginUser.getMemberNickName() %>
 																</div>

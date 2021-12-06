@@ -14,7 +14,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="container">
+	<div class="banner_bg_main">
+		<div class="container">
 			<div class="header_section_top">
 				<div class="row">
 					<div class="col-sm-12">
@@ -216,7 +217,7 @@
 	</div>
 			
 	<% } %>
-			
+	
 	<div class="main-panel">
 		<div class="content">
 			<div class="container-fluid">
@@ -242,8 +243,12 @@
 <!-- 														</div> -->
 <%-- 													<% } else { %> --%>
 														<div class="col-md-7 justify-content-center">
-															<img class="userImg" id="target_img" name="target_img" src="assets/images/hlogo_g.png" alt="profile-image" />
-																<div class="page-content" style="margin: 20px;">
+														<%  if (tutor == null) { %>
+																<img class="userImg" id="target_img" name="target_img" src="assets/images/hlogo_g.png" alt="profile-image" />
+														<%  } else { %>
+																<img class="userImg" id="target_img" name="target_img" src="<%= request.getContextPath() %>/uploadFiles/<%= tutor.getTutorImgChangeName() %>">
+														<%  } %>
+															<div class="page-content" style="margin: 20px;">
 																	<%= loginUser.getMemberNickName() %>
 																</div>
 															</div>
@@ -463,7 +468,9 @@
 		}
 		
 		function reservation() {
-	    	location.href = "<%= request.getContextPath() %>/tuteeEnroll.me";
+	        location.href = "<%= request.getContextPath() %>/tuteeEnroll.me";
+	    }
+		
 
 	</script>
 

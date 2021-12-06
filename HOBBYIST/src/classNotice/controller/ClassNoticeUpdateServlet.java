@@ -61,13 +61,15 @@ public class ClassNoticeUpdateServlet extends HttpServlet {
 		System.out.println("업데이트 안에 result"+ result);
 		String page = null;
 		if (result > 0) {
-			request.setAttribute("classnotice", notice);
-			page = "WEB-INF/views/tutor/noticeDetail.jsp";
+//			request.setAttribute("classnotice", notice);
+//			page = "WEB-INF/views/tutor/noticeDetail.jsp";
+			response.sendRedirect("classNoticedetail.no?cNo="+notice.getClassBoardNo());
 		} else {
 			request.setAttribute("msg", "공지사항 수정 실패");
 			page = "WEB-INF/views/common/errorPage.jsp";
+			request.getRequestDispatcher(page).forward(request, response);
 		}
-		request.getRequestDispatcher(page).forward(request, response);
+		
 		
 	}
 

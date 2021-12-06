@@ -19,6 +19,7 @@
 </style>
 <meta charset="UTF-8">
 <%@ include file="../common/css.jsp"%>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <title>Admin - 회원조회</title>
 </head>
 <body>
@@ -210,10 +211,11 @@
 					<!-- 페이지네이션: 페이징처리시 영역나타남 -->
 					<nav aria-label="Page navigation example">
 						<ul class="pagination justify-content-center">
+						<!-- 맨 처음으로 -->	
 							<li class="page-item">
 								<button class="page-link" id="toFirstBtn" onclick="location.href='<%= request.getContextPath() %>/tutorList.admin?currentPage=1'">&laquo;</button>
 							</li>
-						<!-- prev -->
+						<!-- 이전페이지 -->
 							<li class="page-item">
 								<button class="page-link" id="beforeBtn" onclick="<%= request.getContextPath() %>/tutorList.admin?currentPage=<%= pi.getCurrentPage() -1 %>'" aria-label="Previous">&laquo;</button>
 							</li>
@@ -221,21 +223,18 @@
 						<!-- 페이지넘버 -->
 							<% for (int p = pi.getStartPage(); p <= pi.getEndPage(); p++) { %>
 								<% 		if(p == pi.getCurrentPage()) { %>
-									<li class="page-item" id="choosen"><a class="page-link" href=""><%= p %></a></li> <!-- 현재 페이지는 선택 못하게 -->
+									<li class="page-item" id="choosen"><a class="page-link"><%= p %></a></li> <!-- 현재 페이지는 선택 못하게 -->
 								<%      } else { %> 
 											<li class="page-item" id="numBtn"><a class="page-link" href="<%= request.getContextPath() %>/tutorList.admin?currentPage=<%= p %>"><%= p %></a></li>
 									<% } %>
 							<% 	} %>
 							
-							<!-- next -->
+							<!-- 다음페이지 -->
 							<li class="page-item">
 								<button id="afterBtn" class="page-link" onclick="location.href='<%= request.getContextPath() %>/tutorList.admin?currentPage=<%= pi.getCurrentPage() + 1 %>'"
 									aria-label="Next"> &raquo;</button>
 							</li>	
-							<%-- <li class="page-item">
-								<button id="afterBtn" class="page-link" onclick="location.href='<%= request.getContextPath() %>/tutorList.admin?currentPage=<%= pi.getCurrentPage() + 1 %>'"
-									aria-label="Next"> &raquo;</button>
-							</li> --%>
+							<!-- 맨 끝으로 -->
 							<li class="page-item">
 								<button id="toLastBtn" class="page-link" onclick="location.href='<%= request.getContextPath() %>/tutorList.admin?currentPage=<%= pi.getMaxPage() %>'" 
 									aria-label="Next"> &raquo; </button>

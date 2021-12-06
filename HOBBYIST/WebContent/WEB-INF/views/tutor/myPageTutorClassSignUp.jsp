@@ -149,7 +149,7 @@ img.ui-datepicker-trigger {
 							<ul>
 								<li><a href="<%= request.getContextPath() %>">MAIN</a></li>
 								<li></li>
-								<li><a href="<%= request.getContextPath() %>/myClass.te">LIKED CLASS</a></li>
+								<li><a href="<%= request.getContextPath() %>/likedClass.te">LIKED CLASS</a></li>
 								<li></li>
 								<% if(loginUser == null) { %>
 									<li><a href="<%= request.getContextPath() %>/loginForm.me">LOG-IN</a></li> <!-- login전이면 로그인버튼 -->
@@ -234,7 +234,7 @@ img.ui-datepicker-trigger {
 						class="la la-question-circle"></i>
 						<p>1:1 REQUEST</p>
 					</a></li>
-					<hr>
+					<hr><hr>
 					<li class="nav-item active"><a
 						href="<%=request.getContextPath()%>/move.co"> <i
 							class="la la-pencil"></i>

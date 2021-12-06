@@ -8,6 +8,7 @@
 	HClass c = (HClass)request.getAttribute("c");
 	ArrayList<HClassFile> f = (ArrayList)request.getAttribute("fileList");
 	Tutor t = (Tutor)request.getAttribute("tutor");
+	System.out.println(t);
 	ArrayList<TuteeClass> s = (ArrayList)request.getAttribute("tuteeSchedule");
 	ArrayList<ClassNotice> list = (ArrayList)request.getAttribute("list");
 	DecimalFormat dc = new DecimalFormat("###,###,###");
@@ -211,7 +212,7 @@
 								<div class="board_list_wrap1">
 									<br>
 									<div>
-										<table class="board_list1" id="listArea">
+										<table class="board_list1" id="noticeArea">
 											<h2>공지사항</h2>
 											<thead>
 												<tr>
@@ -228,7 +229,7 @@
 											
 												<%for (int i = 0; i < list.size(); i++) { %>
 												
-											<% 	if(c.getClassNo() == list.get(0).getClassNo()) {%>
+											<% 	if(c.getClassNo() == list.get(i).getClassNo()) {%>
 												<tr>
 													<td><%=list.get(i).getClassBoardNo()%></td>
 													<td><%=list.get(i).getClassBoardName()%></td>
@@ -252,7 +253,7 @@
 								</div>
 							</div>
 							<script>
-								$('#listArea td').mouseenter(function(){
+								$('#noticeArea td').mouseenter(function(){
 									$(this).parent().css({'background':'darkgray', 'cursor':'pointer'});
 								}).mouseout(function(){
 									$(this).parent().css({'background':'none'});
@@ -280,7 +281,9 @@
 											<p><%= t.getTutorReport() %></p>
 
 										<div class="notif-icon notif-danger">
-											<i class="la la-instagram"></i> <a href="<%= t.getTutorSns() %>" class="card-link">SNS</a>
+											<% if (t.getTutorSns() != null) { %>
+												<i class="la la-instagram"></i> <a href="<%= t.getTutorSns() %>" class="card-link">SNS</a>
+											<% } %>
 											<br>
 											<i class="la la-instagram"></i> <%= t.getMemberPhone() %>
 											

@@ -257,7 +257,7 @@
 										<%			} %>
 										<% 		} %>
 										<% } %>
-										<br><br>
+										<br>
 										<div class="btn_main">
 											<div class="buy_bt">
 												<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= classList.get(i).getClassNo() %>">Buy Now</a> 
@@ -319,7 +319,7 @@
 										<%			} %>
 										<% 		} %>
 										<% } %>
-										<br><br>
+										<br>
 										<div class="btn_main">
 											<div class="buy_bt">
 												<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= classList.get(i).getClassNo() %>">Buy Now</a> 
@@ -381,7 +381,7 @@
 										<%			} %>
 										<% 		} %>
 										<% } %>
-										<br><br>
+										<br>
 										<div class="btn_main">
 											<div class="buy_bt">
 												<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= classList.get(i).getClassNo() %>">Buy Now</a> 

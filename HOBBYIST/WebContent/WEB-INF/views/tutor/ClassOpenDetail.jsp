@@ -193,7 +193,7 @@ img.ui-datepicker-trigger {
 								<% }  %>
 									<span class="caret"></span>
 								</span>
-					<
+					
 					</a>
 					<div class="clearfix"></div>
 
@@ -526,9 +526,9 @@ img.ui-datepicker-trigger {
 										<div align="center">
 											<input type="hidden" id="updateBtn" value="수정"> <input
 												type="button" onclick="deleteOpenClass();" id="deleteBtn"
-												value="삭제"> <input type="button"
+												value="삭제하기"> <input type="button"
 												onclick="location.href='javascript:history.go(-1);'"
-												value="취소" id="menuBtn">
+												value="뒤로가기" id="menuBtn">
 										</div>
 									</div>
 									

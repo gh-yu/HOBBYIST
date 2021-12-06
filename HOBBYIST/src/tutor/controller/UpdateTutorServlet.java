@@ -44,7 +44,7 @@ public class UpdateTutorServlet extends HttpServlet {
 		
 		if(ServletFileUpload.isMultipartContent(request)) {
 			
-			int maxSize = 1024 * 1024 * 10;
+			int maxSize = 1024 * 1024 * 100;
 			String root = request.getSession().getServletContext().getRealPath("/");
 			String savePath = root + "uploadFiles/";
 			

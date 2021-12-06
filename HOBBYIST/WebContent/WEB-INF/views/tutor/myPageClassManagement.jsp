@@ -160,7 +160,7 @@
 					<div class="col-sm-12">
 						<div class="custom_menu">
 							<ul>
-								<li><a href="#">MAIN</a></li>
+								<li><a href="<%= request.getContextPath() %>">MAIN</a></li>
 							<% if(loginUser == null) { %>
 								<li></li>
 								<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">LIKED-CLASS</a></li>
@@ -261,7 +261,7 @@
 
                                                 <%for (int i = 0; i < list.size(); i++) { %>
 
-                                            <%     if(c.getClassNo() == list.get(0).getClassNo()) {%>
+                                            <%     if(c.getClassNo() == list.get(i).getClassNo()) {%>
                                                 <tr>
                                                     <td><%=list.get(i).getClassBoardNo()%></td>
                                                     <td><%=list.get(i).getClassBoardName()%></td>
@@ -272,7 +272,7 @@
                                                     <%    check = true; %>
                                                 <% } %>
                                             <% } %>
-
+									
                                         <%    } %>
                                     <% if(!check) { %> 
                                                 <tr>
@@ -363,6 +363,9 @@
 									</div>
 									
 								</div>
+<!-- 								<div> -->
+<!-- 									<input type="button" class="btn btn-default pull-right" value="목록으로" onclick="history.back();"> -->
+<!-- 								</div> -->
 								
 								<!-- 사이드 / 클래스 신청 -->
 <!-- 								<div class="card"> -->
@@ -407,6 +410,7 @@
 									
 <!-- 								</div> -->
 							</div>
+							
 						</div>
 					</div>
 				</div>

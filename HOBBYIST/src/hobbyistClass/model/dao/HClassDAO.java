@@ -527,6 +527,7 @@ public class HClassDAO {
 							  rset.getString("TUTOR_REPORT"),  rset.getString("TUTOR_SNS"),  rset.getString("TUTOR_IMG_PATH"), 
 							  rset.getDate("TUTOR_IMG_UPDATE"), rset.getString("TUTOR_IMG_ORIGIN_NAME"), rset.getString("TUTOR_IMG_CHANGE_NAME"),
 							  rset.getString("MEMBER_NICKNAME"), rset.getString("MEMBER_PHONE"), rset.getInt("MEMBER_STATUS"));
+				t.setMemberEmail(rset.getString("MEMBER_EMAIL"));
 			}
 			
 		} catch (SQLException e) {

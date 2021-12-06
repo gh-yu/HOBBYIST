@@ -210,7 +210,7 @@
 							class="la la-pencil"></i>
 							<p>APPLY FOR CLASS</p>
 					</a></li>
-					<li class="nav-item"><a
+					<li class="nav-item active"><a
 						href="<%=request.getContextPath()%>/tutorMyPage.tt"> <i
 							class="la la-calendar-o"></i>
 							<p>TUTOR ON CLASS</p>

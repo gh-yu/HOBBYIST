@@ -147,9 +147,10 @@
 
 					<li class="nav-item"><a
 						href="<%=request.getContextPath()%>/list.cs"> <i
-							class="la la-bell"></i>
+							 class="la la-question-circle"></i>
 							<p>1:1 REQUEST</p>
 					</a></li>
+					<hr>
 					<% if(loginUser != null && loginUser.getMemberGrade().equals("B")) { %>
 					<hr>
 					<li class="nav-item"><a
@@ -189,17 +190,16 @@
 						<div class="row class beforClass">
 					<% if (!tcBeforeList.isEmpty()) { %>
 							<% 	for (HClass c : tcBeforeList) { %>
-							<div class="col-md-4">
-							<div class="card card-stats card-primary active">
+							<div class="col-md-4" style="height : 550px;">
+							<div class="card card-stats card-primary">
 									<div class="card-body">
 										<div class="row class-card">
-<!-- 											<div class="col-5"> 
-											
-											</div> -->
+											<div class="col-md-12">
+												<div class="box_main">
 									<% if (!fileList.isEmpty()) { %>
 									<%		for(HClassFile f : fileList) { %>
 									<%			if(c.getClassNo() == f.getBoardNo()) { %>
-											<div class="thumbnailArea" style="height: 225px; width: 100%;">
+											<div class="thumbnailArea" style="height: 340px; width: 100%;">
 												<img style="min-width:100%; height: 100%;" src="<%= request.getContextPath() %>/uploadFiles/<%= f.getChangeName() %>"
 													class="thumbnail" alt="Thumbnail">
 											</div>
@@ -217,15 +217,16 @@
 									<% 		} %>
 									<% } %>									
 											</div>
-											<br><br><br>
-											<div class="btn_main">
+												<div class="btn_main">
 												<div class="buy_bt">
 													<a href="<%= request.getContextPath() %>/detail.te?cNo=<%= c.getClassNo() %>">Cancel</a> 
 												</div>
 												<div class="seemore_bt">
 													<a href="<%= request.getContextPath() %>/detail.te?cNo=<%= c.getClassNo() %>">See More</a> 
 												</div>
-											</div>											
+											</div>
+										</div>
+										</div>											
 										</div>
 									</div>
 								</div>

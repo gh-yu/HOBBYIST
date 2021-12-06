@@ -246,7 +246,7 @@
 				<h4 class="page-title">1:1 REQUEST LIST</h4>
 				<hr>
 				
-				<% if (loginUser != null) { %>
+				 <% if (loginUser != null && !loginUser.getMemberGrade().equals("A")) { %>
 					<button id="writeBtn" onclick="location.href='<%= request.getContextPath() %>/writeBoardForm.cs'" class="btn btn-primary pull-right">문의하기</button>
 				<% } %>
 				<br><br>

@@ -14,7 +14,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="container">
+	<div class="banner_bg_main">
+		<div class="container">
 			<div class="header_section_top">
 				<div class="row">
 					<div class="col-sm-12">
@@ -28,7 +29,7 @@
 										<!-- 관리자면 LIKED-CLASS버튼 비활성화 -->
 									<% } else { %>
 										<li></li>
-										<li><a href="<%= request.getContextPath() %>/likedClass.te">LIKED-CLASS</a></li>
+										<li><a href="<%= request.getContextPath() %>/myClass.te">LIKED-CLASS</a></li>
 									<% } %>
 										<li></li>
 									<% if(loginUser == null) { %>
@@ -57,7 +58,7 @@
 		<div class="scrollbar-inner sidebar-wrapper">
 			<div class="user">
 				<div class="photo">
-					<img src="assets/images/hlogo_g.png">	
+					<img src="assets/images/hlogo_g.png">
 				</div>
 				<div class="info">
 					<a class="" data-toggle="collapse" href="#collapseExample"
@@ -92,29 +93,29 @@
 			</div>
 			<ul class="nav">
 				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/tuteeList.admin"> <i
+					href="<%=request.getContextPath()%>/memberCheck.admin"> <i
 					class="la la-user"></i>
 					<p>TUTEE LIST</p>
 				</a></li>
 				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/tutorList.admin"> <i
+					href="<%=request.getContextPath()%>/memberCheck2.admin"> <i
 					class="la la-user"></i>
 					<p>TUTOR LIST</p>
 				</a></li>
 				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/apvList.cl"> <i
-						class="la la-check-circle"></i>
-						<p>CLASS APV LIST</p>
+					class="la la-check-circle"></i>
+					<p>CLASS APV LIST</p>
 				</a></li>
 				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/FAQ.bo"> <i
-						class="la la-question-circle"></i>
-						<p>FAQ</p>
+					class="la la-question-circle"></i>
+					<p>FAQ</p>
 				</a></li>
 				<li class="nav-item"><a
 					href="<%=request.getContextPath()%>/list.cs"> <i
-						class="la la-question-circle"></i>
-						<p>1:1 REQUEST</p>
+					class="la la-question-circle"></i>
+					<p>1:1 REQUEST</p>
 				</a></li>
 			</ul>
 		</div>
@@ -124,11 +125,11 @@
 		<div class="scrollbar-inner sidebar-wrapper">
 			<div class="user">
 				<div class="photo">
-					<%  if (tutor == null) { %>
-						<img src="<%= request.getContextPath() %>/assets/images/hlogo_g.png">
-					<%  } else { %>
-						<img src="<%= request.getContextPath() %>/uploadFiles/<%= tutor.getTutorImgChangeName()  %>">
-					<%  } %>
+					<% if(tutor == null) {  %>
+					<img src="assets/images/hlogo_g.png">
+					<% } else { %>
+					<img src="<%= request.getContextPath() %>/uploadFiles/<%= tutor.getTutorImgChangeName() %>">
+					<% } %>
 				</div>
 				<div class="info">
 					<a class="" data-toggle="collapse" href="#collapseExample"
@@ -157,7 +158,7 @@
 									<span class="link-collapse">내 정보 수정</span>
 							</a></li>
 							<li><a
-								href="<%=request.getContextPath()%>/delete.me"> <span
+								href="<%=request.getContextPath()%>//delete.me"> <span
 									class="link-collapse">튜티 탈퇴</span>
 							</a></li>
 						</ul>
@@ -171,7 +172,7 @@
 						<p>MY CLASS</p>
 				</a></li>
 				<li class="nav-item"><a
-					href="<%=request.getContextPath()%>/likedClass.te"> <i
+					href="<%=request.getContextPath()%>/likedClass.cl"> <i
 						class="la la-gittip"></i>
 						<p>LIKED CLASS</p>
 				</a></li>
@@ -189,19 +190,14 @@
 				<% if (loginUser != null && loginUser.getMemberGrade().equals("B")) { %>
 					<hr>
 					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/move.co"> <i
+						href="<%=request.getContextPath()%>/tutorSignUp.no"> <i
 							class="la la-pencil"></i>
 							<p>APPLY FOR CLASS</p>
 					</a></li>
 					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/tutorMyPage.tt"> <i
+						href="<%=request.getContextPath()%>/tutorClass.no"> <i
 							class="la la-calendar-o"></i>
 							<p>TUTOR ON CLASS</p>
-					</a></li>
-					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/tutorInform.me"> <i
-							class="la la-user"></i>
-							<p>TUTOR INFO</p>
 					</a></li>
 				<% } else { %>
 					<li class="nav-item update-pro">
@@ -242,11 +238,15 @@
 <!-- 														</div> -->
 <%-- 													<% } else { %> --%>
 														<div class="col-md-7 justify-content-center">
-															<img class="userImg" id="target_img" name="target_img" src="assets/images/hlogo_g.png" alt="profile-image" />
+														<%  if (tutor == null) { %>
+																<img class="userImg" id="target_img" name="target_img" src="assets/images/hlogo_g.png" alt="profile-image" />
+														<%  } else { %>
+																<img class="userImg" id="target_img" name="target_img" src="<%= request.getContextPath() %>/uploadFiles/<%= tutor.getTutorImgChangeName() %>">
+														<%  } %>
 																<div class="page-content" style="margin: 20px;">
 																	<%= loginUser.getMemberNickName() %>
 																</div>
-															</div>
+														</div>
 <%-- 													<% } %> --%>
 													<div class="col-md-6">
 													</div>
@@ -360,12 +360,6 @@
 			} else {
 				pwd2Result.css('color', 'green').text('입력하신 비밀번호와 일치합니다.')
 			}})
-		
-		
-		function reservation() {
-    	location.href = "<%= request.getContextPath() %>/tuteeEnroll.me";	
-			
-			
 	</script>	
 	
 
