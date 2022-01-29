@@ -7,6 +7,7 @@ public class TuteeClass {
 	
 	private int tuteeClassNo;
 	private Date tueeClassRevDate;
+	// private Timestamp tueeClassRevDate; // Timestamp로 넣으면 DB에서 가져올 때 시간 정보까지 같이 가져옴
 	private String tueeClassRevTime;
 	private String tuteeClassStatus;
 	private Date tuteeClassEnrollDate;

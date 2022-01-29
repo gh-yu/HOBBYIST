@@ -50,7 +50,6 @@ public class TuteeClassDetailServlet extends HttpServlet {
 		
 		String memberEmail = ((Member)request.getSession().getAttribute("loginUser")).getMemberEmail();	
 		ArrayList<TuteeClass> tuteeSchedule = new TuteeService().selectTuteeSchedule(cNo, memberEmail);
-
 		ArrayList<ClassNotice> list = new ClassNoticeService().selectClassList();
 		
 		String page = null;

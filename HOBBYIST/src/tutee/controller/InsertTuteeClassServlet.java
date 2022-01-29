@@ -54,6 +54,7 @@ public class InsertTuteeClassServlet extends HttpServlet {
 		int minute = Integer.parseInt(splitTime[1]);
 		
 		revDate = new Date(new GregorianCalendar(year, month, day, hour, minute).getTimeInMillis());
+		// Timestamp revTimeDate = new Timestamp(revDate.getTime());
 		
 		TuteeClass tc = new TuteeClass(0, revDate, revTime, null, null, null, cNo, email);
 		
