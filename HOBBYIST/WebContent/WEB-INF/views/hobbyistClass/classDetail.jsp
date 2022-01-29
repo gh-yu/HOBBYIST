@@ -483,7 +483,7 @@
 		}
 		
 		// 날짜 선택시 그 날짜가 오늘 날짜라면
-		// 이미 지난 시간은 select옵션 속성을 hidden으로 처리하여 안 보이게 하는 설정
+		// 이미 지난 시간의 option태그를 hidden으로 처리하여 안 보이게 하는 설정
 		var today = new Date();
 		var todayHour = today.getHours();
 		//var minutes = today.getMinutes();
@@ -493,8 +493,6 @@
 	    var todayDay = ("0" + today.getDate()).slice(-2);
 	    var todayStr = todayYear + "-" + todayMonth + "-" + todayDay;
 		
-		
-		//var todayTime = hour;
 		if (todayStr == inputDate) {
 			for (var i in timeOption) {
 			
@@ -507,7 +505,7 @@
 					if (lectureHour <= todayHour) {
 						timeOption[i].hidden = "hidden";
 						timeOption[i].selected = false;
-						// 그 날 그 시간이랑 스케줄의 강의날 강의시간이 일치하면 선택 못하게 -> 그 날 그 시간 (현재 시간 6시면 강의사간 오후 6시 30분것도 선택 불가, 다음 시간부터 선택 가능)
+						// 그 날 그 시간이랑 스케줄의 강의날 강의시간이 일치하면 선택 못하게 -> 그 날 그 시간 (현재 시간 6시면 강의시간 오후 6시 30분인 것도 선택 불가, 다음 시간부터 선택 가능)
 					}
 				}
 			}

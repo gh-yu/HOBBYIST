@@ -97,7 +97,7 @@
 									<% 		for (int i = 0; i < fList.size(); i++) { %> 
 									<tr>
 										<td colspan="10">
-											<a class="uploadFile" id="uploadFile<%= i %>" href="<%= request.getContextPath() %>/uploadFiles/<%= fList.get(i).getChangeName() %>"><%= fList.get(i).getOriginName() %></a>
+											<a class="uploadFile"  download id="uploadFile<%= i %>" href="<%= request.getContextPath() %>/uploadFiles/<%= fList.get(i).getChangeName() %>"><%= fList.get(i).getOriginName() %></a>
 										</td>
 									</tr>
 									<% 	   } %>

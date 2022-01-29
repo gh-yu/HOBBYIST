@@ -313,7 +313,7 @@
 						</div>
 					</div>
 					
-					<!-- 페이징 처리 영역 : 양식 통일을 위해 제가 admin-회원 조회 리스트에 썼던 폼 그대로 복붙했어요. <%= request.getContextPath() %>/뒤에 주소만 수정하시면 됩니당! -->
+					<!-- 페이징 처리 영역  -->
 					<nav aria-label="Page navigation example">
 						<ul class="pagination justify-content-center">
 							<li class="page-item">
