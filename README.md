@@ -16,8 +16,8 @@
 ## 개발 환경 
     Server : Apache Tomcat 9.0
     Database : Oracle 18c
-    Development Tool :  Eclipse, sqlDeveloper 21.2.1, Visual Studio code
-    Development Language :  JAVA 8 , HTML5, CSS3, JavaScript ES5, jQUery 3.6.0, Sass 1.44.0, SQL, JSP, JDBC, Ajax 
+    Development Tool : Eclipse, sqlDeveloper 21.2.1, Visual Studio code
+    Development Language : JAVA 8 , HTML5, CSS3, JavaScript ES5, jQUery 3.6.0, Sass 1.44.0, SQL, JSP, JDBC, Ajax 
     형상관리 : Github, Sourcetree 
     Team Coop: ERDCloud, Figma, Notion
     Design tool : Bootstrap 5.1
