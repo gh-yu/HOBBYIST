@@ -1,7 +1,7 @@
 # HOBBYIST PROJECT
 <br>
 
-![GitHub repo size](https://img.shields.io/github/repo-size/gh-yu/CODEUS-Groupware) &nbsp; ![GitHub contributors](https://img.shields.io/github/contributors/gh-yu/CODEUS-Groupware) &nbsp; ![GitHub top language](https://img.shields.io/github/languages/top/gh-yu/CODEUS-Groupware)
+![GitHub repo size](https://img.shields.io/github/repo-size/gh-yu/HOBBYIST) &nbsp; ![GitHub contributors](https://img.shields.io/github/contributors/gh-yu/HOBBYIST) &nbsp; ![GitHub top language](https://img.shields.io/github/languages/top/gh-yu/HOBBYIST)
 
 ### HOBBYIST : 라이브 취미 클래스 플랫폼 (Servelt & JSP 기반 웹 프로젝트)
 <br>
