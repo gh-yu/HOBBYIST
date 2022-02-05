@@ -1,4 +1,4 @@
-# HOBBYIST PROJECT
+# HOBBYIST
 <br>
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/gh-yu/HOBBYIST) &nbsp; ![GitHub contributors](https://img.shields.io/github/contributors/gh-yu/HOBBYIST) &nbsp; ![GitHub top language](https://img.shields.io/github/languages/top/gh-yu/HOBBYIST)
