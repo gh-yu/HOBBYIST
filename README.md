@@ -17,7 +17,7 @@
     Server : Apache Tomcat 9.0
     Database : Oracle 18c
     Development Tool : Eclipse, sqlDeveloper 21.2.1, Visual Studio code
-    Development Language : JAVA 8 , HTML5, CSS3, JavaScript ES5, jQUery 3.6.0, Sass 1.44.0, SQL, JSP, JDBC, Ajax 
+    Development Language : JAVA 8 , HTML5, CSS3, Sass 1.44.0, JavaScript, jQUery, SQL, JSP, JDBC, Ajax 
     형상관리 : Github, Sourcetree 
     Team Coop: ERDCloud, Figma, Notion
     Design tool : Bootstrap 5.1
@@ -33,7 +33,11 @@
 ### [메인페이지]
 ![메인페이지](https://user-images.githubusercontent.com/78662802/152633720-36eedcfb-e91a-43db-9fb9-910569f95347.png)
 ![메인페이지2](https://user-images.githubusercontent.com/78662802/152633722-0b86fcb7-e92b-4b54-b92d-6bfd24f26ffc.png)
+
+### [메인페이지 - 카테고리 선택]
 ![카테고리 검색](https://user-images.githubusercontent.com/78662802/152633727-9606f578-b111-4507-8d9c-1596b38aec7e.png)
+
+### [메인페이지- 검색]
 ![클래스 검색](https://user-images.githubusercontent.com/78662802/152633730-1655499a-045e-475a-b959-0e618e629930.png)
 
 ### [클래스 상세]
