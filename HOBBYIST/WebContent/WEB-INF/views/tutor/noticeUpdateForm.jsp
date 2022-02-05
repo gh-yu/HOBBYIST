@@ -2,6 +2,8 @@
     pageEncoding="UTF-8" import="classNotice.model.vo.ClassNotice , member.model.vo.Member" %>
 <%
 	ClassNotice notice = (ClassNotice)request.getAttribute("classNotice");
+	Member loginUser = (Member)session.getAttribute("loginUser");
+
 %>
 <!DOCTYPE html>
 <html>
@@ -20,7 +22,7 @@
 </head>
 <body>
 <%-- 	<%@ include file="../common/menubar.jsp" %> --%>
-	<%@ include file="../common/topbar.jsp" %>
+<%-- 	<%@ include file="../common/topbar.jsp" %> --%>
 
 	<div class="outer">
 		<br>
@@ -38,7 +40,7 @@
 						<th>작성자</th>
 						<td>
 							<%= notice.getClassBoardWriter() %>
-							<input type="hidden" name="nickName" value="<%= notice.getClassBoardWriter() %>"> 
+							<input type="hidden" name="writer" value="<%= notice.getClassBoardWriter() %>"> 
 						</td>
 						<th>작성일</th>			
 						<td>
@@ -55,6 +57,7 @@
 						</td>
 					</tr>
 				</table>
+				<input type= "hidden"name ="cNo" value="<%=notice.getClassNo() %>">
 				
 				<br>
 				

@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="member.model.vo.Member, hobbyistClass.model.vo.*, tutee.model.vo.TuteeClass, java.util.ArrayList"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member, hobbyistClass.model.vo.*, tutor.model.vo.Tutor, tutee.model.vo.TuteeClass, java.util.ArrayList"%>
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
+	Tutor tutor = (Tutor)session.getAttribute("tutor");
 	ArrayList<HClass> tcBeforeList = (ArrayList)request.getAttribute("tcBeforeList");
 	ArrayList<HClass> tcAfterList = (ArrayList)request.getAttribute("tcAfterList");
 	ArrayList<HClassFile> fileList = (ArrayList)request.getAttribute("fileList");
@@ -15,6 +16,7 @@
 <meta charset="UTF-8">
 <title>My Classroom</title>
 <%@ include file="../common/css.jsp" %>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <style>
 .class p{color: black;}
 .card {
@@ -34,19 +36,22 @@
 </head>
 <body>
 
-<div class="banner_bg_main">
+	<div class="banner_bg_main">
 		<div class="container">
 			<div class="header_section_top">
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="custom_menu">
 							<ul>
-								<li><a href="index.jsp">MAIN</a></li>
-								<li></li>
+								<li><a href="<%= request.getContextPath() %>">MAIN</a></li>
 							<% if(loginUser == null) { %>
-								<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">LIKED-CLASS</a></li>
+								<li></li>
+								<li><a href="#" onclick="alert('로그인이 필요한 서비스입니다.');">LIKED-CLASS</a></li>
+							<% } else if(loginUser.getMemberGrade().equals("A")){ %>
+							<!-- 관리자면 LIKED-CLASS버튼 비활성화 -->
 							<% } else { %>
-								<li><a href="<%= request.getContextPath() %>/myClass.te">LIKED-CLASS</a></li>
+								<li></li>
+								<li><a href="<%= request.getContextPath() %>/likedClass.te">LIKED-CLASS</a></li>
 							<% } %>
 								<li></li>
 							<% if(loginUser == null) { %>
@@ -56,7 +61,7 @@
 							<% } %>
 								<li></li>
 							<% if(loginUser == null) { %>
-								<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">MY INFO</a></li>
+								<li><a href="#" onclick="alert('로그인이 필요한 서비스입니다.');">MY INFO</a></li>
 							<% } else { %>
 								<li><a href="<%= request.getContextPath() %>/myInfo.me">MY INFO</a></li>
 							<% } %>
@@ -73,7 +78,11 @@
 				<div class="scrollbar-inner sidebar-wrapper">
 					<div class="user">
 						<div class="photo">
-							<img src="assets/images/iu2.jpg">
+							<%  if (tutor == null) { %>
+								<img src="<%= request.getContextPath() %>/assets/images/hlogo_g.png">
+							<%  } else { %>
+								<img src="<%= request.getContextPath() %>/uploadFiles/<%= tutor.getTutorImgChangeName()  %>">
+							<%  } %>
 						</div>
 						<div class="info">
 							<a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -106,7 +115,7 @@
 										</a>
 									</li>
 									<li>
-										<a href="<%= request.getContextPath() %>/deleteConfirm.me">
+										<a href="<%= request.getContextPath() %>/delete.me">
 											<span class="link-collapse">튜티 탈퇴</span>
 										</a>
 									</li>
@@ -126,34 +135,39 @@
 							<% } %>
 					</a></li>
 					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/likedClass.cl"> <i
+						href="<%=request.getContextPath()%>/likedClass.te"> <i
 							class="la la-gittip"></i>
 							<p>LIKED CLASS</p>
 					</a></li>
-					<li class="nav-item"><a
+<%-- 					<li class="nav-item"><a
 						href="<%=request.getContextPath()%>/review.re"> <i
 							class="la la-camera-retro"></i>
 							<p>MY REVIEW</p>
+					</a></li> --%>
+
+					<li class="nav-item"><a
+						href="<%=request.getContextPath()%>/list.cs"> <i
+							 class="la la-question-circle"></i>
+							<p>1:1 REQUEST</p>
 					</a></li>
 					<hr>
-					
-					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/notification.no"> <i
-							class="la la-bell"></i>
-							<p>NOTIFICATIONS</p>
-					</a></li>
 					<% if(loginUser != null && loginUser.getMemberGrade().equals("B")) { %>
 					<hr>
 					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/tutorSignUp.no"> <i
+						href="<%=request.getContextPath()%>/move.co"> <i
 							class="la la-pencil"></i>
-							<p>APPLICATION</p>
+							<p>APPLY FOR CLASS</p>
 					</a></li>
 					<li class="nav-item"><a
-						href="<%=request.getContextPath()%>/tutorClass.no"> <i
+						href="<%=request.getContextPath()%>/tutorMyPage.tt"> <i
 							class="la la-calendar-o"></i>
 							<p>TUTOR ON CLASS</p>
 					</a></li>
+					<li class="nav-item"><a
+                        href="<%=request.getContextPath()%>/tutorInform.me"> <i
+                            class="la la-user"></i>
+                            <p>TUTOR INFO</p>
+                    </a></li>
 					<% } else { %>
 					
 					<li class="nav-item update-pro">
@@ -176,17 +190,16 @@
 						<div class="row class beforClass">
 					<% if (!tcBeforeList.isEmpty()) { %>
 							<% 	for (HClass c : tcBeforeList) { %>
-							<div class="col-md-4">
-							<div class="card card-stats card-primary active">
+							<div class="col-md-4" style="height : 550px;">
+							<div class="card card-stats card-primary">
 									<div class="card-body">
 										<div class="row class-card">
-<!-- 											<div class="col-5"> 
-											
-											</div> -->
+											<div class="col-md-12">
+												<div class="box_main">
 									<% if (!fileList.isEmpty()) { %>
 									<%		for(HClassFile f : fileList) { %>
 									<%			if(c.getClassNo() == f.getBoardNo()) { %>
-											<div class="thumbnailArea" style="height: 225px; width: 100%;">
+											<div class="thumbnailArea" style="height: 340px; width: 100%;">
 												<img style="min-width:100%; height: 100%;" src="<%= request.getContextPath() %>/uploadFiles/<%= f.getChangeName() %>"
 													class="thumbnail" alt="Thumbnail">
 											</div>
@@ -204,15 +217,16 @@
 									<% 		} %>
 									<% } %>									
 											</div>
-											<br><br><br>
-											<div class="btn_main">
+												<div class="btn_main">
 												<div class="buy_bt">
-													<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">Cancel</a> 
+													<a href="<%= request.getContextPath() %>/detail.te?cNo=<%= c.getClassNo() %>">Cancel</a> 
 												</div>
 												<div class="seemore_bt">
-													<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">See More</a> 
+													<a href="<%= request.getContextPath() %>/detail.te?cNo=<%= c.getClassNo() %>">See More</a> 
 												</div>
-											</div>											
+											</div>
+										</div>
+										</div>											
 										</div>
 									</div>
 								</div>
@@ -250,7 +264,7 @@
 									<% if (!tcScheduleAfter.isEmpty()) { %>
 									<%		for(TuteeClass tcA : tcScheduleAfter) { %>	
 									<%			if(c.getClassNo() == tcA.getClassNo()) { %>
-												<p>최근 수강완료일자는 <b><%= tcA.getTuteeClassFinishDate() %></b>일입니다.</p>
+												<p>최근 수강완료일자는 <b><%= tcA.getTueeClassRevDate() %></b>일입니다.</p>
 									<%			} %>
 									<% 		} %>
 									<% } %>															
@@ -258,10 +272,10 @@
 											<br><br><br>
 											<div class="btn_main">
 												<div class="buy_bt">
-													<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">Write Review</a> 
+													<a href="<%= request.getContextPath() %>/detail.te?cNo=<%= c.getClassNo() %>">Write Review</a> 
 												</div>
 												<div class="seemore_bt">
-													<a href="<%= request.getContextPath() %>/detail.hcl?cNo=<%= c.getClassNo() %>">See More</a> 
+													<a href="<%= request.getContextPath() %>/detail.te?cNo=<%= c.getClassNo() %>">See More</a> 
 												</div>
 											</div>
 										</div>
@@ -277,5 +291,11 @@
 			</div>
 
 <%@ include file="../common/js.jsp" %>
+<script>
+	function reservation() {
+    	location.href = "<%= request.getContextPath() %>/tuteeEnroll.me";
+	}
+
+</script>
 </body>
 </html>

@@ -28,12 +28,16 @@ public class ClassNoticeDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int no = Integer.parseInt(request.getParameter("no"));
-		
-		int result = new ClassNoticeService().deleteClassNotice(no);
-		
+		int del = Integer.parseInt(request.getParameter("no"));
+		int classno = Integer.parseInt(request.getParameter("cNo"));
+	
+		//System.out.println("cnodelete: "+del);
+		int result = new ClassNoticeService().deleteClassNotice(del);
+
+//		int cNoselect = new ClassNoticeService().selectcNo(classno);
 		if(result > 0) {
-			response.sendRedirect("classManagement.tt");
+			response.sendRedirect("classManagement.tt?cNo=" + classno);
+//			request.getRequestDispatcher("WEB-INF/views/tutor/myPageClassManagement.jsp").forward(request, response);
 		} else {
 			request.setAttribute("msg", "공지사항 삭제 실패");
 			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);

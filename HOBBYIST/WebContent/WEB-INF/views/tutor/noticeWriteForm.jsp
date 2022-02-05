@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="member.model.vo.Member"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member, hobbyistClass.model.vo.* ,classNotice.model.vo.*"%>
+<%
+	int cNo =(int)request.getAttribute("cNo");
+	Member loginUser = (Member)session.getAttribute("loginUser");
+// 	ClassNotice notice = (ClassNotice)request.getAttribute("classNotice");
+ %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +22,7 @@
 </head>
 <body>
 <%-- 	<%@ include file="../common/menubar.jsp" %> --%>
-	<%@ include file="../common/topbar.jsp" %>
+<%-- 	<%@ include file="../common/topbar.jsp" %> --%>
 	<div class="outer">
 		<br>
 		<h2 align="center">공지사항 작성</h2>
@@ -47,7 +52,7 @@
 				</table>
 				
 				<br>
-				
+					<input type="hidden" name="cNo" value = "<%=cNo%>">
 				<div align="center">
 					<input type="submit" id="insertNoBtn" value="등록">
 					<input type="button" onclick="location.href='javascript:history.go(-1);'" id="cancelBtn" value="취소">

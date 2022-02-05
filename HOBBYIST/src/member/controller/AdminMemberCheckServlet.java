@@ -19,7 +19,7 @@ import member.model.vo.MemberInfo;
 /**
  * Servlet implementation class AdminMemberCheckServlet
  */
-@WebServlet("/memberCheck.admin")
+@WebServlet("/tuteeList.admin")
 public class AdminMemberCheckServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

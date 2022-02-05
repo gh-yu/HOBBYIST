@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="hobbyistClass.model.vo.*, member.model.vo.Member, tutor.model.vo.Tutor, java.util.ArrayList"%>
+	pageEncoding="UTF-8" import="hobbyistClass.model.vo.*, member.model.vo.Member, tutor.model.vo.Tutor, java.util.ArrayList, java.text.DecimalFormat"%>
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
 
@@ -7,6 +7,7 @@
 	ArrayList<HClassFile> f = (ArrayList)request.getAttribute("fileList");
 	Tutor t = (Tutor)request.getAttribute("tutor");
 	ArrayList<HClassSchedule> s = (ArrayList)request.getAttribute("sList");
+	DecimalFormat dc = new DecimalFormat("###,###,###");
 	
 	// 달력의 요일과 DB에서 가져온 요일데이터를 비교하는 조건식 생성 -> script에서 배열에 저장하여 활용
 	String dayPick = "";
@@ -31,7 +32,7 @@
 <meta charset="UTF-8">
 <title>HOBBYIST</title>
 <%@ include file="../common/css.jsp" %>
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="js/jquery-3.6.0.min.js"></script>
 
 <style>
 	.likeBtnArea{display: inline-block;} 
@@ -50,7 +51,17 @@
 	#btnSub:hover {
 		background: #9ED4C2;
 	}
-
+	
+	.tutorProfile{
+		width: 200px;
+		height: 150px;	
+	}
+	
+	.tutorProfile img{
+		width: 180px;
+		height: 140px;
+	}
+	
 </style>
 </head>
 <body>
@@ -63,15 +74,15 @@
 					<div class="col-sm-12">
 						<div class="custom_menu">
 							<ul>
-								<li><a href="#">MAIN</a></li>
+								<li><a href="<%= request.getContextPath() %>">MAIN</a></li>
 							<% if(loginUser == null) { %>
 								<li></li>
-								<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">LIKED-CLASS</a></li>
+								<li><a href="#" onclick="alert('로그인이 필요한 서비스입니다.');">LIKED-CLASS</a></li>
 							<% } else if(loginUser.getMemberGrade().equals("A")){ %>
 							<!-- 관리자면 LIKED-CLASS버튼 비활성화 -->
 							<% } else { %>
 								<li></li>
-								<li><a href="<%= request.getContextPath() %>/myClass.te">LIKED-CLASS</a></li>
+								<li><a href="<%= request.getContextPath() %>/likedClass.te">LIKED-CLASS</a></li>
 							<% } %>
 								<li></li>
 							<% if(loginUser == null) { %>
@@ -81,7 +92,7 @@
 							<% } %>
 								<li></li>
 							<% if(loginUser == null) { %>
-								<li><a href="#" onclick="alert('로그인을 먼저 해주세요.');">MY INFO</a></li>
+								<li><a href="#" onclick="alert('로그인이 필요한 서비스입니다.');">MY INFO</a></li>
 							<% } else { %>
 								<li><a href="<%= request.getContextPath() %>/myInfo.me">MY INFO</a></li>
 							<% } %>
@@ -133,7 +144,7 @@
 								
 								<!-- 좋아요 버튼 기능 -->
 								<div class="likeBtnArea">
-									<input type="hidden" class="cNo" name="cNo" value="<%= c.getClassNo() %>"> 
+									<input type="hidden" id="cNo" name="cNo" value="<%= c.getClassNo() %>"> 
 									<button class="button button-like">
 										<i class="fa fa-heart"></i><span>Like</span>
 									</button>
@@ -156,13 +167,17 @@
 										<div class="card-title">[LIVE]</div>
 									</div>
 									<div class="card-body">
+										<div class="tutorProfile">
+											<img src="<%= request.getContextPath() %>/uploadFiles/<%= t.getTutorImgChangeName() %>">
+										</div>
 										<h6 class="card-subtitle mb-2 text-muted"><%= t.getMemberNickName() %>의 클래스</h6>
 										<p class="card-text">
 											<p><%= t.getTutorReport() %></p>
-										</p>
 
 										<div class="notif-icon notif-danger">
-											<i class="la la-instagram"></i> <a href="<%= t.getTutorSns() %>" class="card-link">SNS</a>
+											<% if (t.getTutorSns() != null) { %>
+												<i class="la la-instagram"></i> <a href="<%= t.getTutorSns() %>" class="card-link">SNS</a>
+											<% } %>
 										</div>
 										<hr>
 									</div>
@@ -180,6 +195,8 @@
 									</div>
 								</div>
 								<!-- 사이드 / 클래스 신청 -->
+								<% if (loginUser != null && !loginUser.getMemberGrade().equals("A") && !loginUser.getMemberEmail().equals(t.getMemberEmail())) { %>
+												
 								<div class="card">
 									<div class="card-header">
 										<div class="card-title">클래스 신청하기</div>
@@ -192,7 +209,8 @@
 												<small id="imageHelp" class="form-text text-muted">수강을 원하시는 날짜를 선택해주세요(최대 1개)</small> <br> 
 												
 												<label for="exampleFormControlSelect1">강의 시간 선택 &nbsp;</label> 
-												<select id="time" name="time" style="width: 100px;">
+												<select id="time" name="time" style="width: 100px;" required>
+												<option class="timeOption" value="">----</option>
 												<% for (int i = 0; i < s.size(); i++) { %>
 												<% 		if (s.size() > 1 && i != 0 && s.get(i-1).getSchduleTime().equals(s.get(i).getSchduleTime())) { %>
 																								
@@ -206,13 +224,14 @@
 												<input type="hidden" name="cNo" value="<%= c.getClassNo() %>">
 												<div id="price">
 													<label for="exampleFormControlSelect1">수강료 &nbsp;</label> 
-													<input placeholder="<%= c.getClassFee() %>원" disabled>
+													<input placeholder="<%= dc.format(c.getClassFee()) %>원" disabled>
 													<small id="imageHelp" class="form-text text-muted">수강료는 이미 책정된 내역으로 변경할 수 없습니다.</small> 
 												
 													<br><br><br>
 												</div>	
 												<div align="center">
 													<input type="submit" id="btnSub" value="신청">
+												
 												</div>
 												<br>
 											</form>
@@ -221,6 +240,7 @@
 									
 									
 								</div>
+								<% } %>
 							</div>
 						</div>
 					</div>
@@ -230,7 +250,7 @@
 	</div>
 	<br>
 	<!-- 클래스 리뷰 영역 -->
-	<div class="row justify-content-center">
+<!-- 	<div class="row justify-content-center">
 		<div class="col-md-10">
 			<div class="card">
 				<div class="card-header">
@@ -260,13 +280,13 @@
 							<div class="swiper-slide"
 								style="background-image: url(assets/images/painting.jpg)"></div>
 						</div>
-						<!-- Add Pagination -->
+						Add Pagination
 						<div class="swiper-pagination"></div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 <%@ include file="../common/js.jsp" %>
 <script src="assets/js/swiper.js"></script>
@@ -297,7 +317,7 @@
 			// memberEmail이 일치하는 likeClassList를 select해와서  
 			// classNo와 likeClassList의 classNo랑 일치하면  $(this).toggleClass("liked");
 			var memberEmail = '<%= loginUser.getMemberEmail() %>';
-			var cNo = $('.cNo');
+			var cNo = $('#cNo');
 			
 			$.ajax({
 				url: 'likeList.te',
@@ -305,11 +325,9 @@
 				type: 'POST',
 				success: function(data){
 					console.log(data);
-					for (var i in cNo) {
-						for(var j in data) {
-							var likedCNo = data[j].classNo;
-							$('.likeBtnArea').find('input[value=' + likedCNo + ']').next().toggleClass("liked");
-						}	
+					for(var j in data) {
+						var likedCNo = data[j].classNo;
+						$('.likeBtnArea').find('input[value=' + likedCNo + ']').next().toggleClass("liked");
 					}
 				},
 				error: function(data){
@@ -387,33 +405,17 @@
 		changeMonth : true,
 		changeYear : true,
 
-		minDate : '0', // 0 넣으면 오늘날짜부터 선택할 수 있음
+		minDate : '0', // 0 넣으면 오늘날짜부터 선택할 수 있음, 1 넣으면 오늘 이후의 날짜부터 선택 가능
 		maxDate : new Date('<%= c.getClassEndDate() %>'), // 특정날짜 이후는 선택 못하게/ 기간 선택 범위 제한/ 클래스 종료일자 이후는 선택 불가
 		showButtonPanel : true,
 		currentText : '오늘 날짜',
 		closeText : '닫기',
 		showAnim : "slide",
 
-		beforeShowDay : onlyClassday, // 요일 선택 제한, 값으로 함수를 넣었음
+		beforeShowDay : onlyClassday, // 요일 선택 제한, 강사가 신청한 요일만 선택 가능하게 / 값으로 함수를 넣어 반환값인 베열이 저장됨
 		regional : "ko", // 지역
 
 	});
-
-	function onlyClassday(date) { // 리턴한 요일만 선택되게 하는 함수
-		var day = date.getDay();
-		// return [(day == 1), '']; // day == 1 월요일만 선택
-		// return [(day != 0 && day != 1 && day != 3)]; // 특정 요일 제한 -> 일,월,수만 선택 안하기
-		// var classDay = [ (day == 0 || day == 1 || day == 3) ];
-		// return classDay;
-		
-		var classDay = new Array();
-		
-		classDay.push(<%= dayPick %>); 
-		// DB에서 클래스 스케줄의 강의요일을 가져와 조건식으로 저장 -> 배열에 넣어 반환하기
-		// -> 날짜선택 클릭시 달력의 요일과 리턴한 배열의 데이터 안의 요일데이터와 비교 -> 조건식 결과 boolean값이 false면 해당 요일은 선택 불가능 처리
-		
-		return classDay;
-	};
 
 	$(function() {
 		$("#datepicker").datepicker({
@@ -426,7 +428,24 @@
 		var dt = new Date();
 	});
 	
-	// 날짜 선택시 스케줄표에서 그 요일의 시간과 일치하는 것은 selected, 아닌 것은 disabled로 변경 
+	function onlyClassday(date) { // 요일 선택을 제한하는 함수
+		var day = date.getDay(); // 달력의 날짜의 요일을 구하는 함수
+		// return [(day == 1), '']; // day == 1 월요일만 선택
+		// return [(day != 0 && day != 1 && day != 3)]; // 특정 요일 제한 -> 일,월,수만 선택 안하기
+		// var classDay = [ (day == 0 || day == 1 || day == 3) ]; // 일, 월, 수만 선택하기
+		// return classDay;
+		
+		var classDay = new Array();
+		
+		classDay.push(<%= dayPick %>); 
+		// DB에서 클래스 스케줄의 강의요일을 가져와 조건식으로 저장 -> 배열에 넣어 반환하기
+		// -> 날짜선택 클릭시 달력의 요일과 리턴한 배열의 데이터 안의 요일데이터와 비교 -> 조건식 결과 boolean값이 false면 해당 요일은 선택 불가능 처리
+		
+		return classDay;
+	};
+
+	
+	// 날짜 선택시 스케줄표에서 그 요일의 시간과 일치하는 것은 selected, 아닌 것은 hidden으로 변경 
 	$("#datepicker").off().on('change', function(){
 		var inputDate = $(this).val();
 		var inputDay = new Date(inputDate).getDay();
@@ -446,29 +465,72 @@
 		<% } %>
 		
 		for (var i in timeOption) {
-			timeOption[i].disabled = true;
-			$time.css('text-decoration', 'line-through')
+			//timeOption[i].disabled = true;
+//			if (i != 0) {
+//
+//			}
+			
+			timeOption[i].hidden = "hidden";
 			for (var j in flagArr) { 
 				if (i == flagArr[j]) { // 해당 요일의 강의시간과 일치했던 option은 disabled 해제
 					timeOption[flagArr[j]].selected = "selected";
-					timeOption[flagArr[j]].disabled = false;
+					//timeOption[flagArr[j]].disabled = false;
+					timeOption[flagArr[j]].hidden = false;
+					timeOption[flagArr[j]].style.fontColor = 'blue';
+				}
+			}
+			
+		}
+		
+		// 날짜 선택시 그 날짜가 오늘 날짜라면
+		// 이미 지난 시간의 option태그를 hidden으로 처리하여 안 보이게 하는 설정
+		var today = new Date();
+		var todayHour = today.getHours();
+		//var minutes = today.getMinutes();
+		
+	    var todayYear = today.getFullYear();
+	    var todayMonth = ("0" + (1 + today.getMonth())).slice(-2);
+	    var todayDay = ("0" + today.getDate()).slice(-2);
+	    var todayStr = todayYear + "-" + todayMonth + "-" + todayDay;
+		
+		if (todayStr == inputDate) {
+			for (var i in timeOption) {
+			
+				lectureTime = timeOption[i].innerText;
+				console.log(lectureTime);
+				if (i != 0 && i < timeOption.length) {
+					var lectureSplit = lectureTime.split(":");
+					var lectureHour = Number(lectureSplit[0]);
+					
+					if (lectureHour <= todayHour) {
+						timeOption[i].hidden = "hidden";
+						timeOption[i].selected = false;
+						// 그 날 그 시간이랑 스케줄의 강의날 강의시간이 일치하면 선택 못하게 -> 그 날 그 시간 (현재 시간 6시면 강의시간 오후 6시 30분인 것도 선택 불가, 다음 시간부터 선택 가능)
+					}
 				}
 			}
 		}
+
+		
 	});
 	
 	// 신청 form제출시 로그인 여부 check
 	function check() {
+
 		if ('<%= loginUser %>' == 'null') {
 			alert('로그인이 필요한 서비스입니다.');
 			return false;
+		} else if ($('#datepicker').val() == '' ||  $('time').val() == '') {
+			alert('클래스 일정을 선택해주세요.');
+			return false;
 		} else {
-			if (confirm($("#datepicker").val() + "일, " + $('#time').val() +"분을 선택하신 것이 맞습니까?")){
+			if(confirm($("#datepicker").val() + "일, " + $('#time').val() +"분을 선택하신 것이 맞습니까?")) {
 				return true;
 			} else {
 				return false;
 			}
-		}
+		}	
+		return true;
 	}
 	
 </script>
