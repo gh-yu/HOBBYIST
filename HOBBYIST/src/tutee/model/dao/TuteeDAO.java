@@ -305,7 +305,6 @@ public class TuteeDAO {
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setDate(1, tc.getTueeClassRevDate());
-			// pstmt.setTimestamp(1, tc.getTueeClassRevDate());
 			pstmt.setInt(2, tc.getClassNo());
 			
 			rset = pstmt.executeQuery();
