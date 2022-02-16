@@ -3,7 +3,7 @@
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/gh-yu/HOBBYIST) &nbsp; ![GitHub contributors](https://img.shields.io/github/contributors/gh-yu/HOBBYIST) &nbsp; ![GitHub top language](https://img.shields.io/github/languages/top/gh-yu/HOBBYIST)
 
-### HOBBYIST : 라이브 취미 클래스 플랫폼 (Servelt & JSP 기반 웹 프로젝트)
+### HOBBYIST : 온라인 원데이 클래스 제공 플랫폼 (Servelt & JSP 기반 웹 프로젝트)
 <br>
 
 [결과물 바로가기](#결과물)
